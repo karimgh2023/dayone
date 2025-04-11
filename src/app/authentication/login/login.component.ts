@@ -51,7 +51,19 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      rememberMe: [false]
     });
+
+    // Load saved credentials if they exist
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    if (savedEmail && savedPassword) {
+      this.loginForm.patchValue({
+        email: savedEmail,
+        password: savedPassword,
+        rememberMe: true
+      });
+    }
   }
 
 
@@ -78,6 +90,10 @@ export class LoginComponent {
     }
   
     const credentials = this.loginForm.value;
+    const rememberMe = this.loginForm.get('rememberMe')?.value;
+    
+    console.log('Login attempt with rememberMe:', rememberMe);
+    console.log('Form values:', credentials);
   
     this.authservice.login(credentials).subscribe({
       next: (token: string) => {
@@ -93,9 +109,20 @@ export class LoginComponent {
           id: decoded.user.id
         };
 
-        console.log(jwtDecode(token));
+        console.log('Token decoded:', decoded);
+        console.log('User data to save:', user);
+        console.log('Remember me value:', rememberMe);
 
-        this.authservice.saveAuthData(token, user);
+        // Save credentials if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem('savedEmail', credentials.email);
+          localStorage.setItem('savedPassword', credentials.password);
+        } else {
+          localStorage.removeItem('savedEmail');
+          localStorage.removeItem('savedPassword');
+        }
+
+        this.authservice.saveAuthData(token, user, rememberMe);
   
         this.toastr.success(
           `Bienvenue, ${user.firstName} ${user.lastName} `,

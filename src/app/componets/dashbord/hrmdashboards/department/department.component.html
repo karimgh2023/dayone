@@ -1,5 +1,5 @@
-<app-hr-dashboard-page-header [title]="'Department'" [title3]="'Add  Department'" [class]="''"
-    [class1]="'btn btn-primary'" [path]="''"></app-hr-dashboard-page-header>
+<app-hr-dashboard-page-header [title]="'Department'" [title3]="'Add Department'" [class]="''"
+    [class1]="'btn btn-primary'" [path]="''" (addDepartmentClick)="open(content1)"></app-hr-dashboard-page-header>
 
 <!-- Start::row-1 -->
 <div class="row">
@@ -15,12 +15,12 @@
                             <span>Show</span>
                             <div class="d-flex ms-2 mx-2">
                                 <div class="form-group mb-0">
-                                    <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0 remove-ngbutton"
-                                        data-trigger placeholder="10">
-                                        <ng-option value="1" selected="">10</ng-option>
-                                        <ng-option value="2">25</ng-option>
-                                        <ng-option value="3">50</ng-option>
-                                        <ng-option value="4">100</ng-option>
+                                    <ng-select name="quantity" id="select-countries17" class="form-control wd-150 p-0 remove-ngbutton"
+                                        [(ngModel)]="pageSize" (ngModelChange)="changePageSize($event)">
+                                        <ng-option [value]="10">10</ng-option>
+                                        <ng-option [value]="25">25</ng-option>
+                                        <ng-option [value]="50">50</ng-option>
+                                        <ng-option [value]="100">100</ng-option>
                                     </ng-select>
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="float-end">
-                            <input type="text" class="form-control" placeholder="search">
+                            <input type="text" class="form-control" placeholder="search" [(ngModel)]="searchText">
                         </div>
                     </div>
                 </div>
@@ -43,34 +43,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for(department of departments;track $index){
-
-                            <tr class="border-bottom">
-                                <th scope="row">{{department.id}}</th>
-                                <td>{{department.name}}</td>
-                                <td>
-                                    <a class="btn btn-primary btn-icon me-1" (click)="open(content1)" data-bs-toggle="modal"
-                                        data-bs-target="#editdepartmentmodal">
-                                        <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="Edit"></i>
-                                    </a>
-                                    <a class="btn btn-danger btn-icon " (click)="click(department.id)"
-                                        data-bs-toggle="tooltip" data-original-title="Delete"><i
-                                            class="fe fe-trash-2"></i></a>
-                                </td>
-                            </tr>
+                            @if (isLoading) {
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            } @else if (departments.length === 0) {
+                                <tr>
+                                    <td colspan="3" class="text-center">No departments found</td>
+                                </tr>
+                            } @else {
+                                @for(department of paginatedDepartments; track department.id){
+                                <tr class="border-bottom">
+                                    <th scope="row">{{department.id}}</th>
+                                    <td>{{department.name}}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-icon me-1" (click)="edit(content1, department)" data-bs-toggle="modal"
+                                            data-bs-target="#editdepartmentmodal">
+                                            <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="Edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-icon" (click)="deleteDepartment(department.id)"
+                                            data-bs-toggle="tooltip" data-original-title="Delete">
+                                            <i class="fe fe-trash-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
                             }
-
                         </tbody>
                     </table>
                 </div>
                 <!-- Start::pagination -->
                 <nav class="mt-4">
                     <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
-                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                        <li class="page-item" [class.disabled]="currentPage === 1">
+                            <a class="page-link" href="javascript:void(0);" (click)="goToPage(currentPage - 1)">Prev</a>
+                        </li>
+                        @for(page of [].constructor(totalPages); track page; let i = $index) {
+                        <li class="page-item" [class.active]="currentPage === i + 1">
+                            <a class="page-link" href="javascript:void(0);" (click)="goToPage(i + 1)">{{i + 1}}</a>
+                        </li>
+                        }
+                        <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <a class="page-link" href="javascript:void(0);" (click)="goToPage(currentPage + 1)">Next</a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End::pagination -->
@@ -80,15 +99,19 @@
 </div>
 <!--End::row-1 -->
 
-        <ng-template #content1 let-modal>
-
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Edit Department</h5> <button (click)="modal.close('cross click')" type="button" class="btn-close"
-                    data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body"> <label for="input-text11" class="form-label">Edit Department</label> <input type="text"
-                    class="form-control" id="input-text11" placeholder="Departments"> </div>
-            <div class="modal-footer"> <button type="button" class="btn btn-outline-primary" (click)="modal.close('cross click')"
-                    data-bs-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </ng-template>
+<ng-template #content1 let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">{{selectedDepartment ? 'Edit' : 'Add'}} Department</h5>
+        <button (click)="modal.close('cross click')" type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <label for="input-text11" class="form-label">Department Name</label>
+        <input type="text" class="form-control" id="input-text11" [(ngModel)]="newDepartmentName" placeholder="Department Name">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="modal.close('cross click')"
+            data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveDepartment()">Save</button>
+    </div>
+</ng-template>

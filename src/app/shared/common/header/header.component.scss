@@ -3,3 +3,21 @@
     background-color: var(--custom-white);
     border: 0px solid var(--default-border);
 }
+
+.country-selector {
+  .header-link {
+    img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+    }
+  }
+  
+  .dropdown-item {
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+    }
+  }
+}

@@ -12,6 +12,8 @@ import { AppStateService } from '../../services/app-state.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { RightSidebarComponent } from '../right-sidebar/right-sidebar.component';
+import { LanguageService } from '../../services/language.service';
+
 interface Item {
   id: number;
   name: string;
@@ -19,6 +21,13 @@ interface Item {
   title: string;
   // Add other properties as needed
 }
+
+interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -32,17 +41,25 @@ export class HeaderComponent implements OnInit {
   closeResult = '';
   themeType: string | undefined;
 
-  selectedItem: string  | null ='selectedItem'
+  selectedItem: string | null = 'selectedItem';
   isOpen: boolean = false;
-modal: any;
+  modal: any;
+  languages: Language[] = [];
+  currentLanguage: string = 'en';
+  currentLanguageFlag: string = '';
+
   constructor(
     private appStateService: AppStateService,
     public navServices: NavService,
     private elementRef: ElementRef,
     public renderer: Renderer2,
-    public modalService:NgbModal,
-    private router: Router, private activatedRoute: ActivatedRoute
-  ) {this.localStorageBackUp()}
+    public modalService: NgbModal,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public languageService: LanguageService
+  ) {
+    this.localStorageBackUp();
+  }
 
   private offcanvasService = inject(NgbOffcanvas);
 
@@ -254,6 +271,17 @@ modal: any;
       this.updateSelectedItem();
     });
 
+    this.languageService.getLanguages().subscribe(languages => {
+      this.languages = languages;
+    });
+
+    this.languageService.getCurrentLanguage().subscribe(lang => {
+      this.currentLanguage = lang;
+    });
+
+    this.languageService.getCurrentLanguageFlag().subscribe(flag => {
+      this.currentLanguageFlag = flag;
+    });
   }
   
   private updateSelectedItem() {
@@ -369,5 +397,12 @@ modal: any;
   isFullscreen: boolean = false;
   toggleFullscreen() {
     this.isFullscreen = !this.isFullscreen;
+  }
+
+  changeLanguage(languageCode: string): void {
+    this.languageService.setLanguage(languageCode);
+    this.currentLanguage = languageCode;
+    // Here you can add any additional logic needed when language changes
+    // For example, reloading translations, updating the UI, etc.
   }
 }

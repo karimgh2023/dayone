@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HrDashboardPageHeaderModalComponent } from '../hr-dashboard-page-header-modal/hr-dashboard-page-header-modal.component';
 import {NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -20,31 +20,21 @@ export class HrDashboardPageHeaderComponent implements OnInit {
   @Input() class1!: string;
   @Input() path!: string;
   @Input() path1!: string;
+  @Output() addDepartmentClick = new EventEmitter<void>();
 
   model!: NgbDateStruct;
   currentPath: string = '';
-  // private routerSubscription: Subscription;
-content: any;
+  content: any;
   constructor(public dialog: MatDialog,private router: Router) {
     this.currentPath = router.url
-    // this.routerSubscription = this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // )
-    // .subscribe((event:any) => {
-    //   this.currentPath = event.urlAfterRedirects; // Use event.urlAfterRedirects
-    // });
   }
 
-
-  
   inlineDatePicker: boolean = false;
   weekNumbers!: true
-  // selectedDate: Date | null = null; 
   flatpickrOptions: any = {
     inline: true,
    
   };
-  // flatpickrOptions: FlatpickrOptions;
 
   ngOnInit() {
     this.flatpickrOptions = {
@@ -65,7 +55,24 @@ content: any;
   }
 
   private modalService = inject(NgbModal);
-    openModal(content: TemplateRef<any>) {
-      this.modalService.open(content, { centered: true,size:'lg' });
+  
+  openModal(content: TemplateRef<any>) {
+    this.modalService.open(content, { centered: true, size:'lg' });
+  }
+
+  openModalOrEmitEvent() {
+    if (this.currentPath.includes('/dashboard/hrmdashboards/department')) {
+      // Emit event for department component to handle
+      this.addDepartmentClick.emit();
+    } else {
+      // Open the modal for other pages
+      this.openModal(this.content);
     }
+  }
+
+  saveDepartment() {
+    // Close the modal
+    this.modalService.dismissAll();
+    // Department component will handle the actual saving
+  }
 }

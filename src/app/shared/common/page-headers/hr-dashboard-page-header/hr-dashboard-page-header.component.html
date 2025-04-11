@@ -7,7 +7,7 @@
         <div class="d-md-flex align-items-center flex-wrap my-auto end-content breadcrumb-end">
             <div class="d-flex gap-2">
                 <a class="{{class}}" routerLink="{{path}}">{{title2}}</a>
-                <a class="{{class1}}" (click)="openModal(content)">{{title3}}</a>
+                <a class="{{class1}}" (click)="openModalOrEmitEvent()">{{title3}}</a>
                 <button type="button" class="btn btn-light3" data-bs-toggle="tooltip" placement="top"
                     ngbTooltip="E-mail"> <i class="fe fe-mail"></i> </button>
                 <button type="button" class="btn btn-light3" data-bs-toggle="tooltip" placement="top"
@@ -23,17 +23,19 @@
 <ng-template #content let-modal>
     @if(currentPath.includes('/dashboard/hrmdashboards/department')){
     <div class="modal-header">
-        <h5 class="modal-title">Add New Notice</h5> <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"> </button>
+        <h5 class="modal-title">Add Department</h5>
+        <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
         <div class="form-group mb-3"> 
-            <label class="form-label">Type Text</label> 
-            <input class="form-control"placeholder="Text"> </div>
-      
+            <label class="form-label">Department Name</label> 
+            <input class="form-control" placeholder="Enter department name"> 
+        </div>
     </div>
-    <div class="modal-footer"> <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button> <button
-            class="btn btn-primary">submit</button> </div>
+    <div class="modal-footer"> 
+        <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button> 
+        <button class="btn btn-primary" (click)="saveDepartment()">Save</button> 
+    </div>
     }
 
     @if(currentPath=="/dashboard/hrmdashboards/attendance/leave-settings"){

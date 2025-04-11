@@ -11,12 +11,12 @@
               <div class="horizontal-logo">
                 <a routerLink="/dashboard/hrmdashboards/dashboard" class="header-logo"> 
                     <img src="./assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
-                     <img src="./assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo"> 
-                     <img src="./assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
-                      <img src="./assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark"> 
-                      <img src="./assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white"> 
-                      <img src="./assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-white"> 
-                    </a>
+                    <img src="./assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo"> 
+                    <img src="./assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
+                    <img src="./assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark"> 
+                    <img src="./assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white"> 
+                    <img src="./assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-white"> 
+                </a>
               </div>
           </div>
           <!-- End::header-element -->
@@ -122,56 +122,16 @@
           <div class="header-element country-selector" ngbDropdown [autoClose]="'outside'">
               <!-- Start::header-link|dropdown-toggle -->
               <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
-                  <img src="./assets/images/flags/6.jpg" alt="img" class="rounded-circle">
+                  <img [src]="'assets/images/flags/' + languageService.getCurrentLanguageFlag()" alt="img" class="rounded-circle">
               </a>
               <!-- End::header-link|dropdown-toggle -->
               <ul ngbDropdownMenu class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
+                  <li *ngFor="let lang of languages">
+                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);" (click)="changeLanguage(lang.code)">
                           <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/5.jpg" alt="img">
+                              <img [src]="'assets/images/flags/' + lang.flag" [alt]="lang.name">
                           </span>
-                          English
-                      </a>
-                  </li>
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
-                          <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/4.jpg" alt="img" >
-                          </span>
-                          Spanish
-                      </a>
-                  </li>
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
-                          <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/6.jpg" alt="img" >
-                          </span>
-                          French
-                      </a>
-                  </li>
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
-                          <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/1.jpg" alt="img" >
-                          </span>
-                          German
-                      </a>
-                  </li>
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
-                          <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/2.jpg" alt="img" >
-                          </span>
-                          Italian
-                      </a>
-                  </li>
-                  <li>
-                      <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
-                          <span class="avatar avatar-xs lh-1 me-2">
-                              <img src="./assets/images/flags/3.jpg" alt="img" >
-                          </span>
-                          Russian
+                          {{lang.name}}
                       </a>
                   </li>
               </ul>

@@ -35,17 +35,31 @@ verifyEmailCode( code: string): Observable<any> {
 
   
 
-  saveAuthData(token: string, user: User): void {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+  saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
+    console.log('Saving auth data with rememberMe:', rememberMe);
+    if (rememberMe) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('rememberMe', 'true');
+      console.log('Data saved to localStorage');
+    } else {
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
+      localStorage.removeItem('rememberMe');
+      console.log('Data saved to sessionStorage');
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    console.log('Getting token, rememberMe:', rememberMe);
+    return rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token');
   }
 
   getCurrentUser(): User | null {
-    const user = localStorage.getItem('user');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    console.log('Getting user, rememberMe:', rememberMe);
+    const user = rememberMe ? localStorage.getItem('user') : sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
   getPlants(): Observable<Plant[]> {
@@ -57,8 +71,25 @@ verifyEmailCode( code: string): Observable<any> {
   }
   
 
+  getSavedCredentials(): { email: string, password: string } | null {
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    if (rememberMe) {
+      const email = localStorage.getItem('savedEmail');
+      const password = localStorage.getItem('savedPassword');
+      if (email && password) {
+        return { email, password };
+      }
+    }
+    return null;
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('rememberMe');
+    localStorage.removeItem('savedEmail');
+    localStorage.removeItem('savedPassword');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
   }
 }
