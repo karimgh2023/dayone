@@ -1,0 +1,210 @@
+    <!-- Start:: Section-1 -->
+    <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white">Closed Tickets</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">Closed Tickets</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->
+
+    <!--Div-->
+    <div>
+        <div class="cover-image sptb section-bg">
+            <div class="main-container">
+                <div class="row">
+                    <div class="col-xl-3 mb-4 mb-xl-0">
+                        <div class="position-sticky top-0">
+                            <div class="card custom-card border-0 overflow-hidden">
+                                <div class="card-body p-0">
+                                    <!-- Start::app-sidebar -->
+                                <app-support-sidebar></app-support-sidebar>
+                                    <!-- End::app-sidebar -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="card custom-card mb-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Select Priority:</label>
+                                            <ng-select class="form-control custom-select p-0" data-trigger
+                                                placeholder="Select Employee">
+                                                <ng-option value="">High</ng-option>
+                                                <ng-option value="1">Medium</ng-option>
+                                                <ng-option value="2">Low</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">From:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text text-muted"> <i
+                                                                    class="ri-calendar-line"></i> </div>
+                                                            <input mwlFlatpickr  type="text" class="form-control choose-date"
+                                                                placeholder="DD-MM-YYYY">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">To:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text text-muted"> <i
+                                                                    class="ri-calendar-line"></i> </div>
+                                                            <input mwlFlatpickr type="text" class="form-control choose-date"
+                                                                placeholder="DD-MM-YYYY">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <div class="form-group mt-2">
+                                            <label class="form-label"></label>
+                                            <a href="javascript:void(0);"
+                                                class="btn btn-primary d-grid">Search</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-vcenter text-nowrap supportticket-list border-bottom">
+                                        <thead>
+                                            <tr class="bg-light2">
+                                                <th class="border-bottom-0">#ID</th>
+                                                <th class="border-bottom-0">Subject</th>
+                                                <th class="border-bottom-0">Priority</th>
+                                                <th class="border-bottom-0  w-5">Category</th>
+                                                <th class="border-bottom-0">Status</th>
+                                                <th class="border-bottom-0">Last Replied</th>
+                                                <th class="border-bottom-0 w-5">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(ticket of tickets;track $index){
+                                                <tr>
+                                                    <td>{{ticket.id}}</td>
+                                                    <td>
+                                                        <div><a href="javascript:void(0);" class="h5">{{ticket.name}}</a></div>
+                                                        <small class="fs-12 text-muted"><i
+                                                                class="fe fe-clock me-1 text-muted"></i>Opened:
+                                                            <span class="font-weight-normal1">{{ticket.date}}
+                                                                </span></small>
+                                                    </td>
+                                                    <td><span class="badge bg-{{ticket.bg}}-transparent">{{ticket.priority}}</span></td>
+                                                    <td>{{ticket.category}}</td>
+                                                    <td><span class="badge bg-danger">{{ticket.status}}</span></td>
+                                                    <td><span class="fs-13 text-muted"><i
+                                                                class="fe fe-clock me-2"></i>{{ticket.lastreply}}</span></td>
+                                                    <td>
+                                                        <div class="d-flex" ngbDropdown>
+                                                            <a href="javascript:void(0);" class="action-btns1 no-caret"
+                                                                data-bs-toggle="dropdown" ngbDropdownToggle aria-haspopup="true"
+                                                                aria-expanded="false"><i
+                                                                    class="fe fe-more-vertical text-primary"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu role="menu">
+                                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                                        class="dropdown-item"><i
+                                                                            class="fe fe-send me-2"></i>Reply
+                                                                        Ticket</a></li>
+                                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                                        class="dropdown-item"><i
+                                                                            class="fe fe-eye me-2"></i>View
+                                                                        Ticket</a></li>
+                                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                                        class="dropdown-item"><i
+                                                                            class="fe fe-trash-2 me-2"></i>Delete
+                                                                        Ticket</a></li>
+                                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                                        class="dropdown-item"><i
+                                                                            class="fe fe-settings me-2"></i>More</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer border-top-0">
+                                <nav class="">
+                                    <ul class="pagination justify-content-end mb-0">
+                                        <li class="page-item disabled"><a class="page-link"
+                                                href="javascript:void(0);">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link"
+                                                href="javascript:void(0);">1</a></li>
+                                        <li class="page-item"><a class="page-link"
+                                                href="javascript:void(0);">2</a></li>
+                                        <li class="page-item"><a class="page-link"
+                                                href="javascript:void(0);">3</a></li>
+                                        <li class="page-item"><a class="page-link"
+                                                href="javascript:void(0);">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Div-->
+
+    <!-- Start:: Section-2 -->
+    <section class="sptb bg-white">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-lg-7 col-xl-6 col-md-12">
+                    <div class="sub-newsletter">
+                        <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                            aria-describedby="button-addon12">
+                        <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                            id="button-addon12">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End:: Section-2 -->
+
+  

@@ -1,0 +1,61 @@
+<div class="page responsive-log login-bg">
+    <div class="page-single">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col mx-auto">
+            <div class="row justify-content-center">
+              <div class="col-md-8 col-lg-6 col-xl-4 col-xxl-4">
+                <div class="card custom-card my-4">
+                  <div class="p-4 pt-6 text-center">
+                    <img src="./assets/images/Leoni_AG_Logo.svg.png" class="leoni" alt="Logo" />
+                    <p class="text-muted">Email Verification</p>
+                  </div>
+  
+                  <form [formGroup]="verifyForm" (ngSubmit)="onVerify()" class="card-body pt-0 pb-3">
+                    <!-- Code input -->
+                    <div class="form-group">
+                      <label class="form-label">Enter the verification code sent to your email</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fe fe-check-circle"></i></span>
+                        <input type="text" formControlName="code" class="form-control" placeholder="Verification Code" />
+                      </div>
+                    </div>
+  
+                    <!-- Submit -->
+                    <div class="submit d-grid">
+                      <button class="btn btn-primary" type="submit" [disabled]="!verifyForm.valid">
+                        Verify Account
+                      </button>
+                    </div>
+  
+                    <div class="text-center mt-4">
+                      <p class="text-dark mb-0">
+                        Already verified?
+                        <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Log In</a>
+                      </p>
+                    </div>
+                  </form>
+  
+                  <div class="card-body border-top-0 pb-6 pt-1">
+                    <div class="text-center">
+                      <a href="https://www.facebook.com/LEONI.tunisia" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
+                        <i class="ri-facebook-line fs-17"></i>
+                      </a>
+                      <a href="https://www.instagram.com/leoni_tunisia/" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
+                        <i class="ri-instagram-line fs-17"></i>
+                      </a>
+                      <a href="https://www.leoni-tunisia.com/" target="_blank" class="avatar avatar-rounded bg-primary-transparent text-primary">
+                        <span class="fs-17">L</span>
+                      </a>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

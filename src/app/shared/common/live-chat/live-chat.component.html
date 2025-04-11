@@ -1,0 +1,245 @@
+  <!-- Chat popup Icon -->
+  <a (click)="livechat()" href="javascript:void(0);" id="chat-popup"  class="chat-popup-active stretched-link"><i
+    class="fe fe-message-square"></i>
+ </a>
+
+<!--Chat Popup-->
+<div class="chat-message-popup card mb-4 animated">
+<div class="popup-head">
+    <div class="row">
+        <div class="message-popup-left">
+            <div ngbDropdown class="dropdown">
+                <a ngbDropdownToggle class="no-caret"  data-bs-toggle="dropdown"><i
+                        class="fe fe-more-horizontal text-fixed-white"></i></a>
+                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <i class="fe fe-mail text-primary me-1"></i> Send Mail
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="fe fe-thumbs-up text-primary me-1"></i> Rate as Good
+                    </a>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <i class="fe fe-thumbs-down text-primary me-1"></i> Rate as Bad
+                    </a>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <i class="fe fe-settings text-primary me-1"></i> Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center font-weight-bold col-12 text-center">
+            Chat With Us
+        </div>
+        <div class="message-popup-right text-end">
+            <a (click)="fullscreen()" class="card-options-fullscreen me-2" href="javascript:void(0);"
+                data-bs-toggle="card-fullscreen"><i class="fe fe-maximize text-fixed-white"></i></a>
+            <a (click)="closeChat()" class="popup-minimize-normal" href="javascript:void(0);"><i
+                    class="fe fe-x text-fixed-white"></i></a>
+        </div>
+    </div>
+</div>
+<div class="popup-chat-main-body">
+    <div class="user-header p-3 border-top border-bottom">
+        <div class="d-flex">
+            <div class="d-flex">
+                <img class="avatar avatar-md avatar-rounded me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+                <div>
+                    <h6 class="mb-0 font-weight-bold">Abigali kelly</h6>
+                    <span class="w-2 h-2 rounded-circle bg-success d-inline-block me-1"></span>
+                    <small>active</small>
+                </div>
+            </div>
+            <div class="ms-auto">
+                <div class="chat-message-header-icons mt-1 fs-20">
+                    <a class="me-2" href="javascript:void(0);"><i class="fe fe-volume-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-messages pt-0 chat-body-style">
+        <div class="direct-chat-messages">
+            <div class="chat-box-single-line">
+                <abbr class="timestamp">March 15th, 2021</abbr>
+            </div>
+            <div class="direct-chat-msg">
+                <div class="direct-chat-text">Hello. How are you today?<small
+                        class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    Yes
+                    <small class="time-text">10.00am</small>
+                </div>
+                <div class="direct-chat-text">
+                    I'm fine. Thanks for asking fine. Thanks for asking!
+                    <small class="time-text">10.00am</small>
+                </div>
+                <img class="direct-chat-img" src="./assets/images/users/1.jpg" alt="message user image">
+            </div>
+            <div class="chat-box-single-line mt-5">
+                <abbr class="timestamp">March 16th, 2021</abbr>
+            </div>
+            <div class="direct-chat-msg">
+                <div class="direct-chat-text">Various versions have evolved over the years, sometimes<small
+                        class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
+                    anything embarrassing hidden in the middle of text.
+                    <small class="time-text">10.00am</small>
+                </div>
+                <img class="direct-chat-img" src="./assets/images/users/1.jpg" alt="message user image">
+            </div>
+            <div class="direct-chat-msg">
+                <div class="direct-chat-text">All the Lorem Ipsum generators on the Internet tend to repeat
+                    predefined chunks as necessary<small class="time-text">10.00am</small></div>
+                <div class="direct-chat-text">making this the first true generator on the Internet<small
+                        class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    <img src="./assets/images/media/29.jpg" class="d-block" alt="img">
+                    <small class="time-text">10.00am</small>
+                </div>
+                <img class="direct-chat-img" src="./assets/images/users/1.jpg" alt="message user image">
+            </div>
+            <div class="chat-box-single-line mt-5">
+                <abbr class="timestamp">March 16th, 2021</abbr>
+            </div>
+            <div class="direct-chat-msg">
+                <div class="direct-chat-text">Various versions have evolved over the years, sometimes<small
+                        class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
+                    anything embarrassing hidden in the middle of text.
+                    <small class="time-text">10.00am</small>
+                </div>
+                <img class="direct-chat-img" src="./assets/images/users/1.jpg" alt="message user image">
+            </div>
+            <div class="direct-chat-msg">
+                <!-- <div class="direct-chat-text"><iframe width="100" height="250"
+                        src="https://www.youtube.com/embed/kFjETSa9N7A" allow="accelerometer; autoplay;"
+                        allowfullscreen></iframe><small class="time-text">10.00am</small></div> -->
+                <div class="direct-chat-text">All the Lorem Ipsum generators on the Internet tend to repeat
+                    predefined chunks as necessary<small class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    <img src="./assets/images/media/30.jpg" class="d-block" alt="img">
+                    <small class="time-text">10.00am</small>
+                </div>
+                <div class="direct-chat-text">All the Lorem Ipsum generators on the Internet tend to repeat
+                    predefined chunks as necessary<small class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg">
+                <div class="direct-chat-text">making this the first true generator on the Internet<small
+                        class="time-text">10.00am</small></div>
+                <img class="direct-chat-img me-2" src="./assets/images/users/16.jpg"
+                    alt="message user image">
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-text">
+                    <div class="d-flex">
+                        <i class="fe fe-file-text fs-40 op-2 text-muted d-block me-2"></i>
+                        <div>
+                            <div class="font-weight-bold fs-12">sampledemo.txt</div>
+                            <span class="fs-12">4.5 kb</span>
+                        </div>
+                    </div>
+                    <small class="time-text">10.00am</small>
+                </div>
+                <div class="direct-chat-text pb-6">
+                    <div class="d-flex">
+                        <div><img src="./assets/images/media/51.jpg" class="m-1 w-8 h-8 br-2" alt="img">
+                        </div>
+                        <div><img src="./assets/images/media/52.jpg" class="m-1 w-8 h-8 br-2" alt="img">
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div><img src="./assets/images/media/53.jpg" class="m-1 w-8 h-8 br-2" alt="img">
+                        </div>
+                        <div class="relative"><img src="./assets/images/media/54.jpg"
+                                class="m-1 w-8 h-8 br-2" alt="img">
+                            <div class="more-images">+10</div>
+                        </div>
+                    </div>
+                    <small class="time-text">10.00am</small>
+                </div>
+                <img class="direct-chat-img" src="./assets/images/users/1.jpg" alt="message user image">
+            </div>
+        </div>
+    </div>
+    <div class="popup-messages-footer card-footer p-0">
+        <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"
+            class="form-control"></textarea>
+        <div class="chat-footer-icons">
+            <a class="" href="javascript:void(0);"><i class="fe fe-paperclip text-muted"></i></a>
+            <a class="" href="javascript:void(0);"><i class="fe fe-send text-muted"></i></a>
+        </div>
+    </div>
+</div>
+<div class="popup-end-chat-main-body">
+    <div class="p-4">
+        <div class="section-end-chat text-center chat-content">
+            <h2 class="font-weight-bold">End Chat?</h2>
+            <p>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary
+            </p>
+            <div class="mt-6">
+                <!-- <a (click)="chatEnd()" class="btn btn-primary end-chat-button px-5" href="javascript:void(0);">Conform End
+                    Chat</a> -->
+            </div>
+            <div class="mt-3">
+                <!-- <a (click)="goBack()" class="btn btn-link text-primary goback-chat btn-sm" href="javascript:void(0);"><i
+                        class="fe fe-arrow-left"></i> Go Back</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="rating-chat-main-body">
+    <div class="p-4">
+        <div class="text-start">
+            <h3 class="font-weight-bold fs-20">Thank you for Contacting Us</h3>
+            <h6>Please rate our supportive team in the following areas </h6>
+            <form class="mt-3">
+                <div class="mt-0">
+                    <label>What is your best reason for your score</label>
+                    <div class="star-ratings start-ratings-main mb-3 clearfix">
+                        <div class="stars stars-example-fontawesome star-sm">
+                            <select class="rating-fontawesome" name="rating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4" selected>4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label>What is your best reason for your score</label>
+                    <textarea class="form-control" rows="5" cols="50"></textarea>
+                </div>
+                <a (click)="submitResponse()" class="btn btn-success px-5 mt-4 btn-chat-close" href="javascript:void(0);">Submit your
+                    Review</a>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!--Chat Popup-->

@@ -1,0 +1,12 @@
+.dropdown-toggle::after{
+    display: none;
+}
+
+.modal-header{
+    padding: 0;
+}
+
+.dropdown-menu-end{
+    right: 0;
+    left: auto !important;
+}

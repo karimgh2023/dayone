@@ -1,0 +1,53 @@
+::ng-deep{
+    app-faqs{
+        .panel-heading{
+            padding: 0;
+            border-radius: 5px;
+            .card-header{
+                padding: 0px;
+                background-color: #ebeff8;
+            }
+            button{
+                color: inherit;
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+        .btn-link{
+            text-decoration: none;
+            width: 100%;
+            text-align: left;
+            &:hover, 
+            &:focus{
+                text-decoration: none;
+            }
+        }
+        
+    }
+
+    .dark-mode{
+        app-faqs{
+            .card-header {
+                background-color: #262b5a;
+                border: 1px solid rgba(255,255,255,.07);
+                color: #d4d7e2 !important;
+            }
+            button.btn-link{
+                color: #d4d7e2;
+            }
+        }
+    }
+
+    .rtl {
+        app-faqs{
+            .btn-link{
+                text-align: right;
+            }
+            .panelh-eading1 a.collapsed:before {
+                left: 10px !important;
+                right: inherit !important;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,251 @@
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <h4 class="page-title">Super Admins</h4>
+    </div>
+    <div class="page-rightheader ms-md-auto">
+        <div class="d-flex align-items-end flex-wrap my-auto end-content breadcrumb-end">
+            <div class="btn-list d-flex gap-2">
+                <a  class="btn btn-primary " toggle="modal" (click)="open(editContent)"><i
+                        class="fe fe-plus fs-15 my-auto me-2"></i>Add New Admin</a>
+                <button class="btn btn-light" placement="top" ngbTooltip="E-mail"> <i class="fe fe-mail"></i>
+                </button>
+                <button class="btn btn-light" placement="top" ngbTooltip="Contact"> <i class="fe fe-phone-call"></i>
+                </button>
+                <button class="btn btn-primary me-0" placement="top" ngbTooltip="Info"> <i class="fe fe-info"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Page header-->
+<!--Row-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between border-bottom-0"> 
+                <h4 class="card-title">Invoices</h4> 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="d-flex align-items-center">
+                            <span>Show</span>
+                            <div class="d-flex ms-2 mx-2">
+                                <div class="form-group mt-2">
+                                    <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0"
+                                        placeholder="1" data-trigger>
+                                        <ng-option value="1" selected="">1</ng-option>
+                                        <ng-option value="2">2</ng-option>
+                                        <ng-option value="3">3</ng-option>
+                                        <ng-option value="4">4</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <span>entries</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="float-end">
+                            <input type="text" class="form-control" placeholder="search" matInput
+                                (keyup)="applyFilter($event)" #input>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive superadmins-table">
+                    <div class="">
+                        <table mat-table [dataSource]="dataSource" matSort
+                            class="table table-vcenter text-nowrap table-bordered border-bottom">
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="ID">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> #ID </th>
+                                <td class="text-center" mat-cell *matCellDef="let row"> #0{{row.id}} </td>
+                            </ng-container>
+
+                            <!-- CompanyName Column -->
+                            <ng-container matColumnDef="CompanyName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> CompanyName </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a href="javascript:void(0);" class="d-flex">
+                                        <span class="avatar avatar-md avatar-rounded me-2">
+                                            <img [src]="row.img" alt="img">
+                                        </span>
+                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                            <h6 class="mb-1 fs-14">{{row.name}}</h6>
+                                        </div>
+                                    </a>
+
+                                </td>
+                            </ng-container>
+
+                            <!-- Email Column -->
+                            <ng-container matColumnDef="Email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                                <td mat-cell *matCellDef="let row"> {{row.email}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="RegisterDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> RegisterDate </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.registeredBy}}
+                                </td>
+                            </ng-container>
+
+
+                            <!-- PaidBy Date Column -->
+                            <ng-container matColumnDef="Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span class="badge bg-{{row.status}}-transparent"> {{row.statusText}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <div class="d-flex">
+                                        <a href="javascript:void(0);" class="action-btns1"
+                                            placement="top" ngbTooltip="View Task"><i
+                                                class="fe fe-eye text-primary"></i></a>
+                                        <a (click)="edit(editContent)"  class="action-btns1"
+                                            placement="top" ngbTooltip="View">
+                                            <i class="fe fe-edit-2  text-success"></i>
+                                        </a>
+                                        <a (click)="removeData(row.id)" href="javascript:;" class="action-btns1"
+                                            placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                            </tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[8, 10, 25, 100]"
+                            aria-label="Select page of users"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+
+
+
+<!--New Admin Modal -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Add New Admin</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')">
+            <span class="nav-link">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" placeholder="Name" value="">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" placeholder="email" value="">
+        </div>
+        <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-control" placeholder="password" value="">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" placeholder="password" value="">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Upload Image</label>
+            <div class="form-group">
+                <label for="form-label" class="form-label"></label>
+                <input class="form-control" type="file">
+            </div>
+        </div>
+        <div class="custom-controls-stacked d-md-flex">
+            <label class="form-label mt-1 me-5">Status :</label>
+            <label class="custom-control custom-radio success me-4">
+                <input type="radio" class="custom-control-input" name="example-radios1" value="option1">
+                <span class="custom-control-label">Active</span>
+            </label>
+            <label class="custom-control custom-radio success me-4">
+                <input type="radio" class="custom-control-input" name="example-radios1" value="option2">
+                <span class="custom-control-label">InActive</span>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-outline-danger me-2" (click)="modal.dismiss('Cross click')"
+            data-bs-dismiss="modal">Close</a>
+        <a href="javascript:;" class="btn btn-success" (click)="modal.dismiss('Cross click')">Submit</a>
+    </div>
+</ng-template>
+<!-- New Admin Modal  -->
+
+<!-- Edit Company Modal -->
+
+<ng-template #editContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Add New Admin</h5>
+        <button type="button" (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" placeholder="Name" value="">
+        </div>
+        <div class="form-group mt-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" placeholder="email" value="">
+        </div>
+        <div class="form-group mt-3">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-control" placeholder="password" value="">
+        </div>
+        <div class="form-group mt-3">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" placeholder="password" value="">
+        </div>
+        <div class="form-group mt-3">
+            <label class="form-label">Upload Image</label>
+            <div class="form-group">
+                <label  class="form-label"></label>
+                <input class="form-control" type="file">
+            </div>
+        </div>
+        <div class="custom-controls-stacked d-md-flex mt-3">
+            <label class="form-label me-5">Status :</label>
+            <div class="form-check mb-0 me-4">
+                <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault01">
+                <label class="form-check-label" for="flexRadioDefault01">
+                    Active
+                </label>
+            </div>
+            <div class="form-check mb-0">
+                <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault02">
+                <label class="form-check-label" for="flexRadioDefault02">
+                    InActive
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a  href="javascript:void(0);" class="btn btn-outline-danger" (click)="modal.close('cross click')" data-bs-dismiss="modal">Close</a>
+        <button  class="btn btn-success successful-notify">Submit</button>
+    </div>
+</ng-template>
+
+<!-- End Edit Company Modal  -->

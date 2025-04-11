@@ -1,0 +1,820 @@
+<!-- Start:: Section-1 -->
+<div class="landing-banner landing-banner2" id="home">
+  <section class="section">
+    <div class="main-banner-container pb-lg-0 px-sm-0">
+      <div class="row text-fixed-white d-flex align-items-center">
+        <div class="col">
+          <h2 class="mb-0 text-fixed-white">Categories</h2>
+        </div>
+        <div class="col col-auto">
+          <ol class="breadcrumb text-center mb-0">
+            <li class="breadcrumb-item">
+              <a href="javascript:void(0);" class="text-fixed-white op-6"
+                >Home</a
+              >
+            </li>
+            <li class="breadcrumb-item">
+              <a href="javascript:void(0);" class="text-fixed-white op-6"
+                >Pages</a
+              >
+            </li>
+            <li class="breadcrumb-item active">
+              <a href="javascript:void(0);" class="text-fixed-white fw-semibold"
+                >Categories</a
+              >
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End:: Section-1 -->
+
+<!--Section-->
+<section>
+  <div class="cover-image sptb section-bg">
+    <div class="main-container">
+      <div class="row">
+        <div class="col-xl-3 mb-4 mb-xl-0">
+          <div class="position-sticky top-0">
+            <div class="card custom-card border-0 overflow-hidden">
+              <div class="card-body p-0">
+                <!-- Start::app-sidebar -->
+                <app-support-sidebar></app-support-sidebar>
+                <!-- End::app-sidebar -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-9">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+              <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                  <h4 class="card-title">Categories Summary</h4>
+                  <div class="card-options">
+                    <a
+                      (click)="open(content)"
+                      class="btn btn-primary me-3"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addcategory"
+                      >Add New Category</a
+                    >
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-lg-6">
+                      <div class="d-flex align-items-center">
+                        <span>Show</span>
+                        <div class="d-flex ms-2 mx-2">
+                          <div class="form-group mt-2">
+                            <ng-select
+                              name="quantity"
+                              id="select-countries17"
+                              class="form-control wd-150 p-0"
+                              placeholder="1"
+                              data-trigger
+                            >
+                              <ng-option value="1" selected="">1</ng-option>
+                              <ng-option value="2">2</ng-option>
+                              <ng-option value="3">3</ng-option>
+                              <ng-option value="4">4</ng-option>
+                            </ng-select>
+                          </div>
+                        </div>
+                        <span>entries</span>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="float-end">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="search"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table
+                      class="table table-vcenter text-nowrap table-hover border table-striped"
+                      id="support-categorylist"
+                    >
+                      <thead>
+                        <tr>
+                          <th class="border-bottom-0 w-5">#No</th>
+                          <th class="border-bottom-0">Name</th>
+                          <th class="border-bottom-0 w-5 text-center">
+                            Tickets
+                          </th>
+                          <th class="border-bottom-0 w-5 text-center">
+                            Agents
+                          </th>
+                          <th class="border-bottom-0 w-5 text-center">
+                            Articles
+                          </th>
+                          <th class="border-bottom-0 w-5 text-center">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (data of tableData; track $index) {
+                        <tr>
+                          <td>{{ data.no }}</td>
+                          <td>
+                            <span>{{ data.name }}</span>
+                          </td>
+                          <td class="text-center">
+                            <span>{{ data.ticket }}</span>
+                          </td>
+                          <td class="text-center">
+                            <span>{{ data.agents }}</span>
+                          </td>
+                          <td class="text-center">
+                            <span>{{ data.articles }}</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a
+                                (click)="open1(content1)"
+                                class="action-btns1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewcategory"
+                              >
+                                <i
+                                  class="fe fe-eye text-primary"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  ngbTooltip="Edit"
+                                ></i>
+                              </a>
+                              <a
+                                href="javascript:void(0);"
+                                class="action-btns1"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                ngbTooltip="Delete"
+                                ><i class="fe fe-trash-2 text-danger"></i
+                              ></a>
+                            </div>
+                          </td>
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Section-->
+
+<!-- Start:: Section-3 -->
+<section class="sptb bg-white">
+  <div class="main-container">
+    <div class="row">
+      <div class="col-lg-7 col-xl-6 col-md-12">
+        <div class="sub-newsletter">
+          <h3 class="mb-2">
+            <i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter
+          </h3>
+          <p class="mb-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-5 col-xl-6 col-md-12">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ask Here"
+            aria-label="Ask Here"
+            aria-describedby="button-addon12"
+          />
+          <button
+            class="btn btn-primary btn-lg btn-wave waves-effect waves-light"
+            type="button"
+            id="button-addon12"
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- End:: Section-3 -->
+
+<ng-template #content1 let-modal>
+ 
+        <div class="modal-header">
+          <h5 class="modal-title">View Category</h5>
+          <button  (click)="modal.dismiss('Cross click')"
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Name"
+              value="Services"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label class="form-label">Tickets</label>
+            <div
+              class="choices"
+              data-type="select-one"
+              tabindex="0"
+              role="listbox"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div class="choices__inner">
+                <select
+                  class="form-control custom-select choices__input"
+                  data-trigger=""
+                  data-placeholder="Select Tickets"
+                  hidden=""
+                  tabindex="-1"
+                  data-choice="active"
+                >
+                  <option value="1" data-custom-properties="[object Object]">
+                    01
+                  </option>
+                </select>
+                <div class="choices__list choices__list--single">
+                  <div
+                    class="choices__item choices__item--selectable"
+                    data-item=""
+                    data-id="1"
+                    data-value="1"
+                    data-custom-properties="[object Object]"
+                    aria-selected="true"
+                  >
+                    01
+                  </div>
+                </div>
+              </div>
+              <div
+                class="choices__list choices__list--dropdown"
+                aria-expanded="false"
+              >
+                <div class="choices__list" role="listbox">
+                  <div
+                    id="choices--87du-item-choice-1"
+                    class="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted"
+                    role="option"
+                    data-choice=""
+                    data-id="1"
+                    data-value=""
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                    aria-selected="true"
+                  ></div>
+                  <div
+                    id="choices--87du-item-choice-2"
+                    class="choices__item choices__item--choice is-selected choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="2"
+                    data-value="1"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    01
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-3"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="3"
+                    data-value="2"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    02
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-4"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="4"
+                    data-value="3"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    03
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-5"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="5"
+                    data-value="4"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    04
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-6"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="6"
+                    data-value="5"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    05
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-7"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="7"
+                    data-value="6"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    06
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-8"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="8"
+                    data-value="7"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    07
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-9"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="9"
+                    data-value="8"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    08
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-10"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="10"
+                    data-value="9"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    09
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-11"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="11"
+                    data-value="10"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    10
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-12"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="12"
+                    data-value="11"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    11
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-13"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="13"
+                    data-value="12"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    12
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-14"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="14"
+                    data-value="13"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    13
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-15"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="15"
+                    data-value="14"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    14
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-16"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="16"
+                    data-value="15"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    15
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-17"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="17"
+                    data-value="16"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    16
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-18"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="18"
+                    data-value="17"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    17
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-19"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="19"
+                    data-value="18"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    18
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-20"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="20"
+                    data-value="19"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    19
+                  </div>
+                  <div
+                    id="choices--87du-item-choice-21"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="21"
+                    data-value="20"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    20
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label class="form-label">Agents</label>
+            <div
+              class="choices"
+              data-type="select-one"
+              tabindex="0"
+              role="listbox"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div class="choices__inner">
+                <select
+                  class="form-control custom-select choices__input"
+                  data-trigger=""
+                  data-placeholder="Select Agents"
+                  hidden=""
+                  tabindex="-1"
+                  data-choice="active"
+                >
+                  <option value="1" data-custom-properties="[object Object]">
+                    Faith Harris
+                  </option>
+                </select>
+                <div class="choices__list choices__list--single">
+                  <div
+                    class="choices__item choices__item--selectable"
+                    data-item=""
+                    data-id="1"
+                    data-value="1"
+                    data-custom-properties="[object Object]"
+                    aria-selected="true"
+                  >
+                    Faith Harris
+                  </div>
+                </div>
+              </div>
+              <div
+                class="choices__list choices__list--dropdown"
+                aria-expanded="false"
+              >
+                <div class="choices__list" role="listbox">
+                  <div
+                    id="choices--ho4a-item-choice-1"
+                    class="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted"
+                    role="option"
+                    data-choice=""
+                    data-id="1"
+                    data-value=""
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                    aria-selected="true"
+                  ></div>
+                  <div
+                    id="choices--ho4a-item-choice-2"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="2"
+                    data-value="6"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Adam Quinn
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-3"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="3"
+                    data-value="9"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Amelia Russell
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-4"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="4"
+                    data-value="2"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Austin Bell
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-5"
+                    class="choices__item choices__item--choice is-selected choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="5"
+                    data-value="1"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Faith Harris
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-6"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="6"
+                    data-value="12"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Jennifer Hardacre
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-7"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="7"
+                    data-value="14"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Julia Hodges
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-8"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="8"
+                    data-value="10"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Justin Metcalfe
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-9"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="9"
+                    data-value="13"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Justin Parr
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-10"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="10"
+                    data-value="3"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Maria Bower
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-11"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="11"
+                    data-value="8"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Max Wilson
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-12"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="12"
+                    data-value="7"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Melanie Coleman
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-13"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="13"
+                    data-value="15"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Michael Sutherland
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-14"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="14"
+                    data-value="4"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Peter Hill
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-15"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="15"
+                    data-value="11"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Ryan Young
+                  </div>
+                  <div
+                    id="choices--ho4a-item-choice-16"
+                    class="choices__item choices__item--choice choices__item--selectable"
+                    role="option"
+                    data-choice=""
+                    data-id="16"
+                    data-value="5"
+                    data-select-text="Press to select"
+                    data-choice-selectable=""
+                  >
+                    Victoria Lyman
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label class="form-label">Articles</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Articles"
+              value="03"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a (click)="modal.dismiss('Cross click')"
+            href="javascript:void(0);"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+            >Close</a
+          >
+          <a href="javascript:void(0);" class="btn btn-success">Save</a>
+        </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Add New Category</h5>
+    <button
+      (click)="modal.dismiss('Cross click')"
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-control" placeholder="Name" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a
+      (click)="modal.dismiss('Cross click')"
+      href="javascript:void(0);"
+      class="btn btn-outline-danger"
+      data-bs-dismiss="modal"
+      >Close</a
+    >
+    <a href="javascript:void(0);" class="btn btn-success">Save</a>
+  </div>
+</ng-template>

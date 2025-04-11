@@ -1,0 +1,160 @@
+    
+<app-hr-dashboard-page-header [title]="'Notice Board'"  [title3]="'Add New Notice'" [class]="''" [class1]="'btn btn-primary'" [path]="''" ></app-hr-dashboard-page-header>
+
+    <!-- Start::row-1 -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card custom-card">
+                <div class="card-header  border-0">
+                    <h5 class="card-title">Notice Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2 gap-1 gap-lg-0">
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center">
+                                <span>Show</span>
+                                <div class="d-flex ms-2 mx-2">
+                                    <div class="form-group mb-0">
+                                        <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                            <ng-option value="1" >1</ng-option>
+                                            <ng-option value="2">2</ng-option>
+                                            <ng-option value="3">3</ng-option>
+                                            <ng-option value="4">4</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <span>entries</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="float-end">
+                                <input type="text" class="form-control" placeholder="search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="hr-notice">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom-0 w-5">No</th>
+                                    <th class="border-bottom-0">Title</th>
+                                    <th class="border-bottom-0">Description</th>
+                                    <th class="border-bottom-0">To</th>
+                                    <th class="border-bottom-0">Create On</th>
+                                    <th class="border-bottom-0">Status</th>
+                                    <th class="border-bottom-0">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(notice of notices;track $index){
+
+                                    <tr>
+                                        <td>{{notice.id}}</td>
+                                        <td>{{notice.title}}</td>
+                                        <td> {{notice.description}}</td>
+                                        <td>Employees</td>
+                                        <td>{{notice.date}}</td>
+                                        <td><span class="badge bg-{{notice.bg}}">{{notice.status}}</span></td>
+                                        <td>
+                                        <div class="d-flex">
+                                            <a   class="action-btns1" data-bs-toggle="modal" (click)="open(content)" data-bs-target="#editnoticemodal"><i class="fe fe-eye primary text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit/View"></i></a>
+                                            <a  class="action-btns1" (click)="remove(notice.id)" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                }
+                             
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Start::pagination -->
+                    <nav class="mt-4">
+                       <ul class="pagination justify-content-end mb-0">
+                           <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                           <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                           <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                       </ul>
+                   </nav>
+                   <!-- End::pagination -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End::row-1 -->
+
+    
+			<!-- Edit Notice Modal -->
+			<ng-template #content let-modal  id="editnoticemodal">
+			
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Edit Leaves</h5>
+							<button  class="btn-close" (click)="modal.close('cross click')" data-bs-dismiss="modal" aria-label="Close">
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group mb-3">
+								<label class="form-label">Title</label>
+								<input class="form-control" placeholder="Text" value="Board meeting Completed">
+							</div>
+							<div class="form-group mb-3 d-flex">
+								<div class="form-check me-3">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="toEmployee2">
+                                    <label class="form-check-label" for="toEmployee2">
+                                        To Employees
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="toClients2">
+                                    <label class="form-check-label" for="toClients2">
+                                        To Clients
+                                    </label>
+                                </div>
+							</div>
+							<div class="form-group mb-3">
+								<label class="form-label">Select Date:</label>
+								<div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input type="text" class="form-control choose-date" mwlFlatpickr placeholder="DD-MM-YYYY">
+                                    </div>
+                                </div>
+							</div>
+							<div class="form-group mb-3">
+                                <label class="fw-medium form-label">Description:</label>
+                                <div id="editor1">
+                                    <angular-editor [(ngModel)]="htmlContent" [config]="config1">
+                                    </angular-editor>
+                                </div>
+							</div>
+							<div class="form-group mb-3">
+								<label class="form-label">Attachment:</label>
+                                <input class="form-control" type="file">
+							</div>
+							<div class="form-group mb-0 d-flex">
+                                <label class="form-label me-5">Status :</label>
+								<div class="form-check me-3">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="active1">
+                                    <label class="form-check-label" for="active1">
+                                        Active
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="inactive1">
+                                    <label class="form-check-label" for="inactive1">
+                                        Inactive
+                                    </label>
+                                </div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button  class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="modal.close('cross click')">Close</button>
+							<button  class="btn btn-success">Update</button>
+						</div>
+					</div>
+			</ng-template>
+			<!-- Edit Notice Modal -->

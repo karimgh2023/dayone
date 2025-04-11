@@ -1,0 +1,291 @@
+<app-hr-dashboard-page-header [title]="'Holidays'"  [title3]="'Add Holidays'" [class]="''" [class1]="'btn btn-primary'" [path]="''" ></app-hr-dashboard-page-header>
+
+     
+     <!-- Start::row-1 -->
+     <div class="row">
+        <div class="col-xl-12 col-md-12 col-lg-12">
+            <div class="card custom-card">
+                <div class="card-body holiday-firstcards">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Select Date:</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                        <input type="text" mwlFlatpickr class="form-control choose-date" placeholder="22-09-2023">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Month:</label>
+                                <ng-select name="attendance"  class="form-control custom-select p-0" data-trigger placeholder="January">
+                                    <ng-option value="1">January</ng-option>
+                                    <ng-option value="2">February</ng-option>
+                                    <ng-option value="3">March</ng-option>
+                                    <ng-option value="4">April</ng-option>
+                                    <ng-option value="5">May</ng-option>
+                                    <ng-option value="6">June</ng-option>
+                                    <ng-option value="7">July</ng-option>
+                                    <ng-option value="8">August</ng-option>
+                                    <ng-option value="9">September</ng-option>
+                                    <ng-option value="10">October</ng-option>
+                                    <ng-option value="11">November</ng-option>
+                                    <ng-option value="12">December</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Year:</label>
+                                <ng-select name="attendance"  class="form-control custom-select p-0" data-trigger placeholder="2021">
+                                    <ng-option value="1">2024</ng-option>
+                                    <ng-option value="2">2023</ng-option>
+                                    <ng-option value="3">2022</ng-option>
+                                    <ng-option value="4" >2021</ng-option>
+                                    <ng-option value="5">2020</ng-option>
+                                    <ng-option value="6">2019</ng-option>
+                                    <ng-option value="7">2018</ng-option>
+                                    <ng-option value="8">2017</ng-option>
+                                    <ng-option value="9">2016</ng-option>
+                                    <ng-option value="10">2015</ng-option>
+                                    <ng-option value="11">2014</ng-option>
+                                    <ng-option value="12">2013</ng-option>
+                                    <ng-option value="13">2012</ng-option>
+                                    <ng-option value="14">2011</ng-option>
+                                    <ng-option value="15">2019</ng-option>
+                                    <ng-option value="16">2010</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div class="form-group mt-2">
+                                <label class="form-label"></label>
+                                <a  href="javascript:void(0);" class="btn btn-primary d-grid">Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End::row-1 -->
+
+    <!-- Start::row-2 -->
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xxl-8">
+            <div class="card custom-card">
+                <div class="card-header  border-0">
+                    <h4 class="card-title">Holidays Lists</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3 gap-1 gap-lg-0">
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center">
+                                <span>Show</span>
+                                <div class="d-flex ms-2 mx-2">
+                                    <div class="form-group mb-0">
+                                        <select name="quantity" id="select-countries17" class="form-control  wd-150" data-trigger>
+                                            <option value="1" selected="">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span>entries</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="float-end">
+                                <input type="text" class="form-control" placeholder="search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="hr-holiday">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom-0 w-5">No</th>
+                                    <th class="border-bottom-0 w-5">Day</th>
+                                    <th class="border-bottom-0">Date</th>
+                                    <th class="border-bottom-0">Holidays</th>
+                                    <th class="border-bottom-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(holiday of holidays;track $index){
+
+                                    <tr>
+                                        <td>{{holiday.number}}</td>
+                                        <td>{{holiday.day}}</td>
+                                        <td>{{holiday.date}}</td>
+                                        <td class="fw-medium">{{holiday.holidaytype}}</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-icon"  (click)="open(content)" data-bs-toggle="modal" data-bs-target="#holidaymodal">
+                                                <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="View/Edit"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-icon" (click)="remove(holiday.number)" data-bs-toggle="tooltip" data-original-title="Delete"><i class="fe fe-trash-2"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Start::pagination -->
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                        </ul>
+                    </nav>
+                    <!-- End::pagination -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 col-xxl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div id="calendar1" class="calendar-holiday">
+                        <div
+                        class="d-flex align-items-center justify-content-between flex-wrap gap-1"
+                      >
+                        <div class="text-start mb-2">
+                          <div class="btn-group">
+                            <div
+                              class="btn btn-primary"
+                              mwlCalendarPreviousView
+                              [view]="view"
+                              [(viewDate)]="viewDate"
+                              (viewDateChange)="closeOpenMonthViewDay()"
+                            >
+                              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </div>
+                            <div
+                              class="btn btn-primary"
+                              mwlCalendarNextView
+                              [view]="view"
+                              [(viewDate)]="viewDate"
+                              (viewDateChange)="closeOpenMonthViewDay()"
+                            >
+                              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                          <div
+                            class="btn btn-primary ms-2 disabled"
+                            mwlCalendarToday
+                            [(viewDate)]="viewDate"
+                          >
+                            Today
+                          </div>
+                        </div>
+                        <div class="mb-2">
+                          <h3>{{ viewDate | calendarDate : view + "ViewTitle" : "en" }}</h3>
+                        </div>
+                        <div class="text-end mb-2">
+                          <div class="btn-group">
+                            <div
+                              class="btn btn-primary mb-1"
+                              (click)="setView(CalendarView.Month)"
+                              [class.active]="view === CalendarView.Month"
+                            >
+                              Month
+                            </div>
+                            <div
+                              class="btn btn-primary mb-1"
+                              (click)="setView(CalendarView.Week)"
+                              [class.active]="view === CalendarView.Week"
+                            >
+                              Week
+                            </div>
+                            <div
+                              class="btn btn-primary mb-1"
+                              (click)="setView(CalendarView.Day)"
+                              [class.active]="view === CalendarView.Day"
+                            >
+                              Day
+                            </div>
+                            <button
+                              class="btn btn-raised btn-primary float-end mb-1"
+                              (click)="addEvent()"
+                            >
+                              List
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @switch (view) { @case ('month') {
+                        <mwl-calendar-month-view
+                          [viewDate]="viewDate"
+                          [events]="events"
+                          [activeDayIsOpen]="activeDayIsOpen"
+                          [refresh]="refresh"
+                          (dayClicked)="dayClicked($event.day)"
+                          (eventClicked)="handleEvent('Clicked', $event.event)"
+                          (eventTimesChanged)="eventTimesChanged($event)"
+                        >
+                        </mwl-calendar-month-view>
+                        } @case ("week"){
+                        <mwl-calendar-week-view
+                          [viewDate]="viewDate"
+                          [events]="events"
+                          [refresh]="refresh"
+                          [snapDraggedEvents]="false"
+                          (eventClicked)="handleEvent('Clicked', $event.event)"
+                          (eventTimesChanged)="eventDropped($event)"
+                        >
+                        </mwl-calendar-week-view>
+                        } @case ("day"){
+                        <mwl-calendar-day-view
+                          [viewDate]="viewDate"
+                          [events]="events"
+                          [refresh]="refresh"
+                          [snapDraggedEvents]="false"
+                          (eventClicked)="handleEvent('Clicked', $event.event)"
+                          (eventTimesChanged)="eventDropped($event)"
+                        >
+                        </mwl-calendar-day-view>
+                        } }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start::row-2 -->
+<!-- Holiday Modal -->
+<ng-template #content let-modal  id="holidaymodal">
+    
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Holidays</h5>
+                <button  class="btn-close" data-bs-dismiss="modal" (click)="modal.close('cross click')" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label class="form-label">Select Date</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                            <input type="text" class="form-control choose-date" mwlFlatpickr placeholder="22-09-2023">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Enter Occasion</label>
+                    <input class="form-control" placeholder="occasion title">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button  class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="modal.close('cross click')">Close</button>
+                <button  class="btn btn-primary">Add</button>
+            </div>
+        </div>
+</ng-template>
+<!-- Holiday Modal -->

@@ -1,0 +1,403 @@
+<app-page-header [title]="'New client'"></app-page-header>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-5 fw-semibold">Company Details:</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Number">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Company Website</label>
+                            <input class="form-control" type="text" placeholder="Enter Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <textarea rows="3" class="form-control" placeholder="Address1"></textarea>
+                </div>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-5 fw-semibold">Client Details:</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Client ID</label>
+                            <input class="form-control" type="text" placeholder="Enter Number">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Client Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input class="form-control" type="text" placeholder="Enter Email Address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input class="form-control" type="password" placeholder="Enter Password">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" type="text" placeholder="Enter PhoneNumber">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">URL</label>
+                            <input class="form-control" type="text" placeholder="Enter Website eg:https://">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">City</label>
+                            <input class="form-control" type="text" placeholder="Enter City">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">State</label>
+                            <input class="form-control" type="text" placeholder="Enter State">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">ZIP Code</label>
+                            <input class="form-control" type="text" placeholder="Enter ZIP Code">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Country</label>
+                            <ng-select name="attendance" class="form-control p-0 custom-select"
+                                placeholder="Select Country">
+                                <ng-option value="1">Germany</ng-option>
+                                <ng-option value="3">Canada</ng-option>
+                                <ng-option value="4">Usa</ng-option>
+                                <ng-option value="5">Afghanistan</ng-option>
+                                <ng-option value="6">Albania</ng-option>
+                                <ng-option value="7">China</ng-option>
+                                <ng-option value="8">Denmark</ng-option>
+                                <ng-option value="9">Finland</ng-option>
+                                <ng-option value="10">India</ng-option>
+                                <ng-option value="11">Kiribati</ng-option>
+                                <ng-option value="12">Kuwait</ng-option>
+                                <ng-option value="13">Mexico</ng-option>
+                                <ng-option value="14">Pakistan</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <textarea rows="3" class="form-control" placeholder="Address1"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Upload Image:</label>
+                    <div class="form-group">
+                        <label for="form-label" class="form-label"></label>
+                        <input class="form-control" type="file">
+                    </div>
+                </div>
+                <div class="custom-controls-stacked d-md-flex mt-3">
+                    <label class="form-label me-5">Status :</label>
+                    <div class="form-check mb-0 me-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault01">
+                        <label class="form-check-label" for="flexRadioDefault01">
+                            Active
+                        </label>
+                    </div>
+                    <div class="form-check mb-0">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault02">
+                        <label class="form-check-label" for="flexRadioDefault02">
+                            Inactive
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body border-top">
+                <h4 class="mb-4 fw-semibold">Client Project Permissions:</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered border-top text-nowrap mb-0 client-perm-table">
+                        <thead>
+                            <tr>
+                                <th>Module Permissions</th>
+                                <th class="text-center">Read</th>
+                                <th class="text-center">Write</th>
+                                <th class="text-center">Create</th>
+                                <th class="text-center">Delete</th>
+                                <th class="text-center">Import</th>
+                                <th class="text-center">Export</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold">Projects</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked5" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Tasks</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked6" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked7" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked8" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked9" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked10" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked11" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Chat</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked12" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked13" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked14" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked15" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked16" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked17" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Estimates</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked18" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked19" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked20" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked21" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked22" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked23" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Invoice</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked24" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked25" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked26" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked27" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked28" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked29" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Timing Sheets</td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked30" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked31" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked32" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked33" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked34" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox success">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked35" >
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer text-end">
+                <a href="javascript:;" class="btn btn-danger btn-lg me-2">Close</a>
+                <a href="javascript:;" class="btn btn-success btn-lg" onclick="not1()">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->

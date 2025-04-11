@@ -1,0 +1,284 @@
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <h4 class="page-title">Subscriptions</h4>
+    </div>
+    <div class="page-rightheader ms-md-auto">
+        <div class="d-flex align-items-end flex-wrap my-auto end-content breadcrumb-end">
+            <div class="btn-list d-flex gap-2">
+                <a  class="btn btn-primary " toggle="modal" (click)="open(content)"><i
+                        class="fe fe-plus fs-15 my-auto me-2"></i>Add New Package</a>
+                <button class="btn btn-light" placement="top" ngbTooltip="E-mail"> <i class="fe fe-mail"></i>
+                </button>
+                <button class="btn btn-light" placement="top" ngbTooltip="Contact"> <i
+                        class="fe fe-phone-call"></i> </button>
+                <button class="btn btn-primary me-0" placement="top" ngbTooltip="Info"> <i class="fe fe-info"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Page header-->
+<!--Row-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between border-bottom-0"> <h4 class="card-title">Subscriptions</h4>
+             </div>
+            <div class="card-body pt-0">
+                <div class="row my-3 px-3">
+                    <div class="col-lg-6">
+                        <div class="d-flex align-items-center">
+                            <span>Show</span>
+                            <div class="d-flex ms-2 mx-2">
+                                <div class="form-group mt-2">
+                                    <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                        <ng-option value="1" selected="">1</ng-option>
+                                        <ng-option value="2">2</ng-option>
+                                        <ng-option value="3">3</ng-option>
+                                        <ng-option value="4">4</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <span>entries</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="float-end">
+                            <input type="text" class="form-control" placeholder="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive subscription-table">
+                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="company-list">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="border-bottom-0 w-5">#NO</th>
+                                <th rowspan="2" class="border-bottom-0">Package</th>
+                                <th colspan="2" class="text-center">Package Type</th>
+                                <th colspan="2" class="text-center">User Count</th>
+                                <th rowspan="2" class="border-bottom-0">Storage</th>
+                                <th rowspan="2" class="border-bottom-0">Status</th>
+                                <th rowspan="2" class="border-bottom-0">Actions</th>
+                            </tr>
+                            <tr>
+                                <th class="border-bottom-0 text-center">Monthly</th>
+                                <th class="border-bottom-0 text-center">Yearly</th>
+                                <th class="border-bottom-0 text-center">Min</th>
+                                <th class="border-bottom-0 text-center">Max</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#01</td>
+                                <td>Free</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">All</td>
+                                <td class="text-center">All</td>
+                                <td>Limited</td>
+                                <td><span class="badge bg-danger">Disable</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a  class="action-btns1" placement="top" ngbTooltip="View">
+                                            <i class="fe fe-eye text-primary"></i>
+                                        </a>
+                                        <a  class="action-btns1" (click)="open(content)" toggle="modal" target="#editmodal">
+                                            <i class="fe fe-edit-2  text-success" placement="top"
+                                                ngbTooltip="Edit"></i>
+                                        </a>
+                                        <a  class="action-btns1" placement="top"
+                                            ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#02</td>
+                                <td>Basic</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">$19.00</td>
+                                <td class="text-center">00</td>
+                                <td class="text-center">05</td>
+                                <td>Limited</td>
+                                <td><span class="badge bg-success">Enable</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a  class="action-btns1" placement="top" ngbTooltip="View">
+                                            <i class="fe fe-eye text-primary"></i>
+                                        </a>
+                                        <a (click)="open(content)"  class="action-btns1" toggle="modal" target="#editmodal">
+                                            <i class="fe fe-edit-2  text-success" placement="top"
+                                                ngbTooltip="Edit"></i>
+                                        </a>
+                                        <a  class="action-btns1" placement="top"
+                                            ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#03</td>
+                                <td>Premium</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">$39.00</td>
+                                <td class="text-center">00</td>
+                                <td class="text-center">20</td>
+                                <td>Unlimited</td>
+                                <td><span class="badge bg-success">Enable</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a  class="action-btns1" placement="top" ngbTooltip="View">
+                                            <i class="fe fe-eye text-primary"></i>
+                                        </a>
+                                        <a (click)="open(content)"  class="action-btns1" toggle="modal" target="#editmodal">
+                                            <i class="fe fe-edit-2  text-success" placement="top"
+                                                ngbTooltip="Edit"></i>
+                                        </a>
+                                        <a  class="action-btns1" placement="top"
+                                            ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#04</td>
+                                <td>Advanced</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">$69.00</td>
+                                <td class="text-center">00</td>
+                                <td class="text-center">40</td>
+                                <td>Unlimited</td>
+                                <td><span class="badge bg-success">Enable</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a  class="action-btns1" placement="top" ngbTooltip="View">
+                                            <i class="fe fe-eye text-primary"></i>
+                                        </a>
+                                        <a (click)="open(content)"  class="action-btns1" toggle="modal" target="#editmodal">
+                                            <i class="fe fe-edit-2  text-success" placement="top"
+                                                ngbTooltip="Edit"></i>
+                                        </a>
+                                        <a  class="action-btns1" placement="top"
+                                            ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#05</td>
+                                <td>Enterprise</td>
+                                <td class="text-center">$0.00</td>
+                                <td class="text-center">$139.00</td>
+                                <td class="text-center">80</td>
+                                <td class="text-center">Unlimited</td>
+                                <td>Unlimited</td>
+                                <td><span class="badge bg-success">Enable</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a  class="action-btns1" placement="top" ngbTooltip="View">
+                                            <i class="fe fe-eye text-primary"></i>
+                                        </a>
+                                        <a (click)="open(content)"  class="action-btns1" toggle="modal" target="#editmodal">
+                                            <i class="fe fe-edit-2  text-success" placement="top"
+                                                ngbTooltip="Edit"></i>
+                                        </a>
+                                        <a  class="action-btns1" placement="top"
+                                            ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="mt-4"> 
+                    <ul class="pagination justify-content-end mb-0"> 
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);">Prev</a>
+                        </li> 
+                        <li class="page-item active">
+                            <a class="page-link" href="javascript:void(0);">1</a>
+                        </li> <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">2</a>
+                        </li> 
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">3</a>
+                        </li> 
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">Next</a>
+                        </li> 
+                    </ul> 
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+
+<!--Add New Package Modal -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Add Package</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')">
+            <span class="nav-link">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-label">Package Name</label>
+            <ng-select class="form-control custom-select p-0" placeholder="Select Package">
+                <ng-option value="1">Free</ng-option>
+                <ng-option value="2">Basic</ng-option>
+                <ng-option value="3">Premium</ng-option>
+                <ng-option value="4">Advanced</ng-option>
+                <ng-option value="5">Enterprise</ng-option>
+            </ng-select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Package Type</label>
+            <ng-select class="form-control custom-select p-0" placeholder="Select Package">
+                <ng-option value="1">Monthly</ng-option>
+                <ng-option value="2">Yearly</ng-option>
+            </ng-select>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Min Users</label>
+                    <input class="form-control" placeholder="min" value="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Max Users</label>
+                    <input class="form-control" placeholder="max" value="">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Storage</label>
+            <ng-select class="" placeholder="Select Storage">
+                <ng-option value="1">Limited</ng-option>
+                <ng-option value="2">Unlimited</ng-option>
+            </ng-select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea rows="2" class="form-control" placeholder="something text here..."></textarea>
+        </div>
+        <div class="custom-controls-stacked d-md-flex">
+            <label class="form-label mt-1 me-5">Status :</label>
+            <label class="form-check custom-control custom-radio success me-4">
+                <input type="radio" class="form-check-input" name="example-radios1" value="option1">
+                <span class="custom-control-label">Enable</span>
+            </label>
+            <label class="form-check custom-control custom-radio success me-4">
+                <input type="radio" class="form-check-input" name="example-radios1" value="option2">
+                <span class="custom-control-label">Disable</span>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a  class="btn btn-outline-danger me-2" (click)="modal.dismiss('Cross click')"
+            data-bs-dismiss="modal">Close</a>
+        <a  class="btn btn-success" >Updated</a>
+    </div>
+</ng-template>
+<!-- End Add New Package Modal  -->

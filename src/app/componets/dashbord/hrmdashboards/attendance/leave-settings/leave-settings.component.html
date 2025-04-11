@@ -1,0 +1,108 @@
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <h4 class="page-title">Leave Settings</h4>
+    </div>
+    <div class="page-rightheader ms-md-auto">
+        <div class="d-flex align-items-end flex-wrap my-auto end-content breadcrumb-end">
+            <div class="btn-list">
+                <a  class="btn btn-primary me-2" toggle="modal" (click)="open(content)">Add Leave Type</a>
+                <button  class="btn btn-light3 me-2" placement="top" ngbTooltip="E-mail"> <i class="fe fe-mail"></i> </button>
+                <button  class="btn btn-light3 me-2" placement="top" ngbTooltip="Contact"> <i class="fe fe-phone-call"></i> </button>
+                <button  class="btn btn-primary me-2" placement="top" ngbTooltip="Info"> <i class="fe fe-info"></i> </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card custom-card">
+            <div class="card-header  border-0">
+                <h4 class="card-title">Leaves Types</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="hr-leavestypes">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">Leaves Type</th>
+                                <th class="border-bottom-0 text-center">No.of Leaves</th>
+                                <th class="border-bottom-0">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(leave of leaves;track $index){
+                                <tr>
+                                    <td>{{leave.type}}</td>
+                                    <td class="text-center fw-semibold">{{leave.number}}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="javascript:;" class="action-btns1" toggle="modal" (click)="open(content)" ><i  class="fe fe-eye primary text-primary"></i></a>
+                                            <a href="javascript:;" class="action-btns1" (click)="remove(leave.id)" toggle="tooltip" placement="top" ngbTooltip="Delete"><i
+                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+<!-- Add leave Modal -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Add New Leaves</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-label">Type Of Leaves</label>
+            <input class="form-control" placeholder="Text">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Number Of Days</label>
+            <input class="form-control" type="number" placeholder="Numbers">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-outline-primary me-2" (click)="modal.dismiss('Cross click')"
+            data-bs-dismiss="modal">Close</a>
+        <a href="javascript:;" class="btn btn-success">Save</a>
+    </div>
+</ng-template>
+<!-- Add leave Modal -->
+   <!-- Add leave Modal -->
+   <div class="modal fade"  id="addleavemodal">
+    <div class="modal-dialog" role="document">
+        <ng-template #content let-modal class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Leaves</h5>
+                <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label class="form-label">Type Of Leaves</label>
+                    <input class="form-control" placeholder="Text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Number Of Days</label>
+                    <input class="form-control" type="number" placeholder="Numbers">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                <button  class="btn btn-primary">Save</button>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<!-- Add leave Modal -->

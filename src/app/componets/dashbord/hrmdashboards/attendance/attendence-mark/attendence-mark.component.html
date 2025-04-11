@@ -1,0 +1,230 @@
+<app-page-header [title]="'Attendance Mark'"></app-page-header>
+<!-- Row -->
+   <!-- Start::row-1 -->
+   <div class="row">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card custom-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-3">
+                        <div class="form-group">
+                            <label class="form-label">Select Date:</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input mwlFlatpickr type="text" class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body border-top">
+                <div class="row mb-3 gap-1 gap-lg-0">
+                    <div class="col-lg-6">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span>Show</span>
+                            <div class="d-flex ms-2 mx-2">
+                                <div class="form-group mb-0">
+                                    <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                        <ng-option value="1" selected="">1</ng-option>
+                                        <ng-option value="2">2</ng-option>
+                                        <ng-option value="3">3</ng-option>
+                                        <ng-option value="4">4</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <span class="pe-3">entries</span>
+                            
+                            <div class="form-check form-check-xl d-flex align-items-center mb-2">
+                                <input class="form-check-input success check-all" type="checkbox" id="all-tasks" value="" aria-label="..."  (change)="toggleSelectAll($event)">
+                                <label class="form-check-label" >Check All</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="float-end">
+                            <input type="text" class="form-control" placeholder="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="hr-table">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0 w-5">#Emp ID</th>
+                                <th class="border-bottom-0">Emp Name</th>
+                                <th class="border-bottom-0">Status</th>
+                                <th class="border-bottom-0">Clock In</th>
+                                <th class="border-bottom-0">Clock Out</th>
+                                <th class="border-bottom-0">IP Address</th>
+                                <th class="border-bottom-0">Working From</th>
+                                <th class="border-bottom-0">Attendance</th>
+                                <th class="border-bottom-0">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of tableData; track $index) {
+                            <tr>
+                                <td>{{item.id}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2 avatar-rounded">
+                                            <img [src]=item.image alt="img">
+                                        </div>
+                                        <div>
+                                            <div class="lh-1">
+                                                <h6 class="mb-1">{{item.name}}</h6>
+                                            </div>
+                                            <div class="lh-1">
+                                                <span
+                                                    class="fs-12 text-muted">{{item.position}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="badge bg-{{item.statusBg}}-transparent">{{item.status}}</span></td>
+                                <td>{{item.clockin}}</td>
+                                <td>{{item.clockout}}</td>
+                                <td>{{item.address}}</td>
+                                <td>{{item.from}}</td>
+                                <td><span class="badge bg-{{item.attendanceBg}}">{{item.attendance}}</span></td>
+                                <td class="task-list" [ngClass]="{'selected': allTasksChecked}">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="form-check form-check-xl d-flex align-items-center">
+                                            <div class="task-checkbox">
+                                                <input class="form-check-input success" type="checkbox" value="" aria-label="..."  [checked]="allTasksChecked"  [(ngModel)]="item.checked">
+                                            </div>
+                                        </div>
+                                        <a   class="action-btns1 bg-light" (click)="fullDay(content)" data-bs-toggle="modal" data-bs-target="#presentmodal" >
+                                            <i class="fe fe-eye primary text-primary" data-bs-toggle="tooltip" data-original-title="View"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                 <!-- Start::pagination -->
+                 <nav class="mt-4">
+                    <ul class="pagination justify-content-end mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                    </ul>
+                </nav>
+                <!-- End::pagination -->
+            </div>
+            <div class="card-footer">
+                <a  href="javascript:void(0);" class="btn btn-primary float-end">Save All</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End::row-1 -->
+<!-- End Row-->
+
+<ng-template #content let-modal class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Attendance Details</h5>
+        <button (click)="modal.close('cross click')"  class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="pt-5 text-center">
+                    <h6 class="mb-1 fs-16 fw-medium">09:30 AM</h6>
+                    <small class="text-muted fs-14">Clock In</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="attendance-details2">
+                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                    [colors]="chartOptions.colors"   [plotOptions]="chartOptions.plotOptions"
+                    [labels]="chartOptions.labels" 
+                    ></apx-chart>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pt-5 text-center">
+                    <h6 class="mb-1 fs-16 fw-medium"> 06:30 PM</h6>
+                    <small class="text-muted fs-14">Clock Out</small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label">IP Address</label>
+            <input type="text" class="form-control" placeholder="225.192.145.1" disabled>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Working Form</label>
+            <select name="projects"  class="form-control custom-select" data-trigger disabled data-placeholder="Select">
+                <option value="">Select</option>
+                <option value="1" selected>Office</option>
+                <option value="2">Home</option>
+                <option value="3">Others</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a  href="javascript:void(0);" (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">close</a>
+        <a  href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editmodal" data-bs-dismiss="modal">Edit</a>
+    </div>
+</ng-template>
+
+<!--HalfPresent Modal -->
+<ng-template #content1 let-modal   id="halfpresentmodal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Attendance Details <span class="badge bg-orange">Half Day</span></h5>
+            <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row my-4">
+                <div class="col-md-4">
+                    <div class="pt-5 text-center">
+                        <h6 class="mb-1 fs-16 fw-medium">09:30 AM</h6>
+                        <small class="text-muted fs-14">Clock In</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div id="attendance-details">
+                        <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                        [colors]="chartOptions1.colors"   [plotOptions]="chartOptions1.plotOptions"
+                        [labels]="chartOptions1.labels"  [grid]="chartOptions1.grid"   [stroke]="chartOptions1.stroke"
+                        ></apx-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pt-5 text-center">
+                        <h6 class="mb-1 fs-16 fw-medium"> 01:30 PM</h6>
+                        <small class="text-muted fs-14">Clock Out</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">IP Address</label>
+                <input type="text" class="form-control" placeholder="225.192.145.1" disabled>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Working Form</label>
+                <ng-select name="projects"  class="form-control custom-select" data-trigger  data-placeholder="Select">
+                    <ng-option value="">Select</ng-option>
+                    <ng-option value="1" selected>Office</ng-option>
+                    <ng-option value="2">Home</ng-option>
+                    <ng-option value="3">Others</ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a  href="javascript:void(0);" (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">close</a>
+            <a  href="javascript:void(0);"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#halfdayeditmodal" data-bs-dismiss="modal">Edit</a>
+        </div>
+    </div>
+</ng-template>
+<!-- End Present Modal  -->

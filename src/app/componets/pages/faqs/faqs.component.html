@@ -1,0 +1,81 @@
+<app-page-header [title]="'Faqs'"></app-page-header>
+
+                <!-- Start::row-1 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card custom-card">
+                            <div class="card-header justify-content-between">
+                                <div class="card-title">Faqs</div>
+                            </div>
+                            <div class="card-body">
+                                <div
+                                ngbAccordion
+                                [closeOthers]="true"
+                                class="accordion"
+                                id="accordionExample"
+                              >
+                              @for(panel of panels; track $index){
+ 
+                                <div
+                                  ngbAccordionItem
+                                  [collapsed]="panel !== '1.  How To Insert All The Plugins?'"
+                                  class="accordion-item"
+                                  
+                                >
+                                  <h2 ngbAccordionHeader class="accordion-header" id="headingOne">
+                                    <button
+                                      ngbAccordionButton
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#collapseOne"
+                                      aria-expanded="true"
+                                      aria-controls="collapseOne"
+                                    >
+                                      {{ panel }}
+                                    </button>
+                                  </h2>
+                                  <div
+                                    ngbAccordionCollapse
+                                    id="collapseOne"
+                                    class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample"
+                                  >
+                                    <div class="accordion-body" ngbAccordionBody>
+                                      <ng-template>
+                                        I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences
+                                      </ng-template>
+                                    </div>
+                                  </div>
+                                </div>
+                              }
+                              </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card custom-card">
+                            <div class="card-header border-bottom-0">
+                                <h4 class="card-title">Ask Question</h4>
+                            </div>
+                            <div class="card-body">
+                                <h5>If Your Query Not Clarified Post Your Question, My Customer Support will help You</h5>
+                                <div class="pt-4">
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="name1" placeholder="Your Name">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <textarea class="form-control" name="example-textarea-input" rows="6" placeholder="Post Your Quesry"></textarea>
+                                    </div>
+                                    <a  href="javascript:void(0);" class="btn btn-primary">Send Question</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End::row-1 -->

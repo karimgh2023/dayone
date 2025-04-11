@@ -1,0 +1,22 @@
+.btn-close{
+    border: none;
+}
+
+.modal-header{
+    position: relative;
+}
+.size_md {
+    font-size: 30px;
+}
+.countdowntimer {
+    text-align: center;
+    margin-top: 0.75rem;
+}
+.modal-footer{
+    padding: 0;
+}
+::ng-deep{
+    .cdk-overlay-pane{
+        min-width: 20vw;
+    }    
+}

@@ -1,0 +1,43 @@
+      <!-- Start:: Section-1 -->
+      <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white"> {{ routerEvents[routerEvents.length - 1] | titlecase }}</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            @for (path of routerEvents; track path; let i = $index) {
+                                <li
+                                  [ngClass]="{
+                                    active: routerEvents.length - 1 == i,
+                                    'custom-color': i === routerEvents.length - 1
+                                  }"
+                                  class="breadcrumb-item"
+                                >
+                                  <a
+                                    href="javascript:void(0);"
+                                    [ngStyle]="{
+                                      color: i === routerEvents.length - 1 ? '#fff' : 'defaultColor'
+                                    }"
+                                    >{{ path | titlecase }}</a
+                                  >
+                                </li>
+                                }
+                            <!-- <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">{{title1}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">{{title2}}</a>
+                            </li> -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->

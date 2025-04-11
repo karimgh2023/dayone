@@ -1,0 +1,375 @@
+    <!-- Start:: Section-1 -->
+    <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white">Articles</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">Articles</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->
+
+    <!--Section-->
+    <section>
+        <div class="cover-image sptb section-bg">
+            <div class="main-container">
+                <div class="row">
+                    <div class="col-xl-3 mb-4 mb-xl-0">
+                        <div class="position-sticky top-0">
+                            <div class="card custom-card border-0 overflow-hidden">
+                                <div class="card-body p-0">
+                                    <!-- Start::app-sidebar -->
+                                 <app-support-sidebar></app-support-sidebar>
+                                    <!-- End::app-sidebar -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card custom-card">
+                                    <div class="card-header justify-content-between">
+                                        <h4 class="card-title">Articles Summary</h4>
+                                        <div class="card-options">
+                                            <a href="javascript:void(0);" class="btn btn-primary me-3"
+                                                data-bs-toggle="modal" data-bs-target="#addarticle">Add New
+                                                Article</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-6">
+                                                <div class="d-flex align-items-center">
+                                                    <span>Show</span>
+                                                    <div class="d-flex ms-2 mx-2">
+                                                        <div class="form-group mt-2">
+                                                            <ng-select name="quantity" id="select-countries17"
+                                                                class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                                <ng-option value="1" selected="">1</ng-option>
+                                                                <ng-option value="2">2</ng-option>
+                                                                <ng-option value="3">3</ng-option>
+                                                                <ng-option value="4">4</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <span>entries</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="float-end">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-vcenter text-nowrap border table-striped table-hover"
+                                                id="support-articlelist">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-bottom-0 w-5">#No</th>
+                                                        <th class="border-bottom-0">Title</th>
+                                                        <th class="border-bottom-0">Category</th>
+                                                        <th class="border-bottom-0 w-5">Status</th>
+                                                        <th class="border-bottom-0 w-5">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>#01</td>
+                                                        <td><span>How to Updgrade plan?</span></td>
+                                                        <td><span>License</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#02</td>
+                                                        <td><span>How could I manage active menu class?</span>
+                                                        </td>
+                                                        <td><span>Support</span></td>
+                                                        <td><span class="badge bg-danger">UnPublished</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#03</td>
+                                                        <td><span> How to remove the dollar $ sign?</span></td>
+                                                        <td><span>Support</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#04</td>
+                                                        <td><span>How to show sweet alert when i load a
+                                                                page?</span></td>
+                                                        <td><span>Customization</span></td>
+                                                        <td><span class="badge bg-danger">UnPublished</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#05</td>
+                                                        <td><span>Duis aute irure dolor?</span></td>
+                                                        <td><span>Settings</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#06</td>
+                                                        <td><span>Ut enim ad minima veniam?</span></td>
+                                                        <td><span>Billing</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#07</td>
+                                                        <td><span>Quis autem vel eum?</span></td>
+                                                        <td><span>Services</span></td>
+                                                        <td><span class="badge bg-danger">UnPublished</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#08</td>
+                                                        <td><span> How to pursue pleasure?</span></td>
+                                                        <td><span>Support</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#09</td>
+                                                        <td><span>How to pursue pleasure?</span></td>
+                                                        <td><span>Support</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#10</td>
+                                                        <td><span>Neque porro quisquam?</span></td>
+                                                        <td><span>Settings</span></td>
+                                                        <td><span class="badge bg-success">Published</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewarticle">
+                                                                    <i class="fe fe-eye text-primary"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="Edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="action-btns1"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title="Delete"><i
+                                                                        class="fe fe-trash-2 text-danger"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section-->
+
+    <!-- Start:: Section-3 -->
+    <section class="sptb bg-white">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-lg-7 col-xl-6 col-md-12">
+                    <div class="sub-newsletter">
+                        <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                            aria-describedby="button-addon12">
+                        <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                            id="button-addon12">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End:: Section-3 -->
+

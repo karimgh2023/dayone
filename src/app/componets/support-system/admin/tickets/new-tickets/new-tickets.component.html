@@ -1,0 +1,173 @@
+    <!-- Start:: Section-1 -->
+    <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white">New Ticket</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">New
+                                    Ticket</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->
+
+    <!--Div-->
+    <div>
+        <div class="cover-image sptb section-bg">
+            <div class="main-container">
+                <div class="row">
+                    <div class="col-xl-3 mb-4 mb-xl-0">
+                        <div class="position-sticky top-0">
+                            <div class="card custom-card border-0 overflow-hidden">
+                                <div class="card-body p-0">
+                                    <!-- Start::app-sidebar -->
+                                    <app-support-sidebar></app-support-sidebar>
+                                    <!-- End::app-sidebar -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="card custom-card mb-0">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">New Ticket</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Ticket Subject</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Email Address</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Email"
+                                                value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Priority</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select class="form-control custom-select p-0" data-trigger
+                                                placeholder="Select Employee">
+                                                <ng-option value="">High</ng-option>
+                                                <ng-option value="1">Medium</ng-option>
+                                                <ng-option value="2">Low</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Ticket Category</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select class="form-control custom-select p-0" data-trigger
+                                                placeholder="Select Category">
+                                                <ng-option value="">Support</ng-option>
+                                                <ng-option value="1">Services</ng-option>
+                                                <ng-option value="2">Customization</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Ticket Description</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="create-ticket">
+                                                <div id="note" class="">
+                                                    <form [formGroup]="form">
+                                                        <div class="NgxEditor__Wrapper">
+                                                          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+                                                          <ngx-editor [editor]="editor" formControlName="editorContent"> </ngx-editor>
+                                                        </div>
+                                                      </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Upload Image</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <input class="form-control" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-9">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-lg">Create
+                                            Ticket</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Div-->
+
+    <!-- Start:: Section-2 -->
+    <section class="sptb bg-white">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-lg-7 col-xl-6 col-md-12">
+                    <div class="sub-newsletter">
+                        <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                            aria-describedby="button-addon12">
+                        <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                            id="button-addon12">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End:: Section-2 -->

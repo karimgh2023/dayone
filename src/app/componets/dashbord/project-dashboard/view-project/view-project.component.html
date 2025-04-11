@@ -1,0 +1,820 @@
+<app-task-dashboard-page-header [title]="'Project View'" [title3]="'Project'"></app-task-dashboard-page-header>
+<!-- Row -->
+<div class="row">
+    <div class="col-xxl-3 col-md-12 col-lg-12">
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between border-bottom-0">
+                <div class="card-title">Project Details</div>
+            </div>
+            <div class="card-body pt-1 px-2">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Team Lead</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">Abigali kelly</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Client</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">Julia Walker</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Department</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">Designing</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Start Date</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">12-02-2021</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Deadline</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">16-06-2021</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Budget</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">$97,268.000</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Duration</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">5 Months</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Priority</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="badge bg-danger-transparent">High</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Work Status</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="badge bg-primary">Active</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3">
+                    <div class="d-flex align-items-end justify-content-between">
+                        <h6 class="">Project Status</h6>
+                        <h6 class="font-weight-bold mb-1">30%</h6>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-success w-30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card  custom-card">
+            <div class="card-header  border-0">
+                <div class="card-title">Assigned Team</div>
+                <div class="ms-auto">
+                    <a   class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addteammodal">Add</a>
+                </div>
+            </div>
+            <div class="card-body p-1 pt-2">
+                <div class="table-responsive">
+                    <table class="table table-borderless text-nowrap">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex">
+                                        <span class="avatar avatar-md avatar-rounded me-2">
+                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                        </span>
+                                        <div class="mt-0 mt-sm-1 d-block">
+                                            <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                            <p class="text-muted mb-0 fs-12">App Developer</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center position-relative">
+                                        <div id="attendance1" class="flex-shrink-0" data-bs-toggle="tooltip" placement="auto" ngbTooltip="Project Status">
+                                            <apx-chart [series]="optionsCircle.series" [chart]="optionsCircle.chart"
+                                            [colors]="optionsCircle.colors" [stroke]="optionsCircle.stroke"
+                                            [states]="optionsCircle.states"
+                                            [plotOptions]="optionsCircle.plotOptions"
+                                            [grid]="optionsCircle.grid"></apx-chart>
+                                        </div>
+                                        <div class="d-flex mt-1 text-end">
+                                            <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye text-primary"></i></a>
+                                            <a  href="javascript:void(0);" class="action-btns1  me-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex">
+                                        <span class="avatar avatar-md avatar-rounded me-2">
+                                            <img src="./assets/images/users/12.jpg" alt="img">
+                                        </span>
+                                        <div class="mt-0 mt-sm-1 d-block">
+                                            <h6 class="mb-1 fs-14">Justin Parr</h6>
+                                            <p class="text-muted mb-0 fs-12">App Designer</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center position-relative">
+                                        <div id="attendanc2" class="flex-shrink-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Project Status">
+                                            <apx-chart [series]="optionsCircle1.series" [chart]="optionsCircle1.chart"
+                                            [colors]="optionsCircle1.colors" [stroke]="optionsCircle1.stroke"
+                                            [states]="optionsCircle1.states"
+                                            [plotOptions]="optionsCircle1.plotOptions"
+                                            [grid]="optionsCircle1.grid"></apx-chart>
+                                        </div>
+                                        <div class="d-flex mt-1 text-end ">
+                                            <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye text-primary"></i></a>
+                                            <a  href="javascript:void(0);" class="action-btns1  me-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex">
+                                        <span class="avatar avatar-md  avatar-rounded me-2">
+                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                        </span>
+                                        <div class="mt-0 mt-sm-1 d-block">
+                                            <h6 class="mb-1 fs-14">Amelia Russell</h6>
+                                            <p class="text-muted mb-0 fs-12">App Designer</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center position-relative">
+                                        <div id="attendance3" class="flex-shrink-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Project Status">
+                                            <apx-chart [series]="optionsCircle2.series" [chart]="optionsCircle2.chart"
+                                            [colors]="optionsCircle2.colors" [stroke]="optionsCircle2.stroke"
+                                            [states]="optionsCircle2.states"
+                                            [plotOptions]="optionsCircle2.plotOptions"
+                                            [grid]="optionsCircle2.grid"></apx-chart>
+                                        </div>
+                                        <div class="d-flex mt-1 text-end">
+                                            <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye text-primary"></i></a>
+                                            <a  href="javascript:void(0);" class="action-btns1  me-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex">
+                                        <span class="avatar avatar-md avatar-rounded me-2">
+                                            <img src="./assets/images/users/1.jpg" alt="img">
+                                        </span>
+                                        <div class="mt-0 mt-sm-1 d-block">
+                                            <h6 class="mb-1 fs-14">Ryan Young</h6>
+                                            <p class="text-muted mb-0 fs-12">App Developer</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center position-relative">
+                                        <div id="attendance4" class="flex-shrink-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Project Status">
+                                            <apx-chart [series]="optionsCircle3.series" [chart]="optionsCircle3.chart"
+                                            [colors]="optionsCircle3.colors" [stroke]="optionsCircle3.stroke"
+                                            [states]="optionsCircle3.states"
+                                            [plotOptions]="optionsCircle3.plotOptions"
+                                            [grid]="optionsCircle3.grid"></apx-chart>
+                                        </div>
+                                        <div class="d-flex mt-1 text-end">
+                                            <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye text-primary"></i></a>
+                                            <a  href="javascript:void(0);" class="action-btns1  me-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-9 col-md-12 col-lg-12">
+        <div class="tab-menu-heading hremp-tabs p-0 border-0 ">
+            <div class="tabs-menu1">
+                <!-- Tabs -->
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="panel-tabs">
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>Overview</a>
+                      <ng-template ngbNavContent> 
+                       
+                        <div class="card-body">
+                            <h5 class="mb-4 fw-semibold">Description</h5>
+                            <p>At vero eos the moment, so blinded by and equal blame belongs to those who fail in their duty
+                                through weakness et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                                voluptatum deleniti atcorrupti quos dolores et quas molestias excepturi sint occaecati
+                                cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id
+                                est laborum et dolorum fuga.</p>
+                            <p>On the other hand, we denounce with Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                                righteous indignation and dislike men who are so beguiled and demoraliz the charms of
+                                pleasure of the moment, so blinded by and equal blame belongs to those who fail in their
+                                duty through weakness of will, which is the same as saying through shrinking from toil and
+                                pain.</p>
+                            <p>On the other hand, we denounce with Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                                righteous indignation and dislike men who are so beguiled and demoraliz the charms of
+                                pleasure of the moment, so blinded by and equal blame belongs to those who fail in their
+                                duty through weakness of will, which is the same as saying through shrinking from toil and
+                                pain.</p>
+                            <p class="mb-0">On the other hand, we denounce with Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit righteous indignation and dislike men who are so beguiled and demoraliz the
+                                charms of pleasure of the moment, so blinded by and equal blame belongs to those who fail in
+                                their duty through weakness of will, which is the same as saying through shrinking from toil
+                                and pain.</p>
+                            <ul class="project-description mt-3 mb-0">
+                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                                <li>At vero eos et accusamus et iusto odio dignissimos ducimus</li>
+                                <li>The industry's standard dummy text ever since the 1500s</li>
+                                <li>Praesentium voluptatum deleniti atcorrupti quos dolores</li>
+                                <li>We denounce with righteous indignation and dislike men</li>
+                            </ul>
+                            <p>On the other hand, we denounce with Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                                righteous indignation and dislike men who are so beguiled and demoraliz the charms of
+                                pleasure of the moment, so blinded by and equal blame belongs to those who fail in their
+                                duty through weakness of will, which is the same as saying through shrinking from toil and
+                                pain.</p>
+                            <p class="mb-0">On the other hand, we denounce with Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit righteous indignation and dislike men who are so beguiled and demoraliz the
+                                charms of pleasure of the moment, so blinded by and equal blame belongs to those who fail in
+                                their duty through weakness of will, which is the same as saying through shrinking from toil
+                                and pain.</p>
+                        </div>
+                   
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>Tasks</a>
+                      <ng-template ngbNavContent>
+                       
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="d-flex align-items-center">
+                                                <span>Show</span>
+                                                <div class="d-flex ms-2 mx-2">
+                                                    <div class="form-group mt-2">
+                                                        <ng-select name="quantity" id="select-countries1" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                            <ng-option value="1" selected="">1</ng-option>
+                                                            <ng-option value="2">2</ng-option>
+                                                            <ng-option value="3">3</ng-option>
+                                                            <ng-option value="4">4</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <span>entries</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="float-end">
+                                                <div class="d-flex text-nowrap">
+                                                    <a  href="javascript:void(0);" class="btn btn-primary me-2">Add Task</a>
+                                                    <input type="text" matInput (keyup)="applyTasksFilter($event)"  #input class="form-control" placeholder="search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="table-responsive">
+                                  
+                                    <table mat-table [dataSource]="dataSourceTasks" matSort class="table table-vcenter text-nowrap table-bordered border-bottom">
+
+                                      <!-- ID Column -->
+                                      <ng-container matColumnDef="No">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> No </th>
+                                        <td class="text-center" mat-cell *matCellDef="let row"> {{row.No}} </td>
+                                      </ng-container>
+
+                                      <!-- Title Column -->
+                                      <ng-container matColumnDef="Task">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Task </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <span>{{row.task}}</span>
+                                        </td>
+                                      </ng-container>
+
+                                      <!-- Purchase from Column -->
+                                      <ng-container matColumnDef="Client">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Client </th>
+                                        <td mat-cell *matCellDef="let row"> <span class="fw-semibold">{{row.client}}</span> </td>
+                                      </ng-container>
+
+                                      <!-- Date Salary Column -->
+                                      <ng-container matColumnDef="AssignTo">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assign To </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <a  href="javascript:void(0);" class="d-flex">
+                                                <span class="avatar avatar-md me-2 avatar-rounded">
+                                                    <img [src]="row.img" alt="img">
+                                                </span>
+                                                <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                    <h6 class="mb-1 fs-14">{{row.AssignTo}}</h6>
+                                                </div>
+                                            </a>
+                                           
+                                        </td>
+                                      </ng-container>
+
+                                      <!-- Amount Date Column -->
+                                      <ng-container matColumnDef="Priority">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <span class="badge bg-{{row.priorityStatus}}-transparent"> {{row.priority}}</span>
+                                        </td>
+                                      </ng-container>
+
+                                      <!-- PaidBy Date Column -->
+                                      <ng-container matColumnDef="StartDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> StartDate </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.startDate}} </td>
+                                      </ng-container>
+
+                                      <!-- approval Date Column -->
+                                      <ng-container matColumnDef="Deadline">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Deadline </th>
+                                        <td mat-cell *matCellDef="let row" >{{row.deadline}}</td>
+                                      </ng-container>
+                                      <ng-container matColumnDef="Progress">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                                        <td mat-cell *matCellDef="let row" >
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="fs-12">{{row.ProgressText}}</h6>
+                                                <h6 class="fs-12">{{row.ProgressPercentage}}%</h6>
+                                            </div>
+
+                                            <ngb-progressbar class="" type="{{row.ProgressPercentageStatus}}" height="0.25rem" [value]="row.ProgressPercentage"></ngb-progressbar>
+                                        </td>
+                                      </ng-container>
+                                      <ng-container matColumnDef="Action">
+                                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <div class="d-flex">
+                                                <a  class="action-btns1" placement="top" ngbTooltip="View Task"><i class="fe fe-eye text-primary"></i></a>
+                                                <a  href="javascript:;" class="action-btns1" placement="top" ngbTooltip="View">
+                                                    <i class="fe fe-edit-2  text-success"></i>
+                                                </a>
+                                                <a (click)="removeData(row.No)" href="javascript:;" class="action-btns1" placement="top" ngbTooltip="Delete">
+                                                    <i class="fe fe-trash-2 text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                      </ng-container>
+
+                                      <tr mat-header-row *matHeaderRowDef="displayedTasksColumns"></tr>
+                                      <tr mat-row *matRowDef="let row; columns: displayedTasksColumns;"></tr>
+
+                                      <!-- Row shown when there is no matching data. -->
+                                      <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                      </tr>
+                                    </table>
+
+                                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+                                 
+                                </div>
+                            
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="3">
+                      <a ngbNavLink>Files</a>
+                      <ng-template ngbNavContent>
+                        
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="d-flex align-items-center">
+                                                <span>Show</span>
+                                                <div class="d-flex ms-2 mx-2">
+                                                    <div class="form-group mt-2">
+                                                        <ng-select name="quantity" id="select-countries2" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                            <ng-option value="1" selected="">1</ng-option>
+                                                            <ng-option value="2">2</ng-option>
+                                                            <ng-option value="3">3</ng-option>
+                                                            <ng-option value="4">4</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <span>entries</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="float-end">
+                                                <div class="d-flex text-nowrap">
+                                                    <a  href="javascript:void(0);" class="btn btn-primary btn-tableview me-2">Upload Files</a>
+                                                    <input type="text" matInput (keyup)="applyFilesFilter($event)"  #input class="form-control" placeholder="search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      <div class="">
+                                        <table mat-table [dataSource]="dataSourceFiles" matSort class="table table-vcenter text-nowrap table-bordered border-bottom">
+
+                                          <!-- ID Column -->
+                                          <ng-container matColumnDef="No">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No </th>
+                                            <td class="text-center" mat-cell *matCellDef="let row"> {{row.No}} </td>
+                                          </ng-container>
+
+                                          <!-- Title Column -->
+                                          <ng-container matColumnDef="FileName">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <span>{{row.fileName}}</span>
+                                            </td>
+                                          </ng-container>
+
+                                          <!-- Purchase from Column -->
+                                          <ng-container matColumnDef="UploadedBy">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded By </th>
+                                            <td mat-cell *matCellDef="let row"> <span class="fw-semibold">{{row.uploadedBy}}</span> </td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="Action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <div class="d-flex">
+                                                    <a  class="action-btns1" placement="top" ngbTooltip="View Task"><i class="fe fe-eye text-primary"></i></a>
+                                                    <a  href="javascript:;" class="action-btns1" placement="top" ngbTooltip="View">
+                                                        <i class="fe fe-edit-2  text-success"></i>
+                                                    </a>
+                                                    <a (click)="removeFilesData(row.No)" href="javascript:;" class="action-btns1" placement="top" ngbTooltip="Delete">
+                                                        <i class="fe fe-trash-2 text-danger"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                          </ng-container>
+
+                                          <tr mat-header-row *matHeaderRowDef="displayedFilesColumns"></tr>
+                                          <tr mat-row *matRowDef="let row; columns: displayedFilesColumns;"></tr>
+
+                                          <!-- Row shown when there is no matching data. -->
+                                          <tr class="mat-row" *matNoDataRow>
+                                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                </div>
+                            </div>
+                       
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4">
+                      <a ngbNavLink>Milestones</a>
+                      <ng-template ngbNavContent>
+                       
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="d-flex align-items-center">
+                                                <span>Show</span>
+                                                <div class="d-flex ms-2 mx-2">
+                                                    <div class="form-group mt-2">
+                                                        <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                            <ng-option value="1" selected="">1</ng-option>
+                                                            <ng-option value="2">2</ng-option>
+                                                            <ng-option value="3">3</ng-option>
+                                                            <ng-option value="4">4</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <span>entries</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="float-end">
+                                                <div class="d-flex text-nowrap">
+                                                    <a  href="javascript:void(0);" class="btn btn-primary btn-tableview me-2" data-bs-toggle="modal" data-bs-target="#addmilemodal">Add Milestone</a>
+                                                    <input matInput (keyup)="applyMileStoneFilter($event)"  #input type="text" class="form-control" placeholder="search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+
+                                      <div class="">
+                                        <table mat-table [dataSource]="dataSourceMileStone" matSort class="table table-vcenter text-nowrap table-bordered border-bottom">
+
+                                          <!-- ID Column -->
+                                          <ng-container matColumnDef="No">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.No}} </td>
+                                          </ng-container>
+
+                                          <!-- Title Column -->
+                                          <ng-container matColumnDef="MileStoneTitle">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> MileStone Title </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <span>{{row.mileStoneTitle}}</span>
+                                            </td>
+                                          </ng-container>
+
+                                          <!-- Purchase from Column -->
+                                          <ng-container matColumnDef="MileStoneCost">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> MileStone Cost </th>
+                                            <td mat-cell *matCellDef="let row"> <span class="fw-semibold">{{row.mileStoneCost}}</span> </td>
+                                          </ng-container>
+
+                                          <!-- Date Salary Column -->
+                                          <ng-container matColumnDef="Deadline">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Deadline </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.deadline}}
+                                            </td>
+                                          </ng-container>
+
+                                          <!-- Amount Date Column -->
+                                          <ng-container matColumnDef="Status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <span class="badge bg-{{row.status}}-transparent">{{row.statusText}}</span>
+                                            </td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="Action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <div class="d-flex">
+                                                    <a  class="action-btns1" placement="top" ngbTooltip="View Task"><i class="fe fe-eye text-primary"></i></a>
+                                                    <a  href="javascript:;" class="action-btns1" placement="top" ngbTooltip="View">
+                                                        <i class="fe fe-edit-2  text-success"></i>
+                                                    </a>
+                                                    <a (click)="removeMileStoneData(row.No)" href="javascript:;" class="action-btns1" placement="top" ngbTooltip="Delete">
+                                                        <i class="fe fe-trash-2 text-danger"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                          </ng-container>
+
+                                          <tr mat-header-row *matHeaderRowDef="displayedMileStoneColumns"></tr>
+                                          <tr mat-row *matRowDef="let row; columns: displayedMileStoneColumns;"></tr>
+
+                                          <!-- Row shown when there is no matching data. -->
+                                          <tr class="mat-row" *matNoDataRow>
+                                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                </div>
+                            </div>
+                        
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="5">
+                      <a ngbNavLink>Comments</a>
+                      <ng-template ngbNavContent>
+                       
+                                <div class="card shadow-none border">
+                                    <div class="d-sm-flex p-4">
+                                        <div class="d-flex me-3">
+                                            <div class="avatar me-2 avatar-rounded">
+                                                <img src="./assets/images/users/13.jpg" alt="img">
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mt-1 mb-1 fw-semibold">Have you using update version</h5>
+                                            <small class="text-muted"><i class="fe fe-calendar"></i> Jan 21 2021 <i class=" ms-3 fe fe-clock"></i> 13:00</small>
+                                            <p class="fs-13 mb-2 mt-1">
+                                                Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                            </p>
+                                            <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fe fe-message-circle"></i> Comment</span></a>
+                                            <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                            <div class="sub-media d-sm-flex mt-4">
+                                                <div class="d-flex me-3">
+                                                    <div class="avatar me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/10.jpg" alt="img">
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="mt-1 mb-1 fw-semibold">Yes, sir</h5>
+                                                    <small class="text-muted"><i class="fe fe-calendar"></i> Jan 22 2021 <i class=" ms-3 fe fe-clock"></i> 09:00</small>
+                                                    <p class="fs-13 mb-2 mt-1">
+                                                        Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                                    </p>
+                                                    <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fe fe-message-circle"></i> Comment</span></a>
+                                                    <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card shadow-none border">
+                                    <div class="d-sm-flex p-4">
+                                        <div class="d-flex me-3">
+                                            <div class="avatar me-2 avatar-rounded">
+                                                <img src="./assets/images/users/1.jpg" alt="img">
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mt-1 mb-1 fw-semibold">Send the related data</h5>
+                                            <small class="text-muted"><i class="fe fe-calendar"></i> Dec 10 2020 <i class=" ms-3 fe fe-clock"></i> 06:00</small>
+                                            <p class="fs-13 mb-2 mt-1">
+                                                Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                            </p>
+                                            <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark" ><i class="fe fe-message-circle"></i> Comment</span></a>
+                                            <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="">
+                                    <div class="mt-2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="name1" placeholder="Enter Title">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="comment-summernote"></div>
+                                        </div>
+                                        <a  href="javascript:void(0);" class="btn btn-primary mt-2">Send Comment</a>
+                                    </div>
+                                </div>
+                           
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="6">
+                      <a ngbNavLink>Note</a>
+                      <ng-template ngbNavContent>
+                       
+                                <div class="note-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <input class="form-control" placeholder="text">
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-label">Note:</label>
+                                        <div id="note">
+                                            
+                                              <angular-editor [ngModel]="htmlContent" [config]="config"></angular-editor>
+                                        </div>
+                                    </div>
+                                    <div class="text-end mt-2">
+                                        <a  href="javascript:void(0);" class="btn btn-primary">Submit</a>
+                                    </div>
+                                </div>
+                           
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="7">
+                      <a ngbNavLink>Invoices</a>
+                      <ng-template ngbNavContent>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="d-flex align-items-center">
+                                                <span>Show</span>
+                                                <div class="d-flex ms-2 mx-2">
+                                                    <div class="form-group mt-2">
+                                                        <ng-select name="quantity" id="select-countries3" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                            <ng-option value="1" selected="">1</ng-option>
+                                                            <ng-option value="2">2</ng-option>
+                                                            <ng-option value="3">3</ng-option>
+                                                            <ng-option value="4">4</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <span>entries</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="float-end">
+                                                <div class="d-flex text-nowrap">
+                                                    <a  href="javascript:void(0);" class="btn btn-primary btn-tableview me-2">Add Invoice</a>
+                                                    <input type="text" matInput (keyup)="applyInvoiceFilter($event)"  #input class="form-control" placeholder="search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+
+                                      <div class="">
+                                        <table mat-table [dataSource]="dataSourceInvoive" matSort class="table table-vcenter text-nowrap table-bordered border-bottom">
+
+                                          <!-- ID Column -->
+                                          <ng-container matColumnDef="InVoiceID">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> InVoiceID </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.inVoiceId}} </td>
+                                          </ng-container>
+
+                                          <!-- Title Column -->
+                                          <ng-container matColumnDef="Amount">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <span>{{row.amount}}</span>
+                                            </td>
+                                          </ng-container>
+
+                                          <!-- Purchase from Column -->
+                                          <ng-container matColumnDef="InvoiceData">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Data </th>
+                                            <td mat-cell *matCellDef="let row"> <span class="fw-semibold">{{row.invoiceDate}}</span> </td>
+                                          </ng-container>
+
+                                          <!-- Date Salary Column -->
+                                          <ng-container matColumnDef="DueDate">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> DueDate </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.dueDate}}
+                                            </td>
+                                          </ng-container>
+
+                                          <!-- PaidBy Date Column -->
+                                          <ng-container matColumnDef="Payment">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.Payment}} </td>
+                                          </ng-container>
+
+                                          <!-- approval Date Column -->
+                                          <ng-container matColumnDef="Status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                            <td mat-cell *matCellDef="let row" ><span class="badge bg-{{row.status}}-transparent">{{row.statusText}}</span></td>
+                                          </ng-container>
+
+                                          <ng-container matColumnDef="Action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <div class="d-flex">
+                                                    <a  class="action-btns1" placement="top" ngbTooltip="View Task"><i class="fe fe-eye text-primary"></i></a>
+                                                    <a  href="javascript:;" class="action-btns1" placement="top" ngbTooltip="View">
+                                                        <i class="fe fe-edit-2  text-success"></i>
+                                                    </a>
+                                                    <a (click)="removeInvoiceData(row.id)" href="javascript:;" class="action-btns1" placement="top" ngbTooltip="Delete">
+                                                        <i class="fe fe-trash-2 text-danger"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                          </ng-container>
+
+                                          <tr mat-header-row *matHeaderRowDef="displayedInvoiveColumns"></tr>
+                                          <tr mat-row *matRowDef="let row; columns: displayedInvoiveColumns;"></tr>
+
+                                          <!-- Row shown when there is no matching data. -->
+                                          <tr class="mat-row" *matNoDataRow>
+                                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                          </tr>
+                                        </table>
+
+                                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+                                      </div>
+                                </div>
+                            </div>
+                        
+                      </ng-template>
+                    </li>
+                  </ul>
+            </div>
+        </div>
+        <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+            <div  [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+
+
+

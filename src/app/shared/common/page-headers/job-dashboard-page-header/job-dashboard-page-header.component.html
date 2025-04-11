@@ -1,0 +1,131 @@
+      <!-- Page Header -->
+      <div class="page-header d-lg-flex d-block">
+        <div class="page-leftheader">
+            <div class="page-title">{{title}}
+                <span class="fw-normal text-muted ms-2">{{title2}}</span>
+            </div>
+        </div>
+        <div class="page-rightheader">
+            <div class="d-flex align-items-center flex-wrap my-auto end-content breadcrumb-end">
+                <div class="d-lg-flex d-block">
+                    <div class="btn-list d-flex gap-2">
+                        <a  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newtaskmodal" (click)="open(content)"><i class="fe fe-plus fs-12 my-auto me-2"></i>Add New {{title1}}</a>
+                        <button  class="btn btn-light3" data-bs-toggle="tooltip" placement="top" ngbTooltip="E-mail"> <i class="fe fe-mail"></i> </button>
+                        <button  class="btn btn-light3" placement="top" data-bs-toggle="tooltip" ngbTooltip="Contact"> <i class="fe fe-phone-call"></i> </button>
+                        <button  class="btn btn-primary me-0" placement="top" data-bs-toggle="tooltip" ngbTooltip="Info"> <i class="fe fe-info"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header Close -->
+
+    <ng-template #content let-modal>
+        <!-- <div class="modal-content"> -->
+            <div class="modal-header">
+                <h5 class="modal-title">Add New {{title1}}</h5>
+                <button type="button" (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Position</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Name" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Job Type</label>
+                            </div>
+                            <div class="col-md-9">
+                            <ng-select class="form-control custom-select p-0" data-trigger placeholder="Select Priority">
+                                <ng-option value="1">Full Time</ng-option>
+                                <ng-option value="2">Part Time</ng-option>
+                                <ng-option value="3">Freelancer</ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Description</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="text-area1" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Posted Date</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input mwlFlatpickr type="text" class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Last Date To Apply</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input type="text" mwlFlatpickr class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label mb-0 mt-2">Close Date</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input type="text" mwlFlatpickr class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <label class="form-label mb-0 mt-1">Status</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="custom-controls-stacked d-md-flex">
+                                <div class="form-check mb-0 me-4">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault11" id="flexRadioDefault02">
+                                    <label class="form-check-label" for="flexRadioDefault02">
+                                        Active
+                                    </label>
+                                </div>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault11" id="flexRadioDefault03">
+                                    <label class="form-check-label" for="flexRadioDefault03">
+                                        InActive
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button  (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                <button  class="btn btn-success successful-notify">Submit</button>
+            </div>
+        <!-- </div> -->
+    </ng-template>

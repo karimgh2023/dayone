@@ -1,0 +1,621 @@
+<app-page-header [title]="'Settings'"></app-page-header>
+<!-- Row-->
+<div class="row">
+    <div class="col-xl-3">
+        <div class="card">
+            <nav ngbNav #nav="ngbNav" class="flex-column admisetting-tabs" orientation="vertical">
+                <ng-container ngbNavItem>
+                  <a ngbNavLink> <i class="nav-icon las la-cog"></i> General Settings</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">General Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="dayone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="spruko@gmail.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="+9960332258">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Website</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="www.spruko.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <div class="row">
+                                        <div class="col-md-3 mt-2">
+                                            <label class="form-label mb-0 mt-4">Upload Image</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="form-label" class="form-label"></label>
+                                                <input class="form-control" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Change Language</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select placeholder="Choose a Language..."
+                                                class="form-control custom-select languages p-0">
+                                                <ng-option value="AF">Afrikanns</ng-option>
+                                                <ng-option value="SQ">Albanian</ng-option>
+                                                <ng-option value="AR">Arabic</ng-option>
+                                                <ng-option value="HY">Armenian</ng-option>
+                                                <ng-option value="EU">Basque</ng-option>
+                                                <ng-option value="BN">Bengali</ng-option>
+                                                <ng-option value="BG">Bulgarian</ng-option>
+                                                <ng-option value="CA">Catalan</ng-option>
+                                                <ng-option value="KM">Cambodian</ng-option>
+                                                <ng-option value="ZH">Chinese (Mandarin)</ng-option>
+                                                <ng-option value="HR">Croation</ng-option>
+                                                <ng-option value="CS">Czech</ng-option>
+                                                <ng-option value="DA">Danish</ng-option>
+                                                <ng-option value="NL">Dutch</ng-option>
+                                                <ng-option value="EN" selected>English</ng-option>
+                                                <ng-option value="ET">Estonian</ng-option>
+                                                <ng-option value="FJ">Fiji</ng-option>
+                                                <ng-option value="FI">Finnish</ng-option>
+                                                <ng-option value="FR">French</ng-option>
+                                                <ng-option value="KA">Georgian</ng-option>
+                                                <ng-option value="DE">German</ng-option>
+                                                <ng-option value="EL">Greek</ng-option>
+                                                <ng-option value="GU">Gujarati</ng-option>
+                                                <ng-option value="HE">Hebrew</ng-option>
+                                                <ng-option value="HI">Hindi</ng-option>
+                                                <ng-option value="HU">Hungarian</ng-option>
+                                                <ng-option value="IS">Icelandic</ng-option>
+                                                <ng-option value="ID">Indonesian</ng-option>
+                                                <ng-option value="GA">Irish</ng-option>
+                                                <ng-option value="IT">Italian</ng-option>
+                                                <ng-option value="JA">Japanese</ng-option>
+                                                <ng-option value="JW">Javanese</ng-option>
+                                                <ng-option value="KO">Korean</ng-option>
+                                                <ng-option value="LA">Latin</ng-option>
+                                                <ng-option value="LV">Latvian</ng-option>
+                                                <ng-option value="LT">Lithuanian</ng-option>
+                                                <ng-option value="MK">Macedonian</ng-option>
+                                                <ng-option value="MS">Malay</ng-option>
+                                                <ng-option value="ML">Malayalam</ng-option>
+                                                <ng-option value="MT">Maltese</ng-option>
+                                                <ng-option value="MI">Maori</ng-option>
+                                                <ng-option value="MR">Marathi</ng-option>
+                                                <ng-option value="MN">Mongolian</ng-option>
+                                                <ng-option value="NE">Nepali</ng-option>
+                                                <ng-option value="NO">Norwegian</ng-option>
+                                                <ng-option value="FA">Persian</ng-option>
+                                                <ng-option value="PL">Polish</ng-option>
+                                                <ng-option value="PT">Portuguese</ng-option>
+                                                <ng-option value="PA">Punjabi</ng-option>
+                                                <ng-option value="QU">Quechua</ng-option>
+                                                <ng-option value="RO">Romanian</ng-option>
+                                                <ng-option value="RU">Russian</ng-option>
+                                                <ng-option value="SM">Samoan</ng-option>
+                                                <ng-option value="SR">Serbian</ng-option>
+                                                <ng-option value="SK">Slovak</ng-option>
+                                                <ng-option value="SL">Slovenian</ng-option>
+                                                <ng-option value="ES">Spanish</ng-option>
+                                                <ng-option value="SW">Swahili</ng-option>
+                                                <ng-option value="SV">Swedish </ng-option>
+                                                <ng-option value="TA">Tamil</ng-option>
+                                                <ng-option value="TT">Tatar</ng-option>
+                                                <ng-option value="TE">Telugu</ng-option>
+                                                <ng-option value="TH">Thai</ng-option>
+                                                <ng-option value="BO">Tibetan</ng-option>
+                                                <ng-option value="TO">Tonga</ng-option>
+                                                <ng-option value="TR">Turkish</ng-option>
+                                                <ng-option value="UK">Ukranian</ng-option>
+                                                <ng-option value="UR">Urdu</ng-option>
+                                                <ng-option value="UZ">Uzbek</ng-option>
+                                                <ng-option value="VI">Vietnamese</ng-option>
+                                                <ng-option value="CY">Welsh</ng-option>
+                                                <ng-option value="XH">Xhosa</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Currency</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select placeholder="Choose Currency"
+                                                class="form-control custom-select p-0">
+                                                <ng-option value="1" selected>US DOllar(USD)</ng-option>
+                                                <ng-option value="2">European Euro (EUR)</ng-option>
+                                                <ng-option value="3">Japanese Yen (JPY)</ng-option>
+                                                <ng-option value="4">British Pound (GBP)</ng-option>
+                                                <ng-option value="5">Swiss Franc (CHF)</ng-option>
+                                                <ng-option value="6">Canadian Dollar (CAD)</ng-option>
+                                                <ng-option value="7">Australian/New Zealand Dollar (AUD/NZD)</ng-option>
+                                                <ng-option value="8">South African Rand (ZAR)</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Address</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <textarea rows="2" class="form-control"
+                                                placeholder="something text here...">NO.1-8-67, LIG 215,H, 83, near Tulasi Hospital ECIL, APIIC Colony, Kushaiguda, Hyderabad, Telangana 500062</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                  <a ngbNavLink> <i class="nav-icon las la-envelope"></i> Email Settings</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Email Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Email Drivers</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="custom-controls-stacked d-sm-flex">
+                                                <div class="form-check me-4">
+                                                    <input 
+                                                      type="radio" 
+                                                      class="form-check-input" 
+                                                      id="email" 
+                                                      name="example-radios3" 
+                                                      [value]="false" 
+                                                      [(ngModel)]="isSMTPOpen1" 
+                                                      (change)="toggleSmtp1(false)"
+                                                    />
+                                                    <label class="form-check-label" for="email">Mail</label>
+                                                  </div>
+                                                  <div class="form-check me-4">
+                                                    <input 
+                                                      type="radio" 
+                                                      class="form-check-input" 
+                                                      id="emailsmtp" 
+                                                      name="example-radios3" 
+                                                      [value]="true" 
+                                                      [(ngModel)]="isSMTPOpen1" 
+                                                      (change)="toggleSmtp1(true)"
+                                                    />
+                                                    <label class="form-check-label" for="emailsmtp">SMTP</label>
+                                                  </div>
+                                                  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="enable-smtpemail " [ngClass]="{'d-none': !isSMTPOpen1}">
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Host</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="host" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Port</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="port" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">User Name</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="User" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Password</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="password" class="form-control" placeholder="Password" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Encryption</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="encryption" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">From Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="dayone" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">From Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="example@gmail.com" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer btn-list">
+                                <a  href="javascript:void(0);" class="btn btn-success">Save Changes</a>
+                                <a  href="javascript:void(0);" class="btn btn-danger">Cancel</a>
+                                <a  href="javascript:void(0);" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sendmailmodal">Send Test Email</a>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                  <a ngbNavLink><i class="nav-icon lar la-credit-card"></i> Payment Settings</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Payment Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">Paypal</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md" (change)="togglePaypalDisplay($event)">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="open-paypal " [ngClass]="{'d-none': !isPaypalOpen}">
+                                    <div class="form-group mt-3">
+                                        <div class="row ">
+                                            <div class="col-xl-3">
+                                                <label class="form-label">Test Mode</label>
+                                            </div>
+                                            <div class="col-xl-3 pe-0">
+                                                <div class="custom-switch">
+                                                    <div class="form-check form-check-md form-switch">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="switch-md3">
+                                                        <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 ps-xl-0">
+                                                <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row mt-3">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Client ID</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Client ID" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Secret</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Secret" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-label mb-0 mt-2">Currency</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select data-placeholder="Choose Currency..." class="form-control languages" data-trigger>
+                                                    <option value="">Choose Currency</option>
+                                                    <option value="1">US DOllar(USD)</option>
+                                                    <option value="2">European Euro (EUR)</option>
+                                                    <option value="3">Japanese Yen (JPY)</option>
+                                                    <option value="4">British Pound (GBP)</option>
+                                                    <option value="5">Swiss Franc (CHF)</option>
+                                                    <option value="6">Canadian Dollar (CAD)</option>
+                                                    <option value="7">Australian/New Zealand Dollar (AUD/NZD)</option>
+                                                    <option value="8">South African Rand (ZAR)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                  <a ngbNavLink><i class="nav-icon las la-lock"></i> Security Settings</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Security Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">Email Verification</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md4">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">App Update</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md5">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">App Debug</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md6">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">Register</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md7">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="form-label">Google Captcha</label>
+                                        </div>
+                                        <div class="col-xl-3 pe-0">
+                                            <div class="custom-switch">
+                                                <div class="form-check form-check-md form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="switch-md8">
+                                                    <label class="form-check-label text-muted ms-2">Enable/Disable</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 ps-xl-0">
+                                            <span class="d-block fs-12 text-muted">Ut enim ad minim veniam, quis nostrud exercitation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer btn-list">
+                                <a  href="javascript:void(0);" class="btn btn-success">Save Changes</a>
+                                <a  href="javascript:void(0);" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                  <a ngbNavLink> <i class="nav-icon las la-share-alt"></i> Social Settings</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane">
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Social Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="card custom-card border">
+                                            <div class="card-header justify-content-between">
+                                                <h4 class="card-title">Google Login</h4>
+                                                <div class="card-options">
+                                                    <div class="custom-switch">
+                                                        <div class="form-check form-check-md form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label class="form-label">Callback URL <span class="clipboard-icon p-1 border rounded-2" data-clipboard-target="#social1"><i class="las la-clipboard"></i></span></label>
+                                                    <div class="bg-white border br-7" id="social1">
+                                                        <div class="p-3">
+                                                            <span>https://www.doamin.com</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="form-label">Client ID</label>
+                                                    <textarea rows="2" class="form-control" placeholder="something text here..."></textarea>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="form-label">Secret</label>
+                                                    <textarea rows="2" class="form-control" placeholder="something text here..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="card custom-card border">
+                                            <div class="card-header justify-content-between border-0">
+                                                <h4 class="card-title">Facebook Login</h4>
+                                                <div class="card-options">
+                                                    <div class="custom-switch">
+                                                        <div class="form-check form-check-md form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label class="form-label">Callback URL <span class="clipboard-icon p-1 border rounded-2" data-clipboard-target="#social2"><i class="las la-clipboard"></i></span></label>
+                                                    <div class="bg-white border br-7" id="social2">
+                                                        <div class="p-3">
+                                                            <span>https://www.doamin.com</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="form-label">Client ID</label>
+                                                    <textarea rows="2" class="form-control" placeholder="something text here..."></textarea>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="form-label">Secret</label>
+                                                    <textarea rows="2" class="form-control" placeholder="something text here..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </nav>
+        </div>
+    </div>
+    <div class="col-xl-9">
+        <div  [ngbNavOutlet]="nav" class="adminsetting-content" id="setting-tabContent">
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Row-->

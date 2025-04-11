@@ -1,0 +1,73 @@
+::ng-deep {
+  app-hr-dashboard-page-header {
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      background-color: rgb(222, 229, 247) !important;
+    }
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    .mat-form-field {
+      overflow: hidden;
+      border-radius: 0.25rem;
+      width: 150px;
+      height: 42px;
+    }
+
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      padding: 0 0.75rem !important;
+    }
+
+    .input-group>.custom-select:not(:last-child),
+    .input-group>.form-control:not(:last-child) {
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+    }
+
+    .input-group {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .dark-mode {
+    app-hr-dashboard-page-header {
+      .mat-form-field-appearance-fill .mat-form-field-flex {
+        background-color: rgba(0,0,0,0.2) !important;
+        color: #fff;
+      }
+      .mat-form-field-label {
+        color: rgb(255 255 255 / 60%);
+    }
+      .mat-datepicker-toggle,
+      .mat-datepicker-content .mat-calendar-next-button,
+      .mat-datepicker-content .mat-calendar-previous-button {
+        color: rgb(204 217 255);
+      }
+
+    }
+    
+  }
+  .transparent-mode {
+    app-hr-dashboard-page-header {
+      .mat-form-field-appearance-fill .mat-form-field-flex {
+        background-color: rgba(0,0,0,0.2) !important;
+        color: #fff;
+      }
+      .mat-form-field-label {
+        color: rgb(255 255 255 / 60%);
+    }
+      .mat-datepicker-toggle,
+      .mat-datepicker-content .mat-calendar-next-button,
+      .mat-datepicker-content .mat-calendar-previous-button {
+        color: rgb(204 217 255);
+      }
+
+    }
+    
+  }
+}

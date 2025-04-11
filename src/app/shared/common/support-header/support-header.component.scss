@@ -1,0 +1,14 @@
+.sticky{
+    position: fixed ;
+    top: 0;
+}
+::ng-deep{
+    @media screen and (min-width:992px) {
+        .horizontal-megamenu{
+            display: block !important;
+        }        
+    }
+    app-support-system .slide-menu.open{
+        display: block !important;
+    }
+}

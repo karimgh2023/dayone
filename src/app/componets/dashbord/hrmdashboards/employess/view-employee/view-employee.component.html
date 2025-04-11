@@ -1,0 +1,916 @@
+<app-hr-dashboard-page-header
+  [title]="'View Employees'"
+  [title2]="'Add New Employee'"
+  [class]="'btn btn-primary'"
+  [path]="'/dashboard/hrmdashboards/employees/add-employee'"
+></app-hr-dashboard-page-header>
+
+<!-- Row -->
+<div class="row ">
+  <div class="col-xxl-3 col-md-12 col-lg-12">
+    <div class="card box-widget widget-user custom-card">
+      <div class="card-body text-center">
+        <div class="widget-user-image mx-auto text-center">
+          <img
+            class="avatar avatar-xxl avatar-rounded rounded-circle"
+            alt="img"
+            src="./assets/images/users/1.jpg"
+          />
+        </div>
+        <div class="pro-user mt-3">
+          <h5 class="pro-user-username text-dark mb-1 fs-16">Faith Harris</h5>
+          <h6 class="pro-user-desc text-muted fs-12 mb-1">Web Designer</h6>
+        </div>
+        <!--Start:: employee ratings -->
+        <ngb-rating [(rate)]="currentRate" class="text-warning"></ngb-rating>
+        <!-- End:: employee ratings -->
+      </div>
+      <div class="card-footer p-0">
+        <div class="row mx-0">
+          <div class="col-4 text-center py-3 border-end">
+            <h5 class="fs-12 fw-medium mb-3">January</h5>
+            <h5 class="mb-2">
+              <span class="fs-18 text-success">22</span>
+              <span class="my-auto fs-9 fw-normal ms-1 me-1">/</span>
+              <span class="fs-18 fw-medium text-dark">31</span>
+            </h5>
+            <h5 class="fs-12 mb-0">Attendance</h5>
+          </div>
+          <div class="col-4 py-3 text-center border-end">
+            <h5 class="fs-12 fw-medium mb-3">Year-2021</h5>
+            <h5 class="mb-2">
+              <span class="fs-18 text-orange">0</span>
+              <span class="my-auto fs-9 fw-normal ms-1 me-1">/</span>
+              <span class="fs-18 fw-medium text-dark">41</span>
+            </h5>
+            <h5 class="fs-12 mb-0">Leaves</h5>
+          </div>
+          <div class="col-4 text-center py-3">
+            <h5 class="fs-12 fw-medium mb-3">Year-2021</h5>
+            <h5 class="mb-2"><span class="fs-18 text-primary">0</span></h5>
+            <h5 class="fs-12 mb-0">Awards</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Statistics-2021</div>
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-evenly">
+          <div class="col-auto pe-0 text-center">
+            <circle-progress
+              [percent]="89"
+              [radius]="30"
+              [space]="-5"
+              [outerStrokeWidth]="5"
+              [innerStrokeWidth]="5"
+              [showInnerStroke]="true"
+              [outerStrokeColor]="'#3366ff'"
+              [innerStrokeColor]="'#93abf3'"
+              [showUnits]="false"
+              [showSubtitle]="false"
+              [animation]="true"
+              [animationDuration]="300"
+              class="chart-circle"
+            ></circle-progress>
+            <h6 class="fs-14 fw-medium">Attendance</h6>
+          </div>
+          <div class="col-auto pe-0 text-center">
+            <circle-progress
+              [percent]="23"
+              [radius]="30"
+              [space]="-5"
+              [outerStrokeWidth]="5"
+              [innerStrokeWidth]="5"
+              [showInnerStroke]="true"
+              [outerStrokeColor]="'#fe7f00'"
+              [innerStrokeColor]="'#f7cba0'"
+              [showUnits]="false"
+              [showSubtitle]="false"
+              [animation]="true"
+              [animationDuration]="300"
+              class="chart-circle"
+            ></circle-progress>
+            <h6 class="fs-14 fw-medium">Projects</h6>
+          </div>
+          <div class="col-auto pe-0 text-center">
+            <circle-progress
+              [percent]="67"
+              [radius]="30"
+              [space]="-5"
+              [outerStrokeWidth]="5"
+              [innerStrokeWidth]="5"
+              [showInnerStroke]="true"
+              [outerStrokeColor]="'#0dcd94'"
+              [innerStrokeColor]="'#87e9cb'"
+              [showUnits]="false"
+              [showSubtitle]="false"
+              [animation]="true"
+              [animationDuration]="300"
+              class="chart-circle"
+            ></circle-progress>
+            <h6 class="fs-14 fw-medium">Performance</h6>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-flex align-items-end justify-content-between">
+          <h6 class="">This Week</h6>
+          <h6 class="fw-bold mb-1">01</h6>
+        </div>
+        <div
+          class="progress progress-sm progress-animate mb-4"
+          role="progressbar"
+          aria-valuenow="10"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar bg-danger" style="width: 10%"></div>
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+          <h6 class="">This Month</h6>
+          <h6 class="fw-bold mb-1">05</h6>
+        </div>
+        <div
+          class="progress progress-sm progress-animate mb-4"
+          role="progressbar"
+          aria-valuenow="30"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar bg-info" style="width: 30%"></div>
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+          <h6 class="">This Year</h6>
+          <h6 class="fw-bold mb-1">22</h6>
+        </div>
+        <div
+          class="progress progress-sm progress-animate"
+          role="progressbar"
+          aria-valuenow="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar bg-warning" style="width: 50%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xxl-9 col-md-12 col-lg-12">
+    <div class="tab-menu-heading hremp-tabs p-0 border-0">
+      <div class="tabs-menu1">
+        <!-- Tabs -->
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="panel-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Personal Details</a>
+            <ng-template ngbNavContent>
+              <div class="tab-pane active" id="tab5">
+                <div class="card-body">
+                  <h4 class="mb-4 font-weight-bold">Basic</h4>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">User Name</label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <input
+                              type="text"
+                              class="form-control mb-md-0 mb-5"
+                              placeholder="First Name"
+                              value="Faith"
+                            />
+                            <span class="text-muted"></span>
+                          </div>
+                          <div class="col-md-6">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Last Name"
+                              value="Harris"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Father Name</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Name"
+                          value="kyari"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Contact Number</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Phone Number"
+                          value="9685321475"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Emergency Contact Number 01</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Contact Number01"
+                          value="8695324712"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Emergency Contact Number 02</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Contact Number02"
+                          value="9966583155"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Date Of Birth</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <form class="form-inline w-100">
+                          <div class="form-group w-100">
+                            <div class="input-group w-100">
+                              <input
+                                class="form-control breadcrumb-input"
+                                id="daterange"
+                                placeholder="Search By Date Range"
+                                type="text"
+                                mwlFlatpickr
+                             
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div> 
+                <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label">Gender</label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="custom-controls-stacked d-md-flex">
+                          <div class="form-check me-4">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                              checked=""
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexRadioDefault1"
+                            >
+                              Male
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault2"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexRadioDefault2"
+                            >
+                              Female
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Marital Status</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <ng-select
+                          name="projects"
+                          class="form-control custom-select p-0"
+                          placeholder="Single"
+                        >
+                          <ng-option value="0">Select</ng-option>
+                          <ng-option value="1">Single</ng-option>
+                          <ng-option value="2">Married</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Blood Group</label>
+                      </div>
+                      <div class="col-md-9">
+                        <ng-select
+                          name="projects"
+                          class="form-control custom-select p-0"
+                          placeholder="B+"
+                        >
+                          <ng-option value="0">A+</ng-option>
+                          <ng-option value="1">B+</ng-option>
+                          <ng-option value="2">O+</ng-option>
+                          <ng-option value="3">AB+</ng-option>
+                          <ng-option value="4">A-</ng-option>
+                          <ng-option value="5">B-</ng-option>
+                          <ng-option value="6">O-</ng-option>
+                          <ng-option value="7">AB-</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Email</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="email"
+                          value="faith@gmail.com"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Present Address</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <textarea
+                          rows="3"
+                          class="form-control"
+                          placeholder="Address1"
+                        >
+4102 Masonic Hill Road Little Rock Arkansas-727212</textarea
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2" >
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Permanent Address</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <textarea
+                          rows="3"
+                          class="form-control"
+                          placeholder="Address2"
+                        >
+4102 Masonic Hill Road Little Rock Arkansas-727212</textarea
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">Upload Photo</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"></label>
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="mb-5 mt-7 font-weight-bold">Account Login</h4>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Employee Email</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="employee email"
+                          value="faith@gmail.com"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Password</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="password"
+                          value="12345"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mt-7">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label class="form-label">Email Notification:</label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-check form-check-md form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="switch-md1"
+                          />
+                          <label
+                            class="form-check-label mt-0 custom-switch-description"
+                            for="switch-md"
+                            >On/Off</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Company Details</a>
+            <ng-template ngbNavContent>
+              <div class="tab-pane" id="tab6">
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Employee ID</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="#ID"
+                          value="#2987"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Department</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Department"
+                          value="Designing Department"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Designation</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Designation"
+                          value="Web Designer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Date Of Joining</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control fc-datepicker"
+                          placeholder="DD-MM-YYYY"
+                          value="05-05-2017"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Resignation Date</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <form class="form-inline w-100">
+                          <div class="form-group w-100">
+                            <div class="input-group w-100">
+                              <input
+                                class="form-control fc-datepicker"
+                                placeholder="yyyy-mm-dd"
+                                mwlFlatpickr
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Termination Date</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <form class="form-inline w-100">
+                          <div class="form-group w-100">
+                            <div class="input-group w-100">
+                              <input
+                                class="form-control fc-datepicker"
+                                placeholder="yyyy-mm-dd"
+                                mwlFlatpickr
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Credit Leaves
+                          <span
+                            class="form-help"
+                            placement="top"
+                            ngbTooltip="Unused leaves for the Employee"
+                            >?</span
+                          >
+                        </label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="mb-5 mt-7 font-weight-bold">Salary</h4>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Type</label>
+                      </div>
+                      <div class="col-md-9">
+                        <ng-select
+                          class="form-control custom-select p-0"
+                          placeholder="Full-Time"
+                        >
+                          <ng-option value="0">Full-Time</ng-option>
+                          <ng-option value="1">Part-Time</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Salary</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="$Salary"
+                          value="$28000"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mt-7">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label class="form-label">Status:</label>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-check form-check-md form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="switch-md"
+                            checked=""
+                          />
+                          <label
+                            class="form-check-label mt-0 custom-switch-description"
+                            for="switch-md"
+                            >Active/Inactive</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>Bank Details</a>
+            <ng-template ngbNavContent>
+              <div class="tab-pane" id="tab7">
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Account Holder</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Name"
+                          value="Faith Harris"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Account Number</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Number"
+                          value="36985214704"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2">Bank Name</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Name"
+                          value="ABCD Bank"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Branch Location</label
+                        >
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Location"
+                          value="Little Rock Arkansas"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Bank Code (IFSC)
+                          <span
+                            class="form-help"
+                            placement="top"
+                            ngbTooltip="Bank Identify Number in your Country"
+                            >?</span
+                          >
+                        </label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Code"
+                          value="ABC0002189"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row gy-2">
+                      <div class="col-md-3">
+                        <label class="form-label mb-0 mt-2"
+                          >Tax Payer ID (PAN)
+                          <span
+                            class="form-help"
+                            placement="top"
+                            ngbTooltip="Taxpayer Identification Number Used in your Country"
+                            >?</span
+                          >
+                        </label>
+                      </div>
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="ID No"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>Upload Documents</a>
+            <ng-template ngbNavContent>
+              <div class="tab-pane" id="tab8">
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">Resume</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"></label>
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">ID Proof</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"></label>
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">Offer Letter</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"
+                            >Attachment:</label
+                          >
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">Joining Letter</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"></label>
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">Agreement Letter</div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"
+                            >Attachment:</label
+                          >
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-label mb-0 mt-2">
+                          Experience Letter
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="form-label" class="form-label"
+                            >Attachment:</label
+                          >
+                          <input class="form-control" type="file" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+      <div [ngbNavOutlet]="nav" class="tab-content"></div>
+      <div class="panel-footer text-end">
+        <a href="javascript:;" class="me-2 btn btn-primary">Updated</a>
+        <a href="javascript:;" class="btn btn-danger">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Row-->

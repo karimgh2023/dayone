@@ -1,0 +1,237 @@
+<app-task-dashboard-page-header [title]="'Project Overview Calendar'" [title3]="'Project'"></app-task-dashboard-page-header>
+
+   <!-- Start::row-1 -->
+   <div class="row">
+    <div class="col-md-12">
+        <div class="card custom-card">
+            <div class="card-header border-0">
+                <h4 class="card-title">Project Overview This Month</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Employee Name:</label>
+                                    <ng-select class="form-control custom-select p-0" data-trigger placeholder="Select Employee">
+                                        <ng-option value="">Select Employee</ng-option>
+                                        <ng-option value="1" selected>Faith Harris</ng-option>
+                                        <ng-option value="2">Austin Bell</ng-option>
+                                        <ng-option value="3">Maria Bower</ng-option>
+                                        <ng-option value="4">Peter Hill</ng-option>
+                                        <ng-option value="5">Victoria Lyman</ng-option>
+                                        <ng-option value="6">Adam Quinn</ng-option>
+                                        <ng-option value="7">Melanie Coleman</ng-option>
+                                        <ng-option value="8">Max Wilson</ng-option>
+                                        <ng-option value="9">Amelia Russell</ng-option>
+                                        <ng-option value="10">Justin Metcalfe</ng-option>
+                                        <ng-option value="11">Ryan Young</ng-option>
+                                        <ng-option value="12">Jennifer Hardacre</ng-option>
+                                        <ng-option value="13">Justin Parr</ng-option>
+                                        <ng-option value="14">Julia Hodges</ng-option>
+                                        <ng-option value="15">Michael Sutherland</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Select Date:</label>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                            <input type="text" mwlFlatpickr class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Month:</label>
+                                    <ng-select class="form-control custom-select p-0" data-trigger placeholder="Select Month">
+                                        <ng-option value="">Select Month</ng-option>
+                                        <ng-option value="1" selected>January</ng-option>
+                                        <ng-option value="2">February</ng-option>
+                                        <ng-option value="3">March</ng-option>
+                                        <ng-option value="4">April</ng-option>
+                                        <ng-option value="5">May</ng-option>
+                                        <ng-option value="6">June</ng-option>
+                                        <ng-option value="7">July</ng-option>
+                                        <ng-option value="8">August</ng-option>
+                                        <ng-option value="9">September</ng-option>
+                                        <ng-option value="10">October</ng-option>
+                                        <ng-option value="11">November</ng-option>
+                                        <ng-option value="12">December</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Year:</label>
+                                    <ng-select class="form-control custom-select p-0" data-trigger placeholder="Select Year">
+                                        <ng-option value="">Select Year</ng-option>
+                                        <ng-option value="1">2024</ng-option>
+                                        <ng-option value="2">2023</ng-option>
+                                        <ng-option value="3">2022</ng-option>
+                                        <ng-option value="4" selected>2021</ng-option>
+                                        <ng-option value="5">2020</ng-option>
+                                        <ng-option value="6">2019</ng-option>
+                                        <ng-option value="7">2018</ng-option>
+                                        <ng-option value="8">2017</ng-option>
+                                        <ng-option value="9">2016</ng-option>
+                                        <ng-option value="10">2015</ng-option>
+                                        <ng-option value="11">2014</ng-option>
+                                        <ng-option value="12">2013</ng-option>
+                                        <ng-option value="13">2012</ng-option>
+                                        <ng-option value="14">2011</ng-option>
+                                        <ng-option value="15">2019</ng-option>
+                                        <ng-option value="16">2010</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-2">
+                        <div class="form-group mt-2">
+                            <label class="form-label"></label>
+                            <a  href="javascript:void(0);" class="btn btn-primary d-grid">Search</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End::row-1 -->
+
+<!-- Start::row-2 -->
+<div class="row">
+    <div class="col-xl-3">
+        <div class="card custom-card">
+            <div class="card-header d-grid">
+                <button class="btn btn-primary-light btn-wave"><i class="ri-add-line align-middle me-1 fw-medium d-inline-block"></i>Create New Event</button>
+            </div>
+            <div class="card-body p-0">
+                <div id="external-events"  #external class="border-bottom p-3">
+                    <div
+                      class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-primary border border-primary">
+                      <div class="fc-event-main">Calendar Events</div>
+                    </div>
+                    <div
+                      class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-secondary border border-secondary"
+                      data-class="bg-secondary">
+                      <div class="fc-event-main">Birthday EVents</div>
+                    </div>
+                    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-success border border-success"
+                      data-class="bg-success">
+                      <div class="fc-event-main">Holiday Calendar</div>
+                    </div>
+                    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-info border border-info"
+                      data-class="bg-info">
+                      <div class="fc-event-main">Office Events</div>
+                    </div>
+                    <div
+                      class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-warning border border-warning"
+                      data-class="bg-warning">
+                      <div class="fc-event-main">Other Events</div>
+                    </div>
+                    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger border border-danger"
+                      data-class="bg-danger">
+                      <div class="fc-event-main">Festival Events</div>
+                    </div>
+                    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-teal border border-teal"
+                      data-class="bg-danger">
+                      <div class="fc-event-main">Timeline Events</div>
+                    </div>
+                </div>
+                <div class="p-3 border-bottom">
+                  <div class="d-flex align-items-center mb-4 justify-content-between">
+                    <h6 class="fw-medium">
+                      Activity :
+                    </h6>
+                    <button class="btn btn-primary-light btn-sm">View All</button>
+                  </div>
+                  <ul class="list-unstyled mb-0 fullcalendar-events-activity" id="full-calendar-activity">
+                    <li>
+                      <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <p class="mb-1 fw-medium">
+                          Monday, Jan 1,2023
+                        </p>
+                        <span class="badge bg-light text-default mb-1">12:00PM - 1:00PM</span>
+                      </div>
+                      <p class="mb-0 text-muted fs-12">
+                        Meeting with a client about new project requirement.
+                      </p>
+                    </li>
+                    <li>
+                      <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <p class="mb-1 fw-medium">
+                          Thursday, Dec 29,2022
+                        </p>
+                        <span class="badge bg-success mb-1">Completed</span>
+                      </div>
+                      <p class="mb-0 text-muted fs-12">
+                        Birthday party of niha suka
+                      </p>
+                    </li>
+                    <li>
+                      <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <p class="mb-1 fw-medium">
+                          Wednesday, Jan 3,2023
+                        </p>
+                        <span class="badge bg-warning-transparent mb-1">Reminder</span>
+                      </div>
+                      <p class="mb-0 text-muted fs-12">
+                        Work target for new project is completing
+                      </p>
+                    </li>
+                    <li>
+                      <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <p class="mb-1 fw-medium">
+                          Friday, Jan 20,2023
+                        </p>
+                        <span class="badge bg-light text-default mb-1">06:00PM - 09:00PM</span>
+                      </div>
+                      <p class="mb-0 text-muted fs-12">
+                        Watch new movie with family
+                      </p>
+                    </li>
+                    <li>
+                      <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <p class="mb-1 fw-medium">
+                          Saturday, Jan 07,2023
+                        </p>
+                        <span class="badge bg-danger-transparent mb-1">Due Date</span>
+                      </div>
+                      <p class="mb-0 text-muted fs-12">
+                        Last day to pay the electricity bill and water bill.need to check the bank details.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="p-3 text-center">
+                  <img src="./assets/images/media/png/1.png" alt="" class="w-65">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-9">
+        <div class="card custom-card">
+            <div class="card-header">
+                <div class="card-title">Full Calendar</div>
+            </div>
+            <div class="card-body">
+                <div id='calendar2'>
+                    <full-calendar  [options]="calendarOptions" 
+                    [events]="calendarEvents"
+                     ></full-calendar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Start::row-2 -->

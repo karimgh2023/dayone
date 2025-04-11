@@ -1,0 +1,251 @@
+<app-page-header [title]="'Payslips'"></app-page-header>
+<!-- Row -->
+ <!-- Start::row-1 -->
+ <div class="row">
+  <div class="col-md-12">
+      <div class="card custom-card">
+          <div class="card-header  border-0">
+              <h5 class="card-title">My Payslips Summary</h5>
+          </div>
+          <div class="card-body">
+              <div class="row mb-3 gap-1 gap-lg-0">
+                  <div class="col-lg-6">
+                      <div class="d-flex align-items-center">
+                          <span>Show</span>
+                          <div class="d-flex ms-2 mx-2">
+                              <div class="form-group mb-0">
+                                  <ng-select name="quantity" id="select-countries17" class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                      <ng-option value="1">1</ng-option>
+                                      <ng-option value="2">2</ng-option>
+                                      <ng-option value="3">3</ng-option>
+                                      <ng-option value="4">4</ng-option>
+                                  </ng-select>
+                              </div>
+                          </div>
+                          <span>entries</span>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="float-end">
+                          <input type="text" class="form-control" placeholder="search">
+                      </div>
+                  </div>
+              </div>
+              <div class="table-responsive">
+                  <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="emp-attendance">
+                      <thead>
+                          <tr>
+                              <th class="border-bottom-0 text-center">#ID</th>
+                              <th class="border-bottom-0">Month</th>
+                              <th class="border-bottom-0">Year</th>
+                              <th class="border-bottom-0">$ Net Salary</th>
+                              <th class="border-bottom-0">Generated Date</th>
+                              <th class="border-bottom-0">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td class="text-center">#10029</td>
+                              <td>January</td>
+                              <td>2021</td>
+                              <td class="fw-semibold">$32,000</td>
+                              <td>01-02-2021</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10321</td>
+                              <td>December</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-01-2021</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10598</td>
+                              <td>November</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-12-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10438</td>
+                              <td>October</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-11-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10837</td>
+                              <td>September</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-10-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10391</td>
+                              <td>August</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-09-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#11073</td>
+                              <td>July</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>02-08-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10839</td>
+                              <td>June</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>02-07-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10289</td>
+                              <td>May</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-06-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10422</td>
+                              <td>April</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$28,000</td>
+                              <td>01-05-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10029</td>
+                              <td>March</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$24,000</td>
+                              <td>01-04-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10398</td>
+                              <td>February</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$24,000</td>
+                              <td>01-03-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10092</td>
+                              <td>January</td>
+                              <td>2020</td>
+                              <td class="fw-semibold">$24,000</td>
+                              <td>01-02-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#11986</td>
+                              <td>December</td>
+                              <td>2019</td>
+                              <td class="fw-semibold">$24,000</td>
+                              <td>01-01-2020</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="text-center">#10029</td>
+                              <td>November</td>
+                              <td>2019</td>
+                              <td class="fw-semibold">$24,000</td>
+                              <td>01-12-2019</td>
+                              <td>
+                                  <a class="btn btn-primary  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="View"><i class="fe fe-eye"></i></a>
+                                  <a class="btn btn-success  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Download"><i class="fe fe-download"></i></a>
+                                  <a class="btn btn-info  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Print" onclick="javascript:window.print();"><i class="fe fe-printer"></i></a>
+                                  <a class="btn btn-warning  btn-sm m-1" data-bs-toggle="tooltip" ngbTooltip="Share"><i class="fe fe-share-2"></i></a>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!--End::row-1 -->
+<!-- End Row-->
+

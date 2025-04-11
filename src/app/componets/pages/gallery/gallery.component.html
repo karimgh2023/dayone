@@ -1,0 +1,22 @@
+<app-page-header [title]="'Gallery'"></app-page-header>
+<!-- Row -->
+ <div class="row">
+  <div class="col-md-12">
+    <div class="card custom-card">
+      <div class="card-header border-bottom-0">
+        <h4 class="card-title">Lightbox Gallery</h4>
+        </div>
+        <div class="card-body">
+          <div class="list-unstyled row" gallerize>
+            @for(img of imageData;track $index){
+              <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+    
+                <a  class="glightbox card" data-gallery="gallery1">
+                   <img [src]="img.srcUrl" previewFullscreen="true" alt="image"> </a>
+              </div>
+            }
+          </div>
+        </div>
+    </div>
+  </div>
+ </div>

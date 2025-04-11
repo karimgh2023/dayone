@@ -1,0 +1,141 @@
+<app-page-header [title]="'Todo list01'"></app-page-header>
+
+<!-- Start::row-1 -->
+<div class="row">
+    <div class="col-md-12 col-xl-3 col-lg-4">
+        <div class="card custom-card">
+            <div class="list-group list-group-transparent mb-0 mail-inbox pb-3 border-bottom-0">
+                <div class="m-3 text-center">
+                    <a href="javascript:void(0);" class="btn btn-primary d-grid">Add New Task</a>
+                </div>
+                <a href="javascript:void(0);"
+                    class="list-group-item list-group-item-action d-flex align-items-center active">
+                    <span class="icons"><i class="ri-server-line"></i></span> All Tasks <span
+                        class="ms-auto badge badge-success bg-success">12</span>
+                </a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <span class="icons"><i class="ri-file-warning-line"></i></span> Important <span
+                        class="ms-auto badge badge-danger bg-danger">3</span>
+                </a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <span class="icons"><i class="ri-star-line"></i></span> Starred
+                </a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <span class="icons"><i class="ri-spam-line"></i></span> Spam
+                </a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <span class="icons"><i class="ri-archive-line"></i></span> Archive
+                </a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <span class="icons"><i class="ri-delete-bin-line"></i></span> Trash
+                </a>
+            </div>
+            <div class="card-body border-top">
+                <div class="list-group list-group-transparent mb-0 mail-inbox">
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-primary me-2"></span> Pending Tasks
+                    </a>
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-secondary me-2"></span> Unassigned Tasks
+                    </a>
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-success me-2"></span> Completed Tasks
+                    </a>
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-info me-2"></span> Hold Tasks
+                    </a>
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-warning me-2"></span> Task Issue
+                    </a>
+                    <a href="javascript:void(0);"
+                        class="list-group-item list-group-item-action d-flex align-items-center px-0 py-2">
+                        <span class="w-3 h-3 rounded-circle bg-danger me-2"></span> Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-8 col-xl-9">
+        <div class="card">
+            <div class="card-body p-6">
+                <div class="inbox-body">
+                    <div class="row">
+                        <div class="col mb-4">
+                            <div class="form-group w-200">
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i class="fe fe-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="Search Tasks">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-auto mb-4">
+                            <div class="hidden-phone" ngbDropdown>
+                                <a data-bs-toggle="dropdown" ngbDropdownToggle href="javascript:void(0);"
+                                    class="btn btn-white no-caret" aria-expanded="false">
+                                    Sort By
+                                    <i class="fa fa-angle-down "></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                    <li class="dropdown-item" ngbDropdownItem><a href="javascript:void(0);">Ascending
+                                            Order</a></li>
+                                    <li class="dropdown-item" ngbDropdownItem><a href="javascript:void(0);">Descending
+                                            Order</a></li>
+                                    <li class="divider my-1"></li>
+                                    <li class="dropdown-item" ngbDropdownItem><a href="javascript:void(0);">Settings</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-inbox table-hover text-nowrap mb-0">
+                            <tbody>
+                                @for(todo1 of TodoList01ListData;track $index){
+
+                                <tr class="">
+                                    <td class="inbox-small-cells w-7"> <label
+                                            class="custom-control custom-checkbox mb-0"> <input type="checkbox"
+                                                class="form-check-input" name="example-checkbox2" value="option2"> <span
+                                                class="custom-control-label"></span> </label> </td>
+                                    <td class="inbox-small-cells w-4"><i class="fa fa-star {{todo1.starText}} "></i>
+                                    </td>
+                                    <td class="view-message dont-show fw-semibold"><img
+                                            class="avatar avatar-sm rounded-circle me-2" src={{todo1.img}}
+                                            alt="img">{{todo1.name}}</td>
+                                    <td class="view-message">{{todo1.task}}</td>
+                                    <td class="view-message"><span class="badge bg-{{todo1.status}} badge-pill">
+                                            {{todo1.statusText}}</span>
+                                    </td>
+                                    <td class="view-message text-end fw-semibold">
+                                        <a href="javascript:;" (click)="remove(todo1.id)"
+                                            class="fe fe-trash-2 text-muted"></a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="pagination ">
+            <li class="page-item page-prev disabled"> <a class="page-link" href="javascript:void(0);"
+                    tabindex="-1">Prev</a> </li>
+            <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+            <li class="page-item page-next"> <a class="page-link" href="javascript:void(0);">Next</a> </li>
+        </ul>
+    </div>
+</div>
+<!-- End::row-1 -->

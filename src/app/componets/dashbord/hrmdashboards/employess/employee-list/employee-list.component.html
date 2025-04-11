@@ -1,0 +1,174 @@
+
+<app-hr-dashboard-page-header [title]="'Employees'"  [title2]="'Add New Employee'" [class]="'btn btn-primary'" [class1]="''" [path]="'/dashboard/hrmdashboards/employees/add-employee'" ></app-hr-dashboard-page-header>
+       
+              
+              <!-- Start::row-1 -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-md-6">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Employees</span>
+                                            <h3 class="mb-0 mt-1 text-success">5,678</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="icon1 bg-success-transparent my-auto float-end"> <i class="las la-users"></i> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Male Employees</span>
+                                            <h3 class="mb-0 mt-1 text-primary">3,876</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="icon1 bg-primary-transparent my-auto float-end"> <i class="las la-male"></i> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Female Employees</span>
+                                        <h3 class="mb-0 mt-1 text-secondary">1,396</h3> </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="icon1 bg-secondary-transparent my-auto float-end"> <i class="las la-female"></i> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="mt-0 text-start"> <span class="fw-medium">Total New Employees</span>
+                                        <h3 class="mb-0 mt-1 text-danger">398</h3> </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="icon1 bg-danger-transparent my-auto float-end"> <i class="las la-user-friends"></i> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Start::row-1 -->
+
+                <!-- Start::row-2 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card custom-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Employees List</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-2 gap-2 gap-lg-0">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mb-0">
+                                                    <ng-select name="quantity" id="select-countries17" placeholder="10" class="form-control  wd-150 p-0" data-trigger>
+                                                        <ng-option value="1" selected="">10</ng-option>
+                                                        <ng-option value="2">25</ng-option>
+                                                        <ng-option value="3">50</ng-option>
+                                                        <ng-option value="4">100</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <input type="text" class="form-control" placeholder="search">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table mb-0 text-nowrap text-md-nowrap table-bordered border">
+                                        <thead>
+                                            <tr class="border-bottom">
+                                                <th>No</th>
+                                                <th>Emp Name</th>
+                                                <th>#Emp ID</th>
+                                                <th>Department</th>
+                                                <th>Designation</th>
+                                                <th>Phone Number</th>
+                                                <th>Join Date</th>
+                                                <th>At Work</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(emplist of lists;track $index){
+
+                                                <tr class="border-bottom">
+                                                    <th scope="row">{{emplist.id}}</th>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar me-2 avatar-rounded">
+                                                                <img [src]="emplist.src" alt="img">
+                                                            </div>
+                                                            <div>
+                                                                <div class="lh-1">
+                                                                    <h6 class="mb-1">{{emplist.name}}</h6>
+                                                                </div>
+                                                                <div class="lh-1">
+                                                                    <span
+                                                                        class="fs-12 text-muted">{{emplist.mail}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{emplist.empid}}</td>
+                                                    <td>{{emplist.dept}}</td>
+                                                    <td> {{emplist.designation}}</td>
+                                                    <td>{{emplist.phno}}</td>
+                                                    <td>{{emplist.date}}</td>
+                                                    <td>{{emplist.work}}</td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>
+                                                        <a class="btn btn-primary btn-icon"  routerLink="/dashboard/hrmdashboards/employees/view-employee">
+                                                            <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="View/Edit"></i>
+                                                        </a>
+                                                        <a class="btn btn-danger btn-icon" data-bs-toggle="tooltip" (click)="deleteData(emplist.id)" data-original-title="Delete"><i class="fe fe-trash-2"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                       
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Start::pagination -->
+                                <nav class="mt-4">
+                                    <ul class="pagination justify-content-end mb-0">
+                                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                    </ul>
+                                </nav>
+                                <!-- End::pagination -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End::row-2 -->

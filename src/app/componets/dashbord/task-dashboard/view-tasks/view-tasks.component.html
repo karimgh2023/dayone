@@ -1,0 +1,582 @@
+<app-task-dashboard-page-header [title]="'View Task'" [title3]="'Task'"></app-task-dashboard-page-header>
+
+<div class="row">
+    <div class="col-xxl-3 col-md-12 col-lg-12">
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between border-bottom-0">
+                <div class="card-title">Assigned To</div>
+                <div class="ms-auto">
+                    <a   class="btn btn-danger btn-sm" data-bs-toggle="modal" (click)="open(content)" data-bs-target="#recurringmodal">Recurring</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <div class="widget-user-image mx-auto text-center">
+                        <img  class="avatar avatar-xxl avatar-rounded rounded-circle" alt="img" src="./assets/images/users/1.jpg">
+                    </div>
+                    <div class="pro-user mt-3">
+                        <h5 class="pro-user-username text-dark mb-1 fs-16">Faith Harris</h5>
+                        <h6 class="pro-user-desc text-muted fs-12">Web Designer</h6>
+                    </div>
+                </div>
+                <div class="table-responsive mt-4">
+                    <table class="table mb-0 table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Department</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">Designing</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Start Date</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">12-02-2021</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Deadline</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="fw-semibold">16-06-2021</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Priority</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="badge bg-danger-transparent">High</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="w-50">Work Status</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <span class="badge bg-warning">On hold</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h6 class="">Project Status</h6>
+                    <h6 class="font-weight-bold mb-1">30%</h6>
+                </div>
+                <div class="progress progress-sm">
+                    <div class="progress-bar bg-success w-30"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-9 col-md-12 col-lg-12">
+        <div class="tab-menu-heading hremp-tabs p-0 border-0 task-view-tabs">
+            <div class="tabs-menu1">
+                <!-- Tabs -->
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav panel-tabs">
+                    <li [ngbNavItem]="1" class="ms-sm-4">
+                      <a ngbNavLink>Details</a>
+                        <ng-template ngbNavContent>
+                                    <h5 class="mb-4 fw-semibold">Description</h5>
+                                    <div class="main-profile-bio mb-0">
+                                        <span class="fs-14 mt-2 text-muted">Mobile App Ui Designing and Prototyping
+                                            It is a long established fact that a reader will be distracted by the readable content
+                                            of a page when looking
+                                        </span>
+                                        <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                            industry's standard dummy when an unknown printer took a galley of type and scrambled it
+                                            to make a type specimen book. It has survived not only five centuries nchanged.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                            dolore eu fugiat nulla pariatur. </p>
+                                        <p class="mb-0">pleasure rationally encounter but because pursue consequences that are
+                                            extremely painful.occur in which toil and pain can procure him some great pleasure.. <a
+                                                href="javascript:;">More</a></p>
+                                        <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                            industry's standard dummy when an unknown printer took a galley of type and scrambled it
+                                            to make a type specimen book. It has survived not only five centuries nchanged.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                            dolore eu fugiat nulla pariatur. </p>
+                                        <p class="mb-0">pleasure rationally encounter but because pursue consequences that are
+                                            extremely painful.occur in which toil and pain can procure him some great pleasure.. <a
+                                                href="javascript:;">More</a></p>
+                                        <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                            industry's standard dummy when an unknown printer took a galley of type and scrambled it
+                                            to make a type specimen book. It has survived not only five centuries nchanged.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                            dolore eu fugiat nulla pariatur. </p>
+                                        <p>pleasure rationally encounter but because pursue consequences that are extremely
+                                            painful.occur in which toil and pain can procure him some great pleasure.. <a
+                                                href="javascript:;">More</a></p>
+                                        <h5 class="mb-4 mt-5 fw-semibold">Attachments</h5>
+                                        <div class="row attachments-doc">
+                                            <div class="col-md-12 col-xxl-4 col-xl-12">
+                                                <div class="list-group-item  align-items-center my-1">
+                                                    <div class="d-md-flex flex-wrap">
+                                                        <img src="./assets/images/media/files/attachments/2.png" alt="img"
+                                                            class="avatar bg-transparent avatar-xl m-1">
+                                                        <a href="javascript:;" class="fw-semibold fs-14 mt-4"> document.pdf<span
+                                                                class="text-muted ms-2">(23 KB)</span></a>
+                                                        <div class="ms-auto d-flex mt-4 text-end">
+                                                            <a href="javascript:;" class="action-btns1"><i
+                                                                    class="fe fe-download-cloud text-primary"></i></a>
+                                                            <a href="javascript:;" class="action-btns1  me-0"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xxl-4 col-xl-12 mt-4 mt-xl-0">
+                                                <div class="list-group-item  align-items-center  my-1">
+                                                    <div class="d-md-flex flex-wrap">
+                                                        <img src="./assets/images/media/files/attachments/4.png" alt="img"
+                                                            class="avatar bg-transparent avatar-xl m-1">
+                                                        <a href="javascript:;" class="fw-semibold fs-14 mt-4">Project<span
+                                                                class="text-muted ms-2">(578.6MB)</span></a>
+                                                        <div class="ms-auto d-flex mt-4 text-end">
+                                                            <a href="javascript:;" class="action-btns1"><i
+                                                                    class="fe fe-download-cloud text-primary"></i></a>
+                                                            <a href="javascript:;" class="action-btns1 me-0"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xxl-4 col-xl-12 mt-4 mt-xl-0">
+                                                <div class="list-group-item  align-items-center  my-1">
+                                                    <div class="d-md-flex flex-wrap">
+                                                        <img src="./assets/images/media/files/attachments/3.png" alt="img"
+                                                            class="avatar bg-transparent avatar-xl m-1">
+                                                        <a href="javascript:;" class="fw-semibold fs-14 mt-4">files.doc<span
+                                                                class="text-muted ms-2">(2.67 KB)</span></a>
+                                                        <div class="ms-auto d-flex mt-4 text-end">
+                                                            <a href="javascript:;" class="action-btns1"><i
+                                                                    class="fe fe-download-cloud text-primary"></i></a>
+                                                            <a href="javascript:;" class="action-btns1 me-0"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>Sub Task</a>
+                      <ng-template ngbNavContent>
+                                <div class="pt-4 pb-4 text-end">
+                                    <a href="javascript:;" class="btn btn-primary">Add Task</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card custom-card border p-0 shadow-none">
+                                            <div class="card-header border-0">
+                                                <span class="badge badge-md bg-primary-transparent">Today task</span>
+                                                <div class="ms-auto" ngbDropdown>
+                                                    <a  href="javascript:void(0);" ngbDropdownToggle class="no-caret" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fe fe-more-horizontal text-primary fs-18"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu role="menu">
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-eye me-2"></i>View</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-plus-circle me-2"></i>Add</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-send me-2"></i>Send</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-edit-2 me-2"></i>Edit</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-trash-2 me-2"></i>Remove</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-settings me-2"></i>More</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <h5 class="fs-14 mt-3 mb-1 text-capitalize">Jquery Issues Fixed</h5>
+                                                <p class="fs-13 mt-2 text-muted">
+                                                    That a reader will be distracted by the readable content of a page when looking
+                                                </p>
+                                                <p class="fs-13 text-muted"><i class="fe fe-clock  me-2"></i>Dead line 6:00 Pm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card custom-card border p-0 shadow-none">
+                                            <div class="card-header border-0">
+                                                <span class="badge badge-md bg-danger-transparent">Pending task</span>
+                                                <div class="ms-auto" ngbDropdown>
+                                                    <a  href="javascript:void(0);" ngbDropdownToggle class="no-caret" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fe fe-more-horizontal text-primary fs-18"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu role="menu">
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-eye me-2"></i>View</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-plus-circle me-2"></i>Add</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-send me-2"></i>Send</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-edit-2 me-2"></i>Edit</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-trash-2 me-2"></i>Remove</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-settings me-2"></i>More</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <h5 class="fs-14 mt-3 mb-1 text-capitalize">HTML Updated</h5>
+                                                <p class="fs-13 mt-2 text-muted">
+                                                    That a reader will be distracted by the readable content of a page when looking
+                                                </p>
+                                                <p class="fs-13 text-muted"><i class="fe fe-clock  me-2"></i>Dead Line 2:30 Pm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card custom-card border p-0 shadow-none">
+                                            <div class="card-header border-0">
+                                                <span class="badge badge-md bg-success-transparent">Completed task</span>
+                                                <div class="ms-auto" ngbDropdown>
+                                                    <a  href="javascript:void(0);" ngbDropdownToggle class="no-caret" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fe fe-more-horizontal text-primary fs-18"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu role="menu">
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-eye me-2"></i>View</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-plus-circle me-2"></i>Add</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-send me-2"></i>Send</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-edit-2 me-2"></i>Edit</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-trash-2 me-2"></i>Remove</a></li>
+                                                        <li><a  href="javascript:void(0);" ngbDropdownItem class="dropdown-item"><i class="fe fe-settings me-2"></i>More</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <h5 class="fs-14 mt-3 mb-1 text-capitalize">HTML Updated</h5>
+                                                <p class="fs-13 mt-2 text-muted">
+                                                    That a reader will be distracted by the readable content of a page when looking
+                                                </p>
+                                                <p class="fs-13 text-muted"><i class="fe fe-clock  me-2"></i>Dec 02 2019</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="3">
+                      <a ngbNavLink>Comment</a>
+                        <ng-template ngbNavContent>
+                          
+                                    <div class="pt-4 pb-4 text-end">
+                                        <a  href="javascript:void(0);" class="btn btn-primary">Add Comment</a>
+                                    </div>
+                                    <div class="card shadow-none border">
+                                        <div class="d-sm-flex p-4">
+                                            <div class="d-flex me-3">
+                                                <div class="avatar me-2 avatar-rounded">
+                                                    <img src="./assets/images/users/13.jpg" alt="img">
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h5 class="mt-1 mb-1 fw-semibold">Have you using update version</h5>
+                                                <small class="text-muted"><i class="fe fe-calendar"></i> Jan 21 2021 <i class=" ms-3 fe fe-clock"></i> 13:00</small>
+                                                <p class="fs-13 mb-2 mt-1">
+                                                    Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                                </p>
+                                                <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fe fe-message-circle"></i> Comment</span></a>
+                                                <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                                <div class="sub-media d-sm-flex mt-4">
+                                                    <div class="d-flex me-3">
+                                                        <div class="avatar me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/10.jpg" alt="img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="mt-1 mb-1 fw-semibold">Yes, sir</h5>
+                                                        <small class="text-muted"><i class="fe fe-calendar"></i> Jan 22 2021 <i class=" ms-3 fe fe-clock"></i> 09:00</small>
+                                                        <p class="fs-13 mb-2 mt-1">
+                                                            Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                                        </p>
+                                                        <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fe fe-message-circle"></i> Comment</span></a>
+                                                        <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadow-none border">
+                                        <div class="d-sm-flex p-4">
+                                            <div class="d-flex me-3">
+                                                <div class="avatar me-2 avatar-rounded">
+                                                    <img src="./assets/images/users/1.jpg" alt="img">
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h5 class="mt-1 mb-1 fw-semibold">Send the related data</h5>
+                                                <small class="text-muted"><i class="fe fe-calendar"></i> Dec 10 2020 <i class=" ms-3 fe fe-clock"></i> 06:00</small>
+                                                <p class="fs-13 mb-2 mt-1">
+                                                    Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris   commodo consequat.
+                                                </p>
+                                                <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark" ><i class="fe fe-message-circle"></i> Comment</span></a>
+                                                <a  href="javascript:void(0);" class="me-2 mt-1"><span class="badge bg-light text-dark"><i class="fa fa-reply"></i> Reply</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                               
+                        </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4">
+                      <a ngbNavLink>Note</a>
+                      <ng-template ngbNavContent>
+                                <div class="note-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <input class="form-control" placeholder="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Note:</label>
+                                        <angular-editor class="editor" [placeholder]="'Enter text here...'" [config]="config"></angular-editor>
+                                    </div>
+                                    <div class="text-end">
+                                        <a href="javascript:;" class="btn btn-primary">Submit</a>
+                                    </div>
+                                </div>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="5">
+                      <a ngbNavLink>Attachment</a>
+                      <ng-template ngbNavContent>
+                                <div class="attachments-doc">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/media/files/attachments/2.png" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">document.pdf<span class="text-muted ms-2 me-2">(23 KB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1  me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/media/files/attachments/4.png" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">Project<span class="text-muted ms-2 me-2">(578.6MB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1 me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/ecommerce/1.jpg" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">image.jpg<span class="text-muted ms-2 me-2">(2.67 KB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1 me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/media/files/attachments/3.png" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">files.doc<span class="text-muted ms-2 me-2">(23 KB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1  me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/media/files/attachments/1.png" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">style.css<span class="text-muted ms-2 me-2">(176 KB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1  me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xxl-4 col-xl-12">
+                                            <div class="list-group-item  align-items-center  mb-2 mt-2 rounded-2">
+                                                <div class="d-sm-flex flex-wrap">
+                                                    <img src="./assets/images/media/files/attachments/5.png" alt="img" class="avatar bg-transparent avatar-xl me-2">
+                                                    <a  href="javascript:void(0);" class="fw-semibold fs-14 mt-4">index.html<span class="text-muted ms-2 me-2">(176 KB)</span></a>
+                                                    <div class="ms-auto d-flex mt-4 text-end">
+                                                        <a  href="javascript:void(0);" class="action-btns1"><i class="fe fe-download-cloud text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1  me-0"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-12 col-xl-4">
+                                            <div class="list-group-item  align-items-center text-center rounded-2">
+                                                <a  href="javascript:void(0);" class="text-center fs-28 text-success">
+                                                    <i class="fe fe-plus-circle"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="6">
+                      <a ngbNavLink>FAQS</a>
+                      <ng-template ngbNavContent>
+                      
+                                <div class="row">
+                                    @for(panel of panels; track $index){
+                                    <div class="col-xl-10">
+                                    <div
+                                    ngbAccordion
+                                    [closeOthers]="true"
+                                    class="accordion accordion-customicon1 accordions-items-seperate mt-3"
+                                    id="accordioncustomicon1Example"
+                                  >
+                               
+                                              <div
+                                                ngbAccordionItem
+                                                [collapsed]="panel !== 'Have you insert form validations Page?'"
+                                                class="accordion-item"
+                                                
+                                              >
+                                                <h2 ngbAccordionHeader class="accordion-header" id="headingOne">
+                                                  <button
+                                                    ngbAccordionButton
+                                                    class="accordion-button bg-light2"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#collapseOne"
+                                                    aria-expanded="true"
+                                                    aria-controls="collapseOne"
+                                                  >
+                                                    {{ panel }}
+                                                  </button>
+                                                </h2>
+                                                <div
+                                                  ngbAccordionCollapse
+                                                  id="collapseOne"
+                                                  class="accordion-collapse collapse show"
+                                                  aria-labelledby="headingOne"
+                                                  data-bs-parent="#accordionExample"
+                                                >
+                                                  <div class="accordion-body" ngbAccordionBody>
+                                                    <ng-template>
+                                                      <strong>This is the first item's accordion body.</strong> It is shown by
+                                                      default, until the collapse plugin adds the appropriate classes that we
+                                                      use to style each element. These classes control the overall appearance,
+                                                      as well as the showing and hiding via CSS transitions. You can modify
+                                                      any of this with custom CSS or overriding our default variables. It's
+                                                      also worth noting that just about any HTML can go within the
+                                                      <code>.accordion-body</code>, though the transition does limit overflow.
+                                                    </ng-template>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                         
+                                 
+                                </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-2">
+                                      <div class="d-flex mt-2 text-end mt-4">
+                                          <a  class="action-btns1" data-bs-toggle="tooltip" (click)="open(content1)" placement="top" ngbTooltip="View"><i class="fe fe-edit-2 text-primary"></i></a>
+                                          <a  href="javascript:void(0);" class="action-btns1 me-0" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                      </div>
+                                  </div>
+
+                                }
+                                <div class="mt-4"> 
+                                    <a (click)="open(content1)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addfaqmodal"> 
+                                        <i class="fe fe-plus fs-15 my-auto me-2 d-inline-block"></i>Add Faq</a> 
+                                    </div>
+                                    </div>
+                      </ng-template>
+                    </li>
+                  </ul>
+            </div>
+        </div>
+        <div class="panel-body tabs-menu-body hremp-tabs1 p-0" [ngbNavOutlet]="nav">
+        </div>
+    </div>
+</div>
+<!-- End Row-->
+	<!--Recurring Modal -->
+        <ng-template #content let-modal>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recurring</h5>
+                    <button type="button" (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Form:</label>
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input mwlFlatpickr type="text" class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">To:</label>
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                                    <input mwlFlatpickr type="text" class="form-control choose-date" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description:</label>
+                        <textarea rows="3" class="form-control" placeholder="Description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a  href="javascript:void(0);" (click)="modal.close('cross click')" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</a>
+                    <a  href="javascript:void(0);" class="btn btn-primary successful-notify" >Submit</a>
+                </div>
+            </div>
+        </ng-template>
+    <!-- End Recurring Modal  -->
+    
+			<!--Add faq Modal -->
+            <ng-template #content1 let-modal>
+						<div class="modal-header">
+							<h5 class="modal-title">Ask FAQS</h5>
+                            <button type="button" (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<input type="text" class="form-control" id="name1" placeholder="enter Faq">
+							</div>
+							<div class="form-group">
+								<textarea class="form-control" name="example-textarea-input" rows="6" placeholder="description"></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<a  href="javascript:void(0);" (click)="modal.close('cross click')" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</a>
+							<a  href="javascript:void(0);" class="btn btn-primary" >Submit</a>
+						</div>
+                        </ng-template>
+			<!-- End Add faq Modal  -->

@@ -1,0 +1,1842 @@
+<app-page-header [title]="'User profile'"></app-page-header>
+<!-- Row -->
+<div class="row">
+    <div class="col-xl-3 col-md-12 col-lg-12">
+        <div class="card custom-card user-pro-list overflow-hidden">
+            <div class="card-body">
+                <div class="user-pic text-center">
+                    <span class="avatar avatar-xxl me-2 avatar-rounded">
+                        <img src="./assets/images/users/2.jpg" alt="img">
+                    </span>
+                    <div class="pro-user mt-3">
+                        <h5 class="pro-user-username text-dark mb-1 fs-16">Julia Walker</h5>
+                        <h6 class="pro-user-desc text-muted fs-12">CEO</h6>
+                        <div class="btn-list mt-3">
+                            <a  href="javascript:void(0);" class="btn btn-primary">Send Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card custom-card ">
+            <a  href="javascript:void(0);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="mt-0 text-start">
+                                <span class="fs-16 fw-semibold">Completed Projects</span>
+                                <h3 class="mb-0 mt-1 text-success fs-25">1254</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-success-transparent my-auto  float-end"> <i class="las la-project-diagram"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card custom-card ">
+            <a  href="javascript:void(0);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="mt-0 text-start">
+                                <span class="fs-16 fw-semibold">Paid Invoice</span>
+                                <h3 class="mb-0 mt-1 text-primary  fs-25">42</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-primary-transparent my-auto  float-end"> <i class="las la-file-invoice"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card custom-card ">
+            <a  href="javascript:void(0);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="mt-0 text-start">
+                                <span class="fs-16 fw-semibold">Inprogress Projects</span>
+                                <h3 class="mb-0 mt-1 text-secondary fs-25">11</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-secondary-transparent my-auto  float-end"> <i class="las la-folder-plus"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card custom-card ">
+            <a  href="javascript:void(0);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="mt-0 text-start">
+                                <span class="fs-16 fw-semibold">Paid Amount</span>
+                                <h3 class="mb-0 mt-1 text-danger fs-25">$27,138</h3>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="icon1 bg-danger-transparent my-auto  float-end"> <i class="las la-file-invoice-dollar"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-9 col-md-12 col-lg-12">
+        <div class="tab-menu-heading hremp-tabs p-0 border-0 ">
+            <div class="tabs-menu1">
+                <!-- Tabs -->
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="panel-tabs">
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>My Profile</a>
+                      <ng-template ngbNavContent>
+                        
+                            <div class="card-body">
+                                <h4 class="mb-4 font-weight-bold">Basic</h4>
+                                <div class="form-group ">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Client ID</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="#SPT-001">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Client Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-1">
+                                                    <input type="text" class="form-control" placeholder="First Name"
+                                                        value="Julia">
+                                                    <span class="text-muted"></span>
+                                                </div>
+                                                <div class="col-md-6  mb-1">
+                                                    <input type="text" class="form-control" placeholder="Last Name"
+                                                        value="Walker">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Contact Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Phone Number"
+                                                value="+9022291721">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Emergency Contact Number 01</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Contact Number01"
+                                                value="8695324712">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Gender</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="custom-controls-stacked d-md-flex">
+                                                <div class="form-check mb-0 me-4">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault01">
+                                                    <label class="form-check-label" for="flexRadioDefault01">
+                                                        Male
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-0">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault0" id="flexRadioDefault02">
+                                                    <label class="form-check-label" for="flexRadioDefault02">
+                                                        Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Company Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="email"
+                                                value="Abcd pvt Limited">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="email" value="julia@gmail.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Website</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="email" value="www.abcd.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Address 01</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-4">
+                                                    <input type="text" class="form-control" placeholder="Enter City"
+                                                        value="Chicago">
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input type="text" class="form-control" placeholder="Enter Postal Code"
+                                                        value="235861">
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <ng-select class="form-control custom-select p-0" placeholder="Select Country">
+                                                        <ng-option value="1">Germany</ng-option>
+                                                        <ng-option value="2">Real Estate</ng-option>
+                                                        <ng-option value="3">Canada</ng-option>
+                                                        <ng-option value="4" selected>USA</ng-option>
+                                                        <ng-option value="5">Afghanistan</ng-option>
+                                                        <ng-option value="6">Albania</ng-option>
+                                                        <ng-option value="7">China</ng-option>
+                                                        <ng-option value="8">Denmark</ng-option>
+                                                        <ng-option value="9">Finland</ng-option>
+                                                        <ng-option value="10">India</ng-option>
+                                                        <ng-option value="11">Kiribati</ng-option>
+                                                        <ng-option value="12">Kuwait</ng-option>
+                                                        <ng-option value="13">Mexico</ng-option>
+                                                        <ng-option value="14">Pakistan</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <textarea rows="3" class="form-control"
+                                                placeholder="Address1">4102 Masonic Hill Road Little Rock Arkansas-727212</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Address 02</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-4">
+                                                    <input type="text" class="form-control" placeholder="Enter City" value="">
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input type="text" class="form-control" placeholder="Enter Postal Code"
+                                                        value="">
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <ng-select class="form-control custom-select p-0" placeholder="Select Country">
+                                                        <ng-option value="1">Germany</ng-option>
+                                                        <ng-option value="2">Real Estate</ng-option>
+                                                        <ng-option value="3">Canada</ng-option>
+                                                        <ng-option value="4">USA</ng-option>
+                                                        <ng-option value="5">Afghanistan</ng-option>
+                                                        <ng-option value="6">Albania</ng-option>
+                                                        <ng-option value="7">China</ng-option>
+                                                        <ng-option value="8">Denmark</ng-option>
+                                                        <ng-option value="9">Finland</ng-option>
+                                                        <ng-option value="10">India</ng-option>
+                                                        <ng-option value="11">Kiribati</ng-option>
+                                                        <ng-option value="12">Kuwait</ng-option>
+                                                        <ng-option value="13">Mexico</ng-option>
+                                                        <ng-option value="14">Pakistan</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <textarea rows="3" class="form-control" placeholder="Address2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3 mt-2">
+                                            <div class="form-label mb-0 mt-4">Upload Photo</div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="form-label" class="form-label"></label>
+                                                <input class="form-control" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="mb-5 mt-7 font-weight-bold">Change Password</h4>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">New Password</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="password" class="form-control" placeholder="Enter Min 5 Character"
+                                                value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Confirm Password</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="password" class="form-control" placeholder="Re-Type Password" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <a href="javascript:;" class="btn btn-primary btn-lg me-1 my-1">Updated</a>
+                                <a href="javascript:;" class="btn btn-danger btn-lg me-1 my-1">Cancel</a>
+                            </div>
+                       
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>Projects</a>
+                      <ng-template ngbNavContent>
+                       
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mt-2">
+                                                    <ng-select name="quantity" id="select-countries1" placeholder="1" class="form-control  wd-150 p-0" data-trigger>
+                                                        <ng-option value="1" selected="">1</ng-option>
+                                                        <ng-option value="2">2</ng-option>
+                                                        <ng-option value="3">3</ng-option>
+                                                        <ng-option value="4">4</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <div class="d-flex text-nowrap">
+                                                <a  href="javascript:void(0);" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newprojectmodal">Add Project</a>
+                                                <input type="text" class="form-control" placeholder="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="task-list1">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom-0 text-center">No</th>
+                                                <th class="border-bottom-0">Task</th>
+                                                <th class="border-bottom-0">Assign To</th>
+                                                <th class="border-bottom-0">Priority</th>
+                                                <th class="border-bottom-0">Start Date</th>
+                                                <th class="border-bottom-0">Deadline</th>
+                                                <th class="border-bottom-0">Project Status</th>
+                                                <th class="border-bottom-0">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Design Updated</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="avatar-list-stacked">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/8.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/3.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-danger-transparent">High</span></td>
+                                                <td>12-02-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="d-flex align-items-end justify-content-between">
+                                                        <h6 class="fs-12">Status</h6>
+                                                        <h6 class="fs-12">62%</h6>
+                                                    </div>
+                                                    <div class="progress h-1">
+                                                        <div class="progress-bar bg-success w-60"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Code Updated</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="avatar-list-stacked">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/8.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>01-01-2021</td>
+                                                <td>22-04-2021</td>
+                                                <td>
+                                                    <div class="d-flex align-items-end justify-content-between">
+                                                        <h6 class="fs-12">Status</h6>
+                                                        <h6 class="fs-12">45%</h6>
+                                                    </div>
+                                                    <div class="progress h-1">
+                                                        <div class="progress-bar bg-success w-45"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Issues fixed </span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="avatar-list-stacked">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/8.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/3.jpg" alt="img">
+                                                        </span>
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-warning-transparent">Medium</span></td>
+                                                <td>11-04-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="d-flex align-items-end justify-content-between">
+                                                        <h6 class="fs-12">Status</h6>
+                                                        <h6 class="fs-12">53%</h6>
+                                                    </div>
+                                                    <div class="progress h-1">
+                                                        <div class="progress-bar bg-success w-50"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Testing</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="avatar-list-stacked">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/8.jpg" alt="img">
+                                                    </span>
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/2.jpg" alt="img">
+                                                    </span>
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/3.jpg" alt="img">
+                                                    </span>
+                                                </div>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>11-04-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="d-flex align-items-end justify-content-between">
+                                                        <h6 class="fs-12">Status</h6>
+                                                        <h6 class="fs-12">67%</h6>
+                                                    </div>
+                                                    <div class="progress h-1">
+                                                        <div class="progress-bar bg-success w-65"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <nav class="mt-4">
+                                    <ul class="pagination justify-sm-content-end justify-content-center mb-0">
+                                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                    </ul>
+                                </nav>
+                           
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="3">
+                      <a ngbNavLink>Tasks</a>
+                      <ng-template ngbNavContent>
+                       
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mt-2">
+                                                    <select name="quantity" id="select-countries2" class="form-control  wd-150" data-trigger>
+                                                        <option value="1" selected="">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <div class="d-flex text-nowrap">
+                                                <a  href="javascript:void(0);" class="btn btn-primary me-2">Add Task</a>
+                                                <input type="text" class="form-control" placeholder="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="task-list">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom-0 text-center">No</th>
+                                                <th class="border-bottom-0">Task</th>
+                                                <th class="border-bottom-0">Assign To</th>
+                                                <th class="border-bottom-0">Priority</th>
+                                                <th class="border-bottom-0">Start Date</th>
+                                                <th class="border-bottom-0">Deadline</th>
+                                                <th class="border-bottom-0">Project Status</th>
+                                                <th class="border-bottom-0">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Design Updated</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/10.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-danger-transparent">High</span></td>
+                                                <td>12-02-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-60"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Code Updated</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Justin Parr</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>01-01-2021</td>
+                                                <td>22-04-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-45"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Issues fixed </span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/3.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Amelia Russell</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-warning-transparent">Medium</span></td>
+                                                <td>11-04-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-50"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Testing</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Ryan Young</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>11-04-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-65"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">5</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Angular Issues fixed </span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/5.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Sophie Anderson</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-danger-transparent">High</span></td>
+                                                <td>11-03-2021</td>
+                                                <td>19-05-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-55"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">6</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Marketing  materials Issues</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/6.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Justin Parr</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-danger-transparent">High</span></td>
+                                                <td>21-01-2021</td>
+                                                <td>15-03-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-80"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">7</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Application Bugs fix</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/7.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Jennifer Hardacre</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-warning-transparent">Medium</span></td>
+                                                <td>21-01-2021</td>
+                                                <td>15-03-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-75"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">8</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Theme update</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/8.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Michael Sutherland</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>23-01-2021</td>
+                                                <td>25-02-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-65"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">9</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Jquery Issues Fix</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/9.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Faith Harris</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-danger-transparent">High</span></td>
+                                                <td>13-03-2021</td>
+                                                <td>05-05-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-100"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">10</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                        <span>Testing</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a  href="javascript:void(0);" class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/12.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Austin Bell</h6>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td><span class="badge bg-success-transparent">Low</span></td>
+                                                <td>11-04-2021</td>
+                                                <td>16-06-2021</td>
+                                                <td>
+                                                    <div class="progress h-2">
+                                                        <div class="progress-bar bg-success w-65"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4">
+                      <a ngbNavLink>Invoices</a>
+                      <ng-template ngbNavContent>
+                       
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex align-items-center">
+                                        <span>Show</span>
+                                        <div class="d-flex ms-2 mx-2">
+                                            <div class="form-group mt-2">
+                                                <select name="quantity" id="select-countries2" class="form-control  wd-150" data-trigger>
+                                                    <option value="1" selected="">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span>entries</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="float-end">
+                                        <div class="d-flex text-nowrap">
+                                            <a  href="javascript:void(0);" class="btn btn-primary me-2">Add Task</a>
+                                            <input type="text" class="form-control" placeholder="search">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="task-list">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-bottom-0 text-center">No</th>
+                                            <th class="border-bottom-0">Task</th>
+                                            <th class="border-bottom-0">Assign To</th>
+                                            <th class="border-bottom-0">Priority</th>
+                                            <th class="border-bottom-0">Start Date</th>
+                                            <th class="border-bottom-0">Deadline</th>
+                                            <th class="border-bottom-0">Project Status</th>
+                                            <th class="border-bottom-0">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Design Updated</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/10.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-danger-transparent">High</span></td>
+                                            <td>12-02-2021</td>
+                                            <td>16-06-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-60"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Code Updated</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/2.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Justin Parr</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-success-transparent">Low</span></td>
+                                            <td>01-01-2021</td>
+                                            <td>22-04-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-45"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">3</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Issues fixed </span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/3.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Amelia Russell</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-warning-transparent">Medium</span></td>
+                                            <td>11-04-2021</td>
+                                            <td>16-06-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-50"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Testing</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/4.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Ryan Young</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-success-transparent">Low</span></td>
+                                            <td>11-04-2021</td>
+                                            <td>16-06-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-65"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">5</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Angular Issues fixed </span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/5.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Sophie Anderson</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-danger-transparent">High</span></td>
+                                            <td>11-03-2021</td>
+                                            <td>19-05-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-55"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">6</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Marketing  materials Issues</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/6.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Justin Parr</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-danger-transparent">High</span></td>
+                                            <td>21-01-2021</td>
+                                            <td>15-03-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-80"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">7</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Application Bugs fix</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/7.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Jennifer Hardacre</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-warning-transparent">Medium</span></td>
+                                            <td>21-01-2021</td>
+                                            <td>15-03-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-75"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">8</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Theme update</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/8.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Michael Sutherland</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-success-transparent">Low</span></td>
+                                            <td>23-01-2021</td>
+                                            <td>25-02-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-65"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">9</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Jquery Issues Fix</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/9.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Faith Harris</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-danger-transparent">High</span></td>
+                                            <td>13-03-2021</td>
+                                            <td>05-05-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-100"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">10</td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex sidebarmodal-collpase">
+                                                    <span>Testing</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a  href="javascript:void(0);" class="d-flex">
+                                                    <span class="avatar avatar-md me-2 avatar-rounded">
+                                                        <img src="./assets/images/users/12.jpg" alt="img">
+                                                    </span>
+                                                    <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                        <h6 class="mb-1 fs-14">Austin Bell</h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge bg-success-transparent">Low</span></td>
+                                            <td>11-04-2021</td>
+                                            <td>16-06-2021</td>
+                                            <td>
+                                                <div class="progress h-2">
+                                                    <div class="progress-bar bg-success w-65"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Edit"><i class="fe fe-edit-2  text-success"></i></a>
+                                                    <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                      
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="5">
+                      <a ngbNavLink>Payments</a>
+                      <ng-template ngbNavContent>
+                      
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mt-2">
+                                                    <select name="quantity" id="select-countries3" class="form-control  wd-150" data-trigger>
+                                                        <option value="1" selected="">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <div class="d-flex text-nowrap">
+                                                <a  href="javascript:void(0);" class="btn btn-primary btn-tableview me-2">Add Payment</a>
+                                                <input type="text" class="form-control" placeholder="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="payment-tables">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom-0">PaymentID</th>
+                                                <th class="border-bottom-0">($)Amount</th>
+                                                <th class="border-bottom-0">Payment Type</th>
+                                                <th class="border-bottom-0">Due Date</th>
+                                                <th class="border-bottom-0">Status</th>
+                                                <th class="border-bottom-0">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-0478</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$345.00</span></td>
+                                                <td>Cash</td>
+                                                <td>12-01-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-0329</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$897.00</span></td>
+                                                <td>Card</td>
+                                                <td>16-02-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-0298</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$298.00</span></td>
+                                                <td>Cash</td>
+                                                <td>05-03-2021</td>
+                                                <td><span class="badge bg-danger-transparent">UnPaid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-0560</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$839.00</span></td>
+                                                <td>Online Payment</td>
+                                                <td>12-04-2021</td>
+                                                <td><span class="badge bg-danger-transparent">UnPaid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-0927</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$9,238.00</span></td>
+                                                <td>Cash</td>
+                                                <td>05-02-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-2091</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$11,342.00</span></td>
+                                                <td>Online Payment</td>
+                                                <td>12-03-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-1342</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$82,341.00</span></td>
+                                                <td>Cash</td>
+                                                <td>13-02-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-1387</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$9,238.00</span></td>
+                                                <td>Card</td>
+                                                <td>12-02-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-3298</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$12,765.00</span></td>
+                                                <td>Cash</td>
+                                                <td>25-03-2021</td>
+                                                <td><span class="badge bg-danger-transparent">UnPaid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a  href="javascript:void(0);">#PAY-2125</a>
+                                                </td>
+                                                <td><span class="fw-semibold">$35,250.00</span></td>
+                                                <td>Online Payment</td>
+                                                <td>16-03-2021</td>
+                                                <td><span class="badge bg-success-transparent">Paid</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <nav class="mt-4">
+                                    <ul class="pagination justify-sm-content-end justify-content-center mb-0">
+                                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                    </ul>
+                                </nav>
+                            
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="6">
+                      <a ngbNavLink>Tickets</a>
+                      <ng-template ngbNavContent>
+                       
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mt-2">
+                                                    <select name="quantity" id="select-countries17" class="form-control  wd-150" data-trigger>
+                                                        <option value="1" selected="">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <div class="d-flex text-nowrap">
+                                                <a  href="javascript:void(0);" class="btn btn-primary me-2">Add Ticket</a>
+                                                <input type="text" class="form-control" placeholder="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="ticket-tables">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom-0">TicketID</th>
+                                                <th class="border-bottom-0">Title</th>
+                                                <th class="border-bottom-0">Category</th>
+                                                <th class="border-bottom-0">Assigned To</th>
+                                                <th class="border-bottom-0">Status</th>
+                                                <th class="border-bottom-0">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>#Ticket-01</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Sed ut perspiciatis unde omnis iste natus</a>
+                                                </td>
+                                                <td>Support</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/8.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Faith Harris</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-primary">New</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-02</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Sed ut perspiciatis unde omnis iste natus</a>
+                                                </td>
+                                                <td>Services</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/9.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Austin Bell</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-success">Closed</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-03</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Sed ut perspiciatis unde omnis iste natus</a>
+                                                </td>
+                                                <td>Customization</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Maria Bower</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-orange">Open</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-04</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Excepteur sint occaecat cupidatat</a>
+                                                </td>
+                                                <td>Support</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/10.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Peter Hill</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-success">Closed</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-05</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Et harum quidem rerum facilis</a>
+                                                </td>
+                                                <td>Services</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/3.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Victoria Lyman</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-success">Closed</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-06</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Ut aut reiciendis voluptatibus</a>
+                                                </td>
+                                                <td>Customization</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/11.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Adam Quinn</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-success">Closed</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-07</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Maiores alias consequatur aut</a>
+                                                </td>
+                                                <td>Support</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-primary">New</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-08</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Quis autem vel eum iure</a>
+                                                </td>
+                                                <td>Support</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/6.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-orange">Open</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#Ticket-09</td>
+                                                <td>
+                                                    <a  href="javascript:void(0);">Quis autem vel eum iure</a>
+                                                </td>
+                                                <td>Support</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <span class="avatar avatar-md me-2 avatar-rounded">
+                                                            <img src="./assets/images/users/10.jpg" alt="img">
+                                                        </span>
+                                                        <div class="me-3 mt-0 mt-sm-2 d-block">
+                                                            <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="badge bg-orange">Open</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="View"><i class="fe fe-eye  text-primary"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Download"><i class="fe fe-download   text-success"></i></a>
+                                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="" data-original-title="Delete"><i class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <nav class="mt-4">
+                                    <ul class="pagination justify-sm-content-end justify-content-center mb-0">
+                                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                    </ul>
+                                </nav>
+                          
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="7">
+                      <a ngbNavLink>Note</a>
+                      <ng-template ngbNavContent>
+                        
+                            <div class="card-body">
+                                <div class="note-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <input class="form-control" placeholder="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Note:</label>
+                                        <angular-editor class="editor" [placeholder]="'Enter text here...'" [config]="config"></angular-editor>
+                                    </div>
+                                    <div>
+                                        <a href="javascript:;" class="btn btn-primary">Submit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                      </ng-template>
+                    </li>
+                  </ul>
+            </div>
+        </div>
+        <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+            <div  [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>
+<!-- End Row-->

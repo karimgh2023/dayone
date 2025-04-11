@@ -1,0 +1,21 @@
+<!-- End Clock-IN Modal  -->
+<mat-dialog-content>
+    <div class="modal-header">
+        <h5 class="modal-title"><span class="fe fe-clock  me-1"></span>Clock In</h5>
+        <button  class="btn-close" mat-button mat-dialog-close>x
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="countdowntimer"><span id="clocktimer" class="border-0 style size_md">{{Time | date: 'hh:mm:ss'}}</span></div>
+        <div class="form-group">
+            <label class="form-label">Note:</label>
+            <textarea class="form-control" rows="3">Some text here...</textarea>
+        </div>
+    </div>
+</mat-dialog-content>
+<div class="modal-footer">
+    <mat-dialog-actions>
+        <button class="btn btn-outline-primary me-2" mat-button mat-dialog-close>Close</button>
+        <button class="btn btn-primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Clock In</button>
+      </mat-dialog-actions>
+</div>

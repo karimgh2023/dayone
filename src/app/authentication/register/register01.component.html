@@ -1,0 +1,127 @@
+
+    <div class="page responsive-log login-bg">
+        <div class="page-single">
+            <!-- Start::container -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col mx-auto">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-lg-6 col-xl-4 col-xxl-4">
+                                <div class="card custom-card my-4">
+                                    <div class="p-4 pt-6 text-center">
+                                        <a >
+                                            <img src="./assets/images/Leoni_AG_Logo.svg.png" class="leoni" alt="" />
+                                        </a>
+                                        <p class="text-muted">Create new account</p>
+                                    </div>
+                                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="card-body pt-0 pb-3">
+                                        <!-- First Name -->
+                                        <div class="form-group">
+                                        <label class="form-label">First Name</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fe fe-user"></i></span>
+                                            <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
+                                        </div>
+                                        </div>
+                                    
+                                        <!-- Last Name -->
+                                        <div class="form-group">
+                                        <label class="form-label">Last Name</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fe fe-user"></i></span>
+                                            <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
+                                        </div>
+                                        </div>
+                                    
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fe fe-mail"></i></span>
+                                            <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Phone Number</label>
+                                            <div class="input-group mb-3">
+                                              <span class="input-group-text"><i class="fe fe-phone"></i></span>
+                                              <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone Number" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                                                            <!-- Plant select -->
+                                        <div class="form-group">
+                                            <label class="form-label">Select Plant</label>
+                                            <select class="form-select" formControlName="plantId">
+                                                <option value="" disabled>Select a plant</option>
+                                                <option *ngFor="let plant of plants" [value]="plant.id">{{ plant.name }}</option>
+                                                
+                                                
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Department select -->
+                                        <div class="form-group">
+                                            <label class="form-label">Select Department</label>
+                                            <select class="form-select" formControlName="departmentId">
+                                            <option value="" disabled selected>Select a department</option>
+                                            <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Password -->
+                                        <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fe fe-lock"></i></span>
+                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Password" />
+                                        </div>
+                                        </div>
+                                    
+                                        <!-- Confirm Password -->
+                                        <div class="form-group">
+                                        <label class="form-label">Confirm Password</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fe fe-lock"></i></span>
+                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password" />
+                                        </div>
+                                        </div>
+                                    
+                                        <!-- Submit -->
+                                        <div class="submit d-grid">
+                                        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+                                        </div>
+                                    
+                                        <div class="text-center mt-4">
+                                        <p class="text-dark mb-0">
+                                            Already have an account?
+                                            <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Log In</a>
+                                        </p>
+                                        </div>
+                                    </form>
+                                    
+                                    <div class="card-body border-top-0 pb-6 pt-1">
+                                        <div class="text-center">
+                                        <!-- Facebook  -->
+                                        <a href="https://www.facebook.com/LEONI.tunisia" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
+                                            <i class="ri-facebook-line fs-17"></i>
+                                        </a>
+                                        
+                                        <!-- Instagram -->
+                                        <a href="https://www.instagram.com/leoni_tunisia/" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
+                                            <i class="ri-instagram-line fs-17"></i>
+                                        </a>
+                                        
+                                        <a href="https://www.leoni-tunisia.com/?fbclid=PAZXh0bgNhZW0CMTEAAaZQVavNe_uVh2aIwz-rPnqi8a4BinubQvQU-GQDAeBWIAFaVNKfW5msccA_aem_naDiE9j34crJDB-WZpMbiQ" target="_blank" class="avatar avatar-rounded bg-primary-transparent text-primary">
+                                            <span class="fs-17">L</span>
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End::container -->
+        </div>
+    </div>

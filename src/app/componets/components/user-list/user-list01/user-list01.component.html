@@ -1,0 +1,69 @@
+<app-page-header [title]="'User-List 01'"></app-page-header>
+<!-- Row -->
+<div class="row flex-lg-nowrap">
+    <div class="col-12">
+        <div class="row flex-lg-nowrap">
+            <div class="col-12 mb-3">
+                <div class="e-panel card">
+                    <div class="card-body">
+                        <div class="e-table">
+                            <div class="table-responsive table-lg mt-3">
+                                <table class="table table-bordered border-top text-nowrap" id="example1">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-top border-bottom-0 wd-5"></th>
+                                            <th class="border-bottom-0 w-20">User</th>
+                                            <th class="border-bottom-0 w-15">Date of joining</th>
+                                            <th class="border-bottom-0 w-30">Performance</th>
+                                            <th class="border-bottom-0 w-10">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(user1 of userlist01Data;track $index){
+
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="example-checkbox2" value="option2">
+                                                        <span class="custom-control-label"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex flex-wrap">
+                                                        <img class="avatar avatar-rounded avatar-md d-block"
+                                                            [src]="user1.img">
+                                                        <div class="ms-3 mt-1">
+                                                            <h6 class="mb-0 fw-semibold text-wrap">{{user1.name}}</h6>
+                                                            <small class="text-wrap">{{user1.designation}}</small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap align-middle"><span>{{user1.dateOfJoin}}</span></td>
+                                                <td class="text-nowrap align-middle">
+                                                    <div class="float-end">
+                                                        <h6 class="mb-2 ms-4 fw-semibold">{{user1.performance}}%</h6>
+                                                    </div>
+                                                    
+                                                    <ngb-progressbar class="mb-3" type="primary" [value]="user1.performance" />
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="btn-group align-top">
+                                                        <button class="btn btn-sm btn-white">Edit</button>
+                                                        <button class="btn btn-sm btn-white"><span
+                                                                class="fe fe-trash-2 text-muted fs-16" (click)="remove(user1.id)"></span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->

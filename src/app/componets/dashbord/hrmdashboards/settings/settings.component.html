@@ -1,0 +1,579 @@
+<app-page-header [title]="'Settings'"></app-page-header>
+<!-- Row -->
+<div class="row">
+    <div class="col-md-12 col-xl-3">
+        <div class="card">
+            <div ngbNav #nav="ngbNav" class="flex-column admisetting-tabs" orientation="vertical">
+                <ng-container ngbNavItem>
+                    <a ngbNavLink><i class="nav-icon las la-cog"></i> General Settings</a>
+                    <ng-template ngbNavContent>
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">General Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Company Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name"
+                                                value="Spruko Technologies Pvt Ltd">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Company Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name"
+                                                value="spruko@gmail.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Company Address</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <textarea rows="2" class="form-control"
+                                                placeholder="something text here...">NO.1-8-67, LIG 215,H, 83, near Tulasi Hospital ECIL, APIIC Colony, Kushaiguda, Hyderabad, Telangana 500062</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name"
+                                                value="9960332258">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Website</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name"
+                                                value="www.spruko.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Contact Person</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="HR Admin">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Upload Image</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="form-label" class="form-label"></label>
+                                                <input class="form-control" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Country</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select class="form-control custom-select p-0"
+                                                placeholder="Select Country">
+                                                <ng-option value="1">Germany</ng-option>
+                                                <ng-option value="3">Canada</ng-option>
+                                                <ng-option value="4" selected>Usa</ng-option>
+                                                <ng-option value="5">Afghanistan</ng-option>
+                                                <ng-option value="6">Albania</ng-option>
+                                                <ng-option value="7">China</ng-option>
+                                                <ng-option value="8">Denmark</ng-option>
+                                                <ng-option value="9">Finland</ng-option>
+                                                <ng-option value="10">India</ng-option>
+                                                <ng-option value="11">Kiribati</ng-option>
+                                                <ng-option value="12">Kuwait</ng-option>
+                                                <ng-option value="13">Mexico</ng-option>
+                                                <ng-option value="14">Pakistan</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Language</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select placeholder="Choose a Language..."
+                                                class="form-control custom-select languages p-0">
+                                                <ng-option value="AF">Afrikanns</ng-option>
+                                                <ng-option value="SQ">Albanian</ng-option>
+                                                <ng-option value="AR">Arabic</ng-option>
+                                                <ng-option value="HY">Armenian</ng-option>
+                                                <ng-option value="EU">Basque</ng-option>
+                                                <ng-option value="BN">Bengali</ng-option>
+                                                <ng-option value="BG">Bulgarian</ng-option>
+                                                <ng-option value="CA">Catalan</ng-option>
+                                                <ng-option value="KM">Cambodian</ng-option>
+                                                <ng-option value="ZH">Chinese (Mandarin)</ng-option>
+                                                <ng-option value="HR">Croation</ng-option>
+                                                <ng-option value="CS">Czech</ng-option>
+                                                <ng-option value="DA">Danish</ng-option>
+                                                <ng-option value="NL">Dutch</ng-option>
+                                                <ng-option value="EN" selected>English</ng-option>
+                                                <ng-option value="ET">Estonian</ng-option>
+                                                <ng-option value="FJ">Fiji</ng-option>
+                                                <ng-option value="FI">Finnish</ng-option>
+                                                <ng-option value="FR">French</ng-option>
+                                                <ng-option value="KA">Georgian</ng-option>
+                                                <ng-option value="DE">German</ng-option>
+                                                <ng-option value="EL">Greek</ng-option>
+                                                <ng-option value="GU">Gujarati</ng-option>
+                                                <ng-option value="HE">Hebrew</ng-option>
+                                                <ng-option value="HI">Hindi</ng-option>
+                                                <ng-option value="HU">Hungarian</ng-option>
+                                                <ng-option value="IS">Icelandic</ng-option>
+                                                <ng-option value="ID">Indonesian</ng-option>
+                                                <ng-option value="GA">Irish</ng-option>
+                                                <ng-option value="IT">Italian</ng-option>
+                                                <ng-option value="JA">Japanese</ng-option>
+                                                <ng-option value="JW">Javanese</ng-option>
+                                                <ng-option value="KO">Korean</ng-option>
+                                                <ng-option value="LA">Latin</ng-option>
+                                                <ng-option value="LV">Latvian</ng-option>
+                                                <ng-option value="LT">Lithuanian</ng-option>
+                                                <ng-option value="MK">Macedonian</ng-option>
+                                                <ng-option value="MS">Malay</ng-option>
+                                                <ng-option value="ML">Malayalam</ng-option>
+                                                <ng-option value="MT">Maltese</ng-option>
+                                                <ng-option value="MI">Maori</ng-option>
+                                                <ng-option value="MR">Marathi</ng-option>
+                                                <ng-option value="MN">Mongolian</ng-option>
+                                                <ng-option value="NE">Nepali</ng-option>
+                                                <ng-option value="NO">Norwegian</ng-option>
+                                                <ng-option value="FA">Persian</ng-option>
+                                                <ng-option value="PL">Polish</ng-option>
+                                                <ng-option value="PT">Portuguese</ng-option>
+                                                <ng-option value="PA">Punjabi</ng-option>
+                                                <ng-option value="QU">Quechua</ng-option>
+                                                <ng-option value="RO">Romanian</ng-option>
+                                                <ng-option value="RU">Russian</ng-option>
+                                                <ng-option value="SM">Samoan</ng-option>
+                                                <ng-option value="SR">Serbian</ng-option>
+                                                <ng-option value="SK">Slovak</ng-option>
+                                                <ng-option value="SL">Slovenian</ng-option>
+                                                <ng-option value="ES">Spanish</ng-option>
+                                                <ng-option value="SW">Swahili</ng-option>
+                                                <ng-option value="SV">Swedish </ng-option>
+                                                <ng-option value="TA">Tamil</ng-option>
+                                                <ng-option value="TT">Tatar</ng-option>
+                                                <ng-option value="TE">Telugu</ng-option>
+                                                <ng-option value="TH">Thai</ng-option>
+                                                <ng-option value="BO">Tibetan</ng-option>
+                                                <ng-option value="TO">Tonga</ng-option>
+                                                <ng-option value="TR">Turkish</ng-option>
+                                                <ng-option value="UK">Ukranian</ng-option>
+                                                <ng-option value="UR">Urdu</ng-option>
+                                                <ng-option value="UZ">Uzbek</ng-option>
+                                                <ng-option value="VI">Vietnamese</ng-option>
+                                                <ng-option value="CY">Welsh</ng-option>
+                                                <ng-option value="XH">Xhosa</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Currency</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select class="form-control custom-select " placeholder="Choose Currency"
+                                                class="form-control custom-select p-0">
+                                                <ng-option value="1" selected>US DOllar(USD)</ng-option>
+                                                <ng-option value="2">European Euro (EUR)</ng-option>
+                                                <ng-option value="3">Japanese Yen (JPY)</ng-option>
+                                                <ng-option value="4">British Pound (GBP)</ng-option>
+                                                <ng-option value="5">Swiss Franc (CHF)</ng-option>
+                                                <ng-option value="6">Canadian Dollar (CAD)</ng-option>
+                                                <ng-option value="7">Australian/New Zealand Dollar (AUD/NZD)</ng-option>
+                                                <ng-option value="8">South African Rand (ZAR)</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink><i class="nav-icon las la-user-circle"></i> Profile Settings</a>
+                    <ng-template ngbNavContent>
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Profile Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Name" value="HR Admin">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="login email"
+                                                value="hr@demo.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Password</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="password" class="form-control" placeholder="password" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Confirm Password</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="password" class="form-control" placeholder="Confirm password"
+                                                value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink><i class="nav-icon las la-bell"></i> Notification Settings</a>
+                    <ng-template ngbNavContent>
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Notification Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Attendance</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Awards</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Leaves</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Notice Board</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Expenses</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Payroll</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Events</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg1"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg1">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink><i class="nav-icon las la-edit"></i> Attendance Settings</a>
+                    <ng-template ngbNavContent>
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Attendance Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Office Start Time</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <div class="input-group-text text-muted"> <i class="ri-time-line"></i> </div>
+                                                <input type="text" mwlFlatpickr [noCalendar]="true"
+                                                [enableTime]="true" dateFormat="H:i" class="form-control" id="choose-time1" placeholder="Choose time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Office End Time</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <div class="input-group-text text-muted"> <i class="ri-time-line"></i> </div>
+                                                <input type="text" mwlFlatpickr [noCalendar]="true"
+                                                [enableTime]="true" dateFormat="H:i" class="form-control" id="choose-time1" placeholder="Choose time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Employees Mark Attendance</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-check form-check-lg form-switch"> <input
+                                                    class="form-check-input" type="checkbox" role="switch"
+                                                    id="switch-lg"> <label
+                                                    class="form-check-label custom-switch-description"
+                                                    for="switch-lg">Enable/Disable</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Late Mark after(mintues)</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Enter mintues"
+                                                value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-0 mt-2">Office Opens On</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                        <label class="form-check-label" for="flexRadioDefault1"> Monday
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                                        <label class="form-check-label" for="flexRadioDefault2"> Tuesday
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+                                                        <label class="form-check-label" for="flexRadioDefault3">
+                                                            Wednesday </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                                                        <label class="form-check-label" for="flexRadioDefault4">
+                                                            Thursday </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault5">
+                                                        <label class="form-check-label" for="flexRadioDefault5"> Friday
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault6">
+                                                        <label class="form-check-label" for="flexRadioDefault6">
+                                                            Saturday </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                    <div class="form-check"> <input class="form-check-input"
+                                                            type="radio" name="flexRadioDefault" id="flexRadioDefault7">
+                                                        <label class="form-check-label" for="flexRadioDefault7"> Sunday
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink><i class="nav-icon las la-palette"></i> Theme Settings</a>
+                    <ng-template ngbNavContent>
+                        <div class="card custom-card">
+                            <div class="card-header  border-0">
+                                <h4 class="card-title">Theme Settings</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Theme Color</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input [value]="color" [style.background]="color" [cpCancelButton]="true"
+                                                [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpEyeDropper]="true"
+                                                [(colorPicker)]="color" [cpOKButton]="true" [cpSaveClickOutside]="false"
+                                                [cpOKButtonClass]="'btn btn-primary btn-xs'" class="text-white" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Text Color</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ngx-colors ngx-colors-trigger [(ngModel)]="color3" acceptLabel="Select"
+                                                cancelLabel="Cancel">
+                                            </ngx-colors>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:;" class="me-2 btn btn-success">Save Changes</a>
+                                <a href="javascript:;" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xl-9">
+        <div class="adminsetting-content" [ngbNavOutlet]="nav"></div>
+    </div>
+</div>
+<!-- End Row -->

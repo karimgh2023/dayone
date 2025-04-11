@@ -1,0 +1,472 @@
+  <!--Section-->
+  <section>
+    <div class="cover-image sptb section-bg">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-xl-3 mb-4 mb-xl-0">
+                    <div class="position-sticky top-0">
+                        <div class="card custom-card border-0 overflow-hidden">
+                            <div class="card-body p-0">
+                                <!-- Start::app-sidebar -->
+                                <app-support-sidebar></app-support-sidebar>
+                                <!-- End::app-sidebar -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="tab-menu-heading hremp-tabs p-0 border-0">
+                        <div class="tabs-menu1">
+                            <!-- Tabs -->
+                            <ul class="nav panel-tabs" ngbNav #nav="ngbNav" [activeId]="1" >
+                                <li [ngbNavItem]="1" class="ms-4"><a ngbNavLink href="#tab1" class="" data-bs-toggle="tab">Edit
+                                        Profile</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="tab-pane " id="tab1">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">First Name</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="First Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Last Name</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Last Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Email address</label>
+                                                            <input type="email" class="form-control"
+                                                                placeholder="Email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Country</label>
+                                                            <ng-select class="form-control custom-select p-0" data-trigger
+                                                                placeholder="Select Country">
+                                                                <ng-option value="1">Germany</ng-option>
+                                                                <ng-option value="3">Canada</ng-option>
+                                                                <ng-option value="4">USA</ng-option>
+                                                                <ng-option value="5">Afghanistan</ng-option>
+                                                                <ng-option value="6">Albania</ng-option>
+                                                                <ng-option value="7">China</ng-option>
+                                                                <ng-option value="8">Denmark</ng-option>
+                                                                <ng-option value="9">Finland</ng-option>
+                                                                <ng-option value="10">India</ng-option>
+                                                                <ng-option value="11">Kiribati</ng-option>
+                                                                <ng-option value="12">Kuwait</ng-option>
+                                                                <ng-option value="13">Mexico</ng-option>
+                                                                <ng-option value="14">Pakistan</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Upload Image</label>
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="file">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Status</label>
+                                                            <ng-select class="form-control custom-select p-0" data-trigger
+                                                                placeholder="Select Status">
+                                                                <ng-option label="Select Country"></ng-option>
+                                                                <ng-option value="1">Active</ng-option>
+                                                                <ng-option value="2">Inactive</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label mb-0 mt-2">Password</label>
+                                                            <input type="password" class="form-control"
+                                                                placeholder="Password" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-end">
+                                                <a href="javascript:void(0);" class="btn btn-success m-2">Save Changes</a>
+                                                <a href="javascript:void(0);" class="btn btn-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    </li>
+                                <li [ngbNavItem]="2"><a ngbNavLink href="#tab2" data-bs-toggle="tab">My Tickets</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="tab-pane" id="tab2">
+                                            <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-6">
+                                                        <div class="d-flex align-items-center">
+                                                            <span>Show</span>
+                                                            <div class="d-flex ms-2 mx-2">
+                                                                <div class="form-group mt-2">
+                                                                    <ng-select name="quantity" id="select-countries17"
+                                                                        class="form-control  wd-150 p-0" placeholder="1" data-trigger>
+                                                                        <ng-option value="1" selected="">1</ng-option>
+                                                                        <ng-option value="2">2</ng-option>
+                                                                        <ng-option value="3">3</ng-option>
+                                                                        <ng-option value="4">4</ng-option>
+                                                                    </ng-select>
+                                                                </div>
+                                                            </div>
+                                                            <span>entries</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="float-end">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="search">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table
+                                                        class="table table-vcenter text-nowrap table-bordered border-bottom"
+                                                        id="support-customerlist">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-bottom-0 w-1">#No</th>
+                                                                <th class="border-bottom-0">Subject</th>
+                                                                <th class="border-bottom-0 w-1">Priority</th>
+                                                                <th class="border-bottom-0">Category</th>
+                                                                <th class="border-bottom-0 w-5">Status</th>
+                                                                <th class="border-bottom-0">Last Replied</th>
+                                                                <th class="border-bottom-0">Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#01</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Sed ut perspiciatis</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">12-01-2021
+                                                                            12:10AM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-success-transparent">Low</span>
+                                                                </td>
+                                                                <td>Support</td>
+                                                                <td><span class="badge bg-success">Open</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Julia Walker</h6>
+                                                                    <span class="fs-11 text-muted">5 hours ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#02</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Excepteur occaecat</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">05-02-2021
+                                                                            10:00AM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-success-transparent">Low</span>
+                                                                </td>
+                                                                <td>Services</td>
+                                                                <td><span class="badge bg-primary">New</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Amelia Russell</h6>
+                                                                    <span class="fs-11 text-muted">12 hours ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#03</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Sample Test1</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">05-02-2021
+                                                                            05:30PM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-danger-transparent">High</span>
+                                                                </td>
+                                                                <td>Customization</td>
+                                                                <td><span class="badge bg-success">Open</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Max Wilson</h6>
+                                                                    <span class="fs-11 text-muted">1 week ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#04</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Sample Test2</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">05-02-2021
+                                                                            10:45AM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-success-transparent">Low</span>
+                                                                </td>
+                                                                <td>Support</td>
+                                                                <td><span class="badge bg-orange">Re-Open</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Melanie Coleman</h6>
+                                                                    <span class="fs-11 text-muted">3 weeks ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#05</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Ut aut reiciendiLow</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">21-04-2021
+                                                                            11:50AM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-warning-transparent">Medium</span>
+                                                                </td>
+                                                                <td>Services</td>
+                                                                <td><span class="badge bg-danger">Closed</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Adam Quinn</h6>
+                                                                    <span class="fs-11 text-muted">4 weeks ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#06</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Unde omnis iste natus</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">11-03-2021
+                                                                            12:50PM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-success-transparent">Low</span>
+                                                                </td>
+                                                                <td>Support</td>
+                                                                <td><span class="badge bg-success">Open</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Victoria Lyman</h6>
+                                                                    <span class="fs-11 text-muted">4 weeks ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#07</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Et harum quidem</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">11-04-2021
+                                                                            03:50PM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-warning-transparent">Medium</span>
+                                                                </td>
+                                                                <td>Support</td>
+                                                                <td><span class="badge bg-danger">Closed</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Maria Bower</h6>
+                                                                    <span class="fs-11 text-muted">6 months ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>#08</td>
+                                                                <td>
+                                                                    <div><a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="h5">Quis autem vel</a></div>
+                                                                    <small class="fs-12 text-muted"><i
+                                                                            class="fa fa-clock-o me-1 text-muted"></i>Opened:
+                                                                        <span class="font-weight-normal1">11-04-2021
+                                                                            03:50PM</span></small>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge bg-danger-transparent">High</span>
+                                                                </td>
+                                                                <td>Services</td>
+                                                                <td><span class="badge bg-success">Open</span></td>
+                                                                <td>
+                                                                    <h6 class="mb-0 fs-13">Peter Hill</h6>
+                                                                    <span class="fs-11 text-muted">1 year ago</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <a routerLink="/support-system/admin/tickets/view-ticket"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Edit"><i
+                                                                                class="fe fe-edit-2  text-success"></i></a>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="action-btns1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Delete"><i
+                                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-end mt-2">
+                                                <a href="javascript:void(0);" class="btn btn-success">Save Changes</a>
+                                                <a href="javascript:void(0);" class="btn btn-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+                        <div class="tab-content" [ngbNavOutlet]="nav">
+                       
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section-->
+
+<!-- Start:: Section-3 -->
+<section class="sptb bg-white">
+    <div class="main-container">
+        <div class="row">
+            <div class="col-lg-7 col-xl-6 col-md-12">
+                <div class="sub-newsletter">
+                    <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor</p>
+                </div>
+            </div>
+            <div class="col-lg-5 col-xl-6 col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                        aria-describedby="button-addon12">
+                    <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                        id="button-addon12">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End:: Section-3 -->

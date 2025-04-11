@@ -1,0 +1,7 @@
+.dropdown-menu-end{
+    left: auto !important;
+    right: 0;
+}
+.dropdown-toggle::after{
+    display: none;
+}

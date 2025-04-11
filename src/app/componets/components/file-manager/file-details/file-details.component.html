@@ -1,0 +1,115 @@
+<app-page-header [title]="'File details'"></app-page-header>
+
+                <!-- Start::row-1 -->
+                <div class="row">
+                    <div class="col-xxl-8 col-lg-12 col-md-12">
+                        <div class="card custom-card overflow-hidden">
+                            <div class="card-body px-3 pt-3">
+                                <a  href="javascript:void(0);"><img src="./assets/images/media/15.jpg" alt="img" class="rounded-2 w-100"></a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="swiper pagination">
+                                    <div class="swiper-wrapper">
+                                        <swiper [config]="swiperConfig" [slidesPerView]="4" [spaceBetween]="20" (swiper)="setThumbsSwiper($event)" [zoom]="true" [autoplay]="true"
+                                        [watchSlidesProgress]="true" [navigation]="true" class="swiper vertical upcoming-events-swiper mb-2"
+                                        >
+                                        @for (image of imageData7; track image) {
+                                            @if(image.src){
+                            
+                                                <ng-template swiperSlide class="swiper-slide">
+                                                    <!-- <div class="swiper-slide"> -->
+                                                        <div class="card custom-card overflow-hidden mb-0 shadow-none file-details-card border">
+                                                            <a routerLink="/components/file-manager/file-details"><img [src]="image.src" alt="img"></a>
+                                                            <div class="card-footer bd-t-0 py-3">
+                                                                <div class="d-flex">
+                                                                    <div>
+                                                                        <h6 class="mb-0">{{image.jpg}}</h6>
+                                                                    </div>
+                                                                    <div class="ms-auto">
+                                                                        <h6 class="text-muted mb-0">{{image.kb}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <!-- </div> -->
+                                                    </ng-template>
+                                                }
+                                            }
+                                        </swiper>
+                                  
+                                    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-lg-12 col-md-12">
+                        <div class="card custom-card">
+                            <div class=" card-body ">
+                                <h5 class="mb-3">File details :</h5>
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 border-top table-bordered text-nowrap">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">File-name</th>
+                                                            <td>image.jpg</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">File-size</th>
+                                                            <td>12.45mb</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">uploaded-date</th>
+                                                            <td>01-12-2020</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">image-width</th>
+                                                            <td>1000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">image-height</th>
+                                                            <td>600</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">File-formate</th>
+                                                            <td>jpg</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">File-location</th>
+                                                            <td>storage/photos/image.jpg</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <h5 class="mb-3">Recent Files</h5>
+                                <div class="row" gallerize>
+                                    @for(img of imageData;track $index){
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-12">                                         
+                                        <a  class="glightbox card" data-gallery="gallery1">
+                                            <img [src]="img.srcUrl"  previewFullscreen="true" alt="image" >
+                                        </a>
+                                    </div>
+                                    }
+                             
+                             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End::row-1 -->
+

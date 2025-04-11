@@ -1,0 +1,456 @@
+      <!-- Start:: Section-1 -->
+      <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white">Customers</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">Customers</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->
+
+    <!--Section-->
+    <section>
+        <div class="cover-image sptb section-bg">
+            <div class="main-container">
+                <div class="row">
+                    <div class="col-xl-3 mb-4 mb-xl-0">
+                        <div class="position-sticky top-0">
+                            <div class="card custom-card border-0 overflow-hidden">
+                                <div class="card-body p-0">
+                                    <!-- Start::app-sidebar -->
+                                    <app-support-sidebar></app-support-sidebar>
+                                    <!-- End::app-sidebar -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="card custom-card">
+                            <div class="card-header justify-content-between">
+                                <h4 class="card-title">Customers Summary</h4>
+                                <div class="card-options mt-sm-0 mt-3">
+                                    <a href="javascript:void(0);" class="btn btn-primary me-3"
+                                        data-bs-toggle="modal" data-bs-target="#addcustomer">Add New
+                                        Customer</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center">
+                                            <span>Show</span>
+                                            <div class="d-flex ms-2 mx-2">
+                                                <div class="form-group mt-2">
+                                                    <ng-select name="quantity" id="select-countries17" placeholder="1"
+                                                        class="form-control  wd-150 p-0" data-trigger>
+                                                        <ng-option value="1" selected="">1</ng-option>
+                                                        <ng-option value="2">2</ng-option>
+                                                        <ng-option value="3">3</ng-option>
+                                                        <ng-option value="4">4</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="float-end">
+                                            <input type="text" class="form-control" placeholder="search">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter text-nowrap table-bordered border-bottom"
+                                        id="support-customerlist">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom-0 w-5">#No</th>
+                                                <th class="border-bottom-0">Name</th>
+                                                <th class="border-bottom-0">Register Date</th>
+                                                <th class="border-bottom-0 w-5">Tickets</th>
+                                                <th class="border-bottom-0 w-5">Status</th>
+                                                <th class="border-bottom-0">Last Login</th>
+                                                <th class="border-bottom-0">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>#01</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/1.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Faith Harris</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">faith&#64;gmail.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>05-May-2017</td>
+                                                <td>05</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">5 hours ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#02</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/9.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Austin Bell</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">austin&#64;gmail.com
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>12-June-2018</td>
+                                                <td>08</td>
+                                                <td><span class="badge bg-danger">InActive</span></td>
+                                                <td><span class="fs-13 text-muted">1 month ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#03</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/2.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Maria Bower</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">maria&#64;gmail.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>02-Aug-2019</td>
+                                                <td>02</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">5 months ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#04</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/10.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Peter Hill</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">peter&#64;gmail.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>01-Jan-2020</td>
+                                                <td>01</td>
+                                                <td><span class="badge bg-warning">Blocked</span></td>
+                                                <td><span class="fs-13 text-muted">1 month ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#05</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/3.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Victoria Lyman</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">victoria&#64;gmail.com
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>05-May-2021</td>
+                                                <td>10</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">6 months ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#06</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/11.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Adam Quinn</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">adam&#64;gmail.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>15-Feb-2020</td>
+                                                <td>06</td>
+                                                <td><span class="badge bg-danger">InActive</span></td>
+                                                <td><span class="fs-13 text-muted">1 year ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#07</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/4.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Melanie Coleman</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">melanie&#64;gmail.com
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>15-Sep-2019</td>
+                                                <td>11</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">2 years ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#08</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/12.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Max Wilson</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">max&#64;gmail.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>05-Dec-2020</td>
+                                                <td>09</td>
+                                                <td><span class="badge bg-warning">Blocked</span></td>
+                                                <td><span class="fs-13 text-muted">1 year ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#09</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/5.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Amelia Russell</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">amelia&#64;gmail.com
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>01-July-2018</td>
+                                                <td>22</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">5 years ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>#10</td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-md avatar-rounded me-2">
+                                                            <img src="./assets/images/users/13.jpg" alt="img">
+                                                        </div>
+                                                        <div class="me-3 mt-0 mt-sm-1 d-block">
+                                                            <a routerLink="/support-system/admin/customerView">
+                                                                <h6 class="mb-1 fs-14">Justin Metcalfe</h6>
+                                                            </a>
+                                                            <p class="text-muted mb-0 fs-12">justin&#64;gmail.com
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>28-Apr-2017</td>
+                                                <td>18</td>
+                                                <td><span class="badge bg-success">Active</span></td>
+                                                <td><span class="fs-13 text-muted">5 years ago</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a routerLink="/support-system/admin/customerView"
+                                                            class="action-btns1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" ngbTooltip="View Customer"><i
+                                                                class="fe fe-eye text-primary"></i></a>
+                                                        <a href="javascript:void(0);" class="action-btns1"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            ngbTooltip="Delete customer"><i
+                                                                class="fe fe-trash-2 text-danger"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section-->
+
+    <!-- Start:: Section-3 -->
+    <section class="sptb bg-white">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-lg-7 col-xl-6 col-md-12">
+                    <div class="sub-newsletter">
+                        <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                            aria-describedby="button-addon12">
+                        <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                            id="button-addon12">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End:: Section-3 -->
+
+ 

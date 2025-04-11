@@ -1,0 +1,353 @@
+<!-- Start::app-sidebar -->
+<!-- <ng-container> -->
+    @if(currentPath.includes('user-pages')){
+    <!-- Start::app-sidebar -->
+    <aside class="support-sidebar">
+      <div class="profile-pic">
+          <div class="profile-pic-img">
+              <span class="bg-success dots" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title=""
+                  data-original-title="online"
+                  data-bs-original-title=""></span>
+              <div class="avatar avatar-xxl avatar-rounded">
+                  <img src="./assets/images/users/16.jpg" alt="img">
+              </div>
+          </div>
+          <a href="javascript:void(0);" class="text-dark">
+              <h5 class="mt-3 mb-1 fw-semibold2">Abigali kelly</h5>
+          </a>
+          <small class="text-muted ">App Developer</small>
+      </div>
+
+      <!-- Start::main-sidebar -->
+      <div class="main-support-sidebar">
+
+          <!-- Start::nav -->
+          <nav
+              class="main-client-menu-container nav nav-pills flex-column sub-open">
+              <ul class="main-client-menu">
+                  <!-- Start::slide -->
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/dashboard"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-home"></i>Dashboard</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/profile"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-edit"></i>Edit
+                          Profile</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/tickets/ticket-list"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-ticket-alt"></i>Ticket
+                          Lists</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/tickets/active-tickets"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-compass"></i>Active
+                          Tickets</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/tickets/closed-tickets"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-edit"></i>Closed
+                          Tickets</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/tickets/view-ticket"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-tags"></i>View
+                          Ticket</a>
+                  </li>
+                  <li class="slide">
+                      <a routerLinkActive="active" routerLink="/support-system/user-pages/tickets/create-tickets"
+                          class="side-menu__item"><i
+                              class="side-menu__icon las la-briefcase"></i>Create
+                          Ticket</a>
+                  </li>
+                  <li class="slide has-sub" [ngClass]="{'open': isLevel1Open}">
+                      <a href="javascript:void(0);" class="side-menu__item" (click)="toggleLevel1()">
+                          <span class="side-menu__label"><i
+                                  class="side-menu__icon lab la-buffer"></i>Level
+                              1</span>
+                          <i class="fe fe-chevron-right side-menu__angle"></i>
+                      </a>
+                      <ul  class="slide-menu child1" [ngStyle]="{'display': isLevel1Open ? 'block' : 'none'}">
+                          <li class="slide">
+                              <a href="javascript:void(0);"
+                                  class="side-menu__item">Level 1.1</a>
+                          </li>
+                          <li class="slide">
+                              <a href="javascript:void(0);"
+                                  class="side-menu__item">Level 1.2</a>
+                          </li>
+                          <li class="slide">
+                              <a href="javascript:void(0);"
+                                  class="side-menu__item">Level 1.3</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <!-- End::slide -->
+              </ul>
+          </nav>
+          <!-- End::nav -->
+
+      </div>
+      <!-- End::main-sidebar -->
+
+  </aside>
+  <!-- End::app-sidebar -->
+
+    }
+  <!-- </ng-container> -->
+  <!-- End::app-sidebar -->
+    @if(currentPath.includes('admin')){
+    <!-- Start::app-sidebar -->
+    <aside class="support-sidebar">
+        <div class="profile-pic">
+            <div class="profile-pic-img">
+                <span class="bg-success dots" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title=""
+                    data-original-title="online"
+                    data-bs-original-title=""></span>
+                <div class="avatar avatar-xxl avatar-rounded">
+                    <img src="./assets/images/users/16.jpg" alt="img">
+                </div>
+            </div>
+            <a href="javascript:void(0);" class="text-dark">
+                <h5 class="mt-3 mb-1 fw-semibold2">Abigali kelly</h5>
+            </a>
+            <small class="text-muted ">App Developer</small>
+        </div>
+
+        <!-- Start::main-sidebar -->
+        <div class="main-support-sidebar">
+
+            <!-- Start::nav -->
+            <nav
+                class="main-client-menu-container nav nav-pills flex-column sub-open">
+                <ul class="main-client-menu">
+                    <!-- Start::slide -->
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/dashboard"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-home"></i>Dashboard</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/edit-profile"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-edit"></i>Edit
+                            Profile</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/tickets/ticket-list"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-ticket-alt"></i>Ticket
+                            Lists</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/tickets/active-tickets"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-compass"></i>Active
+                            Tickets</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/tickets/closed-tickets"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-edit"></i>Closed
+                            Tickets</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/tickets/view-ticket"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-tags"></i>View
+                            Ticket</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/tickets/new-tickets"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-file-alt"></i>New
+                            Ticket</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/customers"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-briefcase"></i>Customers</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/customerView"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-users"></i>Customer
+                            View</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/categories"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-briefcase"></i>Categories</a>
+                    </li>
+                    <li class="slide">
+                        <a routerLinkActive="active" routerLink="/support-system/admin/articles"
+                            class="side-menu__item"><i
+                                class="side-menu__icon las la-newspaper"></i>Articles</a>
+                    </li>
+                    <li class="slide has-sub"  [ngClass]="{'open': isLevel1Open}">
+                        <a href="javascript:void(0);" class="side-menu__item" (click)="toggleLevel1()">
+                            <span class="side-menu__label"><i
+                                    class="side-menu__icon lab la-buffer"></i>Level
+                                1</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1"  [ngStyle]="{'display': isLevel1Open ? 'block' : 'none'}">
+                            <li class="slide">
+                                <a href="javascript:void(0);"
+                                    class="side-menu__item">Level 1.1</a>
+                            </li>
+                            <li class="slide">
+                                <a href="javascript:void(0);"
+                                    class="side-menu__item">Level 1.2</a>
+                            </li>
+                            <li class="slide">
+                                <a href="javascript:void(0);"
+                                    class="side-menu__item">Level 1.3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- End::slide -->
+                </ul>
+            </nav>
+            <!-- End::nav -->
+
+        </div>
+        <!-- End::main-sidebar -->
+
+    </aside>
+    <!-- End::app-sidebar -->
+    }
+  
+    @if(currentPath.includes('agent')){
+        <aside class="support-sidebar">
+            <div class="profile-pic">
+                <div class="profile-pic-img">
+                    <span class="bg-success dots" data-bs-toggle="tooltip"
+                        placement="top" title=""
+                       ngbTooltip="online"
+                        data-bs-original-title=""></span>
+                    <div class="avatar avatar-xxl avatar-rounded">
+                        <img src="./assets/images/users/16.jpg" alt="img">
+                    </div>
+                </div>
+                <a href="javascript:void(0);" class="text-dark">
+                    <h5 class="mt-3 mb-1 fw-semibold2">Abigali kelly</h5>
+                </a>
+                <small class="text-muted ">App Developer</small>
+            </div>
+
+            <!-- Start::main-sidebar -->
+            <div class="main-support-sidebar">
+                <!-- Start::nav -->
+                <nav
+                    class="main-client-menu-container nav nav-pills flex-column sub-open">
+                    <ul class="main-client-menu">
+                        <!-- Start::slide -->
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/dashboard"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-home"></i>Dashboard</a>
+                        </li>
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/edit-profile"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-edit"></i>Edit
+                                Profile</a>
+                        </li>
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/tickets/ticket-list"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-ticket-alt"></i>Ticket
+                                Lists</a>
+                        </li>
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/tickets/active-tickets"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-compass"></i>Active
+                                Tickets</a>
+                        </li>
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/tickets/closed-tickets"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-edit"></i>Closed
+                                Tickets</a>
+                        </li>
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/tickets/view-ticket"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-edit"></i>view
+                                Tickets</a>
+                        </li>
+                        <!-- <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/tickets/view-ticket"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-tags"></i>View
+                                Ticket</a>
+                        </li> -->
+                        <li class="slide">
+                            <a routerLinkActive="active" routerLink="/support-system/agent/assigned-categories"
+                                class="side-menu__item"><i
+                                    class="side-menu__icon las la-file-alt"></i>Assigned
+                                Categories</a>
+                        </li>
+                        <li class="slide has-sub"  [ngClass]="{'open': isLevel1Open}">
+                            <a href="javascript:void(0);" class="side-menu__item" (click)="toggleLevel1()">
+                                <span class="side-menu__label"><i
+                                        class="side-menu__icon lab la-buffer"></i>Level
+                                    1</span>
+                                <i class="fe fe-chevron-right side-menu__angle"></i>
+                            </a>
+                            <ul class="slide-menu child1"  [ngStyle]="{'display': isLevel1Open ? 'block' : 'none'}">
+                                <li class="slide">
+                                    <a href="javascript:void(0);"
+                                        class="side-menu__item">Level 1.1</a>
+                                </li>
+                                <li class="slide">
+                                    <a href="javascript:void(0);"
+                                        class="side-menu__item">Level 1.2</a>
+                                </li>
+                                <li class="slide">
+                                    <a href="javascript:void(0);"
+                                        class="side-menu__item">Level 1.3</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End::slide -->
+                    </ul>
+                </nav>
+                <!-- End::nav -->
+
+            </div>
+            <!-- End::main-sidebar -->
+
+        </aside>
+    }
+  
+  <ng-container>
+    @if(currentPath.includes('/agent/tickets/view-ticket')){
+    <!-- Start::app-sidebar -->
+
+    <!-- End::app-sidebar -->
+    }
+  </ng-container>
+  
+  <ng-container>
+    @if(currentPath.includes('')){
+    <!-- Start::app-sidebar -->
+   
+    <!-- End::app-sidebar -->
+  
+   
+    }
+  </ng-container>
+  
+ 

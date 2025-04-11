@@ -1,0 +1,302 @@
+     <!-- Start:: Section-1 -->
+     <div class="landing-banner landing-banner2" id="home">
+        <section class="section">
+            <div class="main-banner-container pb-lg-0 px-sm-0">
+                <div class="row text-fixed-white d-flex align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0 text-fixed-white">Dashboard</h2>
+                    </div>
+                    <div class="col col-auto">
+                        <ol class="breadcrumb text-center mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="javascript:void(0);" class="text-fixed-white fw-semibold">Dashboard</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End:: Section-1 -->
+
+    <!--Section-->
+    <section>
+        <div class="cover-image sptb section-bg">
+            <div class="main-container">
+                <div class="row">
+                    <div class="col-xl-3 mb-4 mb-xl-0">
+                        <div class="position-sticky top-0">
+                            <div class="card custom-card border-0 overflow-hidden">
+                                <div class="card-body p-0">
+                                    <!-- Start::app-sidebar -->
+                                    <app-support-sidebar></app-support-sidebar>
+                                    <!-- End::app-sidebar -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-12">
+                                <div class="card custom-card">
+                                    <a href="javascript:void(0);">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="mt-0 text-start">
+                                                        <span class="fs-16 fw-semibold">Total Tickets</span>
+                                                        <h3 class="mb-0 mt-1 text-primary fs-25">5,678</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="icon1 bg-primary-transparent my-auto float-end">
+                                                        <i class="las la-ticket-alt"></i> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12">
+                                <div class="card custom-card">
+                                    <a href="javascript:void(0);">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="mt-0 text-start">
+                                                        <span class="fs-16 fw-semibold">Active Tickets</span>
+                                                        <h3 class="mb-0 mt-1 text-success fs-25">142</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="icon1 bg-success-transparent my-auto float-end">
+                                                        <i class="ri-ticket-2-line"></i> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12">
+                                <div class="card custom-card">
+                                    <a href="javascript:void(0);">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="mt-0 text-start">
+                                                        <span class="fs-16 fw-semibold">Closed Tickets</span>
+                                                        <h3 class="mb-0 mt-1 text-danger fs-25">39</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="icon1 bg-danger-transparent my-auto  float-end">
+                                                        <i class="ri-coupon-2-line"></i> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-12 col-lg-12">
+                                <div class="card custom-card">
+                                    <div ngbDropdown class="card-header justify-content-between">
+                                        <h4 class="card-title">Current Ticket Statistics</h4>
+                                        <a ngbDropdownToggle href="javascript:void(0);"
+                                            class="btn ripple btn-outline-light no-caret my-1"
+                                            data-bs-toggle="dropdown" aria-expanded="false"> Last Month <i
+                                                class="fe fe-chevron-down"></i> </a>
+                                        <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" role="menu">
+                                            <li><a href="javascript:void(0);" class="dropdown-item">Last
+                                                    Year</a></li>
+                                            <li><a href="javascript:void(0);" class="dropdown-item">Last
+                                                    Month</a></li>
+                                            <li><a href="javascript:void(0);" class="dropdown-item">Last
+                                                    Week</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="Ticket-Statistics" class="">
+                                            <apx-chart [series]="donutData.series" [chart]="donutData.chart"
+                                            [legend]="donutData.legend" [xaxis]="donutData.xaxis"
+                                            [colors]="donutData.colors" [markers]="donutData.markers"
+                                            [stroke]="donutData.stroke" [plotOptions]="donutData.plotOptions"
+                                            [dataLabels]="donutData.dataLabels" [grid]="donutData.grid"
+                                            [labels]="donutData.labels" [yaxis]="donutData.yaxis"></apx-chart>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-12">
+                                <div class="card custom-card">
+                                    <div class="card-header justify-content-between">
+                                        <h4 class="card-title">Latest Overview</h4>
+                                        <div ngbDropdown class="card-options">
+                                            <a ngbDropdownToggle href="javascript:void(0);"
+                                                class="btn ripple btn-outline-light no-caret my-1"
+                                                data-bs-toggle="dropdown" aria-expanded="false"> Yearly <i
+                                                    class="fe fe-chevron-down"></i> </a>
+                                            <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" role="menu">
+                                                <li><a href="javascript:void(0);"
+                                                        class="dropdown-item">Yearly</a></li>
+                                                <li><a href="javascript:void(0);"
+                                                        class="dropdown-item">Monthly</a></li>
+                                                <li><a href="javascript:void(0);"
+                                                        class="dropdown-item">Weekly</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="">Total Customers</h6>
+                                                <h6 class="">50</h6>
+                                            </div>
+                                            <div class="progress h-2">
+                                                <div class="progress-bar bg-primary w-50"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="">Total Articles</h6>
+                                                <h6 class="">40</h6>
+                                            </div>
+                                            <div class="progress h-2">
+                                                <div class="progress-bar bg-warning w-40"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="">Total Assigned Tickets</h6>
+                                                <h6 class="">60</h6>
+                                            </div>
+                                            <div class="progress h-2">
+                                                <div class="progress-bar bg-success w-60"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="">Total UnAssigned Tickets</h6>
+                                                <h6 class="">45</h6>
+                                            </div>
+                                            <div class="progress h-2">
+                                                <div class="progress-bar bg-danger w-45"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0">
+                                            <div class="d-flex align-items-end justify-content-between">
+                                                <h6 class="">Total Open Tickets</h6>
+                                                <h6 class="">55</h6>
+                                            </div>
+                                            <div class="progress h-2">
+                                                <div class="progress-bar bg-info w-55"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card custom-card mb-0">
+                                    <div class="card-header border-0">
+                                        <h4 class="card-title">Tickets Summary</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-vcenter text-nowrap table-bordered border-bottom"
+                                                id="supportticket-dash">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-bottom-0">#ID</th>
+                                                        <th class="border-bottom-0">Title</th>
+                                                        <th class="border-bottom-0">Priority</th>
+                                                        <th class="border-bottom-0">Category</th>
+                                                        <th class="border-bottom-0">Date</th>
+                                                        <th class="border-bottom-0">Status</th>
+                                                        <th class="border-bottom-0">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (data of TableData; track $index) {
+
+                                                        <tr>
+                                                            <td>{{data.ID}}</td>
+                                                            <td><a href="javascript:void(0);">{{data.Title}}</a></td>
+                                                            <td><span
+                                                                    class="badge bg-{{data.PriorityBg}}-transparent">{{data.Priority}}</span>
+                                                            </td>
+                                                            <td>{{data.Category}}</td>
+                                                            <td>{{data.Date}}</td>
+                                                            <td><span class="badge bg-{{data.StatusBg}}">{{data.Status}}</span></td>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <a href="javascript:void(0);"
+                                                                        class="action-btns1"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top" ngbTooltip="send"><i
+                                                                            class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="action-btns1"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                       ngbTooltip="View Ticket"><i
+                                                                            class="fe fe-eye text-primary"></i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="action-btns1"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        ngbTooltip="Delete Ticket"><i
+                                                                            class="fe fe-trash-2 text-danger"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section-->
+
+    <!-- Start:: Section-3 -->
+    <section class="sptb bg-white">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-lg-7 col-xl-6 col-md-12">
+                    <div class="sub-newsletter">
+                        <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here">
+                        <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                            id="button-addon2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End:: Section-3 -->
+

@@ -1,0 +1,565 @@
+<app-job-dashboard-page-header [title]="'Job Applications'" [title1]="'Job'"></app-job-dashboard-page-header>
+<!-- Row -->
+  <!-- Start::row-1 -->
+  <div class="row">
+    <div class="col-md-12">
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between border-bottom-0">
+                <h4 class="card-title">Job Applications</h4>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row my-3 px-3">
+                    <div class="col-lg-6">
+                        <div class="d-flex align-items-center">
+                            <span>Show</span>
+                            <div class="d-flex ms-2 mx-2">
+                                <div class="form-group mt-2">
+                                    <ng-select name="quantity" id="select-countries17" placeholder="1" class="form-control  wd-150 p-0" data-trigger>
+                                        <ng-option value="1" selected="">1</ng-option>
+                                        <ng-option value="2">2</ng-option>
+                                        <ng-option value="3">3</ng-option>
+                                        <ng-option value="4">4</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <span>entries</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="float-end">
+                            <input type="text" class="form-control" placeholder="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  table-vcenter text-nowrap table-bordered border-bottom" id="job-applictaion">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">No</th>
+                                <th class="border-bottom-0">Position</th>
+                                <th class="border-bottom-0">Name</th>
+                                <th class="border-bottom-0">Email</th>
+                                <th class="border-bottom-0">Phone Number</th>
+                                <th class="border-bottom-0">Applied On</th>
+                                <th class="border-bottom-0">Submitted By</th>
+                                <th class="border-bottom-0">Status</th>
+                                <th class="border-bottom-0">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior PHP Developer</a>
+                                </td>
+                                <td>Faith Harris</td>
+                                <td>faith&#64;gmail.com</td>
+                                <td>+9685321475</td>
+                                <td>25-01-2021</td>
+                                <td>Faith Harris</td>
+                                <td>
+                                    <span class="badge bg-warning">Pending</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a  class="action-btns1" data-bs-toggle="modal" (click)="open(content)" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Fresher Web Designer</a>
+                                </td>
+                                <td>Austin Bell</td>
+                                <td>austin&#64;gmail.com</td>
+                                <td>+8653217950</td>
+                                <td>20-02-2021</td>
+                                <td>Austin Bell</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Web Developer</a>
+                                </td>
+                                <td>Maria Bower</td>
+                                <td>maria&#64;gmail.com</td>
+                                <td>+9563258417</td>
+                                <td>28-02-2021</td>
+                                <td>Maria Bower</td>
+                                <td>
+                                    <span class="badge bg-danger">Rejected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>04</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Fresher UI Designer</a>
+                                </td>
+                                <td>Peter Hill</td>
+                                <td>peter&#64;gmail.com</td>
+                                <td>+8563249751</td>
+                                <td>19-01-2021</td>
+                                <td>Peter Hill</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>05</td>
+                                <td>
+                                    <a  href="javascript:void(0);">SEO Specialist</a>
+                                </td>
+                                <td>Victoria Lyman</td>
+                                <td>victoria&#64;gmail.com</td>
+                                <td>+9635826432</td>
+                                <td>19-03-2021</td>
+                                <td>Victoria Lyman</td>
+                                <td>
+                                    <span class="badge bg-warning">Pending</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>06</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Worpress Developer</a>
+                                </td>
+                                <td>Adam Quinn</td>
+                                <td>adam&#64;gmail.com</td>
+                                <td>+9685231572</td>
+                                <td>17-01-2021</td>
+                                <td>Adam Quinn</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>07</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Accountant</a>
+                                </td>
+                                <td>Melanie Coleman</td>
+                                <td>melanie&#64;gmail.com</td>
+                                <td>+8635291470</td>
+                                <td>21-02-2021</td>
+                                <td>Melanie Coleman</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>08</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Fresher Angular Developer</a>
+                                </td>
+                                <td>Max Wilson</td>
+                                <td>max&#64;gmail.com</td>
+                                <td>+9986357240</td>
+                                <td>30-03-2021</td>
+                                <td>Max Wilson</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>09</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Angular Developer</a>
+                                </td>
+                                <td>Amelia Russell</td>
+                                <td>amelia&#64;gmail.com</td>
+                                <td>+9356982472</td>
+                                <td>04-04-2021</td>
+                                <td>Amelia Russell</td>
+                                <td>
+                                    <span class="badge bg-warning">Pending</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Fresher Web Designer</a>
+                                </td>
+                                <td>Justin Metcalfe</td>
+                                <td>justin&#64;gmail.com</td>
+                                <td>+9685321475</td>
+                                <td>17-02-2021</td>
+                                <td>Justin Metcalfe</td>
+                                <td>
+                                    <span class="badge bg-danger">Rejected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Web Developer</a>
+                                </td>
+                                <td>Sophie Anderson</td>
+                                <td>sophie&#64;gmail.com</td>
+                                <td>+8674231566</td>
+                                <td>22-02-2021</td>
+                                <td>Sophie Anderson</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior Worpress Developer</a>
+                                </td>
+                                <td>Ryan Young</td>
+                                <td>ryan&#64;gmail.com</td>
+                                <td>+9685321475</td>
+                                <td>18-03-2021</td>
+                                <td>Ryan Young</td>
+                                <td>
+                                    <span class="badge bg-warning">Pending</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Fresher Angular Developer</a>
+                                </td>
+                                <td>Jennifer Hardacre</td>
+                                <td>jennifer&#64;gmail.com</td>
+                                <td>+9635826432</td>
+                                <td>19-03-2021</td>
+                                <td>Jennifer Hardacre</td>
+                                <td>
+                                    <span class="badge bg-danger">Rejected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Accept">
+                                            <i class="fe fe-check text-success" ></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>
+                                    <a  href="javascript:void(0);">Senior PHP Developer</a>
+                                </td>
+                                <td>Justin Parr</td>
+                                <td>justin&#64;gmail.com</td>
+                                <td>+9685321475</td>
+                                <td>20-03-2021</td>
+                                <td>Justin Parr</td>
+                                <td>
+                                    <span class="badge bg-primary">Selected</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rejected">
+                                            <i class="fe fe-x text-danger"></i>
+                                        </a>
+                                        <a   (click)="open(content)" class="action-btns1" data-bs-toggle="modal" data-bs-target=".jobapplictionmodal">
+                                            <i class="fe fe-eye  text-primary"  data-bs-toggle="tooltip" placement="top" ngbTooltip="view"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns1" data-bs-toggle="tooltip" placement="top" ngbTooltip="Delete">
+                                            <i class="fe fe-trash-2 text-danger"></i>
+                                        </a>
+                                        <a  href="javascript:void(0);" class="action-btns" data-bs-toggle="tooltip" placement="top" ngbTooltip="Download Resume">
+                                            <i class="fe fe-download  text-secondary"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Start::pagination -->
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-end mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
+                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                    </ul>
+                </nav>
+                <!-- End::pagination -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--End::row-1 -->
+<!-- End Row -->
+		<!-- Edit Job Modal -->
+
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Job Application</h5>
+                        <button type="button" (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td class="form-label mb-0">Position</td>
+                                        <td>:</td>
+                                        <td>Senior PHP Developer</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Name</td>
+                                        <td>:</td>
+                                        <td>Faith Harris/td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Email</td>
+                                        <td>:</td>
+                                        <td>faith&#64;gmail.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Phone Number</td>
+                                        <td>:</td>
+                                        <td>+9685321475</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Applied On</td>
+                                        <td>:</td>
+                                        <td>25-01-2021</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Status</td>
+                                        <td>:</td>
+                                        <td>
+                                            <span class="badge bg-warning">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-label mb-0">Description</td>
+                                        <td>:</td>
+                                        <td>
+                                            <p class="mb-0">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <a  href="javascript:void(0);" class="btn btn-primary">View Resume</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  class="btn btn-danger" (click)="modal.close('cross click')" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </ng-template>
+        <!-- Edit Job Modal -->

@@ -1,0 +1,140 @@
+<app-page-header [title]="'Notifications'"></app-page-header>
+
+
+<!-- Start::row-1 -->
+<div class="row">
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Basic Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-primary" id="basic" (click)="showDefault()">Basic Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Async Notification With Error Message</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-primary" id="async-error" (click)="showError()">Async Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Async Notification With Success Message</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-primary" id="async-success" (click)="showSuccess()">Async
+          Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">PopUp Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <a type="button" class="btn btn-primary" id="popup" (click)="showPopup(content)">Notification</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End::row-1 -->
+
+<!-- Start::row-2 -->
+<div class="row">
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Info Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn  btn-info" id="info" (click)="showInfo()">Info Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Success Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn  btn-success" id="success" (click)="showSuccess()">Success
+          Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Warning Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-warning" id="warning" (click)=" ShowWarning()">Warning
+          Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Error Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-danger" id="error" (click)=" showError()">Error Notification</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End::row-2 -->
+
+<!-- Start::row-3 -->
+<div class="row">
+  <div class="col-xl-4 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Confirmation Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn  btn-secondary" id="confirm" (click)="Info()">Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Async Block With Error Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-primary" id="async" (click)=" showError()">Notification</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-lg-6">
+    <div class="card custom-card">
+      <div class="card-header">
+        <div class="card-title">Async Block With Success Notification</div>
+      </div>
+      <div class="card-body text-center">
+        <button type="button" class="btn btn-primary" id="async-block" (click)="showSuccess()">Notification</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End::row-3 -->
+
+<ng-template #content>
+<div>
+  <div class="modal-body">
+    <h4 class="fw-semibold mb-1 text-xl">Welcome To Bootstrap Admin Template </h4><small
+    class="text-gray-500 text-sm">Click outside the modal window to close it.</small>
+</div>
+
+</div>
+</ng-template>

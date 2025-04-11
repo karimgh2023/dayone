@@ -1,0 +1,541 @@
+  <!-- Start:: Section-1 -->
+  <div class="landing-banner landing-banner2" id="home">
+    <section class="section">
+        <div class="main-banner-container pb-lg-0 px-sm-0">
+            <div class="row text-fixed-white d-flex align-items-center">
+                <div class="col">
+                    <h2 class="mb-0 text-fixed-white">Dashboard</h2>
+                </div>
+                <div class="col col-auto">
+                    <ol class="breadcrumb text-center mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:void(0);" class="text-fixed-white op-6">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="javascript:void(0);" class="text-fixed-white op-6">Pages</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:void(0);" class="text-fixed-white fw-semibold">Dashboard</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- End:: Section-1 -->
+
+<!--Section-->
+<section>
+    <div class="cover-image sptb section-bg">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-xl-3 mb-4 mb-xl-0">
+                    <div class="position-sticky top-0">
+                        <div class="card custom-card border-0 overflow-hidden">
+                            <div class="card-body p-0">
+                                <!-- Start::app-sidebar -->
+                                <app-support-sidebar></app-support-sidebar>
+                            
+                                <!-- End::app-sidebar -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-12">
+                            <div class="card">
+                                <a href="javascript:void(0);">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="mt-0 text-start">
+                                                    <span class="fs-16 fw-semibold">Total Tickets</span>
+                                                    <h3 class="mb-0 mt-1 text-primary fs-25">1254</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div
+                                                    class="icon-style2 bg-primary-transparent my-auto float-end">
+                                                    <i class="las la-ticket-alt"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-12">
+                            <div class="card">
+                                <a href="javascript:void(0);">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="mt-0 text-start">
+                                                    <span class="fs-16 fw-semibold">Active Tickets</span>
+                                                    <h3 class="mb-0 mt-1 text-success fs-25">42</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div
+                                                    class="icon-style2 bg-success-transparent my-auto float-end">
+                                                    <i class="ri-ticket-2-line"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-12">
+                            <div class="card">
+                                <a href="javascript:void(0);">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="mt-0 text-start">
+                                                    <span class="fs-16 fw-semibold">Closed Tickets</span>
+                                                    <h3 class="mb-0 mt-1 text-secondary fs-25">11</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div
+                                                    class="icon-style2 bg-secondary-transparent my-auto  float-end">
+                                                    <i class="ri-coupon-2-line"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="card custom-card">
+                                <div class="card-header justify-content-between">
+                                    <h4 class="card-title">Ticket Overview</h4>
+                                    <div class="card-options">
+                                        <div class="btn-list" ngbDropdown>
+                                            <a href="javascript:void(0);"
+                                                class="btn  btn-outline-light text-dark float-start d-flex"><span
+                                                    class="dot-label bg-primary bg-opacity-20 me-2 my-auto"></span>Open
+                                                Ticket</a>
+                                            <a href="javascript:void(0);"
+                                                class="btn  btn-outline-light text-dark float-start d-flex"><span
+                                                    class="dot-label bg-primary me-2 my-auto"></span>Closed
+                                                Ticket</a>
+                                            <a href="javascript:void(0);" ngbDropdownToggle class="btn btn-outline-light no-caret"
+                                                data-bs-toggle="dropdown" aria-expanded="false"> Yearly <i
+                                                    class="fe fe-chevron-down"></i> </a>
+                                            <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" role="menu">
+                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                        class="dropdown-item">Monthly</a></li>
+                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                        class="dropdown-item">Yearly</a></li>
+                                                <li><a href="javascript:void(0);" ngbDropdownItem
+                                                        class="dropdown-item">Weekly</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-wrapper">
+                                        <div id="chartLine3">
+                                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [yaxis]="chartOptions.yaxis" [colors]="chartOptions.colors"
+                                            [xaxis]="chartOptions.xaxis" [labels]="chartOptions.labels" [stroke]="chartOptions.stroke" [plotOptions]="chartOptions.plotOptions"
+                                                [dataLabels]="chartOptions.dataLabels"
+                                            [grid]="chartOptions.grid" [legend]="chartOptions.legend"></apx-chart>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="card custom-card mb-0">
+                                <div class="card-header border-0">
+                                    <h4 class="card-title">Tickets Summary</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-vcenter text-nowrap table-bordered border-bottom"
+                                            id="supportticket-dash">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0">#ID</th>
+                                                    <th class="border-bottom-0">Title</th>
+                                                    <th class="border-bottom-0">Priority</th>
+                                                    <th class="border-bottom-0">Category</th>
+                                                    <th class="border-bottom-0">Date</th>
+                                                    <th class="border-bottom-0">Status</th>
+                                                    <th class="border-bottom-0">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>#289</td>
+                                                    <td><a href="javascript:void(0);">Sed ut
+                                                            perspiciatis</a></td>
+                                                    <td><span
+                                                            class="badge bg-success-transparent">Low</span>
+                                                    </td>
+                                                    <td>Support</td>
+                                                    <td>12-01-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#320</td>
+                                                    <td><a href="javascript:void(0);">Excepteur occaecat</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-success-transparent">Low</span>
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>05-02-2021</td>
+                                                    <td><span class="badge bg-danger">Closed</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#837</td>
+                                                    <td><a href="javascript:void(0);">Sample Test1</a></td>
+                                                    <td><span
+                                                            class="badge bg-danger-transparent">High</span>
+                                                    </td>
+                                                    <td>Customization</td>
+                                                    <td>13-03-2021</td>
+                                                    <td><span class="badge bg-success">open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#124</td>
+                                                    <td><a href="javascript:void(0);">Sample Test2</a></td>
+                                                    <td><span
+                                                            class="badge bg-warning-transparent">Medium</span>
+                                                    </td>
+                                                    <td>Support</td>
+                                                    <td>01-01-2021</td>
+                                                    <td><span class="badge bg-danger">Closed</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#309</td>
+                                                    <td><a href="javascript:void(0);">Ut aut reiciendi</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-success-transparent">Low</span>
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>11-04-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#117</td>
+                                                    <td><a href="javascript:void(0);">Unde omnis iste
+                                                            natus</a></td>
+                                                    <td><span
+                                                            class="badge bg-success-transparent">Low</span>
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>11-04-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#276</td>
+                                                    <td><a href="javascript:void(0);">Et harum quidem</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-warning-transparent">Medium</span>
+                                                    </td>
+                                                    <td>Support</td>
+                                                    <td>11-04-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#738</td>
+                                                    <td><a href="javascript:void(0);">Maiores alias aut</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-success-transparent">High</span>
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>17-03-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#498</td>
+                                                    <td><a href="javascript:void(0);">Quis autem vel</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-danger-transparent">High</span>
+                                                    </td>
+                                                    <td>Support</td>
+                                                    <td>17-02-2021</td>
+                                                    <td><span class="badge bg-success">Open</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#298</td>
+                                                    <td><a href="javascript:void(0);">Ut aut reiciendi</a>
+                                                    </td>
+                                                    <td><span
+                                                            class="badge bg-danger-transparent">High</span>
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>11-03-2021</td>
+                                                    <td><span class="badge bg-danger">closed</span></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Reply Ticket"><i
+                                                                    class="fe fe-corner-up-left  text-warning fs-16"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="View Ticket"><i
+                                                                    class="fe fe-eye text-primary"></i></a>
+                                                            <a href="javascript:void(0);"
+                                                                class="action-btns1"
+                                                                data-bs-toggle="tooltip"
+                                                                placement="top"
+                                                                ngbTooltip="Delete Ticket"><i
+                                                                    class="fe fe-trash-2 text-danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section-->
+
+<!-- Start:: Section-3 -->
+<section class="sptb bg-white">
+    <div class="main-container">
+        <div class="row">
+            <div class="col-lg-7 col-xl-6 col-md-12">
+                <div class="sub-newsletter">
+                    <h3 class="mb-2 "><i class="fe fe-send me-2"></i> Subscribe To Our Onlinesletter</h3>
+                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor</p>
+                </div>
+            </div>
+            <div class="col-lg-5 col-xl-6 col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ask Here" aria-label="Ask Here"
+                        aria-describedby="button-addon12">
+                    <button class="btn btn-primary btn-lg btn-wave waves-effect waves-light" type="button"
+                        id="button-addon12">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End:: Section-3 -->

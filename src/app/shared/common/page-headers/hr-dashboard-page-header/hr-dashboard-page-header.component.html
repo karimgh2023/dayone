@@ -1,0 +1,357 @@
+<!--Page header-->
+<div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+        <div class="page-title">{{title}}<span class="fw-normal text-muted ms-2">{{title1}}</span></div>
+    </div>
+    <div class="page-rightheader mt-2 mt-xl-0">
+        <div class="d-md-flex align-items-center flex-wrap my-auto end-content breadcrumb-end">
+            <div class="d-flex gap-2">
+                <a class="{{class}}" routerLink="{{path}}">{{title2}}</a>
+                <a class="{{class1}}" (click)="openModal(content)">{{title3}}</a>
+                <button type="button" class="btn btn-light3" data-bs-toggle="tooltip" placement="top"
+                    ngbTooltip="E-mail"> <i class="fe fe-mail"></i> </button>
+                <button type="button" class="btn btn-light3" data-bs-toggle="tooltip" placement="top"
+                    ngbTooltip="Contact"> <i class="fe fe-phone-call"></i> </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" placement="top"
+                    ngbTooltip="Info"> <i class="fe fe-info"></i> </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Page header-->
+
+<ng-template #content let-modal>
+    @if(currentPath.includes('/dashboard/hrmdashboards/department')){
+    <div class="modal-header">
+        <h5 class="modal-title">Add New Notice</h5> <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"> </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group mb-3"> 
+            <label class="form-label">Type Text</label> 
+            <input class="form-control"placeholder="Text"> </div>
+      
+    </div>
+    <div class="modal-footer"> <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button> <button
+            class="btn btn-primary">submit</button> </div>
+    }
+
+    @if(currentPath=="/dashboard/hrmdashboards/attendance/leave-settings"){
+    <div class="modal-header">
+        <h5 class="modal-title">Add New Leaves</h5> <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"> </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group mb-3"> <label class="form-label">Type Of Leaves</label> <input class="form-control"
+                placeholder="Text"> </div>
+        <div class="form-group"> <label class="form-label">Number Of Days</label> <input class="form-control"
+                type="number" placeholder="Numbers"> </div>
+    </div>
+    <div class="modal-footer"> <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Save</button>
+    </div>
+    }
+
+    @if(currentPath=="/dashboard/hrmdashboards/awards"){
+
+    <div class="modal-header">
+        <h5 class="modal-title">Award Details</h5> <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Employee ID</label> <input type="text"
+                        class="form-control" placeholder="ID"> </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Employee Name</label> <input type="text"
+                        class="form-control" placeholder="Name"> </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Employee Email</label> <input type="text"
+                        class="form-control" placeholder="Email"> </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Designation</label> <input type="text"
+                        class="form-control" placeholder="Designation"> </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Award Types</label>
+                    <div class="choices" data-type="select-one" tabindex="0" role="combobox" aria-autocomplete="list"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__inner"><select name="projects"
+                                class="form-control custom-select choices__input" data-trigger=""
+                                data-placeholder="Choose One" hidden="" tabindex="-1" data-choice="active">
+                                <option value="" data-custom-properties="[object Object]">Choose One</option>
+                            </select>
+                            <div class="choices__list choices__list--single">
+                                <div class="choices__item choices__placeholder choices__item--selectable" data-item=""
+                                    data-id="1" data-value="" data-custom-properties="[object Object]"
+                                    aria-selected="true">Choose One
+                                </div>
+                            </div>
+                        </div>
+                        <div class="choices__list choices__list--dropdown" aria-expanded="false"><input type="text"
+                                class="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off"
+                                spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="Choose One"
+                                placeholder="Search">
+                            <div class="choices__list" role="listbox">
+                                <div id="choices--projects-uq-item-choice-2"
+                                    class="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted"
+                                    role="option" data-choice="" data-id="2" data-value=""
+                                    data-select-text="Press to select" data-choice-selectable="" aria-selected="true">
+                                    Choose One</div>
+                                <div id="choices--projects-uq-item-choice-1"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="1" data-value="7" data-select-text="Press to select"
+                                    data-choice-selectable="">Character Award
+                                </div>
+                                <div id="choices--projects-uq-item-choice-3"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="3" data-value="9" data-select-text="Press to select"
+                                    data-choice-selectable="">Customer
+                                    Service Award</div>
+                                <div id="choices--projects-uq-item-choice-4"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="4" data-value="1" data-select-text="Press to select"
+                                    data-choice-selectable="">Employee of the
+                                    Month Award</div>
+                                <div id="choices--projects-uq-item-choice-5"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="5" data-value="8" data-select-text="Press to select"
+                                    data-choice-selectable="">Innovation
+                                    Award</div>
+                                <div id="choices--projects-uq-item-choice-6"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="6" data-value="6" data-select-text="Press to select"
+                                    data-choice-selectable="">Leadership
+                                    Award</div>
+                                <div id="choices--projects-uq-item-choice-7"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="7" data-value="5" data-select-text="Press to select"
+                                    data-choice-selectable="">Most Creative
+                                    Award</div>
+                                <div id="choices--projects-uq-item-choice-8"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="8" data-value="4" data-select-text="Press to select"
+                                    data-choice-selectable="">Sales Award
+                                </div>
+                                <div id="choices--projects-uq-item-choice-9"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="9" data-value="3" data-select-text="Press to select"
+                                    data-choice-selectable="">Teamwork Award
+                                </div>
+                                <div id="choices--projects-uq-item-choice-10"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="10" data-value="10" data-select-text="Press to select"
+                                    data-choice-selectable="">Top Performer
+                                    Award</div>
+                                <div id="choices--projects-uq-item-choice-11"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="11" data-value="2" data-select-text="Press to select"
+                                    data-choice-selectable="">Work
+                                    Anniversary Award</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3"> <label class="form-label">Gift Types</label>
+                    <div class="choices" data-type="select-one" tabindex="0" role="combobox" aria-autocomplete="list"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__inner"><select name="projects"
+                                class="form-control custom-select choices__input" data-trigger=""
+                                data-placeholder="Choose One" hidden="" tabindex="-1" data-choice="active">
+                                <option value="" data-custom-properties="[object Object]">Choose One</option>
+                            </select>
+                            <div class="choices__list choices__list--single">
+                                <div class="choices__item choices__placeholder choices__item--selectable" data-item=""
+                                    data-id="1" data-value="" data-custom-properties="[object Object]"
+                                    aria-selected="true">Choose One
+                                </div>
+                            </div>
+                        </div>
+                        <div class="choices__list choices__list--dropdown" aria-expanded="false"><input type="text"
+                                class="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off"
+                                spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="Choose One"
+                                placeholder="Search">
+                            <div class="choices__list" role="listbox">
+                                <div id="choices--projects-pm-item-choice-2"
+                                    class="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted"
+                                    role="option" data-choice="" data-id="2" data-value=""
+                                    data-select-text="Press to select" data-choice-selectable="" aria-selected="true">
+                                    Choose One</div>
+                                <div id="choices--projects-pm-item-choice-1"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="1" data-value="1" data-select-text="Press to select"
+                                    data-choice-selectable="">Cash</div>
+                                <div id="choices--projects-pm-item-choice-3"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="3" data-value="3" data-select-text="Press to select"
+                                    data-choice-selectable="">Momento</div>
+                                <div id="choices--projects-pm-item-choice-4"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="4" data-value="4" data-select-text="Press to select"
+                                    data-choice-selectable="">Others</div>
+                                <div id="choices--projects-pm-item-choice-5"
+                                    class="choices__item choices__item--choice choices__item--selectable" role="option"
+                                    data-choice="" data-id="5" data-value="2" data-select-text="Press to select"
+                                    data-choice-selectable="">Trophy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3"> <label class="form-label">Date:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div> <input type="text"
+                        class="form-control choose-date flatpickr-input" mwlFlatpickr  placeholder="DD-MM-YYYY" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="form-group"> <label class="form-label">Award Description:</label> <textarea class="form-control"
+                rows="3" placeholder="enter the description"></textarea> </div>
+    </div>
+    <div class="modal-footer">
+        <div class="ms-auto"> <a (click)="modal.close('cross click')" href="javascript:void(0);" class="btn btn-outline-primary"
+                data-bs-dismiss="modal">close</a> <a href="javascript:void(0);" class="btn btn-primary">Save</a>
+        </div>
+    </div>
+
+    }
+    @if(currentPath=="/dashboard/hrmdashboards/holidays"){
+        <ng-container>
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add Holidays</h5> <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3"> <label class="form-label">Select Date</label>
+                    <div class="form-group">
+                        <div class="input-group"> 
+                            <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div> <input
+                                type="text" mwlFlatpickr class="form-control choose-date flatpickr-input" placeholder="22-09-2023"
+                                readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"> <label class="form-label">Enter Occasion</label> <input class="form-control"
+                        placeholder="occasion title"> </div>
+            </div>
+            <div class="modal-footer"> <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary">Add</button> 
+            </div>
+        </ng-container>
+    }
+
+    @if(currentPath=="/dashboard/hrmdashboards/notice-board"){
+        <div class="modal-header">
+            <h5 class="modal-title">Add New Notice</h5>
+            <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group mb-3">
+                <label class="form-label">Title</label>
+                <input class="form-control" placeholder="Text">
+            </div>
+            <div class="form-group mb-3 d-flex">
+                <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="toEmployees">
+                    <label class="form-check-label" for="toEmployees">
+                        To Employees
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="toClients">
+                    <label class="form-check-label" for="toClients">
+                        To Clients
+                    </label>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Select Date:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                        <input type="text" class="form-control choose-date" mwlFlatpickr placeholder="DD-MM-YYYY">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-medium form-label">Description:</label>
+                <div id="editor"></div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Attachment:</label>
+                <div class="form-group">
+                    <input class="form-control" type="file">
+                </div>
+            </div>
+            <div class="form-group mb-0 d-flex">
+                <label class="form-label me-5">Status :</label>
+                <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="toEmployee1">
+                    <label class="form-check-label" for="toEmployee1">
+                        To Employees
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="toClients3">
+                    <label class="form-check-label" for="toClients3">
+                        To Clients
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button (click)="modal.close('cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+            <button  class="btn btn-success">Save</button>
+        </div>
+    }
+
+    @if(currentPath=="/dashboard/hrmdashboards/events"){
+        <div class="modal-header">
+            <h5 class="modal-title">Add New Event</h5>
+            <button (click)="modal.close('cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group mb-3">
+                <label class="form-label">Event Title</label>
+                <input type="text" class="form-control" placeholder="text" value="">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Event Date:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-text text-muted"> <i class="ri-calendar-line"></i> </div>
+                        <input type="text" class="form-control choose-date" mwlFlatpickr placeholder="DD-MM-YYYY">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Event Description</label>
+                <textarea class="form-control" rows="3">Some text here...</textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a (click)="modal.close('cross click')" href="javascript:void(0);" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</a>
+            <a href="javascript:void(0);" class="btn btn-primary">Add</a>
+        </div>
+}
+
+</ng-template> 

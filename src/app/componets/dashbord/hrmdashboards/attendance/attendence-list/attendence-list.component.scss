@@ -1,0 +1,6 @@
+::ng-deep{
+    .timepicker-backdrop-overlay,
+    .timepicker-overlay{
+        z-index: 999999 !important;
+    }
+}
