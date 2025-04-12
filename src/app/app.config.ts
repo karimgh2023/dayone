@@ -20,14 +20,36 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';  
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(App_Route), provideHttpClient(), AngularFireModule,
+  providers: [
+    provideRouter(App_Route), 
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    importProvidersFrom(
+      AppStateService,
+      ColorPickerModule,
+      CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory,
+      }),
+      ToastrModule.forRoot({ positionClass: 'top' }),
+      NgCircleProgressModule.forRoot({"responsive": true}),
+      NgbNavModule,
+      FlatpickrModule.forRoot(),
+      MatTableModule,
+      MatTableDataSource,
+      NgApexchartsModule,
+      ColorPickerModule
+    ),
+    provideAnimations(),
+    AngularFireModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    AngularFireAuthModule,provideCharts(withDefaultRegisterables()),BrowserModule, provideAnimations(),importProvidersFrom(AppStateService,ColorPickerModule,CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),ToastrModule.forRoot({ positionClass: 'top' }),NgCircleProgressModule.forRoot({"responsive": true}),NgbNavModule,FlatpickrModule.forRoot(),MatTableModule,MatTableDataSource,NgApexchartsModule,ColorPickerModule)],
-
-  }
+    AngularFireAuthModule,
+    provideCharts(withDefaultRegisterables()),
+    BrowserModule
+  ],
+}

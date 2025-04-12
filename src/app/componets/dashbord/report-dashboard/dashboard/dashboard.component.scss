@@ -1,0 +1,70 @@
+// Dashboard component styles
+
+// Card styles
+.card {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+  
+  .card-title {
+    font-weight: 600;
+  }
+}
+
+// Progress bar styles
+.progress {
+  height: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  
+  .progress-bar {
+    border-radius: 0.25rem;
+  }
+}
+
+// Badge styles
+.badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+// Table styles
+.table-responsive {
+  overflow-x: auto;
+}
+
+// Icons
+i.fa-3x {
+  font-size: 2.5rem;
+}
+
+.text-primary {
+  color: #4b9bfa !important;
+}
+
+.text-success {
+  color: #0fcd95 !important;
+}
+
+.text-warning {
+  color: #ffad00 !important;
+}
+
+.text-danger {
+  color: #fd6074 !important;
+}
+
+.text-info {
+  color: #4ec2f0 !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .col-xl-3 {
+    margin-bottom: 1rem;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+} 

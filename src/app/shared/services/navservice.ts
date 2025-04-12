@@ -201,12 +201,17 @@ export class NavService implements OnDestroy {
 				{
 					title: 'Job Dashboard', type: 'sub', badgeType: 'success', badgeValue: '2', selected: false, active: false, children: [
 						{ path: '/dashboard/job-dashboard/dashboard', title: 'Dashboard', type: 'link', selected: false },
-						{ path: '/dashboard/job-dashboard/job-lists', title: 'Job Lists', type: 'link', selected: false },
+						{ path: '/dashboard/job-dashboard/job-list', title: 'Job List', type: 'link', selected: false },
+						{ path: '/dashboard/job-dashboard/apply-jobs', title: 'Apply Jobs', type: 'link', selected: false },
 						{ path: '/dashboard/job-dashboard/job-view', title: 'Job View', type: 'link', selected: false },
-						{ path: '/dashboard/job-dashboard/job-applications', title: 'Job Applications', type: 'link', selected: false },
-						{ path: '/dashboard/job-dashboard/apply-job', title: 'Apply Job', type: 'link', selected: false },
-						{ path: '/dashboard/job-dashboard/new-job', title: 'New Job', type: 'link', selected: false },
 						{ path: '/dashboard/job-dashboard/user-profile', title: 'User Profile', type: 'link', selected: false },
+					]
+				},
+				{
+					title: 'Report Dashboard', type: 'sub', selected: false, active: false, children: [
+						{ path: '/dashboard/report-dashboard/dashboard', title: 'Dashboard', type: 'link', selected: false },
+						{ path: '/dashboard/report-dashboard/report-list', title: 'Report List', type: 'link', selected: false },
+						{ path: '/dashboard/report-dashboard/new-report', title: 'New Report', type: 'link', selected: false },
 					]
 				},
 				{
@@ -219,7 +224,7 @@ export class NavService implements OnDestroy {
 						{ path: '/dashboard/super-admin/settings', title: 'Settings', type: 'link', selected: false },
 						{ path: '/dashboard/super-admin/role-access', title: 'Role Access', type: 'link', selected: false },
 					]
-				}
+				},
 			],
 		},
 		{

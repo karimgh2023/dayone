@@ -34,6 +34,7 @@ import { SupportFooterComponent } from './support-footer/support-footer.componen
 import { SupportSidebarComponent } from './support-sidebar/support-sidebar.component';
 import { SupportPageHeaderComponent } from './page-headers/support-page-header/support-page-header.component';
 import { LiveChatComponent } from './live-chat/live-chat.component';
+import { StatisticCardComponent } from '../components/statistic-card/statistic-card.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { LiveChatComponent } from './live-chat/live-chat.component';
         HrDashboardPageHeaderModalComponent,
         TaskDashboardPageHeaderComponent,
         JobDashboardPageHeaderComponent,
-        JobDashboardPageHeaderModalComponent,SupportSystemComponent,SupportSwitcherComponent,SupportFooterComponent,SupportSidebarComponent,SupportPageHeaderComponent,LiveChatComponent
+        JobDashboardPageHeaderModalComponent,SupportSystemComponent,SupportSwitcherComponent,SupportFooterComponent,SupportSidebarComponent,SupportPageHeaderComponent,LiveChatComponent,
+        StatisticCardComponent
     ],
     imports: [
         CommonModule,
@@ -63,7 +65,7 @@ import { LiveChatComponent } from './live-chat/live-chat.component';
         FormsModule, ReactiveFormsModule,
         RouterModule, FullscreenDirective,
         HoverEffectSidebarDirective, DropdownPositionDirective,MaterialModuleModule,NgSelectModule,FormsModule,FlatpickrModule,NgxColorsModule,
-        
+        StatisticCardComponent
     ],
     providers: [
         FlatpickrDefaults,

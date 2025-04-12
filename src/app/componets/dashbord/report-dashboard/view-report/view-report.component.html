@@ -1,0 +1,256 @@
+<div class="page-header">
+  <div>
+    <h2 class="page-title">View Report</h2>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['../../dashboard']">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="['../report-list']">Reports</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">View Report #{{report.id}}</li>
+    </ol>
+  </div>
+  <div class="ms-auto pageheader-btn">
+    <a [routerLink]="['../report-list']" class="btn btn-secondary btn-icon text-white me-2">
+      <span>
+        <i class="fe fe-arrow-left"></i>
+      </span> Back to List
+    </a>
+  </div>
+</div>
+
+<!-- Loading state -->
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-body text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading report data...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error state -->
+<div class="row" *ngIf="error && !loading">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-body text-center">
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+        <button class="btn btn-primary" (click)="loadReport()">Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Report Display -->
+<div class="row" *ngIf="report && !loading">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-header border-bottom">
+        <h3 class="card-title">Report #{{report.id}} - {{report.designation}}</h3>
+      </div>
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Report Type:</div>
+              <div class="w-60">
+                <span class="badge bg-{{getTypeColor()}}">{{report.type}}</span>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Protocol:</div>
+              <div class="w-60">{{report.protocol.name}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Status:</div>
+              <div class="w-60">
+                <span class="badge bg-{{getStatusColor()}}">{{getStatusText()}}</span>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Created At:</div>
+              <div class="w-60">{{report.createdAt | date:'medium'}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Serial Number:</div>
+              <div class="w-60">{{report.serialNumber}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Manufacturer:</div>
+              <div class="w-60">{{report.manufacturer}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Business Unit:</div>
+              <div class="w-60">{{report.businessUnit}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Service Segment:</div>
+              <div class="w-60">{{report.serviceSeg}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <div class="text-muted mb-2">Equipment Description:</div>
+            <p>{{report.equipmentDescription}}</p>
+          </div>
+        </div>
+
+        <div class="border-bottom mb-4"></div>
+
+        <!-- Tabs for Additional Information -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [ngClass]="{'active': activeTab === 1}" (click)="activeTab = 1">
+              Standard Controls
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [ngClass]="{'active': activeTab === 2}" (click)="activeTab = 2">
+              Specific Controls
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [ngClass]="{'active': activeTab === 3}" (click)="activeTab = 3">
+              Assigned Users
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [ngClass]="{'active': activeTab === 4}" (click)="activeTab = 4">
+              Maintenance Form
+            </a>
+          </li>
+        </ul>
+        
+        <div class="tab-content border-start border-end border-bottom p-4">
+          <!-- Standard Control Criteria Tab -->
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 1}">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Implementation Responsible</th>
+                    <th>Check Responsible</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let entry of getStandardEntries()">
+                    <tr *ngIf="entry.standardCriteria && entry.standardCriteria.description && 
+                              entry.standardCriteria.implementationResponsible && 
+                              entry.standardCriteria.checkResponsible">
+                      <td>{{entry.standardCriteria.description}}</td>
+                      <td>{{entry.standardCriteria.implementationResponsible.name}}</td>
+                      <td>{{entry.standardCriteria.checkResponsible.name}}</td>
+                      <td>
+                        <span class="badge bg-{{entry.implemented ? 'success' : 'warning'}}">
+                          {{entry.implemented ? 'Implemented' : 'Not Implemented'}}
+                        </span>
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" 
+                          data-bs-target="#entryModal" *ngIf="!entry.implemented">
+                          View Details
+                        </button>
+                        <span *ngIf="entry.implemented">N/A</span>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Specific Control Criteria Tab -->
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 2}">
+            <div class="alert alert-info" role="alert">
+              Specific control criteria for this protocol will be displayed here.
+            </div>
+          </div>
+          
+          <!-- Assigned Users Tab -->
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 3}">
+            <div class="row">
+              <div class="col-md-12">
+                <h5>Users Assigned to This Report</h5>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>User ID</th>
+                        <th>Role</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngIf="getUsersAsArray().length > 0">
+                        <tr *ngFor="let userId of getUsersAsArray()">
+                          <td>{{userId}}</td>
+                          <td>Assigned</td>
+                        </tr>
+                      </ng-container>
+                      <tr *ngIf="getUsersAsArray().length === 0">
+                        <td colspan="2" class="text-center">No users assigned</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Maintenance Form Tab -->
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 4}">
+            <div class="alert alert-info" role="alert">
+              Maintenance form details will be displayed here when available.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Entry Details Modal -->
+<div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="entryModalLabel">Entry Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal content will go here -->
+        <div class="form-group mb-3">
+          <label class="form-label">Action Required</label>
+          <input type="text" class="form-control" value="Replace worn parts" readonly>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Responsible for Action</label>
+          <input type="text" class="form-control" value="Maintenance Team" readonly>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Deadline</label>
+          <input type="text" class="form-control" value="2023-05-30" readonly>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Success Control</label>
+          <input type="text" class="form-control" value="Visual inspection and test run" readonly>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 

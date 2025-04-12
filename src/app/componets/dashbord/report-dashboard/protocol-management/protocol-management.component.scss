@@ -1,0 +1,52 @@
+// Custom styling for protocol management component
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.float-end {
+  float: right !important;
+}
+
+.text-danger {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+// Styling for the criteria list
+.list-group-item {
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  
+  button {
+    margin-left: auto;
+  }
+}
+
+// Badge styling
+.badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  border-radius: 0.25rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Avatar styling
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+} 

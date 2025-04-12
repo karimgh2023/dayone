@@ -26,6 +26,7 @@ import { ProfileRoutingModule } from '../../componets/pages/profile/profile.rout
 import { PagesRoutingModule } from '../../componets/pages/pages.routes';
 import { PricingRoutingModule } from '../../componets/pages/pricing/pricing.routes';
 import { ComponentChatRoutingModule } from '../../componets/components/chat/chat.routes';
+import { ReportDashboardRoutingModule } from '../../componets/dashbord/report-dashboard/report-dashboard.routes';
 
 
 
@@ -43,6 +44,7 @@ export const content: Routes = [
     ...ClientDashboardRoutingModule.routes,
     ...JobDashboardRoutingModule.routes,
     ...SuperAdminRoutingModule.routes,
+    ...ReportDashboardRoutingModule.routes,
     ...ChatRoutingModule.routes,
     ...AdminRoutingModule.routes,
     ...ComponentChatRoutingModule.routes,
