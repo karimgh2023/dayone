@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, delay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { 
   Report, 
@@ -342,7 +342,10 @@ export class ReportService {
     // Use mock data for testing if useMockData is true
     if (this.useMockData) {
       console.log('Using mock protocols data (useMockData=true)');
-      return of(this.MOCK_PROTOCOLS);
+      return of(this.MOCK_PROTOCOLS).pipe(
+        delay(500), // Add artificial delay to simulate network request
+        tap(protocols => console.log('Returned mock protocols:', protocols.length))
+      );
     }
     
     console.log(`Fetching protocols from ${this.protocolsUrl}`);
@@ -369,24 +372,35 @@ export class ReportService {
   getProtocolById(id: number): Observable<Protocol> {
     if (this.useMockData) {
       const protocol = this.MOCK_PROTOCOLS.find(p => p.id === id);
-      return of(protocol as Protocol);
+      if (!protocol) {
+        return throwError(() => new Error(`Protocol with ID ${id} not found`));
+      }
+      return of(protocol as Protocol).pipe(delay(300));
     }
     
     return this.http.get<Protocol>(`${this.protocolsUrl}/${id}`)
       .pipe(
         tap(protocol => console.log(`Fetched protocol id=${id}`)),
-        catchError(this.handleError<Protocol>(`getProtocolById id=${id}`))
+        catchError(error => {
+          console.error(`Error fetching protocol id=${id}:`, error);
+          return throwError(() => new Error(`Failed to load protocol: ${error.message || 'Unknown error'}`));
+        })
       );
   }
 
   // Create a new protocol
   createProtocol(protocolData: Partial<Protocol>): Observable<Protocol> {
     if (this.useMockData) {
+      // Validate required fields
+      if (!protocolData.name || !protocolData.protocolType) {
+        return throwError(() => new Error('Protocol name and type are required'));
+      }
+      
       // Create a new protocol with mock ID and user data
       const newProtocol: Protocol = {
         id: Math.max(...this.MOCK_PROTOCOLS.map(p => p.id), 0) + 1,
-        name: protocolData.name ?? '',
-        protocolType: protocolData.protocolType ?? 'Homologation',
+        name: protocolData.name,
+        protocolType: protocolData.protocolType,
         createdBy: {
           id: 1,
           firstName: 'Current',
@@ -397,31 +411,57 @@ export class ReportService {
         }
       };
       this.MOCK_PROTOCOLS.push(newProtocol);
-      return of(newProtocol);
+      return of(newProtocol).pipe(delay(500));
     }
     
     return this.http.post<Protocol>(this.protocolsUrl, protocolData)
       .pipe(
         tap(newProtocol => console.log(`Created protocol id=${newProtocol.id}`)),
-        catchError(this.handleError<Protocol>('createProtocol'))
+        catchError(error => {
+          console.error('Error creating protocol:', error);
+          let errorMsg = 'Failed to create protocol';
+          if (error.status === 400) {
+            errorMsg = error.error || 'Invalid protocol data';
+          } else if (error.status === 403 || error.status === 401) {
+            errorMsg = 'You are not authorized to create protocols';
+          }
+          return throwError(() => new Error(errorMsg));
+        })
       );
   }
 
   // Update a protocol
   updateProtocol(protocolData: Protocol): Observable<Protocol> {
+    if (!protocolData.id) {
+      return throwError(() => new Error('Protocol ID is required for updates'));
+    }
+    
     if (this.useMockData) {
       const index = this.MOCK_PROTOCOLS.findIndex(p => p.id === protocolData.id);
-      if (index !== -1) {
-        this.MOCK_PROTOCOLS[index] = { ...this.MOCK_PROTOCOLS[index], ...protocolData };
-        return of(this.MOCK_PROTOCOLS[index]);
+      if (index === -1) {
+        return throwError(() => new Error(`Protocol with id=${protocolData.id} not found`));
       }
-      return throwError(() => new Error(`Protocol with id=${protocolData.id} not found`));
+      
+      // Update the protocol in our mock data
+      this.MOCK_PROTOCOLS[index] = { ...this.MOCK_PROTOCOLS[index], ...protocolData };
+      return of(this.MOCK_PROTOCOLS[index]).pipe(delay(500));
     }
     
     return this.http.put<Protocol>(`${this.protocolsUrl}/${protocolData.id}`, protocolData)
       .pipe(
         tap(_ => console.log(`Updated protocol id=${protocolData.id}`)),
-        catchError(this.handleError<Protocol>(`updateProtocol id=${protocolData.id}`))
+        catchError(error => {
+          console.error(`Error updating protocol id=${protocolData.id}:`, error);
+          let errorMsg = 'Failed to update protocol';
+          if (error.status === 400) {
+            errorMsg = error.error || 'Invalid protocol data';
+          } else if (error.status === 404) {
+            errorMsg = 'Protocol not found';
+          } else if (error.status === 403 || error.status === 401) {
+            errorMsg = 'You are not authorized to update this protocol';
+          }
+          return throwError(() => new Error(errorMsg));
+        })
       );
   }
 
@@ -429,17 +469,35 @@ export class ReportService {
   deleteProtocol(id: number): Observable<void> {
     if (this.useMockData) {
       const index = this.MOCK_PROTOCOLS.findIndex(p => p.id === id);
-      if (index !== -1) {
-        this.MOCK_PROTOCOLS.splice(index, 1);
-        return of(void 0);
+      if (index === -1) {
+        return throwError(() => new Error(`Protocol with id=${id} not found`));
       }
-      return throwError(() => new Error(`Protocol with id=${id} not found`));
+      
+      // Check if any reports are using this protocol
+      const reportsUsingProtocol = this.MOCK_REPORTS.filter(r => r.protocol.id === id);
+      if (reportsUsingProtocol.length > 0) {
+        return throwError(() => new Error(`Cannot delete protocol with id=${id} because it is used by ${reportsUsingProtocol.length} reports`));
+      }
+      
+      this.MOCK_PROTOCOLS.splice(index, 1);
+      return of(void 0).pipe(delay(500));
     }
     
     return this.http.delete<void>(`${this.protocolsUrl}/${id}`)
       .pipe(
         tap(_ => console.log(`Deleted protocol id=${id}`)),
-        catchError(this.handleError<void>(`deleteProtocol id=${id}`))
+        catchError(error => {
+          console.error(`Error deleting protocol id=${id}:`, error);
+          let errorMsg = 'Failed to delete protocol';
+          if (error.status === 404) {
+            errorMsg = 'Protocol not found';
+          } else if (error.status === 403 || error.status === 401) {
+            errorMsg = 'You are not authorized to delete this protocol';
+          } else if (error.status === 400) {
+            errorMsg = error.error || 'Cannot delete protocol that is in use';
+          }
+          return throwError(() => new Error(errorMsg));
+        })
       );
   }
 
@@ -464,45 +522,99 @@ export class ReportService {
           protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
         }
       ];
-      return of(mockCriteria);
+      return of(mockCriteria).pipe(delay(500));
     }
     
     return this.http.get<SpecificControlCriteria[]>(`${this.protocolsUrl}/${protocolId}/criteria`)
       .pipe(
-        tap(criteria => console.log(`Fetched criteria for protocol id=${protocolId}`)),
-        catchError(this.handleError<SpecificControlCriteria[]>(`getProtocolCriteria protocolId=${protocolId}`, []))
+        tap(criteria => console.log(`Fetched ${criteria.length} criteria for protocol id=${protocolId}`)),
+        catchError(error => {
+          console.error(`Error fetching criteria for protocol id=${protocolId}:`, error);
+          return throwError(() => new Error(`Failed to load criteria: ${error.message || 'Unknown error'}`));
+        })
       );
   }
 
   // Add a criteria to a protocol
   addCriteriaToProtocol(protocolId: number, criteriaData: Partial<SpecificControlCriteria>): Observable<SpecificControlCriteria> {
+    if (!criteriaData.description) {
+      return throwError(() => new Error('Criteria description is required'));
+    }
+    
     if (this.useMockData) {
+      // Find the protocol
+      const protocol = this.MOCK_PROTOCOLS.find(p => p.id === protocolId);
+      if (!protocol) {
+        return throwError(() => new Error(`Protocol with id=${protocolId} not found`));
+      }
+      
       // Create a mock criteria
       const newCriteria: SpecificControlCriteria = {
         id: Math.floor(Math.random() * 1000) + 100,
-        description: criteriaData.description || '',
-        protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
+        description: criteriaData.description,
+        protocol: protocol
       };
-      return of(newCriteria);
+      return of(newCriteria).pipe(delay(500));
     }
     
     return this.http.post<SpecificControlCriteria>(`${this.protocolsUrl}/${protocolId}/criteria`, criteriaData)
       .pipe(
         tap(criteria => console.log(`Added criteria id=${criteria.id} to protocol id=${protocolId}`)),
-        catchError(this.handleError<SpecificControlCriteria>(`addCriteriaToProtocol protocolId=${protocolId}`))
+        catchError(error => {
+          console.error(`Error adding criteria to protocol id=${protocolId}:`, error);
+          let errorMsg = 'Failed to add criteria';
+          if (error.status === 400) {
+            errorMsg = error.error || 'Invalid criteria data';
+          } else if (error.status === 404) {
+            errorMsg = 'Protocol not found';
+          } else if (error.status === 403 || error.status === 401) {
+            errorMsg = 'You are not authorized to add criteria to this protocol';
+          }
+          return throwError(() => new Error(errorMsg));
+        })
       );
   }
 
   // Delete a criteria
   deleteCriteria(protocolId: number, criteriaId: number): Observable<void> {
     if (this.useMockData) {
-      return of(void 0);
+      return of(void 0).pipe(delay(500));
     }
     
     return this.http.delete<void>(`${this.protocolsUrl}/${protocolId}/criteria/${criteriaId}`)
       .pipe(
         tap(_ => console.log(`Deleted criteria id=${criteriaId} from protocol id=${protocolId}`)),
-        catchError(this.handleError<void>(`deleteCriteria criteriaId=${criteriaId}, protocolId=${protocolId}`))
+        catchError(error => {
+          console.error(`Error deleting criteria id=${criteriaId} from protocol id=${protocolId}:`, error);
+          let errorMsg = 'Failed to delete criteria';
+          if (error.status === 404) {
+            errorMsg = 'Criteria or protocol not found';
+          } else if (error.status === 403 || error.status === 401) {
+            errorMsg = 'You are not authorized to delete this criteria';
+          }
+          return throwError(() => new Error(errorMsg));
+        })
+      );
+  }
+
+  // Update a report entry status
+  updateReportEntryStatus(reportId: number, entryId: number, isStandard: boolean, status: string): Observable<any> {
+    const entryType = isStandard ? 'standard' : 'specific';
+    const updateData = isStandard ? 
+      { value: status, conformity: status === 'Implemented' } as StandardReportEntryUpdateRequest : 
+      { value: status, conformity: status === 'Homologated' } as SpecificReportEntryUpdateRequest;
+    
+    return isStandard ? 
+      this.updateStandardReportEntry(reportId, entryId, updateData) : 
+      this.updateSpecificReportEntry(reportId, entryId, updateData);
+  }
+
+  // Update a report status
+  updateReportStatus(reportId: number, status: string): Observable<Report> {
+    return this.http.patch<Report>(`${this.apiUrl}/${reportId}/status`, { status })
+      .pipe(
+        tap(_ => console.log(`Updated report id=${reportId} status to ${status}`)),
+        catchError(this.handleError<Report>(`updateReportStatus id=${reportId}`))
       );
   }
 

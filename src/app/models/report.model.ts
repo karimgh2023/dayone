@@ -117,11 +117,12 @@ export interface MaintenanceForm {
 }
 
 export interface ReportCreationRequest {
-  title: string;
+  title?: string;
   description?: string;
   type: string;
-  protocolId?: number;
+  protocolId: number;
   assignedToId?: number;
+  assignedUsers?: UserAssignmentDTO[];
   serialNumber?: string;
   equipmentDescription?: string;
   designation?: string;
@@ -129,6 +130,14 @@ export interface ReportCreationRequest {
   immobilization?: string;
   serviceSeg?: string;
   businessUnit?: string;
+  
+  // Homologation-specific fields
+  initialVerificationDate?: string;
+  equipmentCategory?: string;
+  
+  // Requalification-specific fields
+  lastQualificationDate?: string;
+  maintenanceFrequency?: string;
 }
 
 export interface UserAssignmentDTO {

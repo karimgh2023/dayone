@@ -10,7 +10,7 @@
  * - Adding criteria to protocols
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,9 +21,10 @@ import { MaterialModuleModule } from '../../../../material-module/material-modul
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Protocol } from '../../../../models/report.model';
+import { Protocol, SpecificControlCriteria } from '../../../../models/report.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReportService } from '../../../../services/report.service';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-protocol-management',
@@ -61,18 +62,47 @@ import { ReportService } from '../../../../services/report.service';
       </div>
     </div>
 
-    <div class="card custom-card">
+    <!-- Alert for errors -->
+    <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ error }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="clearError()"></button>
+    </div>
+
+    <!-- Success message -->
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ successMessage }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="clearSuccessMessage()"></button>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading protocols...</p>
+    </div>
+
+    <div class="card custom-card" *ngIf="!loading">
       <div class="card-header border-bottom">
         <h3 class="card-title">Protocols List</h3>
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-12 col-xl-12">
-            <div class="row">
-              <div class="col-md-12">
+            <div class="row mb-3">
+              <div class="col-md-6">
                 <div class="form-group">
                   <input type="text" class="form-control" id="search" placeholder="Search Protocols..."
                     (keyup)="applyFilter($event)">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <select class="form-control" (change)="filterByType($event)">
+                    <option value="all">All Protocol Types</option>
+                    <option value="Homologation">Homologation</option>
+                    <option value="Requalification">Requalification</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -122,13 +152,13 @@ import { ReportService } from '../../../../services/report.service';
                   <th mat-header-cell *matHeaderCellDef> Actions </th>
                   <td mat-cell *matCellDef="let protocol">
                     <div class="d-flex">
-                      <button class="btn btn-primary btn-sm me-2" (click)="editProtocol(protocol)">
+                      <button class="btn btn-primary btn-sm me-2" (click)="editProtocol(protocol)" [disabled]="actionInProgress">
                         <i class="fe fe-edit"></i> Edit
                       </button>
-                      <button class="btn btn-info btn-sm me-2" (click)="viewProtocol(protocol)">
+                      <button class="btn btn-info btn-sm me-2" (click)="viewProtocol(protocol)" [disabled]="actionInProgress">
                         <i class="fe fe-eye"></i> View
                       </button>
-                      <button class="btn btn-danger btn-sm" (click)="deleteProtocol(protocol.id)">
+                      <button class="btn btn-danger btn-sm" (click)="confirmDeleteProtocol(protocol)" [disabled]="actionInProgress">
                         <i class="fe fe-trash"></i> Delete
                       </button>
                     </div>
@@ -140,7 +170,7 @@ import { ReportService } from '../../../../services/report.service';
 
                 <!-- Row shown when there is no matching data. -->
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell text-center" colspan="5">No data matching the filter</td>
+                  <td class="mat-cell text-center" colspan="5">No protocols found matching the filter</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of protocols"></mat-paginator>
@@ -179,18 +209,24 @@ import { ReportService } from '../../../../services/report.service';
 
           <div class="mb-3" *ngIf="isEditing">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Control Criteria</h5>
-                <button type="button" class="btn btn-sm btn-primary float-end" (click)="addCriteria()">
+                <button type="button" class="btn btn-sm btn-primary" (click)="addCriteria()">
                   <i class="fe fe-plus"></i> Add Criteria
                 </button>
               </div>
               <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
+                <div *ngIf="loadingCriteria" class="text-center py-4">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading criteria...</span>
+                  </div>
+                  <p class="mt-2 mb-0">Loading criteria...</p>
+                </div>
+                <ul class="list-group list-group-flush" *ngIf="!loadingCriteria">
                   <li class="list-group-item" *ngFor="let criteria of protocolCriteria; let i = index">
                     <div class="d-flex justify-content-between align-items-center">
                       <span>{{ criteria.description }}</span>
-                      <button class="btn btn-sm btn-danger" (click)="removeCriteria(i)">
+                      <button class="btn btn-sm btn-danger" (click)="removeCriteria(i)" [disabled]="savingCriteria">
                         <i class="fe fe-trash"></i>
                       </button>
                     </div>
@@ -205,8 +241,10 @@ import { ReportService } from '../../../../services/report.service';
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-        <button type="button" class="btn btn-primary" [disabled]="protocolForm.invalid" (click)="saveProtocol()">
+        <div *ngIf="formError" class="alert alert-danger w-100 mb-2">{{ formError }}</div>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')" [disabled]="formSubmitting">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="protocolForm.invalid || formSubmitting" (click)="saveProtocol()">
+          <span *ngIf="formSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
           {{ isEditing ? 'Update' : 'Create' }} Protocol
         </button>
       </div>
@@ -230,9 +268,31 @@ import { ReportService } from '../../../../services/report.service';
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-        <button type="button" class="btn btn-primary" [disabled]="criteriaForm.invalid" (click)="saveCriteria()">
+        <div *ngIf="criteriaError" class="alert alert-danger w-100 mb-2">{{ criteriaError }}</div>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')" [disabled]="savingCriteria">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="criteriaForm.invalid || savingCriteria" (click)="saveCriteria()">
+          <span *ngIf="savingCriteria" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
           Add Criteria
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Delete Confirmation Modal -->
+    <ng-template #deleteConfirmModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the protocol "{{ protocolToDelete?.name }}"?</p>
+        <p class="text-danger">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="deleteError" class="alert alert-danger w-100 mb-2">{{ deleteError }}</div>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')" [disabled]="deletingProtocol">Cancel</button>
+        <button type="button" class="btn btn-danger" [disabled]="deletingProtocol" (click)="deleteProtocol()">
+          <span *ngIf="deletingProtocol" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          Delete Protocol
         </button>
       </div>
     </ng-template>
@@ -242,19 +302,42 @@ import { ReportService } from '../../../../services/report.service';
     DatePipe
   ],
 })
-export class ProtocolManagementComponent implements OnInit {
+export class ProtocolManagementComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'type', 'createdBy', 'actions'];
   dataSource: MatTableDataSource<Protocol>;
   protocolForm: FormGroup;
   criteriaForm: FormGroup;
+  
+  // UI state
   isEditing = false;
+  loading = false;
+  actionInProgress = false;
+  formSubmitting = false;
+  loadingCriteria = false;
+  savingCriteria = false;
+  deletingProtocol = false;
+  
+  // Error and message handling
+  error: string = '';
+  formError: string = '';
+  criteriaError: string = '';
+  deleteError: string = '';
+  successMessage: string = '';
+  
+  // Data
   selectedProtocol: Protocol | null = null;
-  protocolCriteria: any[] = [];
+  protocolToDelete: Protocol | null = null;
+  protocolCriteria: SpecificControlCriteria[] = [];
+  originalDataSource: Protocol[] = [];
+
+  // Destroy subject for cleanup
+  private destroy$ = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('protocolModal') protocolModal: any;
   @ViewChild('criteriaModal') criteriaModal: any;
+  @ViewChild('deleteConfirmModal') deleteConfirmModal: any;
 
   constructor(
     private modalService: NgbModal,
@@ -264,12 +347,12 @@ export class ProtocolManagementComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Protocol>([]);
     
     this.protocolForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       protocolType: ['Homologation', Validators.required]
     });
 
     this.criteriaForm = this.formBuilder.group({
-      description: ['', Validators.required]
+      description: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]]
     });
   }
 
@@ -282,63 +365,30 @@ export class ProtocolManagementComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  loadProtocols(): void {
-    this.reportService.getAllProtocols().subscribe({
-      next: (protocols) => {
-        this.dataSource.data = protocols;
-      },
-      error: (error) => {
-        console.error('Error loading protocols', error);
-        // Load mock data if API fails
-        this.loadMockData();
-      }
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  loadMockData(): void {
-    const mockProtocols: Protocol[] = [
-      {
-        id: 1,
-        name: 'Machine Installation Protocol',
-        protocolType: 'Homologation',
-        createdBy: {
-          id: 1,
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john.doe@example.com',
-          role: 'ADMIN',
-          department: { id: 1, name: 'Engineering' }
+  loadProtocols(): void {
+    this.loading = true;
+    this.error = '';
+    
+    this.reportService.getAllProtocols()
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        next: (protocols) => {
+          this.dataSource.data = protocols;
+          this.originalDataSource = [...protocols];
+        },
+        error: (err) => {
+          this.error = `Error loading protocols: ${err.message}`;
+          console.error('Error loading protocols', err);
         }
-      },
-      {
-        id: 2,
-        name: 'Machine Maintenance Protocol',
-        protocolType: 'Requalification',
-        createdBy: {
-          id: 2,
-          firstName: 'Jane',
-          lastName: 'Smith',
-          email: 'jane.smith@example.com',
-          role: 'USER',
-          department: { id: 2, name: 'Maintenance' }
-        }
-      },
-      {
-        id: 3,
-        name: 'Safety Inspection Protocol',
-        protocolType: 'Homologation',
-        createdBy: {
-          id: 3,
-          firstName: 'Robert',
-          lastName: 'Johnson',
-          email: 'robert.johnson@example.com',
-          role: 'MANAGER',
-          department: { id: 3, name: 'Safety' }
-        }
-      }
-    ];
-
-    this.dataSource.data = mockProtocols;
+      });
   }
 
   applyFilter(event: Event): void {
@@ -350,135 +400,250 @@ export class ProtocolManagementComponent implements OnInit {
     }
   }
 
+  filterByType(event: Event): void {
+    const filterValue = (event.target as HTMLSelectElement).value;
+    
+    if (filterValue === 'all') {
+      this.dataSource.data = this.originalDataSource;
+    } else {
+      this.dataSource.data = this.originalDataSource.filter(
+        protocol => protocol.protocolType === filterValue
+      );
+    }
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   openProtocolModal(): void {
     this.isEditing = false;
     this.selectedProtocol = null;
     this.protocolForm.reset({ protocolType: 'Homologation' });
     this.protocolCriteria = [];
+    this.formError = '';
     this.modalService.open(this.protocolModal, { size: 'lg' });
   }
 
   editProtocol(protocol: Protocol): void {
     this.isEditing = true;
     this.selectedProtocol = protocol;
+    this.formError = '';
+    
     this.protocolForm.patchValue({
       name: protocol.name,
       protocolType: protocol.protocolType
     });
     
-    // In a real app, you would load criteria from backend
-    this.protocolCriteria = [];
+    this.loadProtocolCriteria(protocol.id);
     this.modalService.open(this.protocolModal, { size: 'lg' });
   }
 
-  viewProtocol(protocol: Protocol): void {
-    // View protocol details - could show this in a modal or navigate to details page
-    console.log('Viewing protocol:', protocol);
-  }
-
-  deleteProtocol(id: number): void {
-    if (confirm('Are you sure you want to delete this protocol?')) {
-      this.reportService.deleteProtocol(id).subscribe({
-        next: () => {
-          this.dataSource.data = this.dataSource.data.filter(protocol => protocol.id !== id);
+  loadProtocolCriteria(protocolId: number): void {
+    this.loadingCriteria = true;
+    this.protocolCriteria = [];
+    
+    this.reportService.getProtocolCriteria(protocolId)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loadingCriteria = false)
+      )
+      .subscribe({
+        next: (criteria) => {
+          this.protocolCriteria = criteria;
         },
-        error: (error) => {
-          console.error('Error deleting protocol', error);
-          // For demo, just remove it from the array
-          this.dataSource.data = this.dataSource.data.filter(protocol => protocol.id !== id);
+        error: (err) => {
+          this.formError = `Error loading criteria: ${err.message}`;
+          console.error('Error loading protocol criteria', err);
         }
       });
-    }
+  }
+
+  viewProtocol(protocol: Protocol): void {
+    this.selectedProtocol = protocol;
+    this.isEditing = true;
+    this.formError = '';
+    
+    // Make the form read-only by disabling all controls
+    this.protocolForm.patchValue({
+      name: protocol.name,
+      protocolType: protocol.protocolType
+    });
+    this.protocolForm.disable();
+    
+    this.loadProtocolCriteria(protocol.id);
+    this.modalService.open(this.protocolModal, { size: 'lg' });
+  }
+
+  confirmDeleteProtocol(protocol: Protocol): void {
+    this.protocolToDelete = protocol;
+    this.deleteError = '';
+    this.modalService.open(this.deleteConfirmModal);
+  }
+
+  deleteProtocol(): void {
+    if (!this.protocolToDelete) return;
+    
+    this.deletingProtocol = true;
+    this.actionInProgress = true;
+    
+    this.reportService.deleteProtocol(this.protocolToDelete.id)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => {
+          this.deletingProtocol = false;
+          this.actionInProgress = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.dataSource.data = this.dataSource.data.filter(
+            protocol => protocol.id !== this.protocolToDelete!.id
+          );
+          this.originalDataSource = this.originalDataSource.filter(
+            protocol => protocol.id !== this.protocolToDelete!.id
+          );
+          this.modalService.dismissAll();
+          this.successMessage = `Protocol "${this.protocolToDelete!.name}" deleted successfully.`;
+          this.protocolToDelete = null;
+        },
+        error: (err) => {
+          this.deleteError = err.message;
+          console.error('Error deleting protocol', err);
+        }
+      });
   }
 
   saveProtocol(): void {
     if (this.protocolForm.invalid) {
+      this.protocolForm.markAllAsTouched();
       return;
     }
 
+    this.formSubmitting = true;
+    this.formError = '';
+    this.actionInProgress = true;
+    
     const protocolData = this.protocolForm.value;
     
     if (this.isEditing && this.selectedProtocol) {
       // Update existing protocol
-      this.reportService.updateProtocol({
+      const updatedProtocol = {
         ...this.selectedProtocol,
-        ...protocolData
-      }).subscribe({
-        next: (updatedProtocol) => {
-          const index = this.dataSource.data.findIndex(p => p.id === this.selectedProtocol!.id);
-          if (index !== -1) {
-            const data = [...this.dataSource.data];
-            data[index] = updatedProtocol;
-            this.dataSource.data = data;
+        name: protocolData.name,
+        protocolType: protocolData.protocolType
+      };
+      
+      this.reportService.updateProtocol(updatedProtocol)
+        .pipe(
+          takeUntil(this.destroy$),
+          finalize(() => {
+            this.formSubmitting = false;
+            this.actionInProgress = false;
+          })
+        )
+        .subscribe({
+          next: (updatedProtocol) => {
+            const index = this.dataSource.data.findIndex(p => p.id === this.selectedProtocol!.id);
+            if (index !== -1) {
+              const data = [...this.dataSource.data];
+              data[index] = updatedProtocol;
+              this.dataSource.data = data;
+              this.originalDataSource = [...data];
+            }
+            this.modalService.dismissAll();
+            this.successMessage = `Protocol "${updatedProtocol.name}" updated successfully.`;
+          },
+          error: (err) => {
+            this.formError = err.message;
+            console.error('Error updating protocol', err);
           }
-          this.modalService.dismissAll();
-        },
-        error: (error) => {
-          console.error('Error updating protocol', error);
-          // For demo, update locally
-          const index = this.dataSource.data.findIndex(p => p.id === this.selectedProtocol!.id);
-          if (index !== -1) {
-            const data = [...this.dataSource.data];
-            data[index] = {
-              ...this.selectedProtocol!,
-              ...protocolData
-            };
-            this.dataSource.data = data;
-          }
-          this.modalService.dismissAll();
-        }
-      });
+        });
     } else {
       // Create new protocol
-      this.reportService.createProtocol(protocolData).subscribe({
-        next: (newProtocol) => {
-          this.dataSource.data = [...this.dataSource.data, newProtocol];
-          this.modalService.dismissAll();
-        },
-        error: (error) => {
-          console.error('Error creating protocol', error);
-          // For demo, just add it to the array with a mock ID
-          const newProtocol: Protocol = {
-            id: Math.max(...this.dataSource.data.map(p => p.id), 0) + 1,
-            name: protocolData.name,
-            protocolType: protocolData.protocolType,
-            createdBy: {
-              id: 1,
-              firstName: 'Current',
-              lastName: 'User',
-              email: 'current.user@example.com',
-              role: 'ADMIN',
-              department: { id: 1, name: 'IT' }
-            }
-          };
-          this.dataSource.data = [...this.dataSource.data, newProtocol];
-          this.modalService.dismissAll();
-        }
-      });
+      this.reportService.createProtocol(protocolData)
+        .pipe(
+          takeUntil(this.destroy$),
+          finalize(() => {
+            this.formSubmitting = false;
+            this.actionInProgress = false;
+          })
+        )
+        .subscribe({
+          next: (newProtocol) => {
+            this.dataSource.data = [...this.dataSource.data, newProtocol];
+            this.originalDataSource = [...this.dataSource.data];
+            this.modalService.dismissAll();
+            this.successMessage = `Protocol "${newProtocol.name}" created successfully.`;
+          },
+          error: (err) => {
+            this.formError = err.message;
+            console.error('Error creating protocol', err);
+          }
+        });
     }
   }
 
   addCriteria(): void {
+    if (!this.selectedProtocol) return;
+    
     this.criteriaForm.reset();
+    this.criteriaError = '';
     this.modalService.open(this.criteriaModal);
   }
 
   saveCriteria(): void {
-    if (this.criteriaForm.invalid) {
+    if (this.criteriaForm.invalid || !this.selectedProtocol) {
+      this.criteriaForm.markAllAsTouched();
       return;
     }
 
-    const criteriaData = this.criteriaForm.value;
-    this.protocolCriteria.push({
-      id: this.protocolCriteria.length + 1,
-      description: criteriaData.description
-    });
+    this.savingCriteria = true;
+    this.criteriaError = '';
+    
+    const criteriaData = {
+      description: this.criteriaForm.get('description')?.value
+    };
 
-    this.modalService.dismissAll();
+    this.reportService.addCriteriaToProtocol(this.selectedProtocol.id, criteriaData)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.savingCriteria = false)
+      )
+      .subscribe({
+        next: (newCriteria) => {
+          this.protocolCriteria = [...this.protocolCriteria, newCriteria];
+          this.modalService.dismissAll();
+        },
+        error: (err) => {
+          this.criteriaError = err.message;
+          console.error('Error adding criteria', err);
+        }
+      });
   }
 
   removeCriteria(index: number): void {
-    this.protocolCriteria.splice(index, 1);
+    if (!this.selectedProtocol) return;
+    
+    const criteriaToRemove = this.protocolCriteria[index];
+    
+    this.savingCriteria = true;
+    
+    this.reportService.deleteCriteria(this.selectedProtocol.id, criteriaToRemove.id)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.savingCriteria = false)
+      )
+      .subscribe({
+        next: () => {
+          this.protocolCriteria.splice(index, 1);
+          this.protocolCriteria = [...this.protocolCriteria];
+        },
+        error: (err) => {
+          this.formError = `Error removing criteria: ${err.message}`;
+          console.error('Error removing criteria', err);
+        }
+      });
   }
 
   getTypeColor(type: string): string {
@@ -490,5 +655,13 @@ export class ProtocolManagementComponent implements OnInit {
       default:
         return 'info';
     }
+  }
+  
+  clearError(): void {
+    this.error = '';
+  }
+  
+  clearSuccessMessage(): void {
+    this.successMessage = '';
   }
 } 

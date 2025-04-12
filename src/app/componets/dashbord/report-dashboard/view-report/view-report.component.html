@@ -8,7 +8,7 @@
       <li class="breadcrumb-item">
         <a [routerLink]="['../report-list']">Reports</a>
       </li>
-      <li class="breadcrumb-item active" aria-current="page">View Report #{{report.id}}</li>
+      <li class="breadcrumb-item active" aria-current="page">View Report #{{hasReport() && report ? report.id : ''}}</li>
     </ol>
   </div>
   <div class="ms-auto pageheader-btn">
@@ -17,6 +17,11 @@
         <i class="fe fe-arrow-left"></i>
       </span> Back to List
     </a>
+    <button *ngIf="hasReport() && report && !report.isCompleted" class="btn btn-success btn-icon text-white" (click)="markReportAsCompleted()">
+      <span>
+        <i class="fe fe-check-circle"></i>
+      </span> Mark as Completed
+    </button>
   </div>
 </div>
 
@@ -49,11 +54,17 @@
 </div>
 
 <!-- Report Display -->
-<div class="row" *ngIf="report && !loading">
+<div class="row" *ngIf="hasReport()">
   <div class="col-12">
     <div class="card custom-card">
       <div class="card-header border-bottom">
-        <h3 class="card-title">Report #{{report.id}} - {{report.designation}}</h3>
+        <h3 class="card-title">Report #{{report?.id}} - {{report?.designation}}</h3>
+        <div class="card-options" *ngIf="hasProtocol()">
+          <span class="badge me-2" [ngClass]="{'bg-primary': report?.protocol?.protocolType === 'Homologation', 'bg-success': report?.protocol?.protocolType === 'Requalification'}">
+            {{report?.protocol?.protocolType}}
+          </span>
+          <span class="badge bg-{{getStatusColor()}}">{{getStatusText()}}</span>
+        </div>
       </div>
       <div class="card-body">
         <div class="row mb-4">
@@ -61,47 +72,91 @@
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Report Type:</div>
               <div class="w-60">
-                <span class="badge bg-{{getTypeColor()}}">{{report.type}}</span>
+                <span class="badge bg-{{getTypeColor()}}">{{report?.type}}</span>
               </div>
             </div>
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Protocol:</div>
-              <div class="w-60">{{report.protocol.name}}</div>
+              <div class="w-60">{{hasProtocol() ? report?.protocol?.name : 'N/A'}}</div>
             </div>
             <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Status:</div>
-              <div class="w-60">
-                <span class="badge bg-{{getStatusColor()}}">{{getStatusText()}}</span>
-              </div>
+              <div class="w-40 text-muted">Created By:</div>
+              <div class="w-60">{{report?.createdBy?.firstName || ''}} {{report?.createdBy?.lastName || ''}}</div>
             </div>
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Created At:</div>
-              <div class="w-60">{{report.createdAt | date:'medium'}}</div>
+              <div class="w-60">{{report?.createdAt ? (report?.createdAt | date:'medium') : 'N/A'}}</div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Serial Number:</div>
-              <div class="w-60">{{report.serialNumber}}</div>
+              <div class="w-60">{{report?.serialNumber || 'N/A'}}</div>
             </div>
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Manufacturer:</div>
-              <div class="w-60">{{report.manufacturer}}</div>
+              <div class="w-60">{{report?.manufacturer || 'N/A'}}</div>
             </div>
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Business Unit:</div>
-              <div class="w-60">{{report.businessUnit}}</div>
+              <div class="w-60">{{report?.businessUnit || 'N/A'}}</div>
             </div>
             <div class="d-flex mb-3">
               <div class="w-40 text-muted">Service Segment:</div>
-              <div class="w-60">{{report.serviceSeg}}</div>
+              <div class="w-60">{{report?.serviceSeg || 'N/A'}}</div>
             </div>
           </div>
         </div>
+
+        <!-- Protocol-specific details -->
+        <div class="row mb-4" *ngIf="hasProtocol() && report?.protocol?.protocolType === 'Homologation'">
+          <div class="col-12">
+            <div class="alert alert-primary">
+              <h5 class="alert-heading">Homologation Details</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="d-flex mb-2">
+                    <div class="w-40 text-muted">Initial Verification Date:</div>
+                    <div class="w-60">{{report?.initialVerificationDate ? (report?.initialVerificationDate | date:'mediumDate') : 'Not provided'}}</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex mb-2">
+                    <div class="w-40 text-muted">Equipment Category:</div>
+                    <div class="w-60">{{report?.equipmentCategory || 'Not provided'}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4" *ngIf="hasProtocol() && report?.protocol?.protocolType === 'Requalification'">
+          <div class="col-12">
+            <div class="alert alert-success">
+              <h5 class="alert-heading">Requalification Details</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="d-flex mb-2">
+                    <div class="w-40 text-muted">Last Qualification Date:</div>
+                    <div class="w-60">{{report?.lastQualificationDate ? (report?.lastQualificationDate | date:'mediumDate') : 'Not provided'}}</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex mb-2">
+                    <div class="w-40 text-muted">Maintenance Frequency:</div>
+                    <div class="w-60">{{report?.maintenanceFrequency ? report?.maintenanceFrequency + ' months' : 'Not provided'}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row mb-4">
           <div class="col-md-12">
             <div class="text-muted mb-2">Equipment Description:</div>
-            <p>{{report.equipmentDescription}}</p>
+            <p>{{report?.equipmentDescription || 'No description available'}}</p>
           </div>
         </div>
 
@@ -111,22 +166,27 @@
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item" role="presentation">
             <a class="nav-link" [ngClass]="{'active': activeTab === 1}" (click)="activeTab = 1">
-              Standard Controls
+              <i class="fe fe-list me-1"></i> Standard Controls
             </a>
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" [ngClass]="{'active': activeTab === 2}" (click)="activeTab = 2">
-              Specific Controls
+              <i class="fe fe-check-square me-1"></i> Specific Controls
             </a>
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" [ngClass]="{'active': activeTab === 3}" (click)="activeTab = 3">
-              Assigned Users
+              <i class="fe fe-users me-1"></i> Assigned Users
             </a>
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" [ngClass]="{'active': activeTab === 4}" (click)="activeTab = 4">
-              Maintenance Form
+              <i class="fe fe-settings me-1"></i> Maintenance Form
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [ngClass]="{'active': activeTab === 5}" (click)="activeTab = 5">
+              <i class="fe fe-activity me-1"></i> Progress
             </a>
           </li>
         </ul>
@@ -134,7 +194,22 @@
         <div class="tab-content border-start border-end border-bottom p-4">
           <!-- Standard Control Criteria Tab -->
           <div class="tab-pane" [ngClass]="{'active': activeTab === 1}">
-            <div class="table-responsive">
+            <div class="d-flex justify-content-between mb-3">
+              <h5 class="mb-0">Standard Control Criteria</h5>
+              <div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-outline-primary" (click)="filterEntries('all')">All</button>
+                  <button type="button" class="btn btn-outline-success" (click)="filterEntries('implemented')">Implemented</button>
+                  <button type="button" class="btn btn-outline-warning" (click)="filterEntries('not-implemented')">Not Implemented</button>
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="getStandardEntries().length === 0" class="alert alert-info">
+              No standard control criteria found for this report.
+            </div>
+            
+            <div class="table-responsive" *ngIf="getStandardEntries().length > 0">
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -142,31 +217,31 @@
                     <th>Implementation Responsible</th>
                     <th>Check Responsible</th>
                     <th>Status</th>
-                    <th>Details</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container *ngFor="let entry of getStandardEntries()">
-                    <tr *ngIf="entry.standardCriteria && entry.standardCriteria.description && 
-                              entry.standardCriteria.implementationResponsible && 
-                              entry.standardCriteria.checkResponsible">
-                      <td>{{entry.standardCriteria.description}}</td>
-                      <td>{{entry.standardCriteria.implementationResponsible.name}}</td>
-                      <td>{{entry.standardCriteria.checkResponsible.name}}</td>
-                      <td>
-                        <span class="badge bg-{{entry.implemented ? 'success' : 'warning'}}">
-                          {{entry.implemented ? 'Implemented' : 'Not Implemented'}}
-                        </span>
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" 
-                          data-bs-target="#entryModal" *ngIf="!entry.implemented">
-                          View Details
-                        </button>
-                        <span *ngIf="entry.implemented">N/A</span>
-                      </td>
-                    </tr>
-                  </ng-container>
+                  <tr *ngFor="let entry of getFilteredStandardEntries()">
+                    <td>{{getStandardCriteriaDescription(entry)}}</td>
+                    <td>{{getImplementationResponsibleName(entry)}}</td>
+                    <td>{{getCheckResponsibleName(entry)}}</td>
+                    <td>
+                      <span class="badge" [ngClass]="{
+                        'bg-success': entry.implemented,
+                        'bg-warning': !entry.implemented
+                      }">
+                        {{entry.implemented ? 'Implemented' : 'Not Implemented'}}
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-primary me-1" (click)="viewEntryDetails(entry)">
+                        <i class="fe fe-eye"></i> View
+                      </button>
+                      <button class="btn btn-sm btn-success" *ngIf="canMarkEntryImplemented(entry)" (click)="updateEntryStatus(entry)">
+                        <i class="fe fe-check"></i> Mark Implemented
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -174,8 +249,60 @@
           
           <!-- Specific Control Criteria Tab -->
           <div class="tab-pane" [ngClass]="{'active': activeTab === 2}">
-            <div class="alert alert-info" role="alert">
-              Specific control criteria for this protocol will be displayed here.
+            <div class="d-flex justify-content-between mb-3">
+              <h5 class="mb-0">
+                {{getProtocolType()}} Specific Control Criteria
+              </h5>
+              <div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-outline-primary" (click)="filterSpecificEntries('all')">All</button>
+                  <button type="button" class="btn btn-outline-success" (click)="filterSpecificEntries('homologation')">Homologation</button>
+                  <button type="button" class="btn btn-outline-warning" (click)="filterSpecificEntries('non-homologation')">Non-Homologation</button>
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="getSpecificEntries().length === 0" class="alert alert-info">
+              No specific control criteria found for this protocol.
+            </div>
+            
+            <div class="table-responsive" *ngIf="getSpecificEntries().length > 0">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Homologation Status</th>
+                    <th>Action</th>
+                    <th>Responsible Action</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of getFilteredSpecificEntries()">
+                    <td>{{getSpecificCriteriaDescription(entry)}}</td>
+                    <td>
+                      <span class="badge" [ngClass]="{
+                        'bg-success': entry.homologation,
+                        'bg-warning': !entry.homologation
+                      }">
+                        {{entry.homologation ? 'Approved' : 'Not Approved'}}
+                      </span>
+                    </td>
+                    <td>{{entry.action || 'N/A'}}</td>
+                    <td>{{entry.responsableAction || 'N/A'}}</td>
+                    <td>{{entry.deadline || 'N/A'}}</td>
+                    <td>
+                      <button class="btn btn-sm btn-primary me-1" (click)="viewSpecificEntryDetails(entry)">
+                        <i class="fe fe-eye"></i> View
+                      </button>
+                      <button class="btn btn-sm btn-success" *ngIf="canMarkEntryHomologated(entry)" (click)="updateSpecificEntryStatus(entry)">
+                        <i class="fe fe-check"></i> Approve
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           
@@ -184,26 +311,38 @@
             <div class="row">
               <div class="col-md-12">
                 <h5>Users Assigned to This Report</h5>
-                <div class="table-responsive">
+                <div *ngIf="getUsersAsArray().length === 0" class="alert alert-info">
+                  No users assigned to this report.
+                </div>
+                <div class="table-responsive" *ngIf="getUsersAsArray().length > 0">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th>User ID</th>
+                        <th>Department</th>
                         <th>Role</th>
+                        <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       <ng-container *ngIf="getUsersAsArray().length > 0">
-                        <tr *ngFor="let userId of getUsersAsArray()">
-                          <td>{{userId}}</td>
-                          <td>Assigned</td>
+                        <tr *ngFor="let user of getUsersAsArray()">
+                          <td>{{getUserId(user)}}</td>
+                          <td>{{getUserDepartment(user) || 'N/A'}}</td>
+                          <td>{{getUserRole(user) || 'Assigned'}}</td>
+                          <td>
+                            <span class="badge bg-success">Active</span>
+                          </td>
                         </tr>
                       </ng-container>
-                      <tr *ngIf="getUsersAsArray().length === 0">
-                        <td colspan="2" class="text-center">No users assigned</td>
-                      </tr>
                     </tbody>
                   </table>
+                </div>
+                
+                <div class="mt-4" *ngIf="report && !report.isCompleted">
+                  <button class="btn btn-outline-primary">
+                    <i class="fe fe-user-plus me-1"></i> Assign Additional User
+                  </button>
                 </div>
               </div>
             </div>
@@ -211,8 +350,171 @@
           
           <!-- Maintenance Form Tab -->
           <div class="tab-pane" [ngClass]="{'active': activeTab === 4}">
-            <div class="alert alert-info" role="alert">
-              Maintenance form details will be displayed here when available.
+            <div class="row">
+              <div class="col-md-12">
+                <h5>Maintenance Form</h5>
+                
+                <div *ngIf="!hasMaintenanceForm()" class="alert alert-info">
+                  No maintenance form data available for this report.
+                </div>
+                
+                <div *ngIf="hasMaintenanceForm()">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-header">
+                          <h6 class="card-title mb-0">Electrical Information</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Control Standard:</div>
+                            <div class="w-50">{{getMaintenanceFormControlStandard()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Current Type:</div>
+                            <div class="w-50">{{getMaintenanceFormCurrentType()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Power Circuit:</div>
+                            <div class="w-50">{{getMaintenanceFormPowerCircuit()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Control Circuit:</div>
+                            <div class="w-50">{{getMaintenanceFormControlCircuit()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Has Transformer:</div>
+                            <div class="w-50">{{hasMaintenanceFormTransformer() ? 'Yes' : 'No'}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-header">
+                          <h6 class="card-title mb-0">Physical Characteristics</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Machine Size (H):</div>
+                            <div class="w-50">{{getMaintenanceFormMachineSizeHeight()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Machine Size (W):</div>
+                            <div class="w-50">{{getMaintenanceFormMachineSizeWidth()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Machine Size (L):</div>
+                            <div class="w-50">{{getMaintenanceFormMachineSizeLength()}}</div>
+                          </div>
+                          <div class="d-flex mb-2">
+                            <div class="w-50 text-muted">Is In Order:</div>
+                            <div class="w-50">{{isMaintenanceFormInOrder() ? 'Yes' : 'No'}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Progress Tab -->
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 5}">
+            <div class="row">
+              <div class="col-md-12">
+                <h5>Report Progress</h5>
+                
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="card-title">Standard Controls</h6>
+                        <div class="d-flex align-items-center mb-3">
+                          <div class="flex-grow-1">
+                            <div class="progress h-7">
+                              <div class="progress-bar bg-success" [style.width.%]="getStandardImplementationPercentage()"></div>
+                            </div>
+                          </div>
+                          <div class="ms-3">
+                            <h5 class="mb-0">{{getStandardImplementationPercentage()}}%</h5>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <div class="text-muted">
+                            <strong>{{getImplementedStandardCount()}}</strong> of {{getStandardEntries().length}} implemented
+                          </div>
+                          <div>
+                            <span class="badge bg-success">{{getImplementedStandardCount()}}</span> / 
+                            <span class="badge bg-warning">{{getNonImplementedStandardCount()}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="card-title">Specific Controls</h6>
+                        <div class="d-flex align-items-center mb-3">
+                          <div class="flex-grow-1">
+                            <div class="progress h-7">
+                              <div class="progress-bar bg-success" [style.width.%]="getSpecificImplementationPercentage()"></div>
+                            </div>
+                          </div>
+                          <div class="ms-3">
+                            <h5 class="mb-0">{{getSpecificImplementationPercentage()}}%</h5>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <div class="text-muted">
+                            <strong>{{getImplementedSpecificCount()}}</strong> of {{getSpecificEntries().length}} approved
+                          </div>
+                          <div>
+                            <span class="badge bg-success">{{getImplementedSpecificCount()}}</span> / 
+                            <span class="badge bg-warning">{{getNonImplementedSpecificCount()}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="card">
+                  <div class="card-header">
+                    <h6 class="card-title mb-0">Overall Progress</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="flex-grow-1">
+                        <div class="progress h-10">
+                          <div class="progress-bar bg-success" [style.width.%]="getOverallProgress()"></div>
+                        </div>
+                      </div>
+                      <div class="ms-3">
+                        <h4 class="mb-0">{{getOverallProgress()}}%</h4>
+                      </div>
+                    </div>
+                    <div class="alert" [ngClass]="{
+                      'alert-success': getOverallProgress() === 100,
+                      'alert-warning': getOverallProgress() > 0 && getOverallProgress() < 100,
+                      'alert-danger': getOverallProgress() === 0
+                    }">
+                      <div *ngIf="getOverallProgress() === 100">
+                        <i class="fe fe-check-circle me-1"></i> All controls have been implemented/approved
+                      </div>
+                      <div *ngIf="getOverallProgress() > 0 && getOverallProgress() < 100">
+                        <i class="fe fe-alert-circle me-1"></i> Some controls are still pending implementation/approval
+                      </div>
+                      <div *ngIf="getOverallProgress() === 0">
+                        <i class="fe fe-x-circle me-1"></i> No controls have been implemented/approved yet
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -226,26 +528,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="entryModalLabel">Entry Details</h5>
+        <h5 class="modal-title" id="entryModalLabel">Control Entry Details</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Modal content will go here -->
-        <div class="form-group mb-3">
-          <label class="form-label">Action Required</label>
-          <input type="text" class="form-control" value="Replace worn parts" readonly>
-        </div>
-        <div class="form-group mb-3">
-          <label class="form-label">Responsible for Action</label>
-          <input type="text" class="form-control" value="Maintenance Team" readonly>
-        </div>
-        <div class="form-group mb-3">
-          <label class="form-label">Deadline</label>
-          <input type="text" class="form-control" value="2023-05-30" readonly>
-        </div>
-        <div class="form-group mb-3">
-          <label class="form-label">Success Control</label>
-          <input type="text" class="form-control" value="Visual inspection and test run" readonly>
+        <!-- Entry details will be displayed here -->
+        <div class="alert alert-info">
+          Select an entry to view details.
         </div>
       </div>
       <div class="modal-footer">
