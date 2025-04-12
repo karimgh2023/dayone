@@ -1,3 +1,15 @@
+/**
+ * Protocol Management Component
+ * 
+ * This component provides a complete interface for managing protocols in the system.
+ * Features include:
+ * - Viewing all protocols in a list
+ * - Creating new protocols
+ * - Editing existing protocols
+ * - Deleting protocols
+ * - Adding criteria to protocols
+ */
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';

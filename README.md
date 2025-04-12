@@ -1,6 +1,16 @@
-# dayone
+# Dayone
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+
+## Features
+
+### Report and Protocol Management
+The application includes a comprehensive protocol and report management system:
+- Protocol creation and management
+- Report creation based on protocols
+- Dashboard for viewing all reports
+- Detailed report viewing and editing capabilities
+- Protocol criteria management
 
 ## Development server
 
