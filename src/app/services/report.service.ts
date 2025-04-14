@@ -21,6 +21,7 @@ export class ReportService {
   private apiUrl = `${environment.apiUrl}/rapports`;
   private protocolsUrl = `${environment.apiUrl}/protocols`;
   private useMockData = true; // Set to false to use real API
+  private useRealProtocolsData = true; // Use real data for protocols
 
   // Mock data for testing when API fails
   private MOCK_REPORTS: Report[] = [
@@ -268,7 +269,11 @@ export class ReportService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`)
       .pipe(
         tap(_ => console.log(`Deleted report id=${id}`)),
-        catchError(this.handleError<void>(`deleteReport id=${id}`))
+        catchError(error => {
+          console.error(`[Auth Interceptor] ${error.status === 403 ? 'Forbidden - access denied' : 'Error'}`);
+          console.error(`deleteReport id=${id} failed: ${error.status === 403 ? 'Not authorized' : error.message}`);
+          return throwError(() => error);
+        })
       );
   }
 
@@ -339,21 +344,14 @@ export class ReportService {
   
   // Get all protocols
   getAllProtocols(): Observable<Protocol[]> {
-    // Use mock data for testing if useMockData is true
-    if (this.useMockData) {
-      console.log('Using mock protocols data (useMockData=true)');
-      return of(this.MOCK_PROTOCOLS).pipe(
-        delay(500), // Add artificial delay to simulate network request
-        tap(protocols => console.log('Returned mock protocols:', protocols.length))
-      );
-    }
-    
     console.log(`Fetching protocols from ${this.protocolsUrl}`);
+    
+    // Always try the real API first, regardless of useMockData setting
     return this.http.get<Protocol[]>(this.protocolsUrl)
       .pipe(
         tap(protocols => {
           if (protocols && protocols.length > 0) {
-            console.log('Fetched protocols:', protocols.length);
+            console.log('Fetched protocols from API:', protocols.length);
           } else {
             console.log('No protocols returned from API');
           }
@@ -361,7 +359,18 @@ export class ReportService {
         catchError((error) => {
           console.error('Error fetching protocols:', error);
           
-          // Return mock data if the API fails
+          // Handle different error types
+          if (error.status === 403) {
+            console.error('Access forbidden to protocols API. Backend security is blocking access.');
+            console.error('Make sure SecurityConfig.java has .requestMatchers("/api/protocols/**").permitAll()');
+          } else if (error.status === 404) {
+            console.error('Protocols endpoint not found. Check the controller mapping in ProtocolController.java.');
+          } else if (error.name === 'SyntaxError' || error.message?.includes('JWT')) {
+            console.error('JWT token error. Token may be malformed or corrupted.');
+            console.error('Try clearing local storage and logging in again.');
+          }
+          
+          // Return mock data as fallback
           console.log('Returning mock protocols data as fallback');
           return of(this.MOCK_PROTOCOLS);
         })
@@ -636,11 +645,9 @@ export class ReportService {
           console.error(`${operation} failed: ${error.message}`);
         }
       } else {
-        console.error(`${operation} failed: ${error.message}`);
+        console.error(`${operation} failed: ${error.message || error.toString()}`);
       }
-
-      // Let the app keep running by returning an empty result
       return of(result as T);
     };
   }
-} 
+}

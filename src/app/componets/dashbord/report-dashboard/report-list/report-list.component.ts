@@ -245,12 +245,23 @@ export class ReportListComponent implements OnInit {
   }
 
   loadProtocols(): void {
+    console.log('Loading protocols from backend...');
     this.reportService.getAllProtocols().subscribe({
       next: (protocols) => {
         this.protocols = protocols;
+        console.log(`Successfully loaded ${protocols.length} protocols`);
       },
       error: (error) => {
-        console.error('Error loading protocols', error);
+        console.error('Error loading protocols:', error);
+        if (error.status === 403) {
+          console.error('Access forbidden to protocols API. Check security settings in the backend.');
+          alert('Permission denied: Unable to load protocols. Please contact an administrator.');
+        } else if (error.status === 401) {
+          console.error('Authentication required to access protocols.');
+          alert('Your session has expired. Please log in again.');
+        } else {
+          alert('Failed to load protocols. Using default values instead.');
+        }
       }
     });
   }
@@ -363,7 +374,17 @@ export class ReportListComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error deleting report', error);
-          alert('Failed to delete report. Please try again.');
+          let errorMessage = 'Failed to delete report. Please try again.';
+          
+          if (error.status === 403) {
+            errorMessage = 'You do not have permission to delete this report. Please contact an administrator.';
+          } else if (error.status === 401) {
+            errorMessage = 'Your session has expired. Please log in again.';
+          } else if (error.status === 404) {
+            errorMessage = 'Report not found or already deleted.';
+          }
+          
+          alert(errorMessage);
         }
       });
     }

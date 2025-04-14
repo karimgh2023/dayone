@@ -3,9 +3,11 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap, retry } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
 
 @Injectable()
@@ -17,7 +19,10 @@ export class AuthInterceptor implements HttpInterceptor {
     // Get the auth token from the service
     const token = this.authService.getToken();
     
-    if (token) {
+    // Check if this is a public endpoint that doesn't require authentication
+    const isPublicEndpoint = this.isPublicEndpoint(request.url);
+    
+    if (token && !isPublicEndpoint) {
       // Clone the request and add the authorization header
       const authReq = request.clone({
         setHeaders: {
@@ -25,11 +30,48 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       });
       
-      // Send the newly created request
-      return next.handle(authReq);
+      // Log for API requests (optional, helps with debugging)
+      if (request.url.includes('/api/')) {
+        console.log(`[Auth Interceptor] Adding token to request: ${request.url}`);
+      }
+      
+      // Send the newly created request with auth token
+      return next.handle(authReq).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            console.error('[Auth Interceptor] Authentication failed - token may be expired');
+            // Handle token expiration
+            this.authService.logout();
+            window.location.href = '/login';
+          } else if (error.status === 403) {
+            console.error('[Auth Interceptor] Forbidden - access denied');
+          } else {
+            console.error(`[Auth Interceptor] Error on request to ${request.url}:`, error);
+          }
+          return throwError(() => error);
+        })
+      );
+    } else if (isPublicEndpoint) {
+      // For public endpoints, don't add token but add retry logic
+      console.log(`[Auth Interceptor] Public endpoint: ${request.url}`);
+      return next.handle(request).pipe(
+        // Retry public endpoints up to 2 times
+        retry(2),
+        catchError((error: HttpErrorResponse) => {
+          console.error(`[Auth Interceptor] Error on public endpoint ${request.url}:`, error);
+          return throwError(() => error);
+        })
+      );
     }
     
     // If no token, proceed with the original request
     return next.handle(request);
+  }
+  
+  private isPublicEndpoint(url: string): boolean {
+    // Define patterns for endpoints that don't need authentication
+    return url.includes('/api/auth/') || 
+           url.includes('/api/public/') || 
+           url.includes('/api/protocols');
   }
 } 
