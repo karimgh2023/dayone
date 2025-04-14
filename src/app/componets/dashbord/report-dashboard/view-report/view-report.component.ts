@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule, DatePipe } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { CriteriaEntryComponent, CriteriaEntryData } from '../../../../shared/components/criteria-entry/criteria-entry.component';
 
 // Define local interfaces for report entries with simplified structure
 interface ReportEntryDisplay {
@@ -56,7 +57,8 @@ interface ExtendedReport extends Report {
     ReactiveFormsModule,
     RouterModule,
     NgSelectModule,
-    CommonModule
+    CommonModule,
+    CriteriaEntryComponent
   ],
   providers: [DatePipe],
   templateUrl: './view-report.component.html',
@@ -638,5 +640,9 @@ export class ViewReportComponent implements OnInit {
 
   canMarkEntryHomologated(entry: ReportEntryDisplay): boolean {
     return !entry.homologation && !!this.report && !this.report.isCompleted;
+  }
+
+  isReportCompleted(): boolean {
+    return !!this.report?.isCompleted;
   }
 } 

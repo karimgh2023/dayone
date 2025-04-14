@@ -210,40 +210,28 @@
             </div>
             
             <div class="table-responsive" *ngIf="getStandardEntries().length > 0">
-              <table class="table table-bordered">
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Description</th>
                     <th>Implementation Responsible</th>
                     <th>Check Responsible</th>
-                    <th>Status</th>
+                    <th>Implementation Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let entry of getFilteredStandardEntries()">
-                    <td>{{getStandardCriteriaDescription(entry)}}</td>
-                    <td>{{getImplementationResponsibleName(entry)}}</td>
-                    <td>{{getCheckResponsibleName(entry)}}</td>
-                    <td>
-                      <span class="badge" [ngClass]="{
-                        'bg-success': entry.implemented,
-                        'bg-warning': !entry.implemented
-                      }">
-                        {{entry.implemented ? 'Implemented' : 'Not Implemented'}}
-                      </span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-primary me-1" (click)="viewEntryDetails(entry)">
-                        <i class="fe fe-eye"></i> View
-                      </button>
-                      <button class="btn btn-sm btn-success" *ngIf="canMarkEntryImplemented(entry)" (click)="updateEntryStatus(entry)">
-                        <i class="fe fe-check"></i> Mark Implemented
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
+
+              <div class="criteria-list">
+                <app-criteria-entry 
+                  *ngFor="let entry of getFilteredStandardEntries()"
+                  [entry]="entry"
+                  [entryType]="'standard'"
+                  [readOnly]="isReportCompleted()"
+                  (markImplemented)="updateEntryStatus($event)"
+                  (viewDetails)="viewEntryDetails($event)">
+                </app-criteria-entry>
+              </div>
             </div>
           </div>
           
@@ -267,7 +255,7 @@
             </div>
             
             <div class="table-responsive" *ngIf="getSpecificEntries().length > 0">
-              <table class="table table-bordered">
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Description</th>
@@ -278,31 +266,18 @@
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let entry of getFilteredSpecificEntries()">
-                    <td>{{getSpecificCriteriaDescription(entry)}}</td>
-                    <td>
-                      <span class="badge" [ngClass]="{
-                        'bg-success': entry.homologation,
-                        'bg-warning': !entry.homologation
-                      }">
-                        {{entry.homologation ? 'Approved' : 'Not Approved'}}
-                      </span>
-                    </td>
-                    <td>{{entry.action || 'N/A'}}</td>
-                    <td>{{entry.responsableAction || 'N/A'}}</td>
-                    <td>{{entry.deadline || 'N/A'}}</td>
-                    <td>
-                      <button class="btn btn-sm btn-primary me-1" (click)="viewSpecificEntryDetails(entry)">
-                        <i class="fe fe-eye"></i> View
-                      </button>
-                      <button class="btn btn-sm btn-success" *ngIf="canMarkEntryHomologated(entry)" (click)="updateSpecificEntryStatus(entry)">
-                        <i class="fe fe-check"></i> Approve
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
+
+              <div class="criteria-list">
+                <app-criteria-entry 
+                  *ngFor="let entry of getFilteredSpecificEntries()"
+                  [entry]="entry"
+                  [entryType]="'specific'"
+                  [readOnly]="isReportCompleted()"
+                  (markHomologated)="updateSpecificEntryStatus($event)"
+                  (viewDetails)="viewSpecificEntryDetails($event)">
+                </app-criteria-entry>
+              </div>
             </div>
           </div>
           

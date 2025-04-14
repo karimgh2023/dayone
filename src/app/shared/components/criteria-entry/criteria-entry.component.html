@@ -1,0 +1,62 @@
+<div class="criteria-entry" [class.implemented]="isImplemented">
+  <!-- Standard entry row with data columns -->
+  <div class="row" *ngIf="isStandardEntry">
+    <div class="col">
+      <span class="description">{{description}}</span>
+    </div>
+    <div class="col">
+      <span class="responsible">{{implementationResponsible}}</span>
+    </div>
+    <div class="col">
+      <span class="responsible">{{checkResponsible}}</span>
+    </div>
+    <div class="col">
+      <span class="badge" [ngClass]="{
+        'bg-success': isImplemented,
+        'bg-warning': !isImplemented
+      }">
+        {{isImplemented ? 'Implemented' : 'Not Implemented'}}
+      </span>
+    </div>
+    <div class="col actions">
+      <button class="btn btn-sm btn-primary me-1" (click)="onViewDetails()">
+        <i class="fe fe-eye"></i> View
+      </button>
+      <button class="btn btn-sm btn-success" *ngIf="!isImplemented && !readOnly" (click)="onMarkImplemented()">
+        <i class="fe fe-check"></i> Mark Implemented
+      </button>
+    </div>
+  </div>
+
+  <!-- Specific entry row with data columns -->
+  <div class="row" *ngIf="isSpecificEntry">
+    <div class="col">
+      <span class="description">{{description}}</span>
+    </div>
+    <div class="col">
+      <span class="badge" [ngClass]="{
+        'bg-success': isImplemented,
+        'bg-warning': !isImplemented
+      }">
+        {{isImplemented ? 'Approved' : 'Not Approved'}}
+      </span>
+    </div>
+    <div class="col">
+      <span class="action">{{entry.action || 'N/A'}}</span>
+    </div>
+    <div class="col">
+      <span class="responsible">{{entry.responsableAction || 'N/A'}}</span>
+    </div>
+    <div class="col">
+      <span class="deadline">{{entry.deadline || 'N/A'}}</span>
+    </div>
+    <div class="col actions">
+      <button class="btn btn-sm btn-primary me-1" (click)="onViewDetails()">
+        <i class="fe fe-eye"></i> View
+      </button>
+      <button class="btn btn-sm btn-success" *ngIf="!isImplemented && !readOnly" (click)="onMarkHomologated()">
+        <i class="fe fe-check"></i> Approve
+      </button>
+    </div>
+  </div>
+</div>

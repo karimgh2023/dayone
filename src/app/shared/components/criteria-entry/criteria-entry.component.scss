@@ -1,0 +1,38 @@
+.criteria-entry {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border-left: 3px solid #f0f0f0;
+  
+  &.implemented {
+    border-left-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.05);
+  }
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  .row {
+    align-items: center;
+  }
+  
+  .description {
+    font-weight: 500;
+  }
+  
+  .responsible, .deadline, .action {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .badge {
+    padding: 5px 8px;
+    font-weight: 500;
+  }
+  
+  .actions {
+    text-align: right;
+  }
+}
