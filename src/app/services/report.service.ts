@@ -20,7 +20,7 @@ import {
 export class ReportService {
   private apiUrl = `${environment.apiUrl}/rapports`;
   private protocolsUrl = `${environment.apiUrl}/protocols`;
-  private useMockData = true; // Set to false to use real API
+  private useMockData = false; // Set to false to use real API
   private useRealProtocolsData = true; // Use real data for protocols
 
   // Mock data for testing when API fails
@@ -49,7 +49,7 @@ export class ReportService {
         role: 'ADMIN',
         department: { id: 1, name: 'Maintenance' }
       },
-      reportUsers: [],
+      assignedUsers: [],
       reportEntries: [],
       createdAt: new Date().toISOString(),
       isCompleted: false,
@@ -80,7 +80,7 @@ export class ReportService {
         role: 'INSPECTOR',
         department: { id: 2, name: 'Quality Control' }
       },
-      reportUsers: [],
+      assignedUsers: [],
       reportEntries: [],
       createdAt: new Date().toISOString(),
       isCompleted: true,
@@ -111,7 +111,7 @@ export class ReportService {
         role: 'TECHNICIAN',
         department: { id: 3, name: 'Repairs' }
       },
-      reportUsers: [],
+      assignedUsers: [],
       reportEntries: [],
       createdAt: new Date().toISOString(),
       isCompleted: false,
@@ -142,7 +142,7 @@ export class ReportService {
         role: 'MANAGER',
         department: { id: 4, name: 'Operations' }
       },
-      reportUsers: [],
+      assignedUsers: [],
       reportEntries: [],
       createdAt: new Date().toISOString(),
       isCompleted: true,
@@ -230,7 +230,12 @@ export class ReportService {
         catchError((error) => {
           console.error('Error fetching reports:', error);
           
-          // Return mock data if the API fails
+          if (error.status === 401 || error.status === 403) {
+            console.error('Authentication error when fetching reports. Please login again.');
+            return throwError(() => new Error('Authentication required'));
+          }
+          
+          // Return mock data if the API fails with other errors
           console.log('Returning mock data as fallback');
           return of(this.MOCK_REPORTS);
         })
@@ -242,7 +247,19 @@ export class ReportService {
     return this.http.get<Report>(`${this.apiUrl}/${id}`)
       .pipe(
         tap(report => console.log(`Fetched report id=${id}`)),
-        catchError(this.handleError<Report>(`getReportById id=${id}`))
+        catchError((error) => {
+          console.error(`Error fetching report id=${id}:`, error);
+          
+          if (error.status === 403) {
+            console.error('Access forbidden. You may not have permission to view this report.');
+          } else if (error.status === 404) {
+            console.error('Report not found. It may have been deleted or the ID is incorrect.');
+          } else if (error.status === 0) {
+            console.error('Network error. The backend server may be down or unreachable.');
+          }
+          
+          return throwError(() => error);
+        })
       );
   }
 
@@ -624,6 +641,38 @@ export class ReportService {
       .pipe(
         tap(_ => console.log(`Updated report id=${reportId} status to ${status}`)),
         catchError(this.handleError<Report>(`updateReportStatus id=${reportId}`))
+      );
+  }
+
+  // Get reports created by the current user
+  getMyCreatedReports(): Observable<Report[]> {
+    if (this.useMockData) {
+      return of(this.MOCK_REPORTS.filter(r => r.createdBy.id === 1)); // Mock current user ID
+    }
+    
+    return this.http.get<Report[]>(`${this.apiUrl}/my-created`)
+      .pipe(
+        tap(reports => console.log('Fetched my created reports:', reports.length)),
+        catchError((error) => {
+          console.error('Error fetching my created reports:', error);
+          return of(this.MOCK_REPORTS.filter(r => r.createdBy.id === 1));
+        })
+      );
+  }
+
+  // Get reports assigned to the current user
+  getAssignedReports(): Observable<Report[]> {
+    if (this.useMockData) {
+      return of(this.MOCK_REPORTS); // Mock assigned reports
+    }
+    
+    return this.http.get<Report[]>(`${this.apiUrl}/assigned`)
+      .pipe(
+        tap(reports => console.log('Fetched assigned reports:', reports.length)),
+        catchError((error) => {
+          console.error('Error fetching assigned reports:', error);
+          return of(this.MOCK_REPORTS);
+        })
       );
   }
 

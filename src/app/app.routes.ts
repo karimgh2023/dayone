@@ -6,6 +6,8 @@ import { AuthenticationLayoutComponent } from './shared/layouts/authentication-l
 import { authen } from './shared/routes/auth.route';
 import { SupportSystemComponent } from './shared/layouts/support-system/support-system.component';
 import { support } from './shared/routes/support.routes';
+import { TranslationDemoComponent } from './shared/components/translation-demo/translation-demo.component';
+import { AuthDebugComponent } from './shared/components/auth-debug/auth-debug.component';
 
 export const App_Route: Routes = [
   { 
@@ -23,6 +25,10 @@ export const App_Route: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: '', component: MainLayoutComponent, children: content },
   { path: 'support', component: SupportSystemComponent, children: support },
+  // Translation demo route
+  { path: 'i18n-demo', component: TranslationDemoComponent },
+  // Auth debug route
+  { path: 'auth-debug', component: AuthDebugComponent },
   // Add a fallback route for 404 errors
   { path: '**', redirectTo: 'auth/login' }
 ];

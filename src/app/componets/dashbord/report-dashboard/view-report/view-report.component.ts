@@ -7,9 +7,11 @@ import { ReportService } from '../../../../services/report.service';
 import { Report, StandardReportEntry, SpecificReportEntry, StandardReportEntryUpdateRequest, SpecificReportEntryUpdateRequest, User, Department } from '../../../../models/report.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule, DatePipe } from '@angular/common';
-import { finalize } from 'rxjs/operators';
+import { finalize, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { CriteriaEntryComponent, CriteriaEntryData } from '../../../../shared/components/criteria-entry/criteria-entry.component';
+import { of } from 'rxjs';
+import { AuthService } from '../../../../services/auth.service';
 
 // Define local interfaces for report entries with simplified structure
 interface ReportEntryDisplay {
@@ -45,6 +47,7 @@ interface ExtendedReport extends Report {
   // Aliases to handle naming inconsistencies in the template
   entries?: ReportEntryDisplay[];
   assignedUsers?: User[];
+  reportUsers?: any[]; // Optional to avoid requiring it in Report
 }
 
 @Component({
@@ -168,7 +171,8 @@ export class ViewReportComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private reportService: ReportService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -182,143 +186,90 @@ export class ViewReportComponent implements OnInit {
     this.loading = true;
     this.error = false;
     
-    const reportId = this.route.snapshot.paramMap.get('id');
-    if (reportId) {
-      this.reportService.getReportById(Number(reportId)).subscribe(
-        (response: any) => {
-          this.loading = false;
-          if (response && response.body) {
-            this.report = response.body;
-            console.log('Report loaded:', this.report);
-          } else {
-            console.log('No report data received, loading mock data');
-            this.loadMockReport();
-          }
-        },
-        (error: any) => {
-          this.loading = false;
-          console.error('Error loading report:', error);
-          
-          // Handle different error scenarios
-          if (error.status === 403) {
-            this.error = true;
-            this.reportName = 'You are not authorized to view this report.';
-          } else if (error.status === 401) {
-            this.error = true;
-            this.reportName = 'You need to be authenticated to view this report.';
-          } else if (error.status === 404) {
-            this.error = true;
-            this.reportName = 'Report not found.';
-          } else {
-            this.error = true;
-            this.reportName = 'Failed to load report. Please try again later.';
-          }
-          
-          // Load mock data for demonstration purposes
-          this.loadMockReport();
-        }
-      );
-    } else {
+    if (!this.reportId) {
       this.loading = false;
       this.error = true;
       this.reportName = 'No report ID provided.';
-      this.loadMockReport();
+      return;
     }
+
+    // Check if user is authenticated
+    if (!this.authService.getToken()) {
+      this.loading = false;
+      this.error = true;
+      this.reportName = 'You need to be authenticated to view this report.';
+      this.toastr.error('Authentication required', 'Please login to view reports');
+      this.router.navigate(['/auth/login'], { queryParams: { returnUrl: `/reports/${this.reportId}` } });
+      return;
+    }
+
+    this.reportService.getReportById(this.reportId)
+      .pipe(
+        finalize(() => this.loading = false),
+        catchError(error => {
+          console.error('Error loading report:', error);
+          
+          this.error = true;
+          
+          // Handle different error scenarios
+          if (error.status === 403) {
+            this.reportName = 'You are not authorized to view this report.';
+            this.toastr.error('Access denied', 'You do not have permission to view this report');
+          } else if (error.status === 401) {
+            this.reportName = 'You need to be authenticated to view this report.';
+            this.toastr.error('Authentication required', 'Please login to view reports');
+            // Redirect to login page with return URL
+            this.router.navigate(['/auth/login'], { queryParams: { returnUrl: `/reports/${this.reportId}` } });
+          } else if (error.status === 404) {
+            this.reportName = 'Report not found.';
+            this.toastr.error('Report not found', 'The requested report does not exist');
+          } else {
+            this.reportName = 'Failed to load report. Please try again later.';
+            this.toastr.error('Error loading report', 'Please try again later');
+          }
+          
+          return of(null);
+        })
+      )
+      .subscribe(
+        (response: any) => {
+          if (response && response.body) {
+            this.report = response.body;
+            this.processReportData();
+            console.log('Report loaded:', this.report);
+          } else if (response) {
+            // Direct response without body property (depends on backend implementation)
+            this.report = response;
+            this.processReportData();
+            console.log('Report loaded:', this.report);
+          } else {
+            console.error('No report data received');
+            this.error = true;
+            this.reportName = 'No report data available.';
+          }
+        }
+      );
   }
 
-  loadMockReport(): void {
-    // Create helper objects
-    const maintDept: Department = { id: 1, name: 'Maintenance' };
-    const safetyDept: Department = { id: 2, name: 'Safety' };
+  processReportData(): void {
+    if (!this.report) return;
     
-    const adminUser: User = {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'admin@example.com',
-      username: 'admin',
-      department: maintDept,
-      role: 'DEPARTMENT_MANAGER'
-    };
-    
-    // Mock entries as StandardReportEntry objects
-    const entries: StandardReportEntry[] = [
-      {
-        id: 1,
-        reportId: this.reportId,
-        standardCriteriaId: 1,
-        standardCriteria: {
-          id: 1,
-          description: 'Check motor connections',
-          implementationResponsible: maintDept,
-          checkResponsible: maintDept
-        },
-        implemented: true,
-        action: '',
-        responsableAction: '',
-        deadline: '',
-        successControl: ''
-      },
-      {
-        id: 2,
-        reportId: this.reportId,
-        standardCriteriaId: 2,
-        standardCriteria: {
-          id: 2,
-          description: 'Inspect for wear and tear',
-          implementationResponsible: maintDept,
-          checkResponsible: safetyDept
-        },
-        implemented: false,
-        action: 'Replace worn parts',
-        responsableAction: 'Maintenance Team',
-        deadline: '2023-05-30',
-        successControl: 'Visual inspection and test run'
-      }
-    ];
-    
-    // Mock detailed report for UI display
-    this.report = {
-      id: this.reportId,
-      type: 'Maintenance',
-      protocol: {
-        id: 1,
-        name: 'Standard Maintenance Protocol',
-        protocolType: 'Homologation',
-        createdBy: adminUser
-      },
-      createdBy: adminUser,
-      reportUsers: [2, 3], // Just store user IDs
-      reportEntries: entries,
-      createdAt: '2023-04-15T10:30:00',
-      isCompleted: false,
-      serialNumber: 'EQ-12345',
-      equipmentDescription: 'Industrial centrifugal pump used for coolant circulation in the main production line. The pump has been showing signs of reduced performance over the last month.',
-      designation: 'Centrifugal Pump',
-      manufacturer: 'Grundfos',
-      immobilization: 'No',
-      serviceSeg: 'A1',
-      businessUnit: 'Production',
-      
-      // Extended fields for template
-      initialVerificationDate: '2023-01-15',
-      equipmentCategory: 'Pumping Equipment',
-      lastQualificationDate: '2022-10-20',
-      maintenanceFrequency: '6',
-      
-      // Set entries and assignedUsers for template compatibility
-      entries: [],
-      assignedUsers: []
-    };
-    
-    // Initialize the entries and assignedUsers arrays
+    // Process and prepare report data for display
     this.standardEntries = this.getStandardEntries() as StandardReportEntry[];
     this.specificEntries = this.getSpecificEntries() as SpecificReportEntry[];
     this.getUsersAsArray();
+    
+    // Set report name for display
+    this.reportName = this.report.designation || 
+      this.report.serialNumber || 
+      `Report #${this.report.id}`;
   }
 
   updateEntryStatus(entry: ReportEntryDisplay): void {
-    if (this.report?.isCompleted) return;
+    if (this.report?.isCompleted) {
+      this.toastr.warning('Cannot update entries in a completed report');
+      return;
+    }
     
     this.loading = true;
     
@@ -336,13 +287,24 @@ export class ViewReportComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error updating entry status:', err);
-          this.toastr.error('Failed to update entry status');
+          
+          let errorMessage = 'Failed to update entry status';
+          if (err.status === 403) {
+            errorMessage = 'You are not authorized to update this entry';
+          } else if (err.status === 400 && err.error) {
+            errorMessage = err.error.message || errorMessage;
+          }
+          
+          this.toastr.error(errorMessage);
         }
       });
   }
 
   updateSpecificEntryStatus(entry: ReportEntryDisplay): void {
-    if (this.report?.isCompleted) return;
+    if (this.report?.isCompleted) {
+      this.toastr.warning('Cannot update entries in a completed report');
+      return;
+    }
     
     this.loading = true;
     
@@ -360,7 +322,15 @@ export class ViewReportComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error updating specific entry status:', err);
-          this.toastr.error('Failed to update specific entry status');
+          
+          let errorMessage = 'Failed to update specific entry status';
+          if (err.status === 403) {
+            errorMessage = 'You are not authorized to update this entry';
+          } else if (err.status === 400 && err.error) {
+            errorMessage = err.error.message || errorMessage;
+          }
+          
+          this.toastr.error(errorMessage);
         }
       });
   }
@@ -405,21 +375,47 @@ export class ViewReportComponent implements OnInit {
   }
 
   markReportAsCompleted(): void {
-    if (this.report && !this.report.isCompleted) {
-      this.loading = true;
-      this.reportService.markReportAsCompleted(this.reportId)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe({
-          next: (updatedReport) => {
-            this.report = updatedReport;
-            this.toastr.success('Report marked as completed successfully');
-          },
-          error: (err) => {
-            console.error('Error marking report as completed:', err);
-            this.toastr.error('Failed to mark report as completed');
-          }
-        });
+    if (!this.report || this.report.isCompleted) {
+      this.toastr.warning('Report is already completed or not available');
+      return;
     }
+    
+    // Check if all required entries are completed
+    const standardIncomplete = this.getStandardEntries().some(entry => !entry.implemented);
+    const specificIncomplete = this.getSpecificEntries().some(entry => !entry.homologation);
+    
+    if (standardIncomplete || specificIncomplete) {
+      this.toastr.warning('All entries must be implemented/homologated before marking the report as completed');
+      return;
+    }
+    
+    this.loading = true;
+    this.reportService.markReportAsCompleted(this.reportId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: (updatedReport) => {
+          if (updatedReport) {
+            this.report = updatedReport;
+            this.processReportData();
+            this.toastr.success('Report marked as completed successfully');
+          } else {
+            this.toastr.error('Failed to update report status');
+            this.loadReport(); // Reload the report to get current data
+          }
+        },
+        error: (err) => {
+          console.error('Error marking report as completed:', err);
+          
+          let errorMessage = 'Failed to mark report as completed';
+          if (err.status === 403) {
+            errorMessage = 'You are not authorized to complete this report';
+          } else if (err.status === 400 && err.error) {
+            errorMessage = err.error.message || errorMessage;
+          }
+          
+          this.toastr.error(errorMessage);
+        }
+      });
   }
 
   getImplementedStandardCount(): number {
@@ -578,60 +574,69 @@ export class ViewReportComponent implements OnInit {
   }
 
   // Helper methods for template logic - moving complex logic from template to component
-  isValidStandardCriteria(entry: ReportEntryDisplay | null): boolean {
-    return !!entry?.standardCriteria && typeof entry.standardCriteria === 'object';
+  isValidStandardCriteria(entry: ReportEntryDisplay | null): entry is ReportEntryDisplay & { 
+    standardCriteria: { 
+      description: string; 
+      implementationResponsible?: { name: string; id?: number }; 
+      checkResponsible?: { name: string; id?: number }; 
+    } 
+  } {
+    return !!entry && 
+           entry.standardCriteria !== undefined &&
+           entry.standardCriteria !== null &&
+           typeof entry.standardCriteria === 'object' &&
+           'description' in entry.standardCriteria;
   }
 
   isValidStandardCriteriaWithImpl(entry: ReportEntryDisplay | null): boolean {
     return this.isValidStandardCriteria(entry) && 
-      !!entry?.standardCriteria && 
-      typeof entry.standardCriteria === 'object' && 
-      !!entry.standardCriteria.implementationResponsible;
+           !!entry.standardCriteria.implementationResponsible;
   }
 
   isValidStandardCriteriaWithCheck(entry: ReportEntryDisplay | null): boolean {
     return this.isValidStandardCriteria(entry) && 
-      !!entry?.standardCriteria && 
-      typeof entry.standardCriteria === 'object' && 
-      !!entry.standardCriteria.checkResponsible;
+           !!entry.standardCriteria.checkResponsible;
   }
 
-  isValidSpecificCriteria(entry: ReportEntryDisplay | null): boolean {
-    return !!entry?.specificCriteria && typeof entry.specificCriteria === 'object';
+  isValidSpecificCriteria(entry: ReportEntryDisplay | null): entry is ReportEntryDisplay & { 
+    specificCriteria: { 
+      description: string;
+      protocol?: { id: number; name: string; protocolType: string }; 
+    } 
+  } {
+    return !!entry && 
+           entry.specificCriteria !== undefined && 
+           entry.specificCriteria !== null &&
+           typeof entry.specificCriteria === 'object' &&
+           'description' in entry.specificCriteria;
   }
 
   getStandardCriteriaDescription(entry: ReportEntryDisplay): string {
-    if (this.isValidStandardCriteria(entry) && 
-        typeof entry.standardCriteria === 'object') {
-      return entry.standardCriteria.description || 'No description';
+    if (this.isValidStandardCriteria(entry)) {
+      return entry.standardCriteria.description;
     }
-    return 'No description';
+    return '';
   }
 
   getImplementationResponsibleName(entry: ReportEntryDisplay): string {
-    if (this.isValidStandardCriteriaWithImpl(entry) && 
-        typeof entry.standardCriteria === 'object' && 
-        entry.standardCriteria.implementationResponsible) {
-      return entry.standardCriteria.implementationResponsible.name || 'N/A';
+    if (this.isValidStandardCriteria(entry) && entry.standardCriteria.implementationResponsible) {
+      return entry.standardCriteria.implementationResponsible.name;
     }
-    return 'N/A';
+    return '';
   }
 
   getCheckResponsibleName(entry: ReportEntryDisplay): string {
-    if (this.isValidStandardCriteriaWithCheck(entry) && 
-        typeof entry.standardCriteria === 'object' && 
-        entry.standardCriteria.checkResponsible) {
-      return entry.standardCriteria.checkResponsible.name || 'N/A';
+    if (this.isValidStandardCriteria(entry) && entry.standardCriteria.checkResponsible) {
+      return entry.standardCriteria.checkResponsible.name;
     }
-    return 'N/A';
+    return '';
   }
 
   getSpecificCriteriaDescription(entry: ReportEntryDisplay): string {
-    if (this.isValidSpecificCriteria(entry) && 
-        typeof entry.specificCriteria === 'object') {
-      return entry.specificCriteria.description || 'No description';
+    if (this.isValidSpecificCriteria(entry)) {
+      return entry.specificCriteria.description;
     }
-    return 'No description';
+    return '';
   }
 
   canMarkEntryImplemented(entry: ReportEntryDisplay): boolean {
