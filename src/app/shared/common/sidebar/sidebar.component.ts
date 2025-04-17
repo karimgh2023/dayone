@@ -8,6 +8,7 @@ import {
 import { Menu, NavService } from '../../services/navservice';
 import { Subscription, fromEvent } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 
 @Component({
@@ -23,15 +24,20 @@ export class SidebarComponent {
   options = { autoHide: false, scrollbarMinSize: 100 };
   public menuItems!: Menu[];
   public menuitemsSubscribe$!: Subscription;
+  currentUser: any;
+  
   constructor(
     private navServices: NavService,
     public router: Router,
     public renderer: Renderer2,
     private elementRef: ElementRef,
-    private cd: ChangeDetectorRef,) {
+    private cd: ChangeDetectorRef,
+    private authService: AuthService) {
     let html = this.elementRef.nativeElement.ownerDocument.documentElement;
-
-
+    
+    // Get current user from token
+    this.currentUser = this.authService.getUserFromToken();
+    console.log('Current user in sidebar:', this.currentUser);
   }
 
   clearNavDropdown() {
@@ -461,5 +467,10 @@ export class SidebarComponent {
         document.querySelector('#responsive-overlay')?.classList.remove('active');
       }
     }
+  }
+
+  // Helper method to handle image errors
+  onImageError(event: any) {
+    event.target.src = './assets/images/users/16.jpg';
   }
 }

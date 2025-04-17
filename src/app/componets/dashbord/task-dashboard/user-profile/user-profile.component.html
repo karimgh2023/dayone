@@ -6,11 +6,13 @@
             <div class="card-body">
                 <div class="user-pic text-center">
                     <div class="avatar avatar-xxl me-2 avatar-rounded">
-                        <img src="./assets/images/users/1.jpg" alt="img">
+                        <img [src]="currentUser?.profilePhoto || './assets/images/users/16.jpg'" 
+                             (error)="onImageError($event)" 
+                             alt="User Profile Image">
                     </div>
                     <div class="pro-user mt-3">
-                        <h5 class="pro-user-username text-dark mb-1 fs-16">Faith Harris</h5>
-                        <h6 class="pro-user-desc text-muted fs-12">faith&#64;gmail.com</h6>
+                        <h5 class="pro-user-username text-dark mb-1 fs-16">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</h5>
+                        <h6 class="pro-user-desc text-muted fs-12">{{ currentUser?.email }}</h6>
                         <div class="d-flex justify-content-center mb-1">
                             <span class="fs-13b text-warning"><i class="bx bxs-star"></i></span>
                             <span class="fs-13b text-warning"><i class="bx bxs-star"></i></span>
@@ -65,16 +67,16 @@
                                 </td>
                                 <td>:</td>
                                 <td class="py-2 px-0">
-                                    <span class="">#2987</span>
+                                    <span class="">#{{ currentUser?.id || 'N/A' }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-0">
-                                    <span class="w-50">Designation</span>
+                                    <span class="w-50">Role</span>
                                 </td>
                                 <td>:</td>
                                 <td class="py-2 px-0">
-                                    <span class="">Web Designer</span>
+                                    <span class="">{{ currentUser?.role || 'N/A' }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -83,16 +85,16 @@
                                 </td>
                                 <td>:</td>
                                 <td class="py-2 px-0">
-                                    <span class="">Designing</span>
+                                    <span class="">{{ currentUser?.department || 'N/A' }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-0">
-                                    <span class="w-50">Join Date</span>
+                                    <span class="w-50">Email</span>
                                 </td>
                                 <td>:</td>
                                 <td class="py-2 px-0">
-                                    <span class="">05-05-2017</span>
+                                    <span class="">{{ currentUser?.email || 'N/A' }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -101,7 +103,7 @@
                                 </td>
                                 <td>:</td>
                                 <td class="py-2 px-0">
-                                    <span class="">+9685321475</span>
+                                    <span class="">{{ currentUser?.phoneNumber || 'N/A' }}</span>
                                 </td>
                             </tr>
                             <tr>

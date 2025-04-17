@@ -4,12 +4,16 @@ import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/login-request.model';
 import { AuthResponse } from '../models/auth-response.model';
 import { User } from '../models/user.model';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8081/api/'; // your backend API base
+  private apiUrl = `${environment.apiUrl}`;
+  private defaultProfilePhoto = 'https://res.cloudinary.com/dbgo6jzqe/image/upload/v1740737558/default_profile_idqbuv.png';
 
   constructor(private http: HttpClient) {}
 
@@ -35,8 +39,44 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
+  getUserFromToken(): any {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      const user = decoded?.user || decoded;
+      
+      // If profilePhoto is undefined or null, set default value
+      if (user && !user.profilePhoto) {
+        user.profilePhoto = this.defaultProfilePhoto;
+      }
+      
+      return user;
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+  }
+
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  saveUser(user: any): void {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 }

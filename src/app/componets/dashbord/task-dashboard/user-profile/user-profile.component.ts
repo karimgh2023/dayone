@@ -11,6 +11,9 @@ import { SharedModule } from '../../../../shared/common/sharedmodule';
 import { FlatpickrDefaults, FlatpickrModule } from 'angularx-flatpickr';
 import flatpickr from 'flatpickr';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
+import { User } from '../../../../models/user.model';
+
 interface PeriodicElement {
   No: number;
   Task: string;
@@ -54,17 +57,26 @@ export class UserProfileComponent implements OnInit {
   displayedColumns: string[] = ['No', 'Task', 'Priority', 'StartDate', 'Deadline', 'Progress', 'WorkStatus', 'Action'];
   dataSource;
   currentRate = 3;
+  currentUser: any;
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private modalService: NgbModal, config: NgbRatingConfig) {
+  constructor(
+    private modalService: NgbModal,
+    config: NgbRatingConfig,
+    private authService: AuthService
+  ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA); 
 
     // customize default values of ratings used by this component tree
     config.max = 5;
+    
+    // Get current user from token
+    this.currentUser = this.authService.getUserFromToken();
+    console.log('Current user in profile:', this.currentUser);
   }
-
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -102,6 +114,11 @@ export class UserProfileComponent implements OnInit {
 
 
   ngOnInit() {
+    // Get current user from token if not already set
+    if (!this.currentUser) {
+      this.currentUser = this.authService.getUserFromToken();
+    }
+    
     this.flatpickrOptions = {
       enableTime: true,
       noCalendar: true,
@@ -110,12 +127,17 @@ export class UserProfileComponent implements OnInit {
 
     flatpickr('#inlinetime', this.flatpickrOptions);
 
-      this.flatpickrOptions = {
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i', // Specify the format you want
-        defaultDate: '2023-11-07 14:30', // Set the default/preloaded time (adjust this to your desired time)
-      };
+    this.flatpickrOptions = {
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i', // Specify the format you want
+      defaultDate: '2023-11-07 14:30', // Set the default/preloaded time (adjust this to your desired time)
+    };
 
-      flatpickr('#pretime', this.flatpickrOptions);
+    flatpickr('#pretime', this.flatpickrOptions);
+  }
+  
+  // Helper method to handle image errors
+  onImageError(event: any) {
+    event.target.src = './assets/images/users/16.jpg';
   }
 }

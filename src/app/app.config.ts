@@ -22,12 +22,14 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';  
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { UserService } from './services/user.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(App_Route), 
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    UserService,
     importProvidersFrom(
       AppStateService,
       ColorPickerModule,

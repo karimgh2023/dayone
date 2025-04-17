@@ -41,7 +41,7 @@
                     </form>
                     <div>
     
-                      @if("menuItems?.length>0"){
+                      @if(menuItems && menuItems.length > 0){
                      
                         <div class="search_drop list-group" (click)="clearSearch()">
                         @for(menuItem of menuItems | slice:0:5;track $index){
@@ -82,18 +82,24 @@
               <div class="header-element header-search d-lg-none" ngbDropdown [autoClose]="'outside'">
                   <!-- Start::header-link -->
                   <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="header-link-icon" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                      <img 
+                        [src]="currentUser?.profilePhoto || './assets/images/users/16.jpg'" 
+                        (error)="onImageError($event)"
+                        alt="User Photo" 
+                        class="avatar avatar-md rounded-circle" 
+                        style="width: 32px; height: 32px;"
+                      >
                   </a>
-                    <ul ngbDropdownMenu class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
-                        <li>
-                            <span ngbDropdownItem class="dropdown-item d-flex align-items-center" >
-                                <span class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search..." aria-label="Search input" aria-describedby="button-addon2">
-                                    <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-                                </span>
-                            </span>
-                        </li>
-                    </ul>
+                  <ul ngbDropdownMenu class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
+                      <li>
+                          <span ngbDropdownItem class="dropdown-item d-flex align-items-center" >
+                              <span class="input-group">
+                                  <input type="text" class="form-control" placeholder="Search..." aria-label="Search input" aria-describedby="button-addon2">
+                                  <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+                              </span>
+                          </span>
+                      </li>
+                  </ul>
                  
                   <!-- End::header-link -->
               </div>
@@ -396,15 +402,20 @@
               <!-- Start::header-link|dropdown-toggle -->
               <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle mx-0 w-100" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                   <div>
-                      <img src="./assets/images/users/16.jpg" alt="img" class="rounded-3 avatar avatar-md">
+                      <img 
+                        [src]="currentUser?.profilePhoto || './assets/images/users/16.jpg'" 
+                        (error)="onImageError($event)"
+                        alt="img" 
+                        class="rounded-3 avatar avatar-md"
+                      >
                   </div>
               </a>
               <!-- End::header-link|dropdown-toggle -->
               <ul ngbDropdownMenu class="main-header-dropdown dropdown-menu pt-0 header-profile-dropdown dropdown-menu-end" aria-labelledby="mainHeaderProfile">
                   <Li>
                       <div class="p-3 text-center border-bottom">
-                          <a routerLink="/pages/profile/profile01" class="text-center fw-semibold">John Thomson</a>
-                          <p class="text-center user-semi-title fs-13 mb-0">App Developer</p>
+                          <a routerLink="/pages/profile/profile01" class="text-center fw-semibold">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</a>
+                          <p class="text-center user-semi-title fs-13 mb-0">{{ currentUser?.role }}</p>
                       </div>
                   </Li>
                   <li><a ngbDropdownItem class="dropdown-item d-flex align-items-center" routerLink="/pages/profile/profile01"><i class="fe fe-user me-2"></i>Profile</a></li>
@@ -412,7 +423,7 @@
                   <li><a ngbDropdownItem class="dropdown-item d-flex align-items-center" routerLink="/pages/edit-profile"><i class="fe fe-settings me-2"></i>Settings</a></li>
                   <li><a ngbDropdownItem (click)="openModal(content)" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#changepasswordnmodal"><i class="fe fe-edit-3 me-2"></i>Change Password</a></li>
                   <li><a ngbDropdownItem class="dropdown-item d-flex align-items-center" routerLink="/chat"><i class="fe fe-headphones me-2"></i>Support</a></li>
-                  <li><a ngbDropdownItem class="dropdown-item d-flex align-items-center" routerLink="/account/login/login01"><i class="fe fe-power me-2"></i>Log Out</a></li>
+                  <li><a ngbDropdownItem class="dropdown-item d-flex align-items-center" (click)="logout()"><i class="fe fe-power me-2"></i>Log Out</a></li>
               </ul>
           </div>  
           <!-- End::header-element -->

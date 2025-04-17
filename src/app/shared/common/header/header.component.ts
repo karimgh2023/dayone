@@ -13,6 +13,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { RightSidebarComponent } from '../right-sidebar/right-sidebar.component';
 import { LanguageService } from '../../services/language.service';
+import { AuthService } from '../../../services/auth.service';
 
 interface Item {
   id: number;
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnInit {
   languages: Language[] = [];
   currentLanguage: string = 'en';
   currentLanguageFlag: string = '';
+  currentUser: any;
 
   constructor(
     private appStateService: AppStateService,
@@ -56,7 +58,8 @@ export class HeaderComponent implements OnInit {
     public modalService: NgbModal,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private authService: AuthService
   ) {
     this.localStorageBackUp();
   }
@@ -252,13 +255,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     const storedSelectedItem = localStorage.getItem('selectedItem');
     // this.updateSelectedItem();
-  // If there's no selected item stored, set a default one
-  if (!storedSelectedItem) {
-    this.selectedItem = "Sales Dashboard"; // You can set any default item here
-    localStorage.setItem('selectedItem', this.selectedItem);
-  } else {
-    this.selectedItem = storedSelectedItem;
-  }
+    // If there's no selected item stored, set a default one
+    if (!storedSelectedItem) {
+      this.selectedItem = "Sales Dashboard"; // You can set any default item here
+      localStorage.setItem('selectedItem', this.selectedItem);
+    } else {
+      this.selectedItem = storedSelectedItem;
+    }
     this.navServices.items.subscribe((menuItems) => {
       this.items = menuItems;
     });
@@ -282,6 +285,10 @@ export class HeaderComponent implements OnInit {
     this.languageService.getCurrentLanguageFlag().subscribe(flag => {
       this.currentLanguageFlag = flag;
     });
+
+    // Get user from token (profile photo will already be set if missing)
+    this.currentUser = this.authService.getUserFromToken();
+    console.log('User from token with photo:', this.currentUser);
   }
   
   private updateSelectedItem() {
@@ -404,5 +411,15 @@ export class HeaderComponent implements OnInit {
     this.currentLanguage = languageCode;
     // Here you can add any additional logic needed when language changes
     // For example, reloading translations, updating the UI, etc.
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
+  }
+
+  // Add this method to handle image loading errors
+  onImageError(event: any) {
+    event.target.src = './assets/images/users/16.jpg';
   }
 }
