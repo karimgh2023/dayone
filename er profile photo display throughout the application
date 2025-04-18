@@ -1,0 +1,13 @@
+warning: in the working copy of 'src/app/componets/dashbord/task-dashboard/user-profile/user-profile.component.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/componets/dashbord/task-dashboard/user-profile/user-profile.component.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/shared/common/sidebar/sidebar.component.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/shared/common/sidebar/sidebar.component.ts', LF will be replaced by CRLF the next time Git touches it
+src/app/app.config.ts
+src/app/componets/dashbord/task-dashboard/user-profile/user-profile.component.html
+src/app/componets/dashbord/task-dashboard/user-profile/user-profile.component.ts
+src/app/models/user.model.ts
+src/app/services/auth.service.ts
+src/app/shared/common/header/header.component.html
+src/app/shared/common/header/header.component.ts
+src/app/shared/common/sidebar/sidebar.component.html
+src/app/shared/common/sidebar/sidebar.component.ts

@@ -11,7 +11,9 @@ import {
   StandardReportEntry,
   SpecificReportEntry,
   Protocol,
-  SpecificControlCriteria
+  SpecificControlCriteria,
+  Department,
+  StandardControlCriteria
 } from '../models/report.model';
 
 @Injectable({
@@ -513,74 +515,61 @@ export class ReportService {
   // Get all criteria for a protocol
   getProtocolCriteria(protocolId: number): Observable<SpecificControlCriteria[]> {
     if (this.useMockData) {
-      // Mock criteria data
+      // Simulate API call with delay
+      console.log(`Mock: Getting specific criteria for protocol ${protocolId}`);
       const mockCriteria: SpecificControlCriteria[] = [
         {
-          id: 1,
-          description: 'Check machine alignment',
-          protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
+          id: 101,
+          description: 'Check for leaks in hydraulic system',
+          protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0],
+          checkResponsible: [
+            { id: 1, name: 'Maintenance' }, 
+            { id: 5, name: 'Safety' }
+          ],
+          implementationResponsible: [
+            { id: 3, name: 'Production' }
+          ]
         },
         {
-          id: 2,
-          description: 'Verify electrical connections',
-          protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
-        },
-        {
-          id: 3,
-          description: 'Test emergency stop functionality',
-          protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
+          id: 102,
+          description: 'Verify emergency stop functionality',
+          protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0],
+          checkResponsible: [
+            { id: 2, name: 'Quality Control' }
+          ],
+          implementationResponsible: [
+            { id: 1, name: 'Maintenance' },
+            { id: 4, name: 'Engineering' }
+          ]
         }
       ];
+      
       return of(mockCriteria).pipe(delay(500));
     }
-    
-    return this.http.get<SpecificControlCriteria[]>(`${this.protocolsUrl}/${protocolId}/criteria`)
+
+    return this.http.get<SpecificControlCriteria[]>(`${this.protocolsUrl}/${protocolId}/specific-criteria`)
       .pipe(
-        tap(criteria => console.log(`Fetched ${criteria.length} criteria for protocol id=${protocolId}`)),
-        catchError(error => {
-          console.error(`Error fetching criteria for protocol id=${protocolId}:`, error);
-          return throwError(() => new Error(`Failed to load criteria: ${error.message || 'Unknown error'}`));
-        })
+        tap(criteria => console.log(`Fetched specific criteria for protocol id=${protocolId}:`, criteria.length)),
+        catchError(this.handleError<SpecificControlCriteria[]>('getProtocolCriteria', []))
       );
   }
 
   // Add a criteria to a protocol
   addCriteriaToProtocol(protocolId: number, criteriaData: Partial<SpecificControlCriteria>): Observable<SpecificControlCriteria> {
-    if (!criteriaData.description) {
-      return throwError(() => new Error('Criteria description is required'));
-    }
-    
     if (this.useMockData) {
-      // Find the protocol
-      const protocol = this.MOCK_PROTOCOLS.find(p => p.id === protocolId);
-      if (!protocol) {
-        return throwError(() => new Error(`Protocol with id=${protocolId} not found`));
-      }
-      
-      // Create a mock criteria
-      const newCriteria: SpecificControlCriteria = {
-        id: Math.floor(Math.random() * 1000) + 100,
-        description: criteriaData.description,
-        protocol: protocol
-      };
-      return of(newCriteria).pipe(delay(500));
+      // Simulate API call with delay
+      console.log(`Mock: Adding criteria to protocol ${protocolId}`, criteriaData);
+      return of({
+        id: Math.floor(Math.random() * 1000),
+        description: criteriaData.description || 'New Criteria',
+        protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0]
+      } as SpecificControlCriteria).pipe(delay(500));
     }
-    
+
     return this.http.post<SpecificControlCriteria>(`${this.protocolsUrl}/${protocolId}/criteria`, criteriaData)
       .pipe(
-        tap(criteria => console.log(`Added criteria id=${criteria.id} to protocol id=${protocolId}`)),
-        catchError(error => {
-          console.error(`Error adding criteria to protocol id=${protocolId}:`, error);
-          let errorMsg = 'Failed to add criteria';
-          if (error.status === 400) {
-            errorMsg = error.error || 'Invalid criteria data';
-          } else if (error.status === 404) {
-            errorMsg = 'Protocol not found';
-          } else if (error.status === 403 || error.status === 401) {
-            errorMsg = 'You are not authorized to add criteria to this protocol';
-          }
-          return throwError(() => new Error(errorMsg));
-        })
+        tap((newCriteria) => console.log(`Added criteria to protocol ${protocolId}:`, newCriteria)),
+        catchError(this.handleError<SpecificControlCriteria>('addCriteriaToProtocol'))
       );
   }
 
@@ -625,6 +614,157 @@ export class ReportService {
         tap(_ => console.log(`Updated report id=${reportId} status to ${status}`)),
         catchError(this.handleError<Report>(`updateReportStatus id=${reportId}`))
       );
+  }
+
+  // Get all departments
+  getAllDepartments(): Observable<Department[]> {
+    if (this.useMockData) {
+      const mockDepartments: Department[] = [
+        { id: 1, name: 'Maintenance' },
+        { id: 2, name: 'Quality Control' },
+        { id: 3, name: 'Production' },
+        { id: 4, name: 'Engineering' },
+        { id: 5, name: 'Safety' }
+      ];
+      
+      return of(mockDepartments).pipe(delay(500));
+    }
+
+    return this.http.get<Department[]>(`${environment.apiUrl}/departments`)
+      .pipe(
+        tap(departments => console.log('Fetched departments:', departments.length)),
+        catchError(this.handleError<Department[]>('getAllDepartments', []))
+      );
+  }
+  
+  // Add standard criteria to a protocol
+  addStandardCriteria(protocolId: number, criteriaData: any): Observable<StandardControlCriteria> {
+    if (this.useMockData) {
+      // Simulate API call with delay
+      console.log(`Mock: Adding standard criteria to protocol ${protocolId}`, criteriaData);
+      const mockCriteria: StandardControlCriteria = {
+        id: Math.floor(Math.random() * 1000),
+        description: criteriaData.description || 'New Standard Criteria',
+        checkResponsible: { id: criteriaData.checkDepartmentId, name: this.getMockDepartmentName(criteriaData.checkDepartmentId) },
+        implementationResponsible: { id: criteriaData.implementationDepartmentId, name: this.getMockDepartmentName(criteriaData.implementationDepartmentId) }
+      };
+      
+      return of(mockCriteria).pipe(delay(500));
+    }
+
+    return this.http.post<StandardControlCriteria>(`${this.protocolsUrl}/${protocolId}/standard-criteria`, criteriaData)
+      .pipe(
+        tap((newCriteria) => console.log(`Added standard criteria to protocol ${protocolId}:`, newCriteria)),
+        catchError(this.handleError<StandardControlCriteria>('addStandardCriteria'))
+      );
+  }
+  
+  // Add specific criteria to a protocol
+  addSpecificCriteria(protocolId: number, criteriaData: any): Observable<SpecificControlCriteria> {
+    if (this.useMockData) {
+      // Simulate API call with delay
+      console.log(`Mock: Adding specific criteria to protocol ${protocolId}`, criteriaData);
+      
+      const checkResponsible = criteriaData.checkDepartmentIds.map((id: number) => ({
+        id: id,
+        name: this.getMockDepartmentName(id)
+      }));
+      
+      const implementationResponsible = criteriaData.implementationDepartmentIds.map((id: number) => ({
+        id: id,
+        name: this.getMockDepartmentName(id)
+      }));
+      
+      const mockCriteria: SpecificControlCriteria = {
+        id: Math.floor(Math.random() * 1000),
+        description: criteriaData.description || 'New Specific Criteria',
+        protocol: this.MOCK_PROTOCOLS.find(p => p.id === protocolId) || this.MOCK_PROTOCOLS[0],
+        checkResponsible: checkResponsible,
+        implementationResponsible: implementationResponsible
+      };
+      
+      return of(mockCriteria).pipe(delay(500));
+    }
+
+    return this.http.post<SpecificControlCriteria>(`${this.protocolsUrl}/${protocolId}/specific-criteria`, criteriaData)
+      .pipe(
+        tap((newCriteria) => console.log(`Added specific criteria to protocol ${protocolId}:`, newCriteria)),
+        catchError(this.handleError<SpecificControlCriteria>('addSpecificCriteria'))
+      );
+  }
+  
+  // Delete standard criteria
+  deleteStandardCriteria(protocolId: number, criteriaId: number): Observable<void> {
+    if (this.useMockData) {
+      // Simulate API call with delay
+      console.log(`Mock: Deleting standard criteria ${criteriaId} from protocol ${protocolId}`);
+      return of(undefined).pipe(delay(500));
+    }
+
+    return this.http.delete<void>(`${this.protocolsUrl}/${protocolId}/standard-criteria/${criteriaId}`)
+      .pipe(
+        tap(_ => console.log(`Deleted standard criteria id=${criteriaId} from protocol id=${protocolId}`)),
+        catchError(this.handleError<void>('deleteStandardCriteria'))
+      );
+  }
+  
+  // Delete specific criteria
+  deleteSpecificCriteria(protocolId: number, criteriaId: number): Observable<void> {
+    if (this.useMockData) {
+      // Simulate API call with delay
+      console.log(`Mock: Deleting specific criteria ${criteriaId} from protocol ${protocolId}`);
+      return of(undefined).pipe(delay(500));
+    }
+
+    return this.http.delete<void>(`${this.protocolsUrl}/${protocolId}/specific-criteria/${criteriaId}`)
+      .pipe(
+        tap(_ => console.log(`Deleted specific criteria id=${criteriaId} from protocol id=${protocolId}`)),
+        catchError(this.handleError<void>('deleteSpecificCriteria'))
+      );
+  }
+  
+  // Get standard criteria for a protocol
+  getStandardCriteria(protocolId: number): Observable<StandardControlCriteria[]> {
+    if (this.useMockData) {
+      // Simulate API call with delay
+      console.log(`Mock: Getting standard criteria for protocol ${protocolId}`);
+      const mockCriteria: StandardControlCriteria[] = [
+        {
+          id: 1,
+          description: 'Check electrical connections',
+          checkResponsible: { id: 1, name: 'Maintenance' },
+          implementationResponsible: { id: 4, name: 'Engineering' }
+        },
+        {
+          id: 2,
+          description: 'Inspect mechanical components',
+          checkResponsible: { id: 2, name: 'Quality Control' },
+          implementationResponsible: { id: 3, name: 'Production' }
+        }
+      ];
+      
+      return of(mockCriteria).pipe(delay(500));
+    }
+
+    return this.http.get<StandardControlCriteria[]>(`${this.protocolsUrl}/${protocolId}/standard-criteria`)
+      .pipe(
+        tap(criteria => console.log(`Fetched standard criteria for protocol id=${protocolId}:`, criteria.length)),
+        catchError(this.handleError<StandardControlCriteria[]>('getStandardCriteria', []))
+      );
+  }
+  
+  // Helper method to get a department name based on ID (mock data)
+  private getMockDepartmentName(id: number): string {
+    const departments = [
+      { id: 1, name: 'Maintenance' },
+      { id: 2, name: 'Quality Control' },
+      { id: 3, name: 'Production' },
+      { id: 4, name: 'Engineering' },
+      { id: 5, name: 'Safety' }
+    ];
+    
+    const department = departments.find(dept => dept.id === id);
+    return department ? department.name : 'Unknown Department';
   }
 
   /**

@@ -32,6 +32,11 @@ import { CommonModule, DatePipe } from '@angular/common';
         </ol>
       </div>
       <div class="ms-auto pageheader-btn">
+        <a [routerLink]="['../protocols']" class="btn btn-info btn-icon text-white me-2">
+          <span>
+            <i class="fe fe-list"></i>
+          </span> Protocol Management
+        </a>
         <a [routerLink]="['../new-report']" class="btn btn-primary btn-icon text-white me-2">
           <span>
             <i class="fe fe-plus"></i>

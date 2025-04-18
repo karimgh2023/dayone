@@ -253,18 +253,48 @@ export class HeaderComponent implements OnInit {
   public SearchResultEmpty: boolean = false;
 
   ngOnInit(): void {
-    const storedSelectedItem = localStorage.getItem('selectedItem');
-    // this.updateSelectedItem();
-    // If there's no selected item stored, set a default one
-    if (!storedSelectedItem) {
-      this.selectedItem = "Sales Dashboard"; // You can set any default item here
-      localStorage.setItem('selectedItem', this.selectedItem);
-    } else {
-      this.selectedItem = storedSelectedItem;
+    // Get the selected item from local storage
+    this.updateSelectedItem();
+    
+    // Load the current user
+    this.currentUser = this.authService.getCurrentUser();
+    console.log('Current user from auth service:', this.currentUser);
+    
+    // Set a default profile photo if none exists
+    if (!this.currentUser?.profilePhoto) {
+      this.currentUser = {
+        ...this.currentUser,
+        profilePhoto: './assets/images/users/16.jpg'
+      };
     }
-    this.navServices.items.subscribe((menuItems) => {
-      this.items = menuItems;
+
+    // Get search input field
+    setTimeout(() => {
+      this.navServices.items.subscribe(items => {
+        this.items = items;
+      });
+      this.menuItems = this.navServices.MENUITEMS;
+    }, 200);
+
+    // Initialize languages
+    this.languages = [
+      { code: 'en', name: 'English', flag: 'us.png' },
+      { code: 'fr', name: 'French', flag: 'fr.png' },
+      { code: 'es', name: 'Spanish', flag: 'es.png' },
+      { code: 'de', name: 'German', flag: 'de.png' },
+      { code: 'it', name: 'Italian', flag: 'it.png' },
+      { code: 'ru', name: 'Russian', flag: 'ru.png' }
+    ];
+    
+    // Set default language values
+    this.currentLanguage = 'en';
+    this.currentLanguageFlag = 'us.png';
+
+    // Set initial theme state
+    this.appStateService.state$.subscribe(state => {
+      this.themeType = state.theme;
     });
+
     // To clear and close the search field by clicking on body
     document.querySelector('.main-content')?.addEventListener('click', () => {
       this.clearSearch();
@@ -273,22 +303,6 @@ export class HeaderComponent implements OnInit {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
       this.updateSelectedItem();
     });
-
-    this.languageService.getLanguages().subscribe(languages => {
-      this.languages = languages;
-    });
-
-    this.languageService.getCurrentLanguage().subscribe(lang => {
-      this.currentLanguage = lang;
-    });
-
-    this.languageService.getCurrentLanguageFlag().subscribe(flag => {
-      this.currentLanguageFlag = flag;
-    });
-
-    // Get user from token (profile photo will already be set if missing)
-    this.currentUser = this.authService.getUserFromToken();
-    console.log('User from token with photo:', this.currentUser);
   }
   
   private updateSelectedItem() {
@@ -414,12 +428,16 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
+    // Call the auth service logout method
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    
+    // Redirect to login page
+    this.router.navigate(['/login']);
   }
 
   // Add this method to handle image loading errors
   onImageError(event: any) {
+    // Set default profile image if the image fails to load
     event.target.src = './assets/images/users/16.jpg';
   }
 }

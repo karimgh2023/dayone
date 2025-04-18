@@ -70,8 +70,18 @@ export class AuthInterceptor implements HttpInterceptor {
   
   private isPublicEndpoint(url: string): boolean {
     // Define patterns for endpoints that don't need authentication
+    // Only consider base protocol endpoints as public, not specific endpoints like criteria
+    if (url.includes('/api/protocols/')) {
+      // Check if it's a specific criteria endpoint - these need authentication
+      if (url.includes('/criteria') || 
+          url.includes('/standard-criteria') || 
+          url.includes('/specific-criteria')) {
+        return false;
+      }
+    }
+    
     return url.includes('/api/auth/') || 
            url.includes('/api/public/') || 
-           url.includes('/api/protocols');
+           url.includes('/api/protocols'); // This will match the base protocols endpoint
   }
 } 

@@ -22,6 +22,9 @@ export interface Protocol {
   name: string;
   protocolType: 'Homologation' | 'Requalification';
   createdBy: User;
+  standardCriteriaCount?: number;
+  specificCriteriaCount?: number;
+  type?: string; // To match the backend DTO field
 }
 
 export interface User {
