@@ -27,6 +27,11 @@ const routes: Routes = [
           import('./view-report').then((m) => m.ViewReportComponent),
       },
       {
+        path: 'fill-report/:id',
+        loadComponent: () =>
+          import('./fill-report').then((m) => m.FillReportComponent),
+      },
+      {
         path: 'protocols',
         loadComponent: () => Promise.resolve(ProtocolManagementComponent),
       }

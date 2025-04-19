@@ -790,4 +790,219 @@ export class ReportService {
       return of(result as T);
     };
   }
+
+  // Get standard entries for a report
+  getStandardEntries(reportId: number): Observable<StandardReportEntry[]> {
+    const url = `${this.apiUrl}/${reportId}/entries/standard`;
+    
+    // For mock data, simulate a response
+    if (this.useMockData) {
+      // Create mock standard entries
+      const mockEntries: StandardReportEntry[] = [
+        {
+          id: 1,
+          reportId: reportId,
+          criteria: {
+            id: 1,
+            description: 'Machine power components are properly installed',
+            equipmentType: 'Electrical',
+            requiredFrequency: 12,
+            implementation: 'Visual inspection of all power connections'
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        },
+        {
+          id: 2,
+          reportId: reportId,
+          criteria: {
+            id: 2,
+            description: 'Safety interlocks are functioning properly',
+            equipmentType: 'Mechanical',
+            requiredFrequency: 6,
+            implementation: 'Test all interlocks with power off'
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        },
+        {
+          id: 3,
+          reportId: reportId,
+          criteria: {
+            id: 3,
+            description: 'Lubrication points are properly maintained',
+            equipmentType: 'Mechanical',
+            requiredFrequency: 3,
+            implementation: 'Visual inspection and measurement of lubricant levels'
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        }
+      ];
+      
+      return of(mockEntries).pipe(delay(500));
+    }
+    
+    return this.http.get<StandardReportEntry[]>(url)
+      .pipe(
+        catchError(this.handleError<StandardReportEntry[]>('getStandardEntries', []))
+      );
+  }
+  
+  // Get specific entries for a report
+  getSpecificEntries(reportId: number): Observable<SpecificReportEntry[]> {
+    const url = `${this.apiUrl}/${reportId}/entries/specific`;
+    
+    // For mock data, simulate a response
+    if (this.useMockData) {
+      // Create mock specific entries
+      const mockEntries: SpecificReportEntry[] = [
+        {
+          id: 1,
+          reportId: reportId,
+          criteria: {
+            id: 1,
+            description: 'Inspect bearing assembly for wear and tear',
+            checkResponsible: {
+              id: 1,
+              name: 'Maintenance Department'
+            },
+            implementationResponsible: {
+              id: 2,
+              name: 'Operations Department'
+            }
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        },
+        {
+          id: 2,
+          reportId: reportId,
+          criteria: {
+            id: 2,
+            description: 'Verify hydraulic system pressure meets specifications',
+            checkResponsible: {
+              id: 1,
+              name: 'Maintenance Department'
+            },
+            implementationResponsible: {
+              id: 1,
+              name: 'Maintenance Department'
+            }
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        },
+        {
+          id: 3,
+          reportId: reportId,
+          criteria: {
+            id: 3,
+            description: 'Check electrical connections for corrosion and tightness',
+            checkResponsible: {
+              id: 3,
+              name: 'Electrical Department'
+            },
+            implementationResponsible: {
+              id: 3,
+              name: 'Electrical Department'
+            }
+          },
+          isImplemented: false,
+          action: '',
+          deadline: null,
+          successControl: '',
+          isUpdated: false,
+          updatedBy: null,
+          updatedAt: null
+        }
+      ];
+      
+      return of(mockEntries).pipe(delay(500));
+    }
+    
+    return this.http.get<SpecificReportEntry[]>(url)
+      .pipe(
+        catchError(this.handleError<SpecificReportEntry[]>('getSpecificEntries', []))
+      );
+  }
+
+  // Update a standard report entry
+  updateStandardEntry(reportId: number, entryId: number, data: any): Observable<StandardReportEntry> {
+    const url = `${this.apiUrl}/entry/standard/${entryId}`;
+    
+    // For mock data, simulate a response
+    if (this.useMockData) {
+      // Return the updated entry
+      return of({
+        ...data,
+        id: entryId,
+        reportId: reportId,
+        updatedAt: new Date().toISOString(),
+        updatedBy: {
+          id: 1,
+          firstName: 'Current',
+          lastName: 'User',
+          email: 'current.user@example.com'
+        }
+      }).pipe(delay(500));
+    }
+    
+    return this.http.put<StandardReportEntry>(url, data)
+      .pipe(
+        catchError(this.handleError<StandardReportEntry>('updateStandardEntry'))
+      );
+  }
+
+  // Update a specific report entry
+  updateSpecificEntry(reportId: number, entryId: number, data: any): Observable<SpecificReportEntry> {
+    const url = `${this.apiUrl}/entry/specific/${entryId}`;
+    
+    // For mock data, simulate a response
+    if (this.useMockData) {
+      // Return the updated entry
+      return of({
+        ...data,
+        id: entryId,
+        reportId: reportId,
+        updatedAt: new Date().toISOString(),
+        updatedBy: {
+          id: 1,
+          firstName: 'Current',
+          lastName: 'User',
+          email: 'current.user@example.com'
+        }
+      }).pipe(delay(500));
+    }
+    
+    return this.http.put<SpecificReportEntry>(url, data)
+      .pipe(
+        catchError(this.handleError<SpecificReportEntry>('updateSpecificEntry'))
+      );
+  }
 }

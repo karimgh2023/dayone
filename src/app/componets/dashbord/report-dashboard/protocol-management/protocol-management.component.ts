@@ -1237,8 +1237,8 @@ export class ProtocolManagementComponent implements OnInit, OnDestroy {
     
     this.standardCriteriaEditForm.patchValue({
       description: criteria.description,
-      implementationDepartmentId: criteria.implementationResponsible?.id,
-      checkDepartmentId: criteria.checkResponsible?.id
+      implementationDepartmentId: criteria.implementationResponsible && criteria.implementationResponsible.id,
+      checkDepartmentId: criteria.checkResponsible && criteria.checkResponsible.id
     });
     
     this.modalService.open(this.standardCriteriaEditModal, { size: 'lg' });
@@ -1290,8 +1290,12 @@ export class ProtocolManagementComponent implements OnInit, OnDestroy {
     this.editingSpecificCriteria = true;
     this.specificCriteriaEditError = '';
     
-    const implementationDepartmentIds = criteria.implementationResponsible?.map((dept: any) => dept.id) || [];
-    const checkDepartmentIds = criteria.checkResponsible?.map((dept: any) => dept.id) || [];
+    const implementationDepartmentIds = criteria.implementationResponsible && Array.isArray(criteria.implementationResponsible) 
+      ? criteria.implementationResponsible.map((dept: any) => dept.id) 
+      : [];
+    const checkDepartmentIds = criteria.checkResponsible && Array.isArray(criteria.checkResponsible) 
+      ? criteria.checkResponsible.map((dept: any) => dept.id) 
+      : [];
     
     this.specificCriteriaEditForm.patchValue({
       description: criteria.description,

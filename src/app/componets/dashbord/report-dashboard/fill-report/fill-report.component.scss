@@ -1,0 +1,115 @@
+/* Form controls styling */
+.form-control:disabled {
+  background-color: #f8f9fa;
+  opacity: 0.8;
+}
+
+/* Table styling */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+/* Status badges */
+.badge {
+  padding: 0.5em 0.75em;
+  font-weight: 500;
+}
+
+/* Card styling */
+.card {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Form styling */
+label.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Hide spin buttons on number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Form switch styling */
+.form-check-input:checked {
+  background-color: #19b159;
+  border-color: #19b159;
+}
+
+.form-check.form-switch {
+  margin-bottom: 0;
+}
+
+/* Button spacing */
+.btn + .btn {
+  margin-left: 0.5rem;
+}
+
+/* Alert styling */
+.alert-info {
+  background-color: rgba(1, 98, 232, 0.1);
+  border-color: rgba(1, 98, 232, 0.2);
+  color: #0162e8;
+}
+
+/* Make sure tables fill width */
+.table {
+  width: 100%;
+}
+
+/* Improve textarea appearance */
+textarea.form-control {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Improve inputs for consistency */
+.form-control {
+  font-size: 0.875rem;
+}
+
+/* Ensure buttons have consistent height */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Status colors */
+.bg-success {
+  background-color: #19b159 !important;
+}
+
+.bg-danger {
+  background-color: #f13c45 !important;
+}
+
+.bg-warning {
+  background-color: #f5b849 !important;
+}
+
+.bg-info {
+  background-color: #3eb0f7 !important;
+}
+
+.bg-primary {
+  background-color: #0162e8 !important;
+} 

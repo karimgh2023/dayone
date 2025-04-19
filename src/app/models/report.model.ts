@@ -60,27 +60,44 @@ export interface ReportUser {
 export interface StandardReportEntry {
   id: number;
   reportId: number;
-  standardCriteriaId: number;
-  standardCriteria?: StandardControlCriteria;
-  implemented: boolean;
-  action: string;
-  responsableAction: string;
-  successControl: string;
-  deadline: string;
-  status?: 'pending' | 'in_progress' | 'resolved' | string;
+  criteria: {
+    id: number;
+    description: string;
+    equipmentType: string;
+    requiredFrequency: number;
+    implementation: string;
+  };
+  isImplemented: boolean;
+  action: string | null;
+  deadline: string | null;
+  successControl: string | null;
+  isUpdated: boolean;
+  updatedBy: any | null;
+  updatedAt: string | null;
 }
 
 export interface SpecificReportEntry {
   id: number;
   reportId: number;
-  specificCriteriaId: number;
-  specificCriteria?: SpecificControlCriteria;
-  homologation: boolean;
-  action: string;
-  responsableAction: string;
-  successControl: string;
-  deadline: string;
-  status?: 'pending' | 'in_progress' | 'resolved' | string;
+  criteria: {
+    id: number;
+    description: string;
+    checkResponsible: {
+      id: number;
+      name: string;
+    };
+    implementationResponsible: {
+      id: number;
+      name: string;
+    };
+  };
+  isImplemented: boolean;
+  action: string | null;
+  deadline: string | null;
+  successControl: string | null;
+  isUpdated: boolean;
+  updatedBy: any | null;
+  updatedAt: string | null;
 }
 
 export interface StandardControlCriteria {

@@ -1,0 +1,459 @@
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Fill Report</h2>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['../../dashboard']">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="['../report-list']">Reports</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Fill Report #{{report?.id}}</li>
+    </ol>
+  </div>
+  <div class="ms-auto pageheader-btn">
+    <a [routerLink]="['../view-report', reportId]" class="btn btn-secondary btn-icon text-white me-2">
+      <span>
+        <i class="fe fe-eye"></i>
+      </span> View Report
+    </a>
+  </div>
+</div>
+
+<!-- Loading state -->
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-body text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading report data...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error state -->
+<div class="row" *ngIf="error && !loading">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-body text-center">
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+        <button class="btn btn-primary" (click)="loadReport()">Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Report Info -->
+<div class="row" *ngIf="report && !loading && !error">
+  <div class="col-12 mb-4">
+    <div class="card custom-card">
+      <div class="card-header border-bottom">
+        <h3 class="card-title">Report #{{report!.id}} - {{report!.designation}}</h3>
+        <div class="card-options" *ngIf="report.protocol">
+          <span class="badge me-2" [ngClass]="{'bg-primary': report.protocol.protocolType === 'Homologation', 'bg-success': report.protocol.protocolType === 'Requalification'}">
+            {{report.protocol.protocolType}}
+          </span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Report Type:</div>
+              <div class="w-60">
+                <span class="badge bg-info">{{report!.type}}</span>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Protocol:</div>
+              <div class="w-60">{{report.protocol.name || 'N/A'}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Created By:</div>
+              <div class="w-60">{{report.createdBy.firstName || ''}} {{report.createdBy.lastName || ''}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Serial Number:</div>
+              <div class="w-60">{{report!.serialNumber || 'N/A'}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Manufacturer:</div>
+              <div class="w-60">{{report!.manufacturer || 'N/A'}}</div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="w-40 text-muted">Business Unit:</div>
+              <div class="w-60">{{report!.businessUnit || 'N/A'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step Navigation -->
+<div class="row" *ngIf="report && !loading && !error">
+  <div class="col-12 mb-4">
+    <div class="card custom-card">
+      <div class="card-body">
+        <div class="step-progress">
+          <div class="step" [ngClass]="{'active': activeStep === 1, 'completed': activeStep > 1}">
+            <div class="step-icon">
+              <i class="fe fe-list"></i>
+            </div>
+            <div class="step-text">
+              Standard Controls
+              <span *ngIf="!hasStandardEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
+            </div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" [ngClass]="{'active': activeStep === 2, 'completed': activeStep > 2}">
+            <div class="step-icon">
+              <i class="fe fe-settings"></i>
+            </div>
+            <div class="step-text">
+              Maintenance Form
+              <span *ngIf="!hasMaintenanceForm" class="badge bg-light text-dark ms-2">Not Assigned</span>
+            </div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" [ngClass]="{'active': activeStep === 3, 'completed': activeStep > 3}">
+            <div class="step-icon">
+              <i class="fe fe-check-square"></i>
+            </div>
+            <div class="step-text">
+              Specific Controls
+              <span *ngIf="!hasSpecificEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step Content -->
+<div class="row" *ngIf="report && !loading && !error">
+  <div class="col-12">
+    <div class="card custom-card">
+      <div class="card-header border-bottom">
+        <ng-container [ngSwitch]="activeStep">
+          <h3 class="card-title" *ngSwitchCase="1">Standard Controls</h3>
+          <h3 class="card-title" *ngSwitchCase="2">Maintenance Form</h3>
+          <h3 class="card-title" *ngSwitchCase="3">Specific Controls</h3>
+        </ng-container>
+      </div>
+      <div class="card-body">
+        <!-- Step 1: Standard Controls -->
+        <div *ngIf="activeStep === 1">
+          <div *ngIf="hasStandardEntries; else noStandardEntries">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th width="120">Implemented?</th>
+                    <th>Action Needed</th>
+                    <th width="150">Deadline</th>
+                    <th width="150">Success Control</th>
+                    <th width="100">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of standardEntries">
+                    <td>{{entry.criteria.description}}</td>
+                    <td>
+                      <div class="form-check form-switch" [formGroup]="standardEntryForms[entry.id]">
+                        <input class="form-check-input" type="checkbox" formControlName="isImplemented" [disabled]="entry.isUpdated">
+                      </div>
+                    </td>
+                    <td>
+                      <form [formGroup]="standardEntryForms[entry.id]">
+                        <textarea class="form-control" formControlName="action" rows="2" placeholder="Enter action needed..." [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
+                      </form>
+                    </td>
+                    <td>
+                      <form [formGroup]="standardEntryForms[entry.id]">
+                        <input type="date" class="form-control" formControlName="deadline" [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated">
+                      </form>
+                    </td>
+                    <td>
+                      <form [formGroup]="standardEntryForms[entry.id]">
+                        <textarea class="form-control" formControlName="successControl" rows="2" placeholder="Enter success control..." [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
+                      </form>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-primary" (click)="submitStandardEntry(entry.id)" [disabled]="entry.isUpdated">
+                        <i class="fe fe-save"></i> Save
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-template #noStandardEntries>
+            <div class="alert alert-info">
+              <i class="fe fe-info me-2"></i> You don't have any standard controls assigned to you for this report.
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Step 2: Maintenance Form -->
+        <div *ngIf="activeStep === 2">
+          <div *ngIf="hasMaintenanceForm && maintenanceFormGroup; else noMaintenanceForm">
+            <form [formGroup]="maintenanceFormGroup">
+              <!-- Maintenance System Department -->
+              <div *ngIf="maintenanceFormGroup.get('controlStandard')">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Control Standard</label>
+                    <input type="text" class="form-control" formControlName="controlStandard">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Current Type</label>
+                    <input type="text" class="form-control" formControlName="currentType">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Network Form</label>
+                    <input type="text" class="form-control" formControlName="networkForm">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Power Circuit</label>
+                    <input type="text" class="form-control" formControlName="powerCircuit">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Control Circuit</label>
+                    <input type="text" class="form-control" formControlName="controlCircuit">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Fuse Value</label>
+                    <input type="text" class="form-control" formControlName="fuseValue">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Has Transformer</label>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" formControlName="hasTransformer">
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Frequency</label>
+                    <input type="text" class="form-control" formControlName="frequency">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Phase Balance Test (380V)</label>
+                    <input type="text" class="form-control" formControlName="phaseBalanceTest380v">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Phase Balance Test (210V)</label>
+                    <input type="text" class="form-control" formControlName="phaseBalanceTest210v">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Insulation Resistance Motor</label>
+                    <input type="text" class="form-control" formControlName="insulationResistanceMotor">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Insulation Resistance Cable</label>
+                    <input type="text" class="form-control" formControlName="insulationResistanceCable">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Machine Size (Height)</label>
+                    <input type="text" class="form-control" formControlName="machineSizeHeight">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Machine Size (Length)</label>
+                    <input type="text" class="form-control" formControlName="machineSizeLength">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Machine Size (Width)</label>
+                    <input type="text" class="form-control" formControlName="machineSizeWidth">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHE Department -->
+              <div *ngIf="maintenanceFormGroup.get('isInOrder')">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Is In Order</label>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" formControlName="isInOrder">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-end mt-3">
+                <button class="btn btn-primary" (click)="submitMaintenanceForm()" [disabled]="maintenanceFormGroup!.disabled || false">
+                  <i class="fe fe-save"></i> Save Maintenance Form
+                </button>
+              </div>
+            </form>
+          </div>
+          <ng-template #noMaintenanceForm>
+            <div class="alert alert-info">
+              <i class="fe fe-info me-2"></i> You don't have access to fill the maintenance form for this report.
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Step 3: Specific Controls -->
+        <div *ngIf="activeStep === 3">
+          <div *ngIf="hasSpecificEntries; else noSpecificEntries">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th width="120">Implemented?</th>
+                    <th>Action Needed</th>
+                    <th width="150">Deadline</th>
+                    <th width="150">Success Control</th>
+                    <th width="100">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of specificEntries">
+                    <td>{{entry.criteria.description}}</td>
+                    <td>
+                      <div class="form-check form-switch" [formGroup]="specificEntryForms[entry.id]">
+                        <input class="form-check-input" type="checkbox" formControlName="isImplemented" [disabled]="entry.isUpdated">
+                      </div>
+                    </td>
+                    <td>
+                      <form [formGroup]="specificEntryForms[entry.id]">
+                        <textarea class="form-control" formControlName="action" rows="2" placeholder="Enter action needed..." [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
+                      </form>
+                    </td>
+                    <td>
+                      <form [formGroup]="specificEntryForms[entry.id]">
+                        <input type="date" class="form-control" formControlName="deadline" [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated">
+                      </form>
+                    </td>
+                    <td>
+                      <form [formGroup]="specificEntryForms[entry.id]">
+                        <textarea class="form-control" formControlName="successControl" rows="2" placeholder="Enter success control..." [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
+                      </form>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-primary" (click)="submitSpecificEntry(entry.id)" [disabled]="entry.isUpdated">
+                        <i class="fe fe-save"></i> Save
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-template #noSpecificEntries>
+            <div class="alert alert-info">
+              <i class="fe fe-info me-2"></i> You don't have any specific controls assigned to you for this report.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-primary" (click)="previousStep()" [disabled]="activeStep === 1">
+            <i class="fe fe-arrow-left me-1"></i> Previous
+          </button>
+          <button *ngIf="activeStep < 3" class="btn btn-primary" (click)="nextStep()">
+            Next <i class="fe fe-arrow-right ms-1"></i>
+          </button>
+          <button *ngIf="activeStep === 3" class="btn btn-success" (click)="signAndSubmit()" [disabled]="!allEntriesUpdated()">
+            <i class="fe fe-check-circle me-1"></i> Sign and Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSS for step navigation -->
+<style>
+.step-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+}
+
+.step-icon i {
+  font-size: 20px;
+  color: #777;
+}
+
+.step.active .step-icon {
+  background-color: #0162e8;
+  border-color: #0162e8;
+}
+
+.step.active .step-icon i {
+  color: white;
+}
+
+.step.completed .step-icon {
+  background-color: #19b159;
+  border-color: #19b159;
+}
+
+.step.completed .step-icon i {
+  color: white;
+}
+
+.step-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.step-line {
+  flex: 1;
+  height: 3px;
+  background-color: #ddd;
+  margin: 0 10px;
+  margin-bottom: 20px;
+}
+
+.step.active .step-text,
+.step.completed .step-text {
+  font-weight: bold;
+}
+</style> 

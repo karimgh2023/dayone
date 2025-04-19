@@ -80,28 +80,27 @@ export class ViewReportComponent implements OnInit {
     if (!this.report || !this.report.reportEntries) return [];
     
     const entries = this.report.reportEntries
-      .filter(entry => 'standardCriteria' in entry)
+      .filter(entry => 'criteria' in entry && entry.criteria && 'equipmentType' in entry.criteria)
       .map(entry => {
         const standardEntry = entry as StandardReportEntry;
         const result: ReportEntryDisplay = {
           id: entry.id,
-          standardCriteria: typeof standardEntry.standardCriteria === 'object' ? {
-            description: standardEntry.standardCriteria?.description || '',
-            implementationResponsible: standardEntry.standardCriteria?.implementationResponsible ? {
-              name: standardEntry.standardCriteria.implementationResponsible.name || '',
-              id: standardEntry.standardCriteria.implementationResponsible.id
-            } : undefined,
-            checkResponsible: standardEntry.standardCriteria?.checkResponsible ? {
-              name: standardEntry.standardCriteria.checkResponsible.name || '',
-              id: standardEntry.standardCriteria.checkResponsible.id
-            } : undefined
+          standardCriteria: typeof standardEntry.criteria === 'object' ? {
+            description: standardEntry.criteria?.description || '',
+            implementationResponsible: {
+              name: 'Implementation Dept', // You need to adjust this based on your model
+              id: 1 // Placeholder, adjust as needed
+            },
+            checkResponsible: {
+              name: 'Check Dept', // You need to adjust this based on your model
+              id: 2 // Placeholder, adjust as needed
+            }
           } : false,
-          implemented: standardEntry.implemented,
-          status: entry.status,
-          action: standardEntry.action,
-          responsableAction: standardEntry.responsableAction,
-          deadline: standardEntry.deadline,
-          successControl: standardEntry.successControl
+          implemented: standardEntry.isImplemented,
+          status: standardEntry.isImplemented ? 'resolved' : 'pending', // Added status field
+          action: standardEntry.action || undefined,
+          deadline: standardEntry.deadline || undefined,
+          successControl: standardEntry.successControl || undefined
         };
         return result;
       });
@@ -118,25 +117,24 @@ export class ViewReportComponent implements OnInit {
     if (!this.report || !this.report.reportEntries) return [];
     
     const entries = this.report.reportEntries
-      .filter(entry => 'specificCriteria' in entry)
+      .filter(entry => 'criteria' in entry && entry.criteria && 'checkResponsible' in entry.criteria)
       .map(entry => {
         const specificEntry = entry as SpecificReportEntry;
         const result: ReportEntryDisplay = {
           id: entry.id,
-          specificCriteria: typeof specificEntry.specificCriteria === 'object' ? {
-            description: specificEntry.specificCriteria?.description || '',
-            protocol: specificEntry.specificCriteria?.protocol ? {
-              id: specificEntry.specificCriteria.protocol.id,
-              name: specificEntry.specificCriteria.protocol.name || '',
-              protocolType: specificEntry.specificCriteria.protocol.protocolType || ''
-            } : undefined
+          specificCriteria: typeof specificEntry.criteria === 'object' ? {
+            description: specificEntry.criteria?.description || '',
+            protocol: {
+              id: 1, // Placeholder, adjust as needed
+              name: 'Protocol', // Placeholder, adjust as needed
+              protocolType: 'Homologation' // Placeholder, adjust as needed
+            }
           } : false,
-          homologation: specificEntry.homologation,
-          status: entry.status,
-          action: specificEntry.action,
-          responsableAction: specificEntry.responsableAction,
-          deadline: specificEntry.deadline,
-          successControl: specificEntry.successControl
+          homologation: true, // Placeholder, adjust as needed
+          status: specificEntry.isImplemented ? 'resolved' : 'pending', // Added status field
+          action: specificEntry.action || undefined,
+          deadline: specificEntry.deadline || undefined,
+          successControl: specificEntry.successControl || undefined
         };
         return result;
       });
@@ -246,34 +244,38 @@ export class ViewReportComponent implements OnInit {
       {
         id: 1,
         reportId: this.reportId,
-        standardCriteriaId: 1,
-        standardCriteria: {
+        criteria: {
           id: 1,
           description: 'Check motor connections',
-          implementationResponsible: maintDept,
-          checkResponsible: maintDept
+          equipmentType: 'Motor',
+          requiredFrequency: 3,
+          implementation: 'Visual inspection'
         },
-        implemented: true,
+        isImplemented: true,
         action: '',
-        responsableAction: '',
         deadline: '',
-        successControl: ''
+        successControl: '',
+        isUpdated: true,
+        updatedBy: null,
+        updatedAt: null
       },
       {
         id: 2,
         reportId: this.reportId,
-        standardCriteriaId: 2,
-        standardCriteria: {
+        criteria: {
           id: 2,
           description: 'Inspect for wear and tear',
-          implementationResponsible: maintDept,
-          checkResponsible: safetyDept
+          equipmentType: 'General',
+          requiredFrequency: 6,
+          implementation: 'Visual inspection'
         },
-        implemented: false,
+        isImplemented: false,
         action: 'Replace worn parts',
-        responsableAction: 'Maintenance Team',
         deadline: '2023-05-30',
-        successControl: 'Visual inspection and test run'
+        successControl: 'Visual inspection and test run',
+        isUpdated: true,
+        updatedBy: null,
+        updatedAt: null
       }
     ];
     
@@ -366,7 +368,7 @@ export class ViewReportComponent implements OnInit {
   }
 
   isEntryResolved(entry: StandardReportEntry): boolean {
-    return entry.status === 'resolved' || entry.implemented;
+    return entry.isImplemented;
   }
 
   getTypeColor(): string {
@@ -394,13 +396,12 @@ export class ViewReportComponent implements OnInit {
   }
 
   getEntryStatusColor(entry: StandardReportEntry | SpecificReportEntry): string {
-    if (!entry || !entry.status) return 'lightgray';
+    if (!entry) return 'lightgray';
     
-    switch(entry.status) {
-      case 'not_started': return 'lightgray';
-      case 'in_progress': return 'orange';
-      case 'completed': return 'green';
-      default: return 'lightgray';
+    if (entry.isImplemented) {
+      return '#19b159'; // Green for implemented/resolved
+    } else {
+      return '#f5b849'; // Yellow for pending
     }
   }
 
