@@ -4,8 +4,9 @@ import { ReportService } from '../../../../services/report.service';
 import { AuthService } from '../../../../services/auth.service';
 import { Report, StandardReportEntry, SpecificReportEntry } from '../../../../models/report.model';
 import { User } from '../../../../models/user.model';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fill-report',
@@ -15,7 +16,11 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [
+    ToastrService
   ]
 })
 export class FillReportComponent implements OnInit {
@@ -32,6 +37,12 @@ export class FillReportComponent implements OnInit {
   hasMaintenanceForm: boolean = false;
   currentUser: User | null = null;
   
+  // Signature tracking
+  stepSignatures: { [key: number]: { name: string, timestamp: string } } = {};
+  signatureModalVisible: boolean = false;
+  currentSigningStep: number = 0;
+  signatureName: string = '';
+  
   // Form for filling report entries
   standardEntryForms: { [id: number]: FormGroup } = {};
   specificEntryForms: { [id: number]: FormGroup } = {};
@@ -42,23 +53,43 @@ export class FillReportComponent implements OnInit {
     private router: Router,
     private reportService: ReportService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
     // Get current user
     this.currentUser = this.authService.getCurrentUser();
     
+    // Initialize signature with current user's name
+    this.initializeSignatureName();
+    
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
         this.reportId = +idParam;
+        // Load any saved signatures from localStorage
+        this.loadSavedSignatures();
         this.loadReport();
       } else {
         this.error = 'Report ID is missing';
         this.loading = false;
       }
     });
+  }
+
+  // Load any previously saved signatures from localStorage
+  loadSavedSignatures(): void {
+    if (!this.reportId) return;
+    
+    try {
+      const savedSignatures = localStorage.getItem(`report_signatures_${this.reportId}`);
+      if (savedSignatures) {
+        this.stepSignatures = JSON.parse(savedSignatures);
+      }
+    } catch (e) {
+      console.error('Failed to load saved signatures', e);
+    }
   }
 
   // Get the user's department ID safely
@@ -292,12 +323,21 @@ export class FillReportComponent implements OnInit {
     if (!this.reportId || !this.standardEntryForms[entryId]) return;
     
     const formValue = this.standardEntryForms[entryId].value;
+    const isImplemented = !!formValue.isImplemented;
+    
+    // Only require action, deadline, and successControl if not implemented
+    if (!isImplemented && (!formValue.action || !formValue.deadline || !formValue.successControl)) {
+      this.error = 'Please fill in all required fields for non-implemented entries.';
+      return;
+    }
+    
+    this.loading = true;
     
     this.reportService.updateStandardEntry(
       this.reportId, 
       entryId, 
       {
-        isImplemented: formValue.isImplemented,
+        isImplemented: isImplemented,
         action: formValue.action,
         deadline: formValue.deadline,
         successControl: formValue.successControl,
@@ -312,10 +352,16 @@ export class FillReportComponent implements OnInit {
           
           // Disable the form
           this.standardEntryForms[entryId].disable();
+          
+          // Show success message
+          this.error = null;
+          this.toastr.success('Standard entry updated successfully');
         }
+        this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to update entry: ' + (err.error?.message || err.message);
+        this.loading = false;
       }
     });
   }
@@ -325,12 +371,21 @@ export class FillReportComponent implements OnInit {
     if (!this.reportId || !this.specificEntryForms[entryId]) return;
     
     const formValue = this.specificEntryForms[entryId].value;
+    const isImplemented = !!formValue.isImplemented;
+    
+    // Only require action, deadline, and successControl if not implemented
+    if (!isImplemented && (!formValue.action || !formValue.deadline || !formValue.successControl)) {
+      this.error = 'Please fill in all required fields for non-implemented entries.';
+      return;
+    }
+    
+    this.loading = true;
     
     this.reportService.updateSpecificEntry(
       this.reportId, 
       entryId, 
       {
-        isImplemented: formValue.isImplemented,
+        isImplemented: isImplemented,
         action: formValue.action,
         deadline: formValue.deadline,
         successControl: formValue.successControl,
@@ -345,10 +400,16 @@ export class FillReportComponent implements OnInit {
           
           // Disable the form
           this.specificEntryForms[entryId].disable();
+          
+          // Show success message
+          this.error = null;
+          this.toastr.success('Specific entry updated successfully');
         }
+        this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to update entry: ' + (err.error?.message || err.message);
+        this.loading = false;
       }
     });
   }
@@ -357,6 +418,13 @@ export class FillReportComponent implements OnInit {
   submitMaintenanceForm(): void {
     if (!this.reportId || !this.maintenanceFormGroup) return;
     
+    // Check form validity
+    if (this.maintenanceFormGroup.invalid) {
+      this.error = 'Please fill all required fields in the maintenance form.';
+      return;
+    }
+    
+    this.loading = true;
     const formValue = this.maintenanceFormGroup.value;
     
     this.reportService.updateMaintenanceForm(this.reportId, formValue).subscribe({
@@ -367,15 +435,32 @@ export class FillReportComponent implements OnInit {
         if (this.maintenanceFormGroup) {
           this.maintenanceFormGroup.disable();
         }
+        
+        // Show success message
+        this.error = null;
+        this.toastr.success('Maintenance form updated successfully');
+        
+        // Add an isUpdated flag to the maintenance form to track completion
+        this.maintenanceForm.isUpdated = true;
+        
+        this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to update maintenance form: ' + (err.error?.message || err.message);
+        this.loading = false;
       }
     });
   }
   
   // Navigate to the next step
   nextStep(): void {
+    // Check if current step is signed before proceeding
+    if (!this.isStepSigned(this.activeStep)) {
+      this.currentSigningStep = this.activeStep;
+      this.signatureModalVisible = true;
+      return;
+    }
+    
     if (this.activeStep < 3) {
       this.activeStep++;
     }
@@ -388,6 +473,79 @@ export class FillReportComponent implements OnInit {
     }
   }
   
+  // Check if a step has been signed
+  isStepSigned(step: number): boolean {
+    return !!this.stepSignatures[step] && !!this.stepSignatures[step].name;
+  }
+  
+  // Get the signature name for a step
+  getSignatureName(step: number): string {
+    return this.stepSignatures[step]?.name || '';
+  }
+  
+  // Get formatted timestamp for a signature
+  getSignatureTimestamp(step: number): string {
+    if (!this.stepSignatures[step]?.timestamp) return '';
+    
+    try {
+      const date = new Date(this.stepSignatures[step].timestamp);
+      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    } catch (e) {
+      return '';
+    }
+  }
+  
+  // Open signature modal for a specific step
+  openSignatureModal(step: number): void {
+    this.currentSigningStep = step;
+    this.signatureModalVisible = true;
+  }
+  
+  // Close signature modal without signing
+  cancelSignature(): void {
+    this.signatureModalVisible = false;
+    this.signatureName = '';
+  }
+  
+  // Submit signature for current step
+  submitSignature(): void {
+    if (!this.signatureName.trim()) {
+      this.toastr.error('Please enter your full name to sign');
+      return;
+    }
+    
+    // Save signature with timestamp
+    this.stepSignatures[this.currentSigningStep] = { name: this.signatureName, timestamp: new Date().toISOString() };
+    
+    // Save to localStorage
+    if (this.reportId) {
+      try {
+        localStorage.setItem(`report_signatures_${this.reportId}`, JSON.stringify(this.stepSignatures));
+      } catch (e) {
+        console.error('Failed to save signatures to localStorage', e);
+      }
+    }
+    
+    // In a real implementation, this would make an API call to save the signature
+    // this.reportService.saveStepSignature(this.reportId, this.currentSigningStep, this.signatureName)
+    
+    this.toastr.success('Step signed successfully');
+    this.signatureModalVisible = false;
+    this.signatureName = '';
+    
+    // If this was called from nextStep, proceed to next step
+    if (this.currentSigningStep === this.activeStep && this.activeStep < 3) {
+      this.activeStep++;
+    }
+  }
+  
+  // Initialize signature name with current user if available
+  initializeSignatureName(): void {
+    if (this.currentUser) {
+      this.signatureName = `${this.currentUser.firstName || ''} ${this.currentUser.lastName || ''}`.trim();
+    }
+  }
+  
   // Check if all entries have been updated
   allEntriesUpdated(): boolean {
     const standardUpdated = this.hasStandardEntries ? 
@@ -397,7 +555,7 @@ export class FillReportComponent implements OnInit {
       this.specificEntries.every(entry => entry.isUpdated === true) : true;
     
     const maintenanceUpdated = this.hasMaintenanceForm ? 
-      this.maintenanceFormGroup !== null && this.maintenanceFormGroup.disabled : true;
+      this.maintenanceForm && this.maintenanceForm.isUpdated === true : true;
     
     // If the user has no entries to fill, consider them updated
     return standardUpdated && specificUpdated && maintenanceUpdated;
@@ -407,8 +565,77 @@ export class FillReportComponent implements OnInit {
   signAndSubmit(): void {
     if (!this.reportId) return;
     
-    // In a real implementation, this would make a final API call to mark the user's part as complete
-    this.router.navigate(['/dashboard/report-dashboard/view-report', this.reportId]);
+    // Check if all assigned entries have been updated
+    if (!this.allEntriesUpdated()) {
+      this.error = 'Please complete all assigned entries before submitting';
+      this.toastr.error('Please complete all assigned entries before submitting');
+      return;
+    }
+
+    // Check if final step is signed
+    if (!this.isStepSigned(this.activeStep)) {
+      this.openSignatureModal(this.activeStep);
+      return;
+    }
+
+    // Show confirmation dialog before submission
+    if (confirm('Are you sure you want to sign and submit your part of the report? This action cannot be undone.')) {
+      this.loading = true;
+      
+      // In a real implementation, this would make a final API call to mark the user's part as complete
+      // We'll include all collected signatures from each step
+      // const signatures = this.stepSignatures;
+      
+      // We'll use a timeout to simulate the API call
+      setTimeout(() => {
+        this.loading = false;
+        this.toastr.success('Your part of the report has been submitted successfully!');
+        
+        // Check if all parts of the report are completed
+        if (this.checkAllPartsCompleted()) {
+          // Ask if the user wants to mark the entire report as completed
+          if (confirm('All parts of the report appear to be completed. Would you like to mark the entire report as completed?')) {
+            this.markReportAsCompleted();
+            return; // The navigation will happen in the markReportAsCompleted() callback
+          }
+        }
+        
+        // Navigate back to view report
+        this.router.navigate(['/dashboard/report-dashboard/view-report', this.reportId]);
+      }, 1000);
+    }
+  }
+
+  // Check if all parts of the report have been completed
+  checkAllPartsCompleted(): boolean {
+    // In a real implementation, this would check if all users have completed their assigned tasks
+    // For now, we'll use our local standardEntries and specificEntries to determine this
+    
+    const standardCompleted = this.standardEntries.length === 0 || 
+                             this.standardEntries.every(entry => entry.isImplemented === true);
+    
+    const specificCompleted = this.specificEntries.length === 0 || 
+                             this.specificEntries.every(entry => entry.isImplemented === true);
+    
+    return standardCompleted && specificCompleted;
+  }
+
+  // Mark the report as completed
+  markReportAsCompleted(): void {
+    if (!this.reportId) return;
+    
+    this.reportService.markReportAsCompleted(this.reportId).subscribe({
+      next: () => {
+        // Show success message and navigate back to view report
+        this.toastr.success('Report has been successfully marked as completed!');
+        this.router.navigate(['/dashboard/report-dashboard/view-report', this.reportId]);
+      },
+      error: (err) => {
+        this.error = 'Failed to mark report as completed: ' + (err.error?.message || err.message);
+        this.toastr.error('Failed to mark report as completed. Please try again.');
+        this.loading = false;
+      }
+    });
   }
 
   onEntryUpdated(entry: StandardReportEntry | SpecificReportEntry, isStandard: boolean): void {
@@ -439,5 +666,11 @@ export class FillReportComponent implements OnInit {
         console.log('Specific entry updated successfully');
       });
     }
+  }
+
+  // Get current date and time as a formatted string
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
   }
 } 

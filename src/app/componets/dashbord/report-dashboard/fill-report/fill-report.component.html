@@ -104,33 +104,42 @@
     <div class="card custom-card">
       <div class="card-body">
         <div class="step-progress">
-          <div class="step" [ngClass]="{'active': activeStep === 1, 'completed': activeStep > 1}">
+          <div class="step" [ngClass]="{'active': activeStep === 1, 'completed': isStepSigned(1) || activeStep > 1}">
             <div class="step-icon">
-              <i class="fe fe-list"></i>
+              <i class="fe" [ngClass]="{'fe-list': !isStepSigned(1), 'fe-check': isStepSigned(1)}"></i>
             </div>
             <div class="step-text">
               Standard Controls
               <span *ngIf="!hasStandardEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
+              <span *ngIf="isStepSigned(1)" class="badge bg-success ms-2">
+                <i class="fe fe-check-circle"></i>
+              </span>
             </div>
           </div>
           <div class="step-line"></div>
-          <div class="step" [ngClass]="{'active': activeStep === 2, 'completed': activeStep > 2}">
+          <div class="step" [ngClass]="{'active': activeStep === 2, 'completed': isStepSigned(2) || activeStep > 2}">
             <div class="step-icon">
-              <i class="fe fe-settings"></i>
+              <i class="fe" [ngClass]="{'fe-settings': !isStepSigned(2), 'fe-check': isStepSigned(2)}"></i>
             </div>
             <div class="step-text">
               Maintenance Form
               <span *ngIf="!hasMaintenanceForm" class="badge bg-light text-dark ms-2">Not Assigned</span>
+              <span *ngIf="isStepSigned(2)" class="badge bg-success ms-2">
+                <i class="fe fe-check-circle"></i>
+              </span>
             </div>
           </div>
           <div class="step-line"></div>
-          <div class="step" [ngClass]="{'active': activeStep === 3, 'completed': activeStep > 3}">
+          <div class="step" [ngClass]="{'active': activeStep === 3, 'completed': isStepSigned(3)}">
             <div class="step-icon">
-              <i class="fe fe-check-square"></i>
+              <i class="fe" [ngClass]="{'fe-check-square': !isStepSigned(3), 'fe-check': isStepSigned(3)}"></i>
             </div>
             <div class="step-text">
               Specific Controls
               <span *ngIf="!hasSpecificEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
+              <span *ngIf="isStepSigned(3)" class="badge bg-success ms-2">
+                <i class="fe fe-check-circle"></i>
+              </span>
             </div>
           </div>
         </div>
@@ -372,16 +381,29 @@
         </div>
       </div>
       <div class="card-footer">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-center">
           <button class="btn btn-outline-primary" (click)="previousStep()" [disabled]="activeStep === 1">
             <i class="fe fe-arrow-left me-1"></i> Previous
           </button>
-          <button *ngIf="activeStep < 3" class="btn btn-primary" (click)="nextStep()">
-            Next <i class="fe fe-arrow-right ms-1"></i>
-          </button>
-          <button *ngIf="activeStep === 3" class="btn btn-success" (click)="signAndSubmit()" [disabled]="!allEntriesUpdated()">
-            <i class="fe fe-check-circle me-1"></i> Sign and Submit
-          </button>
+
+          <div class="text-center">
+            <span *ngIf="isStepSigned(activeStep)" class="badge bg-success mx-2">
+              <i class="fe fe-check-circle me-1"></i> Signed by: {{getSignatureName(activeStep)}}
+              <small class="ms-1">{{getSignatureTimestamp(activeStep)}}</small>
+            </span>
+            <button *ngIf="!isStepSigned(activeStep)" class="btn btn-sm btn-outline-success mx-2" (click)="openSignatureModal(activeStep)">
+              <i class="fe fe-edit-3 me-1"></i> Sign this step
+            </button>
+          </div>
+          
+          <div>
+            <button *ngIf="activeStep < 3" class="btn btn-primary" (click)="nextStep()" [disabled]="!isStepSigned(activeStep)">
+              Next <i class="fe fe-arrow-right ms-1"></i>
+            </button>
+            <button *ngIf="activeStep === 3" class="btn btn-success" (click)="signAndSubmit()" [disabled]="!allEntriesUpdated() || !isStepSigned(activeStep)">
+              <i class="fe fe-check-circle me-1"></i> Submit Report
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -456,4 +478,81 @@
 .step.completed .step-text {
   font-weight: bold;
 }
-</style> 
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signature-modal {
+  background-color: white;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signature-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.signature-modal-header h5 {
+  margin: 0;
+}
+
+.signature-modal-body {
+  margin-bottom: 20px;
+}
+
+.signature-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signature-modal-footer button {
+  margin-left: 10px;
+}
+</style>
+
+<!-- Signature Modal -->
+<div class="modal-backdrop" *ngIf="signatureModalVisible">
+  <div class="signature-modal">
+    <div class="signature-modal-header">
+      <h5>Signature Required: {{ currentSigningStep === 1 ? 'Standard Controls' : 
+           currentSigningStep === 2 ? 'Maintenance Form' : 'Specific Controls' }}</h5>
+      <button type="button" class="btn-close" (click)="cancelSignature()"></button>
+    </div>
+    <div class="signature-modal-body">
+      <p>Please sign this step to confirm that you've reviewed and completed the required information.</p>
+      <div class="form-group mb-3">
+        <label for="signatureName" class="form-label">Your Full Name:</label>
+        <input type="text" class="form-control" id="signatureName" [(ngModel)]="signatureName" placeholder="Enter your full name">
+      </div>
+      <div class="form-group mb-3">
+        <label class="form-label">Date and Time:</label>
+        <p class="form-control-static">{{getCurrentDateTime()}}</p>
+      </div>
+      <div class="alert alert-info mt-3">
+        <i class="fe fe-info me-2"></i>
+        By signing, you confirm that the information provided for this step is accurate and complete to your knowledge.
+        This signature creates an audit trail for accountability.
+      </div>
+    </div>
+    <div class="signature-modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelSignature()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="submitSignature()">Sign</button>
+    </div>
+  </div>
+</div> 
