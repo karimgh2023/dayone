@@ -17,6 +17,11 @@
         <i class="fe fe-arrow-left"></i>
       </span> Back to List
     </a>
+    <a [routerLink]="['../fill-report', reportId]" class="btn btn-primary btn-icon text-white me-2" *ngIf="hasReport() && report && !report.isCompleted">
+      <span>
+        <i class="fe fe-edit-2"></i>
+      </span> Fill Report
+    </a>
     <button *ngIf="hasReport() && report && !report.isCompleted" class="btn btn-success btn-icon text-white" (click)="markReportAsCompleted()">
       <span>
         <i class="fe fe-check-circle"></i>
