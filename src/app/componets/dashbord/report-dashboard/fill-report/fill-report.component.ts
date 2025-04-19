@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ReportService } from '../../../../services/report.service';
 import { AuthService } from '../../../../services/auth.service';
 import { Report, StandardReportEntry, SpecificReportEntry } from '../../../../models/report.model';
+import { User } from '../../../../models/user.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -29,6 +30,7 @@ export class FillReportComponent implements OnInit {
   hasStandardEntries: boolean = false;
   hasSpecificEntries: boolean = false;
   hasMaintenanceForm: boolean = false;
+  currentUser: User | null = null;
   
   // Form for filling report entries
   standardEntryForms: { [id: number]: FormGroup } = {};
@@ -44,6 +46,9 @@ export class FillReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Get current user
+    this.currentUser = this.authService.getCurrentUser();
+    
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
@@ -54,6 +59,37 @@ export class FillReportComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  // Get the user's department ID safely
+  private getUserDepartmentId(): number | null {
+    if (!this.currentUser || !this.currentUser.department) {
+      return null;
+    }
+    
+    if (typeof this.currentUser.department === 'string') {
+      const deptId = parseInt(this.currentUser.department);
+      return isNaN(deptId) ? null : deptId;
+    } else if (typeof this.currentUser.department === 'object') {
+      return (this.currentUser.department as any).id || null;
+    }
+    
+    return null;
+  }
+  
+  // Get the user's department name safely
+  private getUserDepartmentName(): string {
+    if (!this.currentUser || !this.currentUser.department) {
+      return '';
+    }
+    
+    if (typeof this.currentUser.department === 'string') {
+      return this.currentUser.department.toLowerCase();
+    } else if (typeof this.currentUser.department === 'object') {
+      return ((this.currentUser.department as any).name || '').toLowerCase();
+    }
+    
+    return '';
   }
 
   loadReport(): void {
@@ -84,7 +120,7 @@ export class FillReportComponent implements OnInit {
     this.reportService.getStandardEntries(this.reportId).subscribe({
       next: (entries: StandardReportEntry[]) => {
         // Filter entries assigned to current user
-        this.standardEntries = this.filterAssignedEntries(entries);
+        this.standardEntries = this.filterAssignedStandardEntries(entries);
         this.hasStandardEntries = this.standardEntries.length > 0;
         
         // Initialize forms for each entry
@@ -106,7 +142,7 @@ export class FillReportComponent implements OnInit {
     this.reportService.getSpecificEntries(this.reportId).subscribe({
       next: (entries: SpecificReportEntry[]) => {
         // Filter entries assigned to current user
-        this.specificEntries = this.filterAssignedEntries(entries);
+        this.specificEntries = this.filterAssignedSpecificEntries(entries);
         this.hasSpecificEntries = this.specificEntries.length > 0;
         
         // Initialize forms for each entry
@@ -128,7 +164,7 @@ export class FillReportComponent implements OnInit {
     this.reportService.getMaintenanceForm(this.reportId).subscribe({
       next: (form) => {
         this.maintenanceForm = form;
-        this.hasMaintenanceForm = !!form;
+        this.hasMaintenanceForm = !!form && this.hasAssignedMaintenanceForm();
         
         // Initialize maintenance form
         if (this.hasMaintenanceForm) {
@@ -145,11 +181,56 @@ export class FillReportComponent implements OnInit {
     });
   }
   
-  // Filter entries that are assigned to the current user
-  filterAssignedEntries<T>(entries: T[]): T[] {
-    // For demonstration purposes, we'll just return all entries
-    // In a real implementation, filter based on the current user's department/role
+  // Filter standard entries assigned to the current user
+  filterAssignedStandardEntries(entries: StandardReportEntry[]): StandardReportEntry[] {
+    const userDeptId = this.getUserDepartmentId();
+    if (!userDeptId) return [];
+    
+    // For now, return all entries since we don't have a proper filter criterion in the model
+    // In a real app, you would filter based on the user's department or role
     return entries;
+  }
+  
+  // Filter specific entries assigned to the current user
+  filterAssignedSpecificEntries(entries: SpecificReportEntry[]): SpecificReportEntry[] {
+    const userDeptId = this.getUserDepartmentId();
+    if (!userDeptId) return [];
+    
+    return entries.filter(entry => {
+      // Check if the entry has checkResponsible and if the user's department is in it
+      if (entry.criteria && entry.criteria.checkResponsible) {
+        if (Array.isArray(entry.criteria.checkResponsible)) {
+          return entry.criteria.checkResponsible.some((dept: any) => dept.id === userDeptId);
+        } else {
+          return entry.criteria.checkResponsible.id === userDeptId;
+        }
+      }
+      return false;
+    });
+  }
+  
+  // Check if user is assigned to maintenance form
+  hasAssignedMaintenanceForm(): boolean {
+    if (!this.maintenanceForm) return false;
+    
+    // Check if user's department is responsible for any step of the maintenance form
+    return this.hasAssignedMaintenanceFormStep(1) || this.hasAssignedMaintenanceFormStep(2);
+  }
+  
+  // Check if user is assigned to a specific maintenance form step
+  hasAssignedMaintenanceFormStep(step: number): boolean {
+    if (!this.maintenanceForm) return false;
+    
+    const deptName = this.getUserDepartmentName();
+    
+    // Check based on department name (this is a simplification - in a real app, you'd use IDs)
+    if (step === 1 && deptName === 'maintenance system') {
+      return true;
+    } else if (step === 2 && deptName === 'she') {
+      return true;
+    }
+    
+    return false;
   }
   
   // Initialize forms for standard entries
@@ -179,18 +260,9 @@ export class FillReportComponent implements OnInit {
   // Initialize maintenance form
   initializeMaintenanceForm(): void {
     // Create form based on user's department
-    const currentUser = this.authService.getCurrentUser();
-    let departmentName = '';
+    const deptName = this.getUserDepartmentName();
     
-    if (currentUser && currentUser.department) {
-      if (typeof currentUser.department === 'object' && currentUser.department !== null) {
-        departmentName = (currentUser.department as any).name?.toLowerCase() || '';
-      } else if (typeof currentUser.department === 'string') {
-        departmentName = (currentUser.department as string).toLowerCase();
-      }
-    }
-    
-    if (departmentName === 'maintenance system') {
+    if (deptName === 'maintenance system') {
       this.maintenanceFormGroup = this.fb.group({
         controlStandard: [this.maintenanceForm.controlStandard],
         currentType: [this.maintenanceForm.currentType],
@@ -208,7 +280,7 @@ export class FillReportComponent implements OnInit {
         machineSizeLength: [this.maintenanceForm.machineSizeLength],
         machineSizeWidth: [this.maintenanceForm.machineSizeWidth]
       });
-    } else if (departmentName === 'she') {
+    } else if (deptName === 'she') {
       this.maintenanceFormGroup = this.fb.group({
         isInOrder: [this.maintenanceForm.isInOrder]
       });
