@@ -26,6 +26,12 @@ export class AuthInterceptor implements HttpInterceptor {
     console.log(`[Auth Interceptor] Request to ${request.url}`);
     console.log(`[Auth Interceptor] Token exists: ${!!token}`);
 
+    // Don't add auth header for authentication endpoints
+    if (request.url.includes('/api/auth/login') || request.url.includes('/api/auth/register')) {
+      console.log(`[Auth Interceptor] Auth endpoint detected, skipping token: ${request.url}`);
+      return next.handle(request);
+    }
+
     // Only clone and add auth header if token exists
     if (token) {
       const authRequest = request.clone({
