@@ -97,43 +97,60 @@ export class LoginComponent {
   
     this.authservice.login(credentials).subscribe({
       next: (token: string) => {
-        // ✅ Decode the token to extract user info
-        const decoded = jwtDecode<any>(token);
-        const user: User = {
-          firstName: decoded.user.firstName,
-          lastName: decoded.user.lastName,
-          email: decoded.user.email,
-          department: decoded.user.department,
-          role: decoded.user.role,
-          phoneNumber: Number(decoded.user.phone),
-          id: decoded.user.id
-        };
+        try {
+          // ✅ Decode the token to extract user info
+          const decoded = jwtDecode<any>(token);
+          console.log('Token decoded:', decoded);
+          
+          // Check if token has the expected claims
+          if (!decoded) {
+            throw new Error('Invalid token structure');
+          }
+          
+          // Create user from the token claims
+          // Note: In the backend, the user properties are added directly as claims, not nested under 'user'
+          const user: User = {
+            firstName: decoded.firstName || '',
+            lastName: decoded.lastName || '',
+            email: decoded.email || credentials.email,
+            department: decoded.department?.name || '',
+            role: decoded.role || '',
+            phoneNumber: Number(decoded.phoneNumber || 0),
+            id: decoded.userId || 0,
+            profilePhoto: decoded.profilePhoto || ''
+          };
 
-        console.log('Token decoded:', decoded);
-        console.log('User data to save:', user);
-        console.log('Remember me value:', rememberMe);
+          console.log('User data to save:', user);
+          console.log('Remember me value:', rememberMe);
 
-        // Save credentials if remember me is checked
-        if (rememberMe) {
-          localStorage.setItem('savedEmail', credentials.email);
-          localStorage.setItem('savedPassword', credentials.password);
-        } else {
-          localStorage.removeItem('savedEmail');
-          localStorage.removeItem('savedPassword');
-        }
+          // Save credentials if remember me is checked
+          if (rememberMe) {
+            localStorage.setItem('savedEmail', credentials.email);
+            localStorage.setItem('savedPassword', credentials.password);
+          } else {
+            localStorage.removeItem('savedEmail');
+            localStorage.removeItem('savedPassword');
+          }
 
-        this.authservice.saveAuthData(token, user, rememberMe);
-  
-        this.toastr.success(
-          `Bienvenue, ${user.firstName} ${user.lastName} `,
-          'Connexion réussie',
-          {
+          this.authservice.saveAuthData(token, user, rememberMe);
+    
+          this.toastr.success(
+            `Bienvenue, ${user.firstName} ${user.lastName}`,
+            'Connexion réussie',
+            {
+              timeOut: 3000,
+              positionClass: 'toast-top-right',
+            }
+          );
+    
+          this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
+        } catch (error) {
+          console.error('Error processing token:', error);
+          this.toastr.error('Error processing login response', 'Login Failed', {
             timeOut: 3000,
             positionClass: 'toast-top-right',
-          }
-        );
-  
-        this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
+          });
+        }
       },
       error: (err) => {
         this.toastr.error('Invalid credentials', 'Login Failed', {
