@@ -10,15 +10,20 @@ import { Report } from '../../../../models/report.model';
 import { ReportService } from '../../../../services/report.service.refactored';
 import { ReportStateService } from '../../../../services/report-state.service';
 
-// Import our reusable components - only the ones we actually use
-import { TypeBadgeComponent } from '../../../../shared/components/reports/type-badge/type-badge.component';
-import { StatusBadgeComponent } from '../../../../shared/components/reports/status-badge/status-badge.component';
-import { LoadingIndicatorComponent } from '../../../../shared/components/reports/loading-indicator/loading-indicator.component';
-import { ErrorAlertComponent } from '../../../../shared/components/reports/error-alert/error-alert.component';
-import { StatisticCardComponent } from '../../../../shared/components/reports/statistic-card/statistic-card.component';
-import { ReportFilterComponent } from '../../../../shared/components/reports/report-filter/report-filter.component';
-import { DataTableComponent } from '../../../../shared/components/reports/data-table/data-table.component';
-import { ReportActionsComponent } from '../../../../shared/components/reports/report-actions/report-actions.component';
+// Import our reusable components
+import { 
+  TypeBadgeComponent, 
+  StatusBadgeComponent,
+  LoadingIndicatorComponent,
+  ErrorAlertComponent,
+  StatisticCardComponent,
+  ReportFilterComponent,
+  NoDataComponent,
+  DataTableComponent,
+  ReportActionsComponent,
+  ReportDetailsComponent,
+  PaginationComponent
+} from '../../../../shared/components/reports';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -52,8 +57,11 @@ interface ReportStatistics {
     ErrorAlertComponent,
     StatisticCardComponent,
     ReportFilterComponent,
+    NoDataComponent,
     DataTableComponent,
-    ReportActionsComponent
+    ReportActionsComponent,
+    ReportDetailsComponent,
+    PaginationComponent
   ],
   providers: [DatePipe],
   template: `
