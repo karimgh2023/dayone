@@ -153,17 +153,7 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        let errorMessage = 'Invalid credentials';
-        
-        if (err.status === 403) {
-          errorMessage = 'Access denied. You may not have permission to login.';
-        } else if (err.status === 401) {
-          errorMessage = 'Invalid email or password';
-        } else if (err.error && err.error.error) {
-          errorMessage = err.error.error;
-        }
-        
-        this.toastr.error(errorMessage, 'Login Failed', {
+        this.toastr.error('Invalid credentials', 'Login Failed', {
           timeOut: 3000,
           positionClass: 'toast-top-right',
         });

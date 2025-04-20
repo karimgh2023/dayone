@@ -1,12 +1,16 @@
+import { Department } from './department.model';
+import { Plant } from './plant.model';
+
 export interface User {
-    id?: number;
-    lastName: string;
+    id: number;
     firstName: string;
-    department: string;
-    phoneNumber : number;
+    lastName: string;
     email: string;
-    password?: string;
-    role?: string;
+    phoneNumber?: number | string;
     profilePhoto?: string;
-  }
+    department: Department;
+    plant?: Plant;
+    role: string;
+    username?: string;
+}
   

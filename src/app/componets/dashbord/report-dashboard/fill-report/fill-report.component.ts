@@ -7,6 +7,7 @@ import { User } from '../../../../models/user.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { Department } from '../../../../models/department.model';
 
 @Component({
   selector: 'app-fill-report',
@@ -114,12 +115,19 @@ export class FillReportComponent implements OnInit {
       return '';
     }
     
-    if (typeof this.currentUser.department === 'string') {
-      return this.currentUser.department.toLowerCase();
-    } else if (typeof this.currentUser.department === 'object') {
-      return ((this.currentUser.department as any).name || '').toLowerCase();
+    const dept = this.currentUser.department;
+    
+    // Handle case where department is a string (not expected in the model but could happen)
+    if (typeof dept === 'string') {
+      return (dept as string).toLowerCase();
+    } 
+    
+    // Handle case where department is a Department object (expected case)
+    if (dept && typeof dept === 'object' && 'name' in dept && typeof dept.name === 'string') {
+      return dept.name.toLowerCase();
     }
     
+    // Fallback case
     return '';
   }
 

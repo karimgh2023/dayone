@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +16,9 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginRequest): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials)
-      .pipe(
-        map(response => response.token)
-      );
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials, {
+      responseType: 'text' 
+    });
   }
 
   register(userData: any): Observable<string> {
