@@ -165,7 +165,7 @@ interface ReportStatistics {
                   <button class="btn btn-primary" [routerLink]="['../new-report']">
                     <i class="fe fe-plus"></i> Create New Report
                   </button>
-                </div>
+              </div>
               </app-data-table>
             </div>
             <div class="card-footer">
@@ -254,11 +254,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       replacement: 0
     }
   };
-  
+
   recentReports: Partial<Report>[] = [];
   loading: boolean = false;
   error: string = '';
-  
+
   reportsColumns = [
     { 
       label: 'ID', 
@@ -300,7 +300,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     private reportService: ReportService,
     private reportStateService: ReportStateService
   ) { }
-  
+
   ngOnInit(): void {
     this.loadReports();
     
@@ -334,7 +334,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  
+
   loadReports(): void {
     this.reportStateService.setLoading(true);
     
@@ -362,7 +362,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     // Process statistics
     this.processReportStatistics(reports);
   }
-  
+
   processReportStatistics(reports: Report[]): void {
     // Calculate basic statistics
     this.statistics.total = reports.length;
@@ -384,7 +384,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       repair: 0,
       replacement: 0
     };
-    
+
     reports.forEach(report => {
       const type = report.type?.toLowerCase() || '';
       

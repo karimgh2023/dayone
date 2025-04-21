@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Protocol } from '../models/report.model';
+import { BaseApiService } from './base-api.service';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProtocolService {
-  private apiUrl = `${environment.apiUrl}/protocols`;
+export class ProtocolService extends BaseApiService {
+  private protocolsUrl = `${this.apiUrl}/protocols`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-  // Get all protocols
+  /**
+   * Get all protocols
+   * @returns Observable of Protocol array
+   */
   getAllProtocols(): Observable<Protocol[]> {
-    return this.http.get<Protocol[]>(this.apiUrl)
+    const headers = this.getAuthHeaders();
+    return this.http.get<Protocol[]>(this.protocolsUrl, { headers })
       .pipe(
         map(protocols => {
           return protocols.map(protocol => {
@@ -40,82 +47,142 @@ export class ProtocolService {
       );
   }
 
-  // Get protocol by ID
+  /**
+   * Get all protocols grouped by type
+   * @returns Observable of grouped protocols
+   */
+  getAllProtocolsGroupedByType(): Observable<{ [key: string]: Protocol[] }> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<{ [key: string]: Protocol[] }>(`${this.protocolsUrl}/grouped`, { headers })
+      .pipe(
+        catchError(this.handleError<{ [key: string]: Protocol[] }>('getAllProtocolsGroupedByType', {}))
+      );
+  }
+
+  /**
+   * Get protocol by ID
+   * @param id Protocol ID
+   * @returns Observable of a single Protocol
+   */
   getProtocolById(id: number): Observable<Protocol> {
-    return this.http.get<Protocol>(`${this.apiUrl}/${id}`)
+    const headers = this.getAuthHeaders();
+    return this.http.get<Protocol>(`${this.protocolsUrl}/${id}`, { headers })
       .pipe(
         tap(protocol => console.log(`Fetched protocol id=${id}`)),
         catchError(this.handleError<Protocol>(`getProtocolById id=${id}`))
       );
   }
 
-  // Get protocols by type
+  /**
+   * Get protocols by type
+   * @param type Protocol type
+   * @returns Observable of Protocol array
+   */
   getProtocolsByType(type: 'Homologation' | 'Requalification'): Observable<Protocol[]> {
-    return this.http.get<Protocol[]>(`${this.apiUrl}/type/${type}`)
+    const headers = this.getAuthHeaders();
+    return this.http.get<Protocol[]>(`${this.protocolsUrl}/type/${type}`, { headers })
       .pipe(
         tap(protocols => console.log(`Fetched ${type} protocols:`, protocols.length)),
         catchError(this.handleError<Protocol[]>(`getProtocolsByType type=${type}`, []))
       );
   }
 
-  // Get all protocol types
+  /**
+   * Get all protocol types
+   * @returns Observable of protocol types
+   */
   getAllProtocolTypes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/types`)
+    const headers = this.getAuthHeaders();
+    return this.http.get<any[]>(`${this.protocolsUrl}/types`, { headers })
       .pipe(
         tap(types => console.log('Fetched protocol types:', types.length)),
         catchError(this.handleError<any[]>('getAllProtocolTypes', []))
       );
   }
 
-  // Create a new protocol
-  createProtocol(protocolData: any): Observable<Protocol> {
-    return this.http.post<Protocol>(`${this.apiUrl}/create`, protocolData)
+  /**
+   * Create a new protocol
+   * @param protocol Protocol data
+   * @returns Observable of the created Protocol
+   */
+  createProtocol(protocol: Partial<Protocol>): Observable<Protocol> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<Protocol>(this.protocolsUrl, protocol, { headers })
       .pipe(
         tap(newProtocol => console.log('Created new protocol:', newProtocol)),
         catchError(this.handleError<Protocol>('createProtocol'))
       );
   }
 
-  // Update an existing protocol
-  updateProtocol(protocol: Protocol): Observable<Protocol> {
-    return this.http.put<Protocol>(`${this.apiUrl}/${protocol.id}`, protocol)
+  /**
+   * Update an existing protocol
+   * @param id Protocol ID
+   * @param protocol Protocol data
+   * @returns Observable of the updated Protocol
+   */
+  updateProtocol(id: number, protocol: Partial<Protocol>): Observable<Protocol> {
+    const headers = this.getAuthHeaders();
+    return this.http.put<Protocol>(`${this.protocolsUrl}/${id}`, protocol, { headers })
       .pipe(
-        tap(_ => console.log(`Updated protocol id=${protocol.id}`)),
+        tap(_ => console.log(`Updated protocol id=${id}`)),
         catchError(this.handleError<Protocol>('updateProtocol'))
       );
   }
 
-  // Delete a protocol
-  deleteProtocol(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`)
+  /**
+   * Delete a protocol
+   * @param id Protocol ID
+   * @returns Observable of void
+   */
+  deleteProtocol(id: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<void>(`${this.protocolsUrl}/${id}`, { headers })
       .pipe(
         tap(_ => console.log(`Deleted protocol id=${id}`)),
-        catchError(this.handleError<any>('deleteProtocol'))
+        catchError(this.handleError<void>('deleteProtocol'))
       );
   }
 
-  // Add criteria to a protocol
+  /**
+   * Add criteria to a protocol
+   * @param protocolId Protocol ID
+   * @param criteriaData Criteria data
+   * @returns Observable of added criteria
+   */
   addCriteriaToProtocol(protocolId: number, criteriaData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${protocolId}/criteria`, criteriaData)
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(`${this.protocolsUrl}/${protocolId}/criteria`, criteriaData, { headers })
       .pipe(
         tap(criteria => console.log(`Added criteria to protocol id=${protocolId}`)),
         catchError(this.handleError<any>('addCriteriaToProtocol'))
       );
   }
 
-  // Delete criteria from a protocol
-  deleteCriteria(protocolId: number, criteriaId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${protocolId}/criteria/${criteriaId}`)
+  /**
+   * Delete criteria from a protocol
+   * @param protocolId Protocol ID
+   * @param criteriaId Criteria ID
+   * @returns Observable of void
+   */
+  deleteCriteria(protocolId: number, criteriaId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<void>(`${this.protocolsUrl}/${protocolId}/criteria/${criteriaId}`, { headers })
       .pipe(
         tap(_ => console.log(`Deleted criteria id=${criteriaId} from protocol id=${protocolId}`)),
-        catchError(this.handleError<any>('deleteCriteria'))
+        catchError(this.handleError<void>('deleteCriteria'))
       );
   }
 
-  // Get all criteria for a protocol
+  /**
+   * Get all criteria for a protocol
+   * @param protocolId Protocol ID
+   * @returns Observable of criteria
+   */
   getCriteriaByProtocolId(protocolId: number): Observable<{ standardCriteria: any[], specificCriteria: any[] }> {
+    const headers = this.getAuthHeaders();
     return this.http.get<{ standardCriteria: any[], specificCriteria: any[] }>(
-      `${this.apiUrl}/${protocolId}/criteria`
+      `${this.protocolsUrl}/${protocolId}/criteria`,
+      { headers }
     ).pipe(
       tap(criteria => console.log(`Fetched criteria for protocol id=${protocolId}`)),
       catchError((error) => {
@@ -170,18 +237,32 @@ export class ProtocolService {
     );
   }
 
-  // Update standard criteria
+  /**
+   * Update standard criteria
+   * @param protocolId Protocol ID
+   * @param criteriaId Criteria ID
+   * @param criteriaData Criteria data
+   * @returns Observable of updated criteria
+   */
   updateStandardCriteria(protocolId: number, criteriaId: number, criteriaData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${protocolId}/standard-criteria/${criteriaId}`, criteriaData)
+    const headers = this.getAuthHeaders();
+    return this.http.put<any>(`${this.protocolsUrl}/${protocolId}/standard-criteria/${criteriaId}`, criteriaData, { headers })
       .pipe(
         tap(_ => console.log(`Updated standard criteria id=${criteriaId} for protocol id=${protocolId}`)),
         catchError(this.handleError<any>('updateStandardCriteria'))
       );
   }
 
-  // Update specific criteria
+  /**
+   * Update specific criteria
+   * @param protocolId Protocol ID
+   * @param criteriaId Criteria ID
+   * @param criteriaData Criteria data
+   * @returns Observable of updated criteria
+   */
   updateSpecificCriteria(protocolId: number, criteriaId: number, criteriaData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${protocolId}/specific-criteria/${criteriaId}`, criteriaData)
+    const headers = this.getAuthHeaders();
+    return this.http.put<any>(`${this.protocolsUrl}/${protocolId}/specific-criteria/${criteriaId}`, criteriaData, { headers })
       .pipe(
         tap(_ => console.log(`Updated specific criteria id=${criteriaId} for protocol id=${protocolId}`)),
         catchError(this.handleError<any>('updateSpecificCriteria'))
@@ -189,27 +270,23 @@ export class ProtocolService {
   }
 
   /**
+   * Get authorization headers
+   * @returns HttpHeaders with Bearer token
+   */
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
+
+  /**
    * Handle Http operation that failed.
    * Let the app continue.
-   *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status === 403) {
-          console.error(`${operation} failed: Not authorized`);
-        } else if (error.status === 401) {
-          console.error(`${operation} failed: Not authenticated`);
-        } else {
-          console.error(`${operation} failed: ${error.message}`);
-        }
-      } else {
-        console.error(`${operation} failed: ${error.message}`);
-      }
-
-      // Let the app keep running by returning an empty result
+  override handleError<T>(operation = 'operation', result?: T) {
+    return (error: HttpErrorResponse): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }

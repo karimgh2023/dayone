@@ -98,7 +98,13 @@ export class LoginComponent {
     this.authservice.login(credentials).subscribe({
       next: (token: string) => {
         try {
-          // ✅ Decode the token to extract user info
+          // Ensure token is a string and not binary or malformed data
+          if (typeof token !== 'string' || !token.trim()) {
+            throw new Error('Received empty or invalid token');
+          }
+          
+          // Validate token by attempting to decode it - this is more flexible
+          // as it doesn't rely on a specific format pattern
           const decoded = jwtDecode<any>(token);
           console.log('Token decoded:', decoded);
           
@@ -132,6 +138,8 @@ export class LoginComponent {
             localStorage.removeItem('savedPassword');
           }
 
+          // Clear any existing tokens before saving
+          this.authservice.clearAuthData();
           this.authservice.saveAuthData(token, user, rememberMe);
     
           this.toastr.success(
@@ -150,6 +158,8 @@ export class LoginComponent {
             timeOut: 3000,
             positionClass: 'toast-top-right',
           });
+          // Clear any corrupted token
+          this.authservice.clearAuthData();
         }
       },
       error: (err) => {
@@ -158,6 +168,8 @@ export class LoginComponent {
           positionClass: 'toast-top-right',
         });
         console.error(err);
+        // Clear any corrupted token
+        this.authservice.clearAuthData();
       }
     });
   }
