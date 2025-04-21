@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { LoginRequest } from '../../models/login-request.model';
-import { Observable } from 'rxjs';
+
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
@@ -29,11 +29,11 @@ export class AuthService {
           this.clearAuthData();
           return;
         }
-        
+
         // Try to decode the token with jwt-decode
         // If it fails, it will throw an error which we'll catch
         const decoded = JSON.parse(atob(token.split('.')[1]));
-        
+
         // If we get here, token is at least decodable
         console.log('[Auth Service] Token validated successfully');
       } catch (error) {
@@ -51,40 +51,40 @@ export class AuthService {
     sessionStorage.removeItem('user');
   }
 
-  login(credentials: LoginRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, credentials, {
-      responseType: 'text' 
-    });
-  }
 
   register(userData: any): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/auth/register`, userData, {
       responseType: 'text' as 'json'
     });
   }
-  
-  
+
+
 verifyEmailCode( code: string): Observable<any> {
   return this.http.post(`${this.apiUrl}/auth/verify?code=${code}`, {});
   // empty body but code is in URL
 }
 
-  
 
-  saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
-    console.log('Saving auth data with rememberMe:', rememberMe);
-    if (rememberMe) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('rememberMe', 'true');
-      console.log('Data saved to localStorage');
-    } else {
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('user', JSON.stringify(user));
-      localStorage.removeItem('rememberMe');
-      console.log('Data saved to sessionStorage');
-    }
+
+login(credentials: { email: string; password: string }): Observable<string> {
+  return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    map((res: any) => res.token) // ✅ extract only the string, not the object
+  );
+}
+
+
+saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
+  if (rememberMe) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('rememberMe', 'true');
+  } else {
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.removeItem('rememberMe');
   }
+}
+
 
   getToken(): string | null {
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
@@ -101,11 +101,11 @@ verifyEmailCode( code: string): Observable<any> {
   getPlants(): Observable<Plant[]> {
     return this.http.get<Plant[]>(`${this.apiUrl}/plants`);
   }
-  
+
   getDepartments(): Observable<Department[]> {
     return this.http.get<Department[]>(`${this.apiUrl}/departments`);
   }
-  
+
 
   getSavedCredentials(): { email: string, password: string } | null {
     const rememberMe = localStorage.getItem('rememberMe') === 'true';

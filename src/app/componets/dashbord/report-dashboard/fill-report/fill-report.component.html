@@ -1,558 +1,287 @@
-<div class="page-header">
-  <div>
-    <h2 class="page-title">Fill Report</h2>
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a [routerLink]="['../../dashboard']">Dashboard</a>
-      </li>
-      <li class="breadcrumb-item">
-        <a [routerLink]="['../report-list']">Reports</a>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">Fill Report #{{report?.id}}</li>
-    </ol>
-  </div>
-  <div class="ms-auto pageheader-btn">
-    <a [routerLink]="['../view-report', reportId]" class="btn btn-secondary btn-icon text-white me-2">
-      <span>
-        <i class="fe fe-eye"></i>
-      </span> View Report
-    </a>
-  </div>
-</div>
+<div class="standard-checklist" >
+  <h2>Checklist Standard</h2>
 
-<!-- Loading state -->
-<div class="row" *ngIf="loading">
-  <div class="col-12">
-    <div class="card custom-card">
-      <div class="card-body text-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <p class="mt-2">Loading report data...</p>
+  <form (ngSubmit)="submitStandardChecklist()" *ngIf="standardChecklist?.length">
+    <div class="checklist-table">
+      <div class="header-row">
+        <div>Critères de contrôle</div>
+        <div>Responsable Implémentation</div>
+        <div>Responsable Check</div>
+        <div>Implé</div>
+        <div>Action</div>
+        <div>Responsable action</div>
+        <div>Délais</div>
+        <div>Contrôle de succès</div>
       </div>
-    </div>
-  </div>
-</div>
 
-<!-- Error state -->
-<div class="row" *ngIf="error && !loading">
-  <div class="col-12">
-    <div class="card custom-card">
-      <div class="card-body text-center">
-        <div class="alert alert-danger" role="alert">
-          {{error}}
-        </div>
-        <button class="btn btn-primary" (click)="loadReport()">Try Again</button>
-      </div>
-    </div>
-  </div>
-</div>
+      <div *ngFor="let item of standardChecklist" class="checklist-row">
+        <div class="desc">{{ item.criteriaDescription }}</div>
+        <div>{{ item.implementationResponsible?.name }}</div>
+        <div>{{ item.checkResponsible?.name }}</div>
 
-<!-- Report Info -->
-<div class="row" *ngIf="report && !loading && !error">
-  <div class="col-12 mb-4">
-    <div class="card custom-card">
-      <div class="card-header border-bottom">
-        <h3 class="card-title">Report #{{report!.id}} - {{report!.designation}}</h3>
-        <div class="card-options" *ngIf="report.protocol">
-          <span class="badge me-2" [ngClass]="{'bg-primary': report.protocol.protocolType === 'Homologation', 'bg-success': report.protocol.protocolType === 'Requalification'}">
-            {{report.protocol.protocolType}}
-          </span>
+        <div>
+          <select
+            [disabled]="!item.editable"
+            [(ngModel)]="item.implemented"
+            name="implemented-{{ item.entryId }}"
+            (ngModelChange)="item.isFilled = true">
+            <option [ngValue]="true">✔️</option>
+            <option [ngValue]="false">❌</option>
+          </select>
         </div>
-      </div>
-      <div class="card-body">
-        <div class="row mb-4">
-          <div class="col-md-6">
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Report Type:</div>
-              <div class="w-60">
-                <span class="badge bg-info">{{report!.type}}</span>
-              </div>
-            </div>
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Protocol:</div>
-              <div class="w-60">{{report.protocol.name || 'N/A'}}</div>
-            </div>
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Created By:</div>
-              <div class="w-60">{{report.createdBy.firstName || ''}} {{report.createdBy.lastName || ''}}</div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Serial Number:</div>
-              <div class="w-60">{{report!.serialNumber || 'N/A'}}</div>
-            </div>
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Manufacturer:</div>
-              <div class="w-60">{{report!.manufacturer || 'N/A'}}</div>
-            </div>
-            <div class="d-flex mb-3">
-              <div class="w-40 text-muted">Business Unit:</div>
-              <div class="w-60">{{report!.businessUnit || 'N/A'}}</div>
-            </div>
-          </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Action"
+            [disabled]="!item.editable || item.implemented"
+            [(ngModel)]="item.action"
+            name="action-{{ item.entryId }}"
+            (ngModelChange)="item.isFilled = true" />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Responsable"
+            [disabled]="!item.editable || item.implemented"
+            [(ngModel)]="item.responsableAction"
+            name="responsable-{{ item.entryId }}"
+            (ngModelChange)="item.isFilled = true" />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Délais"
+            [disabled]="!item.editable || item.implemented"
+            [(ngModel)]="item.deadline"
+            name="deadline-{{ item.entryId }}"
+            (ngModelChange)="item.isFilled = true" />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Contrôle"
+            [disabled]="!item.editable || item.implemented"
+            [(ngModel)]="item.successControl"
+            name="control-{{ item.entryId }}"
+            (ngModelChange)="item.isFilled = true" />
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <button
+    type="submit"
+    class="mt-4"
+    [disabled]="!hasFilledStandardEntries()">
+    Enregistrer la checklist
+  </button>
+</form>
 
-<!-- Step Navigation -->
-<div class="row" *ngIf="report && !loading && !error">
-  <div class="col-12 mb-4">
-    <div class="card custom-card">
-      <div class="card-body">
-        <div class="step-progress">
-          <div class="step" [ngClass]="{'active': activeStep === 1, 'completed': isStepSigned(1) || activeStep > 1}">
-            <div class="step-icon">
-              <i class="fe" [ngClass]="{'fe-list': !isStepSigned(1), 'fe-check': isStepSigned(1)}"></i>
-            </div>
-            <div class="step-text">
-              Standard Controls
-              <span *ngIf="!hasStandardEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
-              <span *ngIf="isStepSigned(1)" class="badge bg-success ms-2">
-                <i class="fe fe-check-circle"></i>
-              </span>
-            </div>
-          </div>
-          <div class="step-line"></div>
-          <div class="step" [ngClass]="{'active': activeStep === 2, 'completed': isStepSigned(2) || activeStep > 2}">
-            <div class="step-icon">
-              <i class="fe" [ngClass]="{'fe-settings': !isStepSigned(2), 'fe-check': isStepSigned(2)}"></i>
-            </div>
-            <div class="step-text">
-              Maintenance Form
-              <span *ngIf="!hasMaintenanceForm" class="badge bg-light text-dark ms-2">Not Assigned</span>
-              <span *ngIf="isStepSigned(2)" class="badge bg-success ms-2">
-                <i class="fe fe-check-circle"></i>
-              </span>
-            </div>
-          </div>
-          <div class="step-line"></div>
-          <div class="step" [ngClass]="{'active': activeStep === 3, 'completed': isStepSigned(3)}">
-            <div class="step-icon">
-              <i class="fe" [ngClass]="{'fe-check-square': !isStepSigned(3), 'fe-check': isStepSigned(3)}"></i>
-            </div>
-            <div class="step-text">
-              Specific Controls
-              <span *ngIf="!hasSpecificEntries" class="badge bg-light text-dark ms-2">Not Assigned</span>
-              <span *ngIf="isStepSigned(3)" class="badge bg-success ms-2">
-                <i class="fe fe-check-circle"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Step Content -->
-<div class="row" *ngIf="report && !loading && !error">
-  <div class="col-12">
-    <div class="card custom-card">
-      <div class="card-header border-bottom">
-        <ng-container [ngSwitch]="activeStep">
-          <h3 class="card-title" *ngSwitchCase="1">Standard Controls</h3>
-          <h3 class="card-title" *ngSwitchCase="2">Maintenance Form</h3>
-          <h3 class="card-title" *ngSwitchCase="3">Specific Controls</h3>
-        </ng-container>
-      </div>
-      <div class="card-body">
-        <!-- Step 1: Standard Controls -->
-        <div *ngIf="activeStep === 1">
-          <div *ngIf="hasStandardEntries; else noStandardEntries">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th width="120">Implemented?</th>
-                    <th>Action Needed</th>
-                    <th width="150">Deadline</th>
-                    <th width="150">Success Control</th>
-                    <th width="100">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let entry of standardEntries">
-                    <td>{{entry.criteria.description}}</td>
-                    <td>
-                      <div class="form-check form-switch" [formGroup]="standardEntryForms[entry.id]">
-                        <input class="form-check-input" type="checkbox" formControlName="isImplemented" [disabled]="entry.isUpdated">
-                      </div>
-                    </td>
-                    <td>
-                      <form [formGroup]="standardEntryForms[entry.id]">
-                        <textarea class="form-control" formControlName="action" rows="2" placeholder="Enter action needed..." [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
-                      </form>
-                    </td>
-                    <td>
-                      <form [formGroup]="standardEntryForms[entry.id]">
-                        <input type="date" class="form-control" formControlName="deadline" [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated">
-                      </form>
-                    </td>
-                    <td>
-                      <form [formGroup]="standardEntryForms[entry.id]">
-                        <textarea class="form-control" formControlName="successControl" rows="2" placeholder="Enter success control..." [disabled]="standardEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
-                      </form>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-primary" (click)="submitStandardEntry(entry.id)" [disabled]="entry.isUpdated">
-                        <i class="fe fe-save"></i> Save
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <ng-template #noStandardEntries>
-            <div class="alert alert-info">
-              <i class="fe fe-info me-2"></i> You don't have any standard controls assigned to you for this report.
-            </div>
-          </ng-template>
+
+  <div class="standard-checklist"  >
+    <h2>Checklist Spécifique</h2>
+
+    <form (ngSubmit)="submitSpecificChecklist()" *ngIf="specificChecklist?.length">
+      <div class="checklist-table">
+        <div class="header-row">
+          <div>Critères de contrôle</div>
+          <div>Départements Implémentation</div>
+          <div>Départements Check</div>
+          <div>Homologation</div>
+          <div>Action</div>
+          <div>Responsable action</div>
+          <div>Délais</div>
+          <div>Contrôle de succès</div>
         </div>
 
-        <!-- Step 2: Maintenance Form -->
-        <div *ngIf="activeStep === 2">
-          <div *ngIf="hasMaintenanceForm && maintenanceFormGroup; else noMaintenanceForm">
-            <form [formGroup]="maintenanceFormGroup">
-              <!-- Maintenance System Department -->
-              <div *ngIf="maintenanceFormGroup.get('controlStandard')">
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Control Standard</label>
-                    <input type="text" class="form-control" formControlName="controlStandard">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Current Type</label>
-                    <input type="text" class="form-control" formControlName="currentType">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Network Form</label>
-                    <input type="text" class="form-control" formControlName="networkForm">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Power Circuit</label>
-                    <input type="text" class="form-control" formControlName="powerCircuit">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Control Circuit</label>
-                    <input type="text" class="form-control" formControlName="controlCircuit">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Fuse Value</label>
-                    <input type="text" class="form-control" formControlName="fuseValue">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Has Transformer</label>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" formControlName="hasTransformer">
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Frequency</label>
-                    <input type="text" class="form-control" formControlName="frequency">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Phase Balance Test (380V)</label>
-                    <input type="text" class="form-control" formControlName="phaseBalanceTest380v">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Phase Balance Test (210V)</label>
-                    <input type="text" class="form-control" formControlName="phaseBalanceTest210v">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Insulation Resistance Motor</label>
-                    <input type="text" class="form-control" formControlName="insulationResistanceMotor">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Insulation Resistance Cable</label>
-                    <input type="text" class="form-control" formControlName="insulationResistanceCable">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Machine Size (Height)</label>
-                    <input type="text" class="form-control" formControlName="machineSizeHeight">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Machine Size (Length)</label>
-                    <input type="text" class="form-control" formControlName="machineSizeLength">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Machine Size (Width)</label>
-                    <input type="text" class="form-control" formControlName="machineSizeWidth">
-                  </div>
-                </div>
-              </div>
+        <div *ngFor="let item of specificChecklist" class="checklist-row">
+          <div class="desc">{{ item.criteriaDescription }}</div>
+          <div>{{ getDepartmentNames(item.implementationResponsibles) }}</div>
+          <div>{{ getDepartmentNames(item.checkResponsibles) }}</div>
 
-              <!-- SHE Department -->
-              <div *ngIf="maintenanceFormGroup.get('isInOrder')">
-                <div class="row">
-                  <div class="col-md-12 mb-3">
-                    <label class="form-label">Is In Order</label>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" formControlName="isInOrder">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="text-end mt-3">
-                <button class="btn btn-primary" (click)="submitMaintenanceForm()" [disabled]="maintenanceFormGroup!.disabled || false">
-                  <i class="fe fe-save"></i> Save Maintenance Form
-                </button>
-              </div>
-            </form>
-          </div>
-          <ng-template #noMaintenanceForm>
-            <div class="alert alert-info">
-              <i class="fe fe-info me-2"></i> You don't have access to fill the maintenance form for this report.
-            </div>
-          </ng-template>
-        </div>
-
-        <!-- Step 3: Specific Controls -->
-        <div *ngIf="activeStep === 3">
-          <div *ngIf="hasSpecificEntries; else noSpecificEntries">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th width="120">Implemented?</th>
-                    <th>Action Needed</th>
-                    <th width="150">Deadline</th>
-                    <th width="150">Success Control</th>
-                    <th width="100">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let entry of specificEntries">
-                    <td>{{entry.criteria.description}}</td>
-                    <td>
-                      <div class="form-check form-switch" [formGroup]="specificEntryForms[entry.id]">
-                        <input class="form-check-input" type="checkbox" formControlName="isImplemented" [disabled]="entry.isUpdated">
-                      </div>
-                    </td>
-                    <td>
-                      <form [formGroup]="specificEntryForms[entry.id]">
-                        <textarea class="form-control" formControlName="action" rows="2" placeholder="Enter action needed..." [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
-                      </form>
-                    </td>
-                    <td>
-                      <form [formGroup]="specificEntryForms[entry.id]">
-                        <input type="date" class="form-control" formControlName="deadline" [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated">
-                      </form>
-                    </td>
-                    <td>
-                      <form [formGroup]="specificEntryForms[entry.id]">
-                        <textarea class="form-control" formControlName="successControl" rows="2" placeholder="Enter success control..." [disabled]="specificEntryForms[entry.id].get('isImplemented')?.value || entry.isUpdated"></textarea>
-                      </form>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-primary" (click)="submitSpecificEntry(entry.id)" [disabled]="entry.isUpdated">
-                        <i class="fe fe-save"></i> Save
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <ng-template #noSpecificEntries>
-            <div class="alert alert-info">
-              <i class="fe fe-info me-2"></i> You don't have any specific controls assigned to you for this report.
-            </div>
-          </ng-template>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex justify-content-between align-items-center">
-          <button class="btn btn-outline-primary" (click)="previousStep()" [disabled]="activeStep === 1">
-            <i class="fe fe-arrow-left me-1"></i> Previous
-          </button>
-
-          <div class="text-center">
-            <span *ngIf="isStepSigned(activeStep)" class="badge bg-success mx-2">
-              <i class="fe fe-check-circle me-1"></i> Signed by: {{getSignatureName(activeStep)}}
-              <small class="ms-1">{{getSignatureTimestamp(activeStep)}}</small>
-            </span>
-            <button *ngIf="!isStepSigned(activeStep)" class="btn btn-sm btn-outline-success mx-2" (click)="openSignatureModal(activeStep)">
-              <i class="fe fe-edit-3 me-1"></i> Sign this step
-            </button>
-          </div>
-          
           <div>
-            <button *ngIf="activeStep < 3" class="btn btn-primary" (click)="nextStep()" [disabled]="!isStepSigned(activeStep)">
-              Next <i class="fe fe-arrow-right ms-1"></i>
-            </button>
-            <button *ngIf="activeStep === 3" class="btn btn-success" (click)="signAndSubmit()" [disabled]="!allEntriesUpdated() || !isStepSigned(activeStep)">
-              <i class="fe fe-check-circle me-1"></i> Submit Report
-            </button>
+            <select
+              [disabled]="!item.editable"
+              [(ngModel)]="item.homologation"
+              name="homologation-{{ item.entryId }}"
+              (ngModelChange)="item.isFilled = true">
+              <option [ngValue]="true">✔️</option>
+              <option [ngValue]="false">❌</option>
+            </select>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Action"
+              [disabled]="!item.editable || item.homologation"
+              [(ngModel)]="item.action"
+              name="action-{{ item.entryId }}"
+              (ngModelChange)="item.isFilled = true" />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Responsable"
+              [disabled]="!item.editable || item.homologation"
+              [(ngModel)]="item.responsableAction"
+              name="responsable-{{ item.entryId }}"
+              (ngModelChange)="item.isFilled = true" />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Délais"
+              [disabled]="!item.editable || item.homologation"
+              [(ngModel)]="item.deadline"
+              name="deadline-{{ item.entryId }}"
+              (ngModelChange)="item.isFilled = true" />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Contrôle"
+              [disabled]="!item.editable || item.homologation"
+              [(ngModel)]="item.successControl"
+              name="control-{{ item.entryId }}"
+              (ngModelChange)="item.isFilled = true" />
           </div>
         </div>
       </div>
-    </div>
+
+      <button
+      type="submit"
+      class="mt-4"
+      [disabled]="!hasFilledSpecificEntries()">
+      Enregistrer la checklist
+    </button>
+    </form>
   </div>
+
+
+<div class="standard-checklist"  >
+  <h2>Fiche Maintenance</h2>
+
+  <form (ngSubmit)="updateMaintenanceForm()" *ngIf="maintenanceForm">
+    <div class="checklist-table">
+
+      <!-- Maintenance System fields -->
+      <div class="checklist-row">
+        <label>Contrôlé selon</label>
+        <select [(ngModel)]="maintenanceForm.form.controlStandard" name="controlStandard">
+          <option [ngValue]="'VDE_0100'">VDE 0100</option>
+          <option [ngValue]="'NFC_15_100'">NFC 15-100</option>
+          <option [ngValue]="'NONE'">Aucun</option>
+        </select>
+      </div>
+
+      <div class="checklist-row">
+        <label>Nature du courant</label>
+        <select [(ngModel)]="maintenanceForm.form.currentType" name="currentType"
+                [disabled]="!canEditMaintenancePart()">
+          <option [ngValue]="'NONE'">Aucun</option>
+          <option [ngValue]="'AC'">AC</option>
+          <option [ngValue]="'DC'">DC</option>
+        </select>
+      </div>
+
+      <div class="checklist-row">
+        <label>Forme de réseau</label>
+        <select [(ngModel)]="maintenanceForm.form.networkForm" name="networkForm"
+                [disabled]="!canEditMaintenancePart()">
+          <option [ngValue]="'SYSTEM_3_CONDUCTORS'">Système à 3 conducteurs</option>
+          <option [ngValue]="'SYSTEM_4_CONDUCTORS'">Système à 4 conducteurs</option>
+          <option [ngValue]="'SYSTEM_5_CONDUCTORS'">Système à 5 conducteurs</option>
+        </select>
+      </div>
+
+      <div class="checklist-row">
+        <label>Circuit de puissance</label>
+        <input [(ngModel)]="maintenanceForm.form.powerCircuit" name="powerCircuit" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Circuit de commande</label>
+        <input [(ngModel)]="maintenanceForm.form.controlCircuit" name="controlCircuit" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Valeur du fusible</label>
+        <input [(ngModel)]="maintenanceForm.form.fuseValue" name="fuseValue" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Fréquence</label>
+        <input [(ngModel)]="maintenanceForm.form.frequency" name="frequency" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Phase/Phase 380v</label>
+        <input [(ngModel)]="maintenanceForm.form.phaseBalanceTest380v" name="phaseBalanceTest380v" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Phase/Neutre 210v</label>
+        <input [(ngModel)]="maintenanceForm.form.phaseBalanceTest210v" name="phaseBalanceTest210v" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Résistance isolement moteur</label>
+        <input [(ngModel)]="maintenanceForm.form.insulationResistanceMotor" name="insulationResistanceMotor" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Résistance isolement câble</label>
+        <input [(ngModel)]="maintenanceForm.form.insulationResistanceCable" name="insulationResistanceCable" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Hauteur machine</label>
+        <input [(ngModel)]="maintenanceForm.form.machineSizeHeight" name="machineSizeHeight" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Longueur machine</label>
+        <input [(ngModel)]="maintenanceForm.form.machineSizeLength" name="machineSizeLength" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <div class="checklist-row">
+        <label>Largeur machine</label>
+        <input [(ngModel)]="maintenanceForm.form.machineSizeWidth" name="machineSizeWidth" [disabled]="!canEditMaintenancePart()" />
+      </div>
+
+      <!-- SHE-specific fields -->
+      <div class="checklist-row">
+        <label>Transformateur</label>
+        <select [(ngModel)]="maintenanceForm.form.hasTransformer" name="hasTransformer"
+                [disabled]="!canEditMaintenancePart()">
+          <option [ngValue]="true">Oui</option>
+          <option [ngValue]="false">Non</option>
+        </select>
+      </div>
+
+      <div class="checklist-row">
+        <label>Est en ordre</label>
+        <select [(ngModel)]="maintenanceForm.form.isInOrder" name="isInOrder"
+                [disabled]="!canEditShePart()">
+          <option [ngValue]="true">Oui</option>
+          <option [ngValue]="false">Non</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button type="submit" [disabled]="!(canEditMaintenancePart() || canEditShePart())">Enregistrer</button>
+  </form>
 </div>
 
-<!-- CSS for step navigation -->
-<style>
-.step-progress {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  position: relative;
-}
 
-.step-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  border: 2px solid #ddd;
-}
 
-.step-icon i {
-  font-size: 20px;
-  color: #777;
-}
 
-.step.active .step-icon {
-  background-color: #0162e8;
-  border-color: #0162e8;
-}
-
-.step.active .step-icon i {
-  color: white;
-}
-
-.step.completed .step-icon {
-  background-color: #19b159;
-  border-color: #19b159;
-}
-
-.step.completed .step-icon i {
-  color: white;
-}
-
-.step-text {
-  font-size: 14px;
-  text-align: center;
-}
-
-.step-line {
-  flex: 1;
-  height: 3px;
-  background-color: #ddd;
-  margin: 0 10px;
-  margin-bottom: 20px;
-}
-
-.step.active .step-text,
-.step.completed .step-text {
-  font-weight: bold;
-}
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1050;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.signature-modal {
-  background-color: white;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 100%;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.signature-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.signature-modal-header h5 {
-  margin: 0;
-}
-
-.signature-modal-body {
-  margin-bottom: 20px;
-}
-
-.signature-modal-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.signature-modal-footer button {
-  margin-left: 10px;
-}
-</style>
-
-<!-- Signature Modal -->
-<div class="modal-backdrop" *ngIf="signatureModalVisible">
-  <div class="signature-modal">
-    <div class="signature-modal-header">
-      <h5>Signature Required: {{ currentSigningStep === 1 ? 'Standard Controls' : 
-           currentSigningStep === 2 ? 'Maintenance Form' : 'Specific Controls' }}</h5>
-      <button type="button" class="btn-close" (click)="cancelSignature()"></button>
-    </div>
-    <div class="signature-modal-body">
-      <p>Please sign this step to confirm that you've reviewed and completed the required information.</p>
-      <div class="form-group mb-3">
-        <label for="signatureName" class="form-label">Your Full Name:</label>
-        <input type="text" class="form-control" id="signatureName" [(ngModel)]="signatureName" placeholder="Enter your full name">
-      </div>
-      <div class="form-group mb-3">
-        <label class="form-label">Date and Time:</label>
-        <p class="form-control-static">{{getCurrentDateTime()}}</p>
-      </div>
-      <div class="alert alert-info mt-3">
-        <i class="fe fe-info me-2"></i>
-        By signing, you confirm that the information provided for this step is accurate and complete to your knowledge.
-        This signature creates an audit trail for accountability.
-      </div>
-    </div>
-    <div class="signature-modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="cancelSignature()">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="submitSignature()">Sign</button>
-    </div>
-  </div>
-</div> 

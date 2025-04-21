@@ -25,50 +25,50 @@ import { User } from '../../models/user.model';
               <div *ngIf="successMessage" class="alert alert-success">
                 {{ successMessage }}
               </div>
-              
+
               <form (ngSubmit)="login()">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input 
-                    type="email" 
-                    class="form-control" 
-                    id="email" 
-                    [(ngModel)]="credentials.email" 
-                    name="email" 
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    [(ngModel)]="credentials.email"
+                    name="email"
                     required
                   >
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input 
-                    type="password" 
-                    class="form-control" 
-                    id="password" 
-                    [(ngModel)]="credentials.password" 
-                    name="password" 
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    [(ngModel)]="credentials.password"
+                    name="password"
                     required
                   >
                 </div>
                 <div class="mb-3 form-check">
-                  <input 
-                    type="checkbox" 
-                    class="form-check-input" 
-                    id="rememberMe" 
-                    [(ngModel)]="rememberMe" 
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="rememberMe"
+                    [(ngModel)]="rememberMe"
                     name="rememberMe"
                   >
                   <label class="form-check-label" for="rememberMe">Remember me</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
               </form>
-              
+
               <hr />
-              
+
               <div class="mt-3">
                 <button (click)="checkAuthStatus()" class="btn btn-info">
                   Check Authentication Status
                 </button>
-                
+
                 <div *ngIf="authStatus" class="mt-3">
                   <div class="card">
                     <div class="card-header bg-info text-white">
@@ -102,25 +102,27 @@ export class TestLoginComponent {
   login() {
     this.errorMessage = '';
     this.successMessage = '';
-    
+
     console.log('Attempting login with:', this.credentials);
-    
+
     this.authService.login(this.credentials).subscribe({
       next: (token: string) => {
         try {
           const decoded = jwtDecode<any>(token);
           console.log('Decoded token:', decoded);
-          
+
           const user: User = {
             firstName: decoded.user.firstName,
             lastName: decoded.user.lastName,
             email: decoded.user.email,
             department: decoded.user.department,
             role: decoded.user.role,
-            phoneNumber: Number(decoded.user.phone),
-            id: decoded.user.id
+            phoneNumber: decoded.user.phone,
+            id: decoded.user.id,
+            profilePhoto: '',
+            plant: decoded.user.plant,
           };
-          
+
           this.authService.saveAuthData(token, user, this.rememberMe);
           this.successMessage = `Login successful. Welcome, ${user.firstName} ${user.lastName}!`;
           console.log('Login successful, token saved.');
@@ -139,7 +141,7 @@ export class TestLoginComponent {
   checkAuthStatus() {
     const token = this.authService.getToken();
     const user = this.authService.getCurrentUser();
-    
+
     this.authStatus = {
       isAuthenticated: !!token,
       token: token ? `${token.substring(0, 20)}...` : null,
@@ -161,4 +163,4 @@ export class TestLoginComponent {
       return 'Invalid token or no expiry';
     }
   }
-} 
+}

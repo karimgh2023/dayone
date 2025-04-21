@@ -1,16 +1,12 @@
 import { Department } from "./department.model";
 import { Plant } from "./plant.model";
-import { Role } from "./role.enum";
 
-
-export interface User {
-  id: number;
-  email: string;
+export interface AssignedUserDTO {
+  userId: number;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  email: string;
   profilePhoto: string;
-  role: Role;
   department: Department;
   plant: Plant;
 }

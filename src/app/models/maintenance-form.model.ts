@@ -28,16 +28,6 @@ export interface MaintenanceForm {
   maintenanceSystemUpdated?: boolean;
   sheUpdated?: boolean;
   
-  // 🔥 Index signature for dynamic property access
-  [key: string]: any;
+    // 🔥 Add this line
+    [key: string]: any;
 }
-
-export interface SpecificReportEntryDTO {
-  id: number;
-  homologation: boolean;
-  action: string;
-  responsableAction: string;
-  deadline: string;
-  successControl: string;
-  isUpdated: boolean;
-} 

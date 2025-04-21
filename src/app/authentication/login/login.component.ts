@@ -81,55 +81,38 @@ export class LoginComponent {
     this.errorMessage = '';
     this._error = { name: '', message: '' };
   }
+
   login() {
     this.clearErrorMessage();
-  
+
     if (!this.loginForm.valid) {
       this.errorMessage = 'Please fill in all required fields';
       return;
     }
-  
+
     const credentials = this.loginForm.value;
     const rememberMe = this.loginForm.get('rememberMe')?.value;
-    
-    console.log('Login attempt with rememberMe:', rememberMe);
-    console.log('Form values:', credentials);
-  
+
     this.authservice.login(credentials).subscribe({
       next: (token: string) => {
         try {
-          // Ensure token is a string and not binary or malformed data
-          if (typeof token !== 'string' || !token.trim()) {
-            throw new Error('Received empty or invalid token');
-          }
-          
-          // Validate token by attempting to decode it - this is more flexible
-          // as it doesn't rely on a specific format pattern
+          if (typeof token !== 'string' || !token.trim()) throw new Error('Invalid token');
+
           const decoded = jwtDecode<any>(token);
-          console.log('Token decoded:', decoded);
-          
-          // Check if token has the expected claims
-          if (!decoded) {
-            throw new Error('Invalid token structure');
-          }
-          
-          // Create user from the token claims
-          // Note: In the backend, the user properties are added directly as claims, not nested under 'user'
+
           const user: User = {
+            id: decoded.userId || 0,
+            email: decoded.email || '',
             firstName: decoded.firstName || '',
             lastName: decoded.lastName || '',
-            email: decoded.email || credentials.email,
-            department: decoded.department?.name || '',
+            phoneNumber: decoded.phoneNumber || '',
             role: decoded.role || '',
-            phoneNumber: Number(decoded.phoneNumber || 0),
-            id: decoded.userId || 0,
+            department: decoded.department,
+            plant: decoded.plant,
             profilePhoto: decoded.profilePhoto || ''
           };
 
-          console.log('User data to save:', user);
-          console.log('Remember me value:', rememberMe);
-
-          // Save credentials if remember me is checked
+          // Save login info
           if (rememberMe) {
             localStorage.setItem('savedEmail', credentials.email);
             localStorage.setItem('savedPassword', credentials.password);
@@ -138,45 +121,27 @@ export class LoginComponent {
             localStorage.removeItem('savedPassword');
           }
 
-          // Clear any existing tokens before saving
           this.authservice.clearAuthData();
           this.authservice.saveAuthData(token, user, rememberMe);
-    
-          this.toastr.success(
-            `Bienvenue, ${user.firstName} ${user.lastName}`,
-            'Connexion réussie',
-            {
-              timeOut: 3000,
-              positionClass: 'toast-top-right',
-            }
-          );
-    
+
+          this.toastr.success(`Bienvenue, ${user.firstName} ${user.lastName}`, 'Connexion réussie');
           this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
         } catch (error) {
           console.error('Error processing token:', error);
-          this.toastr.error('Error processing login response', 'Login Failed', {
-            timeOut: 3000,
-            positionClass: 'toast-top-right',
-          });
-          // Clear any corrupted token
+          this.toastr.error('Token error', 'Login Failed');
           this.authservice.clearAuthData();
         }
       },
       error: (err) => {
-        this.toastr.error('Invalid credentials', 'Login Failed', {
-          timeOut: 3000,
-          positionClass: 'toast-top-right',
-        });
-        console.error(err);
-        // Clear any corrupted token
+        console.error('Login failed:', err);
+        this.toastr.error('Invalid credentials', 'Login Failed');
         this.authservice.clearAuthData();
       }
     });
   }
-  
-  
-  
-  
-  
+
+
+
+
 
 }

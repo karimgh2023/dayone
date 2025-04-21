@@ -1,110 +1,76 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { 
-  StandardReportEntry, 
-  SpecificReportEntry,
-  StandardReportEntryUpdateRequest,
-  SpecificReportEntryUpdateRequest
-} from '../models/report.model';
-import { BaseApiService } from './base-api.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { MaintenanceFormDTO } from '../models/maintenance-form-dto.model';
+import { MaintenanceForm } from '../models/maintenance-form.model';
+import { SpecificChecklistItemDTO } from '../models/SpecificChecklistItemDTO.model';
+import { SpecificReportEntryDTO } from '../models/specificReportEntryDTO.model';
+import { StandardChecklistItemDTO } from '../models/StandardChecklistItemDTO.model';
+import { StandardReportEntryDTO } from '../models/standardReportEntryDTO.model';
+
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReportEntryService extends BaseApiService {
-  // Override the endpoint for report entries
-  private reportsUrl = `${this.apiUrl}/reports`;
-  
-  constructor(private http: HttpClient) {
-    super();
+export class ReportEntryService {
+  private apiUrl = `http://localhost:8081/api/rapports`;
+
+  constructor(private http: HttpClient) {}
+
+  // ✅ Get standard checklist
+  getStandardChecklist(reportId: number): Observable<StandardChecklistItemDTO[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<StandardChecklistItemDTO[]>(`${this.apiUrl}/standard-checklist/${reportId}`, { headers } )
   }
-  
-  /**
-   * Get standard entries for a report
-   * @param reportId ID of the report
-   * @returns Observable of StandardReportEntry array
-   */
-  getStandardEntries(reportId: number): Observable<StandardReportEntry[]> {
-    return this.http.get<StandardReportEntry[]>(`${this.reportsUrl}/${reportId}/standard-entries`)
-      .pipe(
-        catchError(this.handleError<StandardReportEntry[]>('getStandardEntries', []))
-      );
+
+  // ✅ Get specific checklist
+  getSpecificChecklist(reportId: number): Observable<SpecificChecklistItemDTO[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<SpecificChecklistItemDTO[]>(`${this.apiUrl}/specific-checklist/${reportId}`, { headers } );
+      headers
+
   }
-  
-  /**
-   * Get specific entries for a report
-   * @param reportId ID of the report
-   * @returns Observable of SpecificReportEntry array
-   */
-  getSpecificEntries(reportId: number): Observable<SpecificReportEntry[]> {
-    return this.http.get<SpecificReportEntry[]>(`${this.reportsUrl}/${reportId}/specific-entries`)
-      .pipe(
-        catchError(this.handleError<SpecificReportEntry[]>('getSpecificEntries', []))
-      );
+
+  // ✅ Update standard checklist entry
+  updateMultipleStandardEntries(entries: StandardReportEntryDTO[]): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/entry/standard/batch-update`, entries, {
+      headers,
+      responseType: 'json'  // make sure Angular expects a JSON response
+    });
   }
-  
-  /**
-   * Update a standard report entry
-   * @param reportId ID of the report
-   * @param entryId ID of the entry to update
-   * @param data Update data
-   * @returns Observable of updated StandardReportEntry
-   */
-  updateStandardEntry(
-    reportId: number, 
-    entryId: number, 
-    data: StandardReportEntryUpdateRequest
-  ): Observable<StandardReportEntry> {
-    return this.http.put<StandardReportEntry>(
-      `${this.reportsUrl}/${reportId}/standard-entries/${entryId}`, 
-      data
-    ).pipe(
-      catchError(this.handleError<StandardReportEntry>('updateStandardEntry'))
-    );
+
+
+
+  // ✅ Update specific checklist entry
+  updateMultipleSpecificEntries(entries: SpecificReportEntryDTO[]): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/entry/specific/batch-update`, entries, {
+      headers,
+      responseType: 'json'  // Ensure Angular expects a JSON response
+    });
   }
-  
-  /**
-   * Update a specific report entry
-   * @param reportId ID of the report
-   * @param entryId ID of the entry to update
-   * @param data Update data
-   * @returns Observable of updated SpecificReportEntry
-   */
-  updateSpecificEntry(
-    reportId: number, 
-    entryId: number, 
-    data: SpecificReportEntryUpdateRequest
-  ): Observable<SpecificReportEntry> {
-    return this.http.put<SpecificReportEntry>(
-      `${this.reportsUrl}/${reportId}/specific-entries/${entryId}`, 
-      data
-    ).pipe(
-      catchError(this.handleError<SpecificReportEntry>('updateSpecificEntry'))
-    );
+
+
+  // ✅ Get full maintenance form DTO with editability flags
+  getMaintenanceForm(reportId: number): Observable<MaintenanceFormDTO> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<MaintenanceFormDTO>(`${this.apiUrl}/maintenance-form/${reportId}`, { headers } );
+
   }
-  
-  /**
-   * Update entry status (standard or specific)
-   * @param reportId ID of the report
-   * @param entryId ID of the entry to update
-   * @param isStandard Whether the entry is standard or specific
-   * @param status New status
-   * @returns Observable of the updated entry
-   */
-  updateEntryStatus(
-    reportId: number,
-    entryId: number,
-    isStandard: boolean,
-    status: string
-  ): Observable<any> {
-    const entryType = isStandard ? 'standard' : 'specific';
-    const url = `${this.reportsUrl}/${reportId}/${entryType}-entries/${entryId}/status`;
-    
-    return this.http.patch(url, { status })
-      .pipe(
-        catchError(this.handleError('updateEntryStatus'))
-      );
+
+  // ✅ Update maintenance form
+  updateMaintenanceForm(reportId: number, form: MaintenanceForm): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/maintenance-form/update/${reportId}`, form, { headers } );
   }
-} 
+}

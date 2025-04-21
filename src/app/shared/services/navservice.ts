@@ -152,7 +152,7 @@ export class NavService implements OnDestroy {
 							]
 						},
 						{ title: 'Events', dirchange: false, type: 'link', active: false, selected: false, path: '/dashboard/hrmdashboards/events' },
-						
+
 						{ title: 'Settings', dirchange: false, type: 'link', active: false, selected: false, path: '/dashboard/hrmdashboards/settings' },
 					]
 				},
@@ -209,10 +209,9 @@ export class NavService implements OnDestroy {
 				},
 				{
 					title: 'Report Dashboard', type: 'sub', selected: false, active: false, children: [
-						{ path: '/dashboard/report-dashboard/dashboard', title: 'Dashboard', type: 'link', selected: false },
-						{ path: '/dashboard/report-dashboard/report-list', title: 'Report List', type: 'link', selected: false },
-						{ path: '/dashboard/report-dashboard/new-report', title: 'New Report', type: 'link', selected: false },
-						{ path: '/dashboard/report-dashboard/protocols', title: 'Protocol Management', type: 'link', selected: false },
+						{ path: '/dashboard/report-dashboard/view-reports', title: 'Report List', type: 'link', selected: false },
+						{ path: '/dashboard/report-dashboard/protocol-selection', title: 'New Report', type: 'link', selected: false },
+					//	{ path: '/dashboard/report-dashboard/protocols', title: 'Protocol Management', type: 'link', selected: false },
 					]
 				},
 				{
@@ -388,11 +387,11 @@ export class NavService implements OnDestroy {
 							selected: false,
 							path: '/apps/forms/form-elements/color-pickers',
 						  },
-						
-						 
-						
-						
-					  
+
+
+
+
+
 						],
 					  },
 					  {
@@ -655,7 +654,7 @@ export class NavService implements OnDestroy {
 				{
 					path: '/apps/icons/icons', title: 'Icons', icon: 'message-square', type: 'link', selected: false
 				},
-			
+
 			]
 		},
 		{
@@ -743,7 +742,7 @@ export class NavService implements OnDestroy {
 				title: 'Carousels',
 				type: 'link',
 			  },
-			 
+
 			  {
 				path: '/advancedui/modals-closes',
 				title: 'Models & Closes',
@@ -826,7 +825,7 @@ export class NavService implements OnDestroy {
 						{ path: '/pages/blog/blog-styles', title: 'Blog Styles', type: 'link', selected: false },
 					]
 				},
-				
+
 				{ path: '/pages/gallery', title: 'Gallery', type: 'link', selected: false },
 				{ path: '/pages/faqs', title: 'FAQS', type: 'link', selected: false },
 				{ path: '/pages/terms', title: 'Terms', type: 'link', selected: false },

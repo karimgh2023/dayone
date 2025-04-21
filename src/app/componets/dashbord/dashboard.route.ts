@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 export const admin: Routes = [
   {
     path: 'dashboard', children: [
-     
+
 
     ]
   }

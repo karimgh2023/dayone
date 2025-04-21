@@ -1,40 +1,35 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProtocolManagementComponent } from './protocol-management/protocol-management.component';
+
+import { ProtocolSelectionComponent } from './protocol-selection/protocol-selection.component';
+import { ReportCreateComponent } from './report-create/report-create.component';
+import { ViewReportsComponent } from './view-reports/view-reports.component';
+import { FillReportComponent } from './fill-report/fill-report.component';
 
 const routes: Routes = [
   {
     path: 'dashboard/report-dashboard',
     children: [
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./dashboard').then((m) => m.DashboardComponent),
-      },
-      {
-        path: 'report-list',
-        loadComponent: () =>
-          import('./report-list').then((m) => m.ReportListComponent),
-      },
-      {
-        path: 'new-report',
-        loadComponent: () =>
-          import('./new-report').then((m) => m.NewReportComponent),
-      },
-      {
-        path: 'view-report/:id',
-        loadComponent: () =>
-          import('./view-report').then((m) => m.ViewReportComponent),
-      },
+
+
       {
         path: 'fill-report/:id',
-        loadComponent: () =>
-          import('./fill-report').then((m) => m.FillReportComponent),
+        loadComponent: () => Promise.resolve(FillReportComponent),
       },
       {
-        path: 'protocols',
-        loadComponent: () => Promise.resolve(ProtocolManagementComponent),
+        path: 'view-reports',
+        loadComponent: () => Promise.resolve(ViewReportsComponent),
+      },
+
+      {
+        path: 'protocol-selection',
+        loadComponent: () => Promise.resolve(ProtocolSelectionComponent),
+      },
+      {
+        path: 'report-create/:protocolId',
+        loadComponent: () => Promise.resolve(ReportCreateComponent),
       }
+
     ]
   }
 ];
@@ -45,4 +40,4 @@ const routes: Routes = [
 })
 export class ReportDashboardRoutingModule {
   static routes = routes;
-} 
+}

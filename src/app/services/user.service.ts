@@ -25,7 +25,7 @@ export class UserService {
   updateProfilePhoto(userId: number, photo: File): Observable<User> {
     const formData = new FormData();
     formData.append('photo', photo);
-    
+
     return this.http.post<User>(`${this.apiUrl}/${userId}/profile-photo`, formData);
   }
 
@@ -42,4 +42,8 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${user.id}`, user);
   }
-} 
+
+  getAllUsersExceptAdmins() : Observable<User[]>  {
+    return this.http.get<User[]>(`http://localhost:8081/api/public/non-admins`);
+  }
+}
