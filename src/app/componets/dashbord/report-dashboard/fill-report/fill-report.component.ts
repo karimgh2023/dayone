@@ -226,8 +226,72 @@ export class FillReportComponent implements OnInit {
     }
   }
 
+  /**
+   * Calculate the overall progress of the report
+   */
+  getOverallProgress(): number {
+    const standard = this.getStandardProgress();
+    const specific = this.getSpecificProgress();
+    const maintenance = this.getMaintenanceProgress();
+    
+    // Calculate average of the three sections, giving more weight to the checklists
+    return Math.round((standard * 0.4) + (specific * 0.4) + (maintenance * 0.2));
+  }
 
+  /**
+   * Calculate the progress of the standard checklist
+   */
+  getStandardProgress(): number {
+    if (!this.standardChecklist || this.standardChecklist.length === 0) {
+      return 0;
+    }
+    
+    const totalItems = this.standardChecklist.length;
+    const completedItems = this.standardChecklist.filter(item => 
+      item.implemented === true || 
+      (item.implemented === false && item.action && item.responsableAction && item.deadline)
+    ).length;
+    
+    return Math.round((completedItems / totalItems) * 100);
+  }
 
+  /**
+   * Calculate the progress of the specific checklist
+   */
+  getSpecificProgress(): number {
+    if (!this.specificChecklist || this.specificChecklist.length === 0) {
+      return 0;
+    }
+    
+    const totalItems = this.specificChecklist.length;
+    const completedItems = this.specificChecklist.filter(item => 
+      item.homologation === true || 
+      (item.homologation === false && item.action && item.responsableAction && item.deadline)
+    ).length;
+    
+    return Math.round((completedItems / totalItems) * 100);
+  }
 
+  /**
+   * Calculate the progress of the maintenance form
+   */
+  getMaintenanceProgress(): number {
+    if (!this.maintenanceForm || !this.maintenanceForm.form) {
+      return 0;
+    }
+    
+    const form = this.maintenanceForm.form;
+    const totalFields = this.editableKeys.length;
+    
+    // Count fields that have values
+    let filledFields = 0;
+    this.editableKeys.forEach(key => {
+      if (form[key] && form[key].toString().trim() !== '') {
+        filledFields++;
+      }
+    });
+    
+    return Math.round((filledFields / totalFields) * 100);
+  }
 
 }

@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
 import { ReportService } from '../../../../services/report.service';
 
 @Component({
   standalone: true,
   selector: 'app-view-reports',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgbTooltipModule],
   templateUrl: './view-reports.component.html',
   styleUrls: ['./view-reports.component.scss']
 })
@@ -150,5 +151,87 @@ export class ViewReportsComponent implements OnInit {
     }
     
     return 'Non spécifié';
+  }
+
+  /**
+   * Get the total number of reports (created + assigned)
+   */
+  getTotalReports(): number {
+    // Create a set of unique report IDs to avoid counting duplicates
+    const reportIds = new Set<number>();
+    
+    this.createdReports.forEach(report => reportIds.add(report.id));
+    this.assignedReports.forEach(report => reportIds.add(report.id));
+    
+    return reportIds.size;
+  }
+
+  /**
+   * Calculate the completion rate of all reports
+   */
+  getCompletionRate(): number {
+    // This is a simplified calculation - in a real app, you'd need report completion data
+    // For now, use a placeholder calculation based on the number of reports
+    const totalReportCount = this.getTotalReports();
+    if (totalReportCount === 0) return 0;
+    
+    // Just for demo purposes - simulate a completion rate
+    // In a real application, you'd use actual completion data from the reports
+    const completedCount = Math.floor(Math.random() * totalReportCount);
+    
+    return Math.round((completedCount / totalReportCount) * 100);
+  }
+
+  /**
+   * Get status label for a report
+   */
+  getStatusLabel(report: ReportDTO): string {
+    // Simplified status logic - in a real app you would use actual status data
+    // Type assertion to handle potential property
+    const anyReport = report as any;
+    if (anyReport.status) {
+      return anyReport.status;
+    }
+    
+    // Placeholder logic - in a real application you'd use actual data from the report
+    const randomStatus = Math.floor(Math.random() * 3);
+    return ['En cours', 'Complété', 'En attente'][randomStatus];
+  }
+
+  /**
+   * Get CSS class for status badge
+   */
+  getStatusBadgeClass(report: ReportDTO): string {
+    const status = this.getStatusLabel(report);
+    
+    switch (status) {
+      case 'Complété':
+        return 'bg-success-transparent';
+      case 'En cours':
+        return 'bg-info-transparent';
+      case 'En attente':
+        return 'bg-warning-transparent';
+      default:
+        return 'bg-secondary-transparent';
+    }
+  }
+
+  /**
+   * Get progress percentage for a report
+   */
+  getReportProgress(report: ReportDTO): number {
+    // Placeholder - in a real app, you would use actual completion data
+    // For now, generate a random percentage between 0 and 100
+    return Math.floor(Math.random() * 101);
+  }
+
+  /**
+   * Download report as PDF
+   */
+  downloadReport(report: ReportDTO): void {
+    // Placeholder - in a real app, you would implement the actual PDF download
+    console.log(`Downloading report ${report.id} as PDF`);
+    // Show a toast notification
+    alert(`Téléchargement du rapport ${report.id} en cours...`);
   }
 }

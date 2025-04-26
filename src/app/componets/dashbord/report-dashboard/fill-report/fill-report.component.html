@@ -13,6 +13,56 @@
   </div>
 </div>
 
+<!-- Progress Tracker -->
+<div class="card custom-card mb-4">
+  <div class="card-body p-3">
+    <div class="progress-tracker">
+      <div class="d-flex justify-content-between mb-3">
+        <div class="fs-16 fw-semibold">Progression du rapport</div>
+        <div class="fs-16 fw-semibold text-primary">{{ getOverallProgress() }}%</div>
+      </div>
+      <div class="progress progress-lg mb-3">
+        <div class="progress-bar bg-primary" [style.width.%]="getOverallProgress()"></div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between">
+        <div class="completion-stat">
+          <div class="d-flex align-items-center">
+            <div class="completion-icon bg-success-transparent me-2">
+              <i class="fe fe-check-square text-success"></i>
+            </div>
+            <div>
+              <div class="fs-14 text-muted">Checklist Standard</div>
+              <div class="fs-16 fw-semibold">{{ getStandardProgress() }}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="completion-stat">
+          <div class="d-flex align-items-center">
+            <div class="completion-icon bg-info-transparent me-2">
+              <i class="fe fe-list text-info"></i>
+            </div>
+            <div>
+              <div class="fs-14 text-muted">Checklist Spécifique</div>
+              <div class="fs-16 fw-semibold">{{ getSpecificProgress() }}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="completion-stat">
+          <div class="d-flex align-items-center">
+            <div class="completion-icon bg-warning-transparent me-2">
+              <i class="fe fe-tool text-warning"></i>
+            </div>
+            <div>
+              <div class="fs-14 text-muted">Fiche Maintenance</div>
+              <div class="fs-16 fw-semibold">{{ getMaintenanceProgress() }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid px-0">
   <!-- Standard Checklist Card -->
   <div class="card custom-card mb-4">

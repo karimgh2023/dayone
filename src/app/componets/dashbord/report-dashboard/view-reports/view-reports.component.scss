@@ -23,8 +23,8 @@
   box-shadow: var(--card-shadow);
   
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(var(--primary-rgb), 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
   }
   
   .card-header {
@@ -36,6 +36,10 @@
       color: var(--default-text-color);
       font-weight: 500;
       margin-bottom: 0;
+    }
+
+    .badge {
+      font-weight: 500;
     }
   }
 
@@ -49,6 +53,14 @@
     background-color: var(--footer-bg);
     border-top: 1px solid var(--default-border);
     padding: 0.75rem 1.25rem;
+  }
+
+  .fw-semibold {
+    font-weight: 600;
+  }
+  
+  .fw-medium {
+    font-weight: 500;
   }
 }
 
@@ -71,17 +83,17 @@
   }
   
   &.bg-success-transparent {
-    background-color: rgba(var(--success-rgb), 0.1);
+    background-color: rgba(var(--success-rgb), 0.15);
     color: var(--success-color);
   }
   
   &.bg-warning-transparent {
-    background-color: rgba(var(--warning-rgb), 0.1);
+    background-color: rgba(var(--warning-rgb), 0.15);
     color: var(--warning-color);
   }
   
   &.bg-info-transparent {
-    background-color: rgba(var(--info-rgb), 0.1);
+    background-color: rgba(var(--info-rgb), 0.15);
     color: var(--info-color);
   }
 
@@ -136,7 +148,7 @@
 }
 
 .bg-primary-transparent {
-  background-color: rgba(var(--primary-rgb), 0.08);
+  background-color: rgba(var(--primary-rgb), 0.15);
   border: 1px solid rgba(var(--primary-rgb), 0.15);
   
   &:hover {
@@ -210,6 +222,15 @@
   .row-cards .col-xl-6 {
     margin-bottom: 1.5rem;
   }
+
+  .dashboard-icon {
+    width: 45px;
+    height: 45px;
+    
+    i {
+      font-size: 1.25rem;
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -218,4 +239,34 @@
     align-items: flex-start;
     margin-bottom: 1rem;
   }
+}
+
+@media (max-width: 576px) {
+  .dashboard-icon {
+    width: 40px;
+    height: 40px;
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Dashboard icons and metrics */
+.dashboard-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.chart-wrapper {
+  width: 60px;
+  height: 60px;
 }

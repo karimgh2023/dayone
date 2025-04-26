@@ -1,4 +1,100 @@
 <div class="container-fluid mt-4">
+  <!-- Dashboard Metrics -->
+  <div class="row mb-5">
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+      <div class="card custom-card overflow-hidden">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mt-0">
+              <div class="d-flex flex-wrap align-items-center mb-1">
+                <h5 class="text-dark mb-1 fw-semibold">Total Rapports</h5>
+              </div>
+              <h2 class="text-primary mb-0 fw-bold">{{ getTotalReports() }}</h2>
+            </div>
+            <div class="ms-auto">
+              <div class="chart-wrapper mt-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <div class="dashboard-icon bg-primary-transparent">
+                    <i class="fe fe-clipboard text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+      <div class="card custom-card overflow-hidden">
+    <div class="card-body">
+          <div class="d-flex">
+            <div class="mt-0">
+              <div class="d-flex flex-wrap align-items-center mb-1">
+                <h5 class="text-dark mb-1 fw-semibold">Rapports Créés</h5>
+              </div>
+              <h2 class="text-success mb-0 fw-bold">{{ createdReports.length }}</h2>
+            </div>
+            <div class="ms-auto">
+              <div class="chart-wrapper mt-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <div class="dashboard-icon bg-success-transparent">
+                    <i class="fe fe-edit text-success"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+      <div class="card custom-card overflow-hidden">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mt-0">
+              <div class="d-flex flex-wrap align-items-center mb-1">
+                <h5 class="text-dark mb-1 fw-semibold">Rapports Assignés</h5>
+              </div>
+              <h2 class="text-warning mb-0 fw-bold">{{ assignedReports.length }}</h2>
+            </div>
+            <div class="ms-auto">
+              <div class="chart-wrapper mt-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <div class="dashboard-icon bg-warning-transparent">
+                    <i class="fe fe-users text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+      <div class="card custom-card overflow-hidden">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mt-0">
+              <div class="d-flex flex-wrap align-items-center mb-1">
+                <h5 class="text-dark mb-1 fw-semibold">Taux de Complétion</h5>
+              </div>
+              <h2 class="text-info mb-0 fw-bold">{{ getCompletionRate() }}%</h2>
+            </div>
+            <div class="ms-auto">
+              <div class="chart-wrapper mt-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <div class="dashboard-icon bg-info-transparent">
+                    <i class="fe fe-bar-chart-2 text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Created Reports Section -->
   <div class="page-header border-bottom pb-2 mb-4">
     <div class="page-leftheader">
@@ -21,8 +117,8 @@
       <button class="btn btn-outline-primary" type="button" (click)="resetCreatedReportsFilter()">
         <i class="fe fe-refresh-cw me-1"></i>Réinitialiser
       </button>
-    </div>
   </div>
+</div>
 
   <!-- No Reports Alert -->
   <div *ngIf="filteredCreatedReports.length === 0" class="alert alert-info bg-info-transparent">
@@ -36,10 +132,14 @@
   <div class="row row-cards">
     <div class="col-xl-6 col-md-12 mb-4" *ngFor="let report of filteredCreatedReports">
       <div class="card custom-card h-100 overflow-hidden">
+        <div class="card-status card-status-left bg-primary"></div>
         <div class="card-header position-relative">
-          <div class="card-title mb-0">
-            <span class="badge me-1 bg-primary-transparent">{{ report.type }}</span>
-            Rapport N°{{ report.id }}
+          <div class="card-title mb-0 d-flex align-items-center">
+            <span class="badge me-2 bg-primary-transparent">{{ report.type }}</span>
+            <span>Rapport N°{{ report.id }}</span>
+            <span class="badge ms-2 rounded-pill" [ngClass]="getStatusBadgeClass(report)">
+              {{ getStatusLabel(report) }}
+            </span>
           </div>
           <div class="position-absolute top-0 end-0 p-3 text-muted fs-13">
             <i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'short' }}
@@ -49,59 +149,87 @@
           <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
             <div>
               <p class="text-muted mb-1">Numéro de série</p>
-              <h6 class="fw-semibold mb-0">{{ report.serialNumber }}</h6>
+              <h6 class="fw-semibold mb-0 d-flex align-items-center">
+                <i class="fe fe-hash text-primary me-1"></i>
+                {{ report.serialNumber }}
+              </h6>
             </div>
             <div class="text-end">
               <p class="text-muted mb-1">Équipement</p>
-              <h6 class="fw-semibold mb-0">{{ report.designation || 'Non spécifié' }}</h6>
+              <h6 class="fw-semibold mb-0 d-flex align-items-center justify-content-end">
+                <i class="fe fe-box text-primary me-1"></i>
+                {{ report.designation || 'Non spécifié' }}
+              </h6>
             </div>
           </div>
           
           <div class="row mb-3">
             <div class="col-md-6">
               <p class="text-muted mb-1">Fabricant</p>
-              <p class="fw-medium">{{ report.manufacturer || 'Non spécifié' }}</p>
+              <p class="fw-medium d-flex align-items-center">
+                <i class="fe fe-briefcase text-primary me-1"></i>
+                {{ report.manufacturer || 'Non spécifié' }}
+              </p>
             </div>
             <div class="col-md-6">
               <p class="text-muted mb-1">Immobilisation</p>
-              <p class="fw-medium">{{ report.immobilization || 'Non spécifié' }}</p>
+              <p class="fw-medium d-flex align-items-center">
+                <i class="fe fe-alert-circle text-primary me-1"></i>
+                {{ report.immobilization || 'Non spécifié' }}
+              </p>
             </div>
           </div>
           
-          <div class="row">
+          <div class="row mb-4">
             <div class="col-md-6">
               <p class="text-muted mb-1">Unité</p>
-              <p class="fw-medium">{{ report.businessUnit || 'Non spécifié' }}</p>
+              <p class="fw-medium d-flex align-items-center">
+                <i class="fe fe-layers text-primary me-1"></i>
+                {{ report.businessUnit || 'Non spécifié' }}
+              </p>
             </div>
             <div class="col-md-6">
               <p class="text-muted mb-1">Service</p>
-              <p class="fw-medium">{{ report.serviceSeg || 'Non spécifié' }}</p>
+              <p class="fw-medium d-flex align-items-center">
+                <i class="fe fe-server text-primary me-1"></i>
+                {{ report.serviceSeg || 'Non spécifié' }}
+              </p>
             </div>
           </div>
           
-          <div class="mt-4">
-            <p class="fw-semibold mb-2"><i class="fe fe-users me-1 text-primary"></i>Responsables Assignés</p>
-            <div class="row">
-              <div class="col-md-6 mb-3" *ngFor="let user of report.assignedUsers">
-                <div class="d-flex align-items-center p-2 rounded-3 bg-light-transparent">
-                  <img [src]="user.profilePhoto" alt="photo" class="avatar avatar-md rounded-circle me-2">
-                  <div>
-                    <div class="fw-semibold text-dark">{{ user.firstName }} {{ user.lastName }}</div>
-                    <small class="text-muted d-block">{{ user.email }}</small>
-                    <div class="mt-1">
-                      <span class="badge rounded-pill bg-primary-transparent me-1">{{ user.department.name }}</span>
-                      <span class="badge rounded-pill bg-info-transparent">{{ user.plant.name }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div>
+            <p class="fw-semibold mb-2 d-flex align-items-center">
+              <i class="fe fe-users text-primary me-2"></i>Responsables Assignés
+            </p>
+            <div class="avatar-list avatar-list-stacked mb-2">
+              <span *ngFor="let user of report.assignedUsers?.slice(0, 5)" class="avatar avatar-md rounded-circle" 
+                [ngbTooltip]="user.firstName + ' ' + user.lastName">
+                <img [src]="user.profilePhoto" alt="photo">
+              </span>
+              <span *ngIf="report.assignedUsers?.length > 5" class="avatar avatar-md rounded-circle bg-primary text-white">
+                +{{ report.assignedUsers.length - 5 }}
+              </span>
             </div>
           </div>
         </div>
-        <div class="card-footer">
-          <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-primary btn-sm">
-            <i class="fe fe-edit-2 me-1"></i>Voir le rapport
-          </a>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <div class="progress-wrapper w-50">
+            <div class="d-flex align-items-center mb-1">
+              <span class="text-muted fs-13">Complétion</span>
+              <span class="ms-auto fs-13 fw-semibold">{{ getReportProgress(report) }}%</span>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-primary" [style.width.%]="getReportProgress(report)"></div>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-primary">
+              <i class="fe fe-edit-2 me-1"></i>Voir
+            </a>
+            <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
+              <i class="fe fe-download me-1"></i>PDF
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -144,32 +272,45 @@
   <div class="row row-cards">
     <div class="col-xl-6 col-md-12 mb-4" *ngFor="let report of filteredAssignedReports">
       <div class="card custom-card h-100 overflow-hidden">
+        <div class="card-status card-status-left bg-warning"></div>
         <div class="card-header position-relative">
-          <div class="card-title mb-0">
-            <span class="badge me-1 bg-warning-transparent">{{ report.type }}</span>
-            Rapport N°{{ report.id }}
+          <div class="card-title mb-0 d-flex align-items-center">
+            <span class="badge me-2 bg-warning-transparent">{{ report.type }}</span>
+            <span>Rapport N°{{ report.id }}</span>
+            <span class="badge ms-2 rounded-pill" [ngClass]="getStatusBadgeClass(report)">
+              {{ getStatusLabel(report) }}
+            </span>
           </div>
           <div class="position-absolute top-0 end-0 p-3 text-muted fs-13">
             <i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'short' }}
           </div>
         </div>
         <div class="card-body">
-          <div class="d-flex justify-content-between mb-3">
+          <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
             <div>
               <p class="text-muted mb-1">Numéro de série</p>
-              <h6 class="fw-semibold mb-0">{{ report.serialNumber }}</h6>
+              <h6 class="fw-semibold mb-0 d-flex align-items-center">
+                <i class="fe fe-hash text-warning me-1"></i>
+                {{ report.serialNumber }}
+              </h6>
             </div>
             <div class="text-end">
               <p class="text-muted mb-1">Créé par</p>
-              <h6 class="fw-semibold mb-0">{{ getCreatorEmail(report) }}</h6>
+              <h6 class="fw-semibold mb-0 d-flex align-items-center justify-content-end">
+                <i class="fe fe-user text-warning me-1"></i>
+                {{ getCreatorEmail(report) }}
+              </h6>
             </div>
           </div>
           
-          <div class="mt-4">
-            <p class="fw-semibold mb-2"><i class="fe fe-users me-1 text-primary"></i>Responsables Assignés</p>
-            <div class="row">
-              <div class="col-md-6 mb-3" *ngFor="let user of report.assignedUsers">
-                <div class="d-flex align-items-center p-2 rounded-3" [ngClass]="{'bg-primary-transparent': user.email === getLoggedInUserEmail(), 'bg-light-transparent': user.email !== getLoggedInUserEmail()}">
+          <div>
+            <p class="fw-semibold mb-2 d-flex align-items-center">
+              <i class="fe fe-users text-warning me-2"></i>Responsables Assignés
+            </p>
+            <div class="row mb-2">
+              <div class="col-md-6 mb-2" *ngFor="let user of report.assignedUsers?.slice(0, 4)">
+                <div class="d-flex align-items-center p-2 rounded-3" 
+                     [ngClass]="{'bg-warning-transparent': user.email === getLoggedInUserEmail(), 'bg-light-transparent': user.email !== getLoggedInUserEmail()}">
                   <img [src]="user.profilePhoto" alt="photo" class="avatar avatar-md rounded-circle me-2">
                   <div>
                     <div class="fw-semibold text-dark">{{ user.firstName }} {{ user.lastName }}</div>
@@ -182,12 +323,32 @@
                 </div>
               </div>
             </div>
+
+            <div *ngIf="report.assignedUsers?.length > 4" class="text-center mt-2 mb-3">
+              <button type="button" class="btn btn-sm btn-light3">
+                <i class="fe fe-plus-circle me-1"></i>Voir {{ report.assignedUsers.length - 4 }} autres
+              </button>
+            </div>
           </div>
         </div>
-        <div class="card-footer">
-          <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-primary btn-sm">
-            <i class="fe fe-edit-2 me-1"></i>Compléter le rapport
-          </a>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <div class="progress-wrapper w-50">
+            <div class="d-flex align-items-center mb-1">
+              <span class="text-muted fs-13">Complétion</span>
+              <span class="ms-auto fs-13 fw-semibold">{{ getReportProgress(report) }}%</span>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-warning" [style.width.%]="getReportProgress(report)"></div>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-warning">
+              <i class="fe fe-edit-2 me-1"></i>Compléter
+            </a>
+            <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
+              <i class="fe fe-download me-1"></i>PDF
+            </button>
+          </div>
         </div>
       </div>
     </div>
