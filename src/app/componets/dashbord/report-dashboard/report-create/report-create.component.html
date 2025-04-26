@@ -31,7 +31,11 @@
                   <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
                   <div class="input-group">
                     <span class="input-group-text bg-primary-transparent"><i class="fe fe-tag text-primary"></i></span>
-                    <input type="text" id="type" class="form-control" formControlName="type" placeholder="Ex: Homologation, Requalification..." required />
+                    <select id="type" class="form-select" formControlName="type" required>
+                      <option value="">-- Sélectionnez un type --</option>
+                      <option value="Homologation">Homologation</option>
+                      <option value="Requalification">Requalification</option>
+                    </select>
                   </div>
                   <div *ngIf="isFieldInvalid('type')" class="text-danger fs-12 mt-1">
                     Ce champ est requis
