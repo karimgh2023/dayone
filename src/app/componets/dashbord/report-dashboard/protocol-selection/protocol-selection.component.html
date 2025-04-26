@@ -1,55 +1,110 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
-      <!-- Page header -->
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Sélection de Protocole</h2>
+      <!-- Page Header -->
+      <div class="page-header d-xxl-flex d-block justify-content-xxl-between">
+        <div class="page-leftheader">
+          <div class="page-title">Sélection de Protocole</div>
+        </div>
+        <div class="page-rightheader">
+          <div class="btn-list d-flex gap-2">
+            <button class="btn btn-light3" data-bs-toggle="tooltip" placement="top" ngbTooltip="Aide">
+              <i class="fe fe-help-circle"></i>
+            </button>
+            <button class="btn btn-primary" (click)="fetchProtocols()" data-bs-toggle="tooltip" placement="top" ngbTooltip="Rafraîchir">
+              <i class="fe fe-refresh-cw"></i>
+            </button>
+          </div>
+        </div>
       </div>
+      <!-- Page Header Close -->
 
       <!-- Error state -->
       <div *ngIf="error" class="alert alert-danger" role="alert">
-        <i class="fe fe-alert-triangle me-2"></i>{{ error }}
-        <button class="btn btn-sm btn-outline-danger ms-2" (click)="fetchProtocols()">Réessayer</button>
+        <div class="d-flex">
+          <i class="fe fe-alert-triangle me-2 align-self-center alert-icon"></i>
+          <div>
+            <h4 class="alert-heading mb-1">Erreur de chargement</h4>
+            <p class="mb-1">{{ error }}</p>
+            <button class="btn btn-sm btn-outline-danger mt-2" (click)="fetchProtocols()">Réessayer</button>
+          </div>
+        </div>
       </div>
 
       <!-- Loading state -->
-      <div *ngIf="loading" class="card custom-card p-3">
-        <div class="d-flex justify-content-center align-items-center" style="min-height: 250px;">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Chargement...</span>
+      <div *ngIf="loading" class="card custom-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-center align-items-center py-5">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <span class="ms-3 text-muted">Chargement des protocoles...</span>
           </div>
-          <span class="ms-2">Chargement des protocoles...</span>
         </div>
       </div>
 
       <!-- Content when data is loaded -->
-      <div *ngIf="!loading && !error" class="card custom-card">
-        <div class="card-header border-bottom">
-          <h5 class="card-title mb-0">Choisissez un protocole pour créer un rapport</h5>
-        </div>
-        <div class="card-body">
-          <div *ngIf="isEmpty(protocolsByType)" class="alert alert-info">
-            <i class="fe fe-info me-2"></i>Aucun protocole disponible pour le moment.
-          </div>
-          
-          <div *ngIf="!isEmpty(protocolsByType)">
-            <div class="row">
-              <div *ngFor="let type of protocolsByType | keyvalue" class="col-md-6 col-lg-4 mb-4">
-                <div class="card shadow-sm">
-                  <div class="card-header d-flex align-items-center" [ngClass]="getThemeClass('bg-transparent', 'bg-light')">
-                    <i class="fe fe-clipboard me-2 text-primary"></i>
-                    <h5 class="mb-0">{{ type.key }}</h5>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="list-group list-group-flush border-0">
-                      <button *ngFor="let protocol of type.value" 
-                              (click)="selectProtocol(protocol.id)"
-                              class="list-group-item list-group-item-action d-flex align-items-center"
-                              [ngClass]="getThemeClass('bg-transparent border-dark-subtle', '')">
-                        <i class="fe fe-file-text me-2 text-primary"></i>
-                        <span>{{ protocol.name }}</span>
-                        <i class="fe fe-chevron-right ms-auto"></i>
-                      </button>
+      <div *ngIf="!loading && !error" class="row">
+        <div class="col-12 mb-4">
+          <div class="card custom-card">
+            <div class="card-header border-bottom d-flex justify-content-between align-items-center">
+              <div class="card-title">Choisissez un protocole pour créer un rapport</div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary" (click)="expandAllProtocolTypes()" *ngIf="!areAllProtocolTypesExpanded()">
+                  <i class="fe fe-chevrons-down me-1"></i> Tout déplier
+                </button>
+                <button class="btn btn-sm btn-outline-primary" (click)="collapseAllProtocolTypes()" *ngIf="areAllProtocolTypesExpanded()">
+                  <i class="fe fe-chevrons-up me-1"></i> Tout replier
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-4">
+              <div *ngIf="isEmpty(protocolsByType)" class="alert alert-info mb-0">
+                <div class="d-flex">
+                  <i class="fe fe-info me-2 align-self-center"></i>
+                  <div>Aucun protocole disponible pour le moment.</div>
+                </div>
+              </div>
+              
+              <div *ngIf="!isEmpty(protocolsByType)" class="row">
+                <div *ngFor="let type of protocolsByType | keyvalue" class="col-xl-6 col-lg-6 col-md-12 mb-4">
+                  <div class="card custom-card overflow-hidden protocol-category-card shadow-sm">
+                    <div class="card-header d-flex align-items-center" [ngClass]="getThemeClass('bg-transparent', 'bg-light')"
+                         (click)="toggleProtocolType(type.key)" role="button">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar avatar-sm bg-primary-transparent me-2">
+                          <i class="fe fe-clipboard text-primary"></i>
+                        </span>
+                        <h5 class="mb-0">{{ type.key }}</h5>
+                      </div>
+                      <div class="ms-auto d-flex align-items-center">
+                        <span class="badge bg-primary-transparent text-primary me-2 rounded-pill">
+                          {{ type.value.length }} protocoles
+                        </span>
+                        <i class="fe" [ngClass]="isProtocolTypeExpanded(type.key) ? 'fe-chevron-up' : 'fe-chevron-down'"></i>
+                      </div>
+                    </div>
+                    
+                    <!-- Animated content -->
+                    <div [@expandCollapse]="isProtocolTypeExpanded(type.key) ? 'expanded' : 'collapsed'" class="overflow-hidden">
+                      <div class="list-group list-group-flush">
+                        <button *ngFor="let protocol of type.value" 
+                                (click)="selectProtocol(protocol.id)"
+                                class="list-group-item list-group-item-action d-flex align-items-center protocol-item"
+                                [ngClass]="getThemeClass('bg-transparent border-dark-subtle', '')">
+                          <div class="d-flex w-100 align-items-center">
+                            <div class="protocol-icon">
+                              <i class="fe fe-file-text text-primary"></i>
+                            </div>
+                            <div class="ms-3">
+                              <h6 class="mb-0">{{ protocol.name }}</h6>
+                              <small class="text-muted">ID: {{ protocol.id }}</small>
+                            </div>
+                            <div class="ms-auto">
+                              <span class="badge bg-success-transparent text-success rounded-pill me-2">Disponible</span>
+                              <i class="fe fe-chevron-right"></i>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
