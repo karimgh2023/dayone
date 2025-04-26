@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +43,8 @@ export class FillReportComponent implements OnInit {
 
   constructor(
     private reportEntryService: ReportEntryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +59,13 @@ export class FillReportComponent implements OnInit {
       }
     });
 
+  }
+
+  /**
+   * Navigate back to the reports list
+   */
+  goBack(): void {
+    this.router.navigate(['/dashboard/report-dashboard/view-reports']);
   }
 
   formatLabel(key: string): string {
@@ -196,6 +204,26 @@ export class FillReportComponent implements OnInit {
         alert('❌ Échec de l\'enregistrement de la checklist. Veuillez réessayer.');
       }
     });
+  }
+
+  /**
+   * Toggle implementation status and mark as filled
+   */
+  toggleImplementation(item: StandardChecklistItemDTO): void {
+    if (item.editable) {
+      item.implemented = !item.implemented;
+      item.isFilled = true;
+    }
+  }
+
+  /**
+   * Toggle homologation status and mark as filled
+   */
+  toggleHomologation(item: SpecificChecklistItemDTO): void {
+    if (item.editable) {
+      item.homologation = !item.homologation;
+      item.isFilled = true;
+    }
   }
 
 
