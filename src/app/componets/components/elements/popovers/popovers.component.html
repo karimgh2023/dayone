@@ -1,0 +1,495 @@
+
+<app-page-header title="Popovers" ></app-page-header>
+<!-- Start:: row-1 -->
+<div class="row">
+  <div class="col-xl-5">
+    <app-showcode-card
+      [title]="'Default Popovers'"
+      [prism]="prismCode.popover1"
+    >
+      <div class="d-flex gap-1 flex-wrap">
+        <a
+          tabindex="0"
+          class="btn btn-outline-primary btn-wave"
+          role="button"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverTitle="Popover Top"
+          ngbPopover="And here's some amazing content. It's very engaging. Right?"
+          >Popover Top
+        </a>
+        <a
+          tabindex="0"
+          class="btn btn-outline-primary btn-wave"
+          role="button"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverTitle="Popover Right"
+          ngbPopover="And here's some amazing content. It's very engaging. Right?"
+          >Popover Right</a
+        >
+        <a
+          tabindex="0"
+          class="btn btn-outline-primary btn-wave"
+          role="button"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverTitle="Popover Bottom"
+          ngbPopover="And here's some amazing content. It's very engaging. Right?"
+          >Popover Bottom</a
+        >
+        <a
+          tabindex="0"
+          class="btn btn-outline-primary btn-wave"
+          role="button"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverTitle="Popover Left"
+          ngbPopover="And here's some amazing content. It's very engaging. Right?"
+          >Popover Left</a
+        >
+      </div>
+    </app-showcode-card>
+  </div>
+  <div class="col-xl-7">
+    <app-showcode-card [title]="'Colored Headers'" [prism]="prismCode.popover2">
+      <div class="d-flex gap-1 flex-wrap">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="header-primary"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with primary header."
+        >
+          Header Primary
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-wave"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverClass="header-secondary"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with secondary header."
+        >
+          Header Secondary
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-info btn-wave info-popover"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverClass="header-info"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with info header."
+        >
+          Header Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-warning btn-wave"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverClass="header-warning"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with warning header."
+        >
+          Header Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="header-success"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with success header."
+        >
+          Header Success
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="header-danger"
+          popoverTitle="Color Header"
+          ngbPopover="Popover with danger header."
+        >
+          Header Danger
+        </button>
+      </div>
+    </app-showcode-card>
+  </div>
+</div>
+<!-- End:: row-1 -->
+
+<!-- Start:: row-2 -->
+<div class="row">
+  <div class="col-xl-12">
+    <app-showcode-card
+      [title]="'Colored Popovers'"
+      [prism]="prismCode.popover3"
+    >
+      <div class="d-flex gap-1 flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="popover-primary"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with primary background."
+        >
+          Primary
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary btn-wave"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverClass="popover-secondary"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with secondary background."
+        >
+          Secondary
+        </button>
+        <button
+          type="button"
+          class="btn btn-info btn-wave"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverClass="popover-info"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with info background."
+        >
+          Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning btn-wave"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverClass="popover-warning"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with warning background."
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-success btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="popover-success"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with success background."
+        >
+          Success
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-wave"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverClass="popover-danger"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with danger background."
+        >
+          Danger
+        </button>
+        <button
+          type="button"
+          class="btn btn-teal btn-wave"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverClass="popover-teal"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with teal background."
+        >
+          Teal
+        </button>
+        <button
+          type="button"
+          class="btn btn-purple btn-wave"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverClass="popover-purple"
+          popoverTitle="Color Background"
+          ngbPopover="Popover with purple background."
+        >
+          Purple
+        </button>
+      </div>
+    </app-showcode-card>
+  </div>
+</div>
+<!-- End:: row-2 -->
+
+<!-- Start:: row-3 -->
+<div class="row">
+  <div class="col-xl-12">
+    <app-showcode-card [title]="'Light Popovers'" [prism]="prismCode.popover4">
+      <div class="d-flex gap-1 flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary-light btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="popover-primary-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light primary background."
+        >
+          Primary
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary-light btn-wave"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverClass="popover-secondary-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light secondary background."
+        >
+          Secondary
+        </button>
+        <button
+          type="button"
+          class="btn btn-info-light btn-wave"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverClass="popover-info-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light info background."
+        >
+          Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning-light btn-wave"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverClass="popover-warning-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light warning background."
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-success-light btn-wave"
+          data-bs-toggle="popover"
+          placement="top"
+          popoverClass="popover-success-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light success background."
+        >
+          Success
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger-light btn-wave"
+          data-bs-toggle="popover"
+          placement="right"
+          popoverClass="popover-danger-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light danger background."
+        >
+          Danger
+        </button>
+        <button
+          type="button"
+          class="btn btn-teal-light btn-wave"
+          data-bs-toggle="popover"
+          placement="bottom"
+          popoverClass="popover-teal-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light teal background."
+        >
+          Teal
+        </button>
+        <button
+          type="button"
+          class="btn btn-purple-light btn-wave"
+          data-bs-toggle="popover"
+          placement="left"
+          popoverClass="popover-purple-light"
+          popoverTitle="Light Background"
+          ngbPopover="Popover with light purple background."
+        >
+          Purple
+        </button>
+      </div>
+    </app-showcode-card>
+  </div>
+</div>
+<!-- End:: row-3 -->
+
+<!-- Start:: row-4 -->
+<div class="row">
+  <div class="col-xl-6">
+    <app-showcode-card
+      [title]="'Dismissible Popovers'"
+      [prism]="prismCode.popover5"
+      classbody="d-sm-flex  justify-content-lg-between gap-0"
+    >
+      <a
+        tabindex="0"
+        class="btn btn-primary m-1"
+        data-bs-toggle="popover"
+        data-bs-trigger="focus"
+        placement="top"
+        popoverTitle="Dismissible popover"
+        ngbPopover="And here's some amazing content. It's very engaging. Right?"
+        >Popover Dismiss
+      </a>
+      <a
+        tabindex="0"
+        class="btn btn-secondary m-1"
+        data-bs-toggle="popover"
+        data-bs-trigger="focus"
+        placement="right"
+        popoverTitle="Dismissible popover"
+        ngbPopover="And here's some amazing content. It's very engaging. Right?"
+        >Popover Dismiss
+      </a>
+      <a
+        tabindex="0"
+        class="btn btn-info m-1"
+        data-bs-toggle="popover"
+        data-bs-trigger="focus"
+        placement="bottom"
+        popoverTitle="Dismissible popover"
+        ngbPopover="And here's some amazing content. It's very engaging. Right?"
+        >Popover Dismiss
+      </a>
+      <a
+        tabindex="0"
+        class="btn btn-warning m-1"
+        data-bs-toggle="popover"
+        data-bs-trigger="focus"
+        placement="left"
+        popoverTitle="Dismissible popover"
+        ngbPopover="And here's some amazing content. It's very engaging. Right?"
+        >Popover Dismiss
+      </a>
+    </app-showcode-card>
+  </div>
+  <div class="col-xl-6">
+    <app-showcode-card
+      [title]="'Disabled Popover'"
+      [prism]="prismCode.popover6"
+    >
+      <span
+        class="d-inline-block mb-3 mb-sm-1 me-2"
+        tabindex="0"
+        data-bs-toggle="popover"
+        data-bs-trigger="hover focus"
+        ngbPopover="Disabled popover"
+      >
+        <button class="btn btn-primary" type="button" disabled>
+          Disabled button
+        </button>
+      </span>
+    </app-showcode-card>
+  </div>
+  <div class="col-xl-6">
+    <app-showcode-card [title]="'Icon Popovers'" [prism]="prismCode.popover7">
+      <a
+        class="me-4"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="top"
+        popoverClass="popover-secondary"
+        ngbPopover="This popover is used to provide details about this icon."
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="svg-secondary"
+          height="24px"
+          viewBox="0 0 24 24"
+          width="24px"
+          fill="#000000"
+        >
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path
+            d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+          />
+        </svg>
+      </a>
+      <a
+        class="me-4"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="left"
+        popoverClass="popover-info"
+        ngbPopover="This popover is used to provide information about this icon."
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="svg-info"
+          height="24px"
+          viewBox="0 0 24 24"
+          width="24px"
+          fill="#000000"
+        >
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path
+            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+          />
+        </svg>
+      </a>
+      <a
+        class="me-4"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="right"
+        popoverClass="popover-warning"
+        ngbPopover="This popover is used to provide information about this icon."
+      >
+        <span class="avatar avatar-md br-5 bg-warning-transparent text-warning"
+          ><i class="fe fe-box"></i
+        ></span>
+      </a>
+      <a
+        class="me-4"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="bottom"
+        popoverClass="popover-teal"
+        ngbPopover="This popover is used to provide information about this icon."
+      >
+        <span class="avatar avatar-md br-5 bg-teal-transparent text-teal"
+          ><i class="fe fe-zap"></i
+        ></span>
+      </a>
+    </app-showcode-card>
+  </div>
+  <div class="col-xl-6">
+    <app-showcode-card [title]="'Image Popovers'" [prism]="prismCode.popover7">
+      <a
+        class="me-4 avatar avatar-md br-5"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="top"
+        popoverClass="popover-primary"
+        ngbPopover="This popover is used to provide information about this icon."
+      >
+        <img src="./assets/images/users/10.jpg" alt="img" />
+      </a>
+      <a
+        class="me-4 avatar avatar-md rounded-circle"
+        href="javascript:void(0)"
+        data-bs-toggle="popover"
+        placement="right"
+        popoverClass="popover-white"
+        ngbPopover="This popover is used to provide information about this icon."
+      >
+        <img src="./assets/images/users/1.jpg" alt="img" />
+      </a>
+    </app-showcode-card>
+  </div>
+</div>
+<!-- End:: row-4 -->

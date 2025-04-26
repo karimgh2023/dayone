@@ -1,0 +1,272 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Report Tabs -->
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs report-tabs">
+        <li [ngbNavItem]="1">
+          <button ngbNavLink>Basic Information</button>
+          <ng-template ngbNavContent>
+            <div class="report-card">
+              <div class="card-header">
+                <h6 class="card-title">
+                  Equipment Details
+                  <p class="subtitle">Enter the basic information about the equipment</p>
+                </h6>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="reportForm">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="reportTitle" class="form-label">Report Title</label>
+                      <input 
+                        type="text" 
+                        id="reportTitle"
+                        formControlName="reportTitle"
+                        class="form-control"
+                        placeholder="Enter report title">
+                      <div class="text-danger" *ngIf="reportForm.get('reportTitle')?.invalid && reportForm.get('reportTitle')?.touched">
+                        Title is required
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                      <label for="serialNumber" class="form-label">Serial Number</label>
+                      <input 
+                        type="text" 
+                        id="serialNumber"
+                        formControlName="serialNumber"
+                        class="form-control"
+                        placeholder="Enter serial number">
+                      <div class="text-danger" *ngIf="reportForm.get('serialNumber')?.invalid && reportForm.get('serialNumber')?.touched">
+                        Serial number is required
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                      <label for="type" class="form-label">Type</label>
+                      <input 
+                        type="text" 
+                        id="type"
+                        formControlName="type"
+                        class="form-control"
+                        placeholder="Qualification, Homologation, etc.">
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                      <label for="manufacturer" class="form-label">Manufacturer</label>
+                      <input 
+                        type="text" 
+                        id="manufacturer"
+                        formControlName="manufacturer"
+                        class="form-control"
+                        placeholder="Enter manufacturer">
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                      <label for="equipmentDescription" class="form-label">Equipment Description</label>
+                      <textarea 
+                        id="equipmentDescription"
+                        formControlName="equipmentDescription"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Describe the equipment"></textarea>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label for="designation" class="form-label">Designation</label>
+                      <input 
+                        type="text" 
+                        id="designation"
+                        formControlName="designation"
+                        class="form-control"
+                        placeholder="Enter designation">
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label for="immobilization" class="form-label">Immobilization</label>
+                      <input 
+                        type="text" 
+                        id="immobilization"
+                        formControlName="immobilization"
+                        class="form-control"
+                        placeholder="Enter immobilization">
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label for="serviceSeg" class="form-label">Service Segment</label>
+                      <input 
+                        type="text" 
+                        id="serviceSeg"
+                        formControlName="serviceSeg"
+                        class="form-control"
+                        placeholder="Enter service segment">
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                      <label for="businessUnit" class="form-label">Business Unit</label>
+                      <input 
+                        type="text" 
+                        id="businessUnit"
+                        formControlName="businessUnit"
+                        class="form-control"
+                        placeholder="Enter business unit">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <button ngbNavLink>Parameters</button>
+          <ng-template ngbNavContent>
+            <div class="report-card">
+              <div class="card-header">
+                <h6 class="card-title">
+                  Parameter List
+                  <p class="subtitle">Add and evaluate equipment parameters</p>
+                </h6>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="reportForm">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="form-section-title">Parameters</h5>
+                    <button 
+                      type="button" 
+                      class="btn btn-sm btn-primary btn-wave"
+                      (click)="addParameter()">
+                      <i class="ri-add-line me-1"></i> Add Parameter
+                    </button>
+                  </div>
+                  
+                  <div class="report-grid" formArrayName="parameters">
+                    <div class="grid-header-row">
+                      <div>Parameter</div>
+                      <div>Value</div>
+                      <div>Unit</div>
+                      <div>Status</div>
+                      <div>Action</div>
+                      <div>Actions</div>
+                    </div>
+                    
+                    <div class="grid-data-row" 
+                         *ngFor="let parameter of parametersArray.controls; let i = index"
+                         [formGroupName]="i">
+                      <div data-label="Parameter:">
+                        <input type="text" formControlName="name" class="form-control" placeholder="Parameter name">
+                      </div>
+                      <div data-label="Value:">
+                        <input type="text" formControlName="value" class="form-control" placeholder="Value">
+                      </div>
+                      <div data-label="Unit:">
+                        <input type="text" formControlName="unit" class="form-control" placeholder="Unit">
+                      </div>
+                      <div data-label="Status:">
+                        <select formControlName="status" class="form-select">
+                          <option *ngFor="let option of statusOptions" [value]="option.value">
+                            {{ option.icon }} {{ option.label }}
+                          </option>
+                        </select>
+                      </div>
+                      <div data-label="Action:">
+                        <input type="text" formControlName="action" class="form-control"
+                               [class.bg-light]="!isActionRequired(i)"
+                               [disabled]="!isActionRequired(i)"
+                               placeholder="Required action">
+                      </div>
+                      <div>
+                        <button 
+                          type="button" 
+                          class="btn btn-sm btn-danger btn-wave"
+                          (click)="removeParameter(i)">
+                          <i class="ri-delete-bin-line"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <button ngbNavLink>Summary</button>
+          <ng-template ngbNavContent>
+            <div class="report-card">
+              <div class="card-header">
+                <h6 class="card-title">
+                  Report Summary
+                  <p class="subtitle">Verify and submit the report</p>
+                </h6>
+              </div>
+              <div class="card-body">
+                <div class="mb-4">
+                  <h5 class="form-section-title">Basic Information</h5>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <strong>Report Title:</strong> {{ reportForm.get('reportTitle')?.value }}
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Serial Number:</strong> {{ reportForm.get('serialNumber')?.value }}
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Type:</strong> {{ reportForm.get('type')?.value }}
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <strong>Manufacturer:</strong> {{ reportForm.get('manufacturer')?.value }}
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mb-4">
+                  <h5 class="form-section-title">Parameters</h5>
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Parameter</th>
+                          <th>Value</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let param of parametersArray.controls">
+                          <td>{{ param.get('name')?.value }}</td>
+                          <td>{{ param.get('value')?.value }} {{ param.get('unit')?.value }}</td>
+                          <td>
+                            <span *ngIf="param.get('status')?.value === 'PASSED'" class="text-success">
+                              <i class="ri-checkbox-circle-fill me-1"></i> Passed
+                            </span>
+                            <span *ngIf="param.get('status')?.value === 'FAILED'" class="text-danger">
+                              <i class="ri-close-circle-fill me-1"></i> Failed
+                            </span>
+                            <span *ngIf="param.get('status')?.value === 'PENDING'" class="text-warning">
+                              <i class="ri-time-fill me-1"></i> Pending
+                            </span>
+                          </td>
+                          <td>{{ param.get('action')?.value }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <button 
+                    type="button" 
+                    class="btn btn-primary btn-wave"
+                    (click)="submitReport()">
+                    Submit Report
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+</div> 

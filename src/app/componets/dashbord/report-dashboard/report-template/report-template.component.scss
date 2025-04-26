@@ -1,0 +1,54 @@
+// Component-specific styles only
+
+// Add subtle transitions for form interactions
+.form-control, 
+.form-select {
+  transition: all 0.2s ease-in-out;
+  
+  &:focus {
+    transform: translateY(-1px);
+  }
+}
+
+// Styling for the parameter status indicators in the table
+.text-success, 
+.text-warning, 
+.text-danger {
+  i {
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+}
+
+// Additional table styling for summary view
+.table-responsive {
+  .table {
+    th {
+      background-color: rgba(var(--primary-rgb), 0.05);
+      font-weight: 500;
+    }
+  }
+}
+
+// Dark theme adjustments
+[data-theme-mode="dark"] {
+  .table-responsive {
+    .table {
+      th {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+// Make the Add Parameter button more prominent
+.btn-primary.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-weight: 500;
+  
+  i {
+    font-size: 0.875rem;
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+} 

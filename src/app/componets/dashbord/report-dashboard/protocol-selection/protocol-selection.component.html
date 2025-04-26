@@ -1,12 +1,63 @@
-<div *ngIf="protocolsByType">
-  <div *ngFor="let type of protocolsByType | keyvalue">
-    <h3>{{ type.key }}</h3>
-    <ul>
-      <li *ngFor="let protocol of type.value">
-        <button (click)="selectProtocol(protocol.id)">
-          {{ protocol.name }}
-        </button>
-      </li>
-    </ul>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Page header -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Sélection de Protocole</h2>
+      </div>
+
+      <!-- Error state -->
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        <i class="fe fe-alert-triangle me-2"></i>{{ error }}
+        <button class="btn btn-sm btn-outline-danger ms-2" (click)="fetchProtocols()">Réessayer</button>
+      </div>
+
+      <!-- Loading state -->
+      <div *ngIf="loading" class="card custom-card p-3">
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 250px;">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+          <span class="ms-2">Chargement des protocoles...</span>
+        </div>
+      </div>
+
+      <!-- Content when data is loaded -->
+      <div *ngIf="!loading && !error" class="card custom-card">
+        <div class="card-header border-bottom">
+          <h5 class="card-title mb-0">Choisissez un protocole pour créer un rapport</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isEmpty(protocolsByType)" class="alert alert-info">
+            <i class="fe fe-info me-2"></i>Aucun protocole disponible pour le moment.
+          </div>
+          
+          <div *ngIf="!isEmpty(protocolsByType)">
+            <div class="row">
+              <div *ngFor="let type of protocolsByType | keyvalue" class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                  <div class="card-header d-flex align-items-center" [ngClass]="getThemeClass('bg-transparent', 'bg-light')">
+                    <i class="fe fe-clipboard me-2 text-primary"></i>
+                    <h5 class="mb-0">{{ type.key }}</h5>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="list-group list-group-flush border-0">
+                      <button *ngFor="let protocol of type.value" 
+                              (click)="selectProtocol(protocol.id)"
+                              class="list-group-item list-group-item-action d-flex align-items-center"
+                              [ngClass]="getThemeClass('bg-transparent border-dark-subtle', '')">
+                        <i class="fe fe-file-text me-2 text-primary"></i>
+                        <span>{{ protocol.name }}</span>
+                        <i class="fe fe-chevron-right ms-auto"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

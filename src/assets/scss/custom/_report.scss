@@ -1,0 +1,237 @@
+/* Start:: Report Styles */
+
+// Base report card styling
+.report-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-clip: border-box;
+  background-color: var(--custom-white);
+  margin-block-end: 1.5rem;
+  width: 100%;
+  border: 0;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(196, 205, 224, .2);
+  border-radius: 0.813rem;
+
+  .card-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    background-color: transparent !important;
+    border-block-end: 0px solid var(--default-border);
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+
+    &:first-child {
+      border-radius: 0.625rem 0.625rem 0 0;
+    }
+
+    .card-title:before {
+      content: "";
+      position: absolute;
+      inset-inline-start: -1.5rem;
+      padding: 2px;
+      height: 1.563rem;
+      background: var(--primary-color);
+    }
+
+    .card-title {
+      position: relative;
+      margin-block-end: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-transform: capitalize;
+
+      .subtitle {
+        margin-block-end: 0;
+        text-transform: initial;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    color: var(--default-text-color);
+  }
+
+  .card-footer {
+    background-color: transparent !important;
+    border-block-start: 1px solid var(--default-border);
+    padding: 1rem 1.25rem;
+  }
+}
+
+// Dark theme report card
+[data-theme-mode="dark"] {
+  .report-card {
+    background-color: #1e1e1e;
+    color: #fff;
+    box-shadow: 0 0.05rem 0.5rem 0 rgba(14, 15, 46, .1);
+
+    .form-control,
+    .form-select {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: #fff;
+      
+      &:focus {
+        background-color: #2c2c2c;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
+      }
+      
+      &:disabled {
+        background-color: #1a1a1a;
+        opacity: 0.7;
+      }
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .table {
+      color: #fff;
+    }
+
+    .text-muted {
+      color: #9ba5ca !important;
+    }
+  }
+}
+
+// Report grid layout
+.report-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .grid-header-row,
+  .grid-data-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr 1fr;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .grid-header-row {
+    font-weight: 500;
+    border-bottom: 2px solid var(--default-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .grid-data-row {
+    border-bottom: 1px solid var(--default-border);
+    padding: 0.5rem 0;
+  }
+}
+
+// Report form styling
+.form-section-title {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--default-text-color);
+  position: relative;
+  padding-left: 0.75rem;
+  
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 1rem;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+  }
+}
+
+// Status indicators
+.status-indicator {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+
+  &.status-success {
+    background-color: var(--success-rgb);
+  }
+
+  &.status-pending {
+    background-color: var(--warning-rgb);
+  }
+
+  &.status-failed {
+    background-color: var(--danger-rgb);
+  }
+}
+
+// Report navigation tabs
+.report-tabs {
+  border-bottom: 1px solid var(--default-border);
+  margin-bottom: 1.5rem;
+  
+  .nav-link {
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    position: relative;
+    
+    &:hover {
+      color: var(--primary-color);
+    }
+    
+    &.active {
+      color: var(--primary-color);
+      background-color: transparent;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 767.98px) {
+  .report-grid {
+    .grid-header-row,
+    .grid-data-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    
+    .grid-header-row {
+      display: none;
+    }
+    
+    .grid-data-row > div {
+      border-bottom: 1px solid var(--default-border);
+      padding: 0.5rem 0;
+      
+      &:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: 500;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+/* End:: Report Styles */ 
