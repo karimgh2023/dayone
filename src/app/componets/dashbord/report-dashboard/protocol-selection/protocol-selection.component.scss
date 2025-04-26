@@ -375,3 +375,193 @@ h2, h3 {
     gap: 1rem;
   }
 }
+
+/* Search box styling */
+.search-box {
+  width: 300px;
+  max-width: 100%;
+  
+  .input-group {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    
+    .input-group-text {
+      background-color: rgba(var(--primary-rgb), 0.1);
+      border-color: rgba(var(--primary-rgb), 0.2);
+      color: var(--primary-color);
+    }
+    
+    .form-control {
+      border-color: rgba(var(--primary-rgb), 0.2);
+      &:focus {
+        box-shadow: none;
+        border-color: rgba(var(--primary-rgb), 0.4);
+      }
+    }
+    
+    .btn {
+      border-color: rgba(var(--primary-rgb), 0.2);
+      background-color: var(--custom-white);
+      color: var(--text-muted);
+      
+      &:hover {
+        color: var(--danger-color);
+      }
+    }
+  }
+}
+
+/* Tab navigation styling */
+.nav-tabs {
+  border-bottom: 1px solid var(--default-border);
+  margin-bottom: 1.5rem;
+  
+  .nav-link {
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    position: relative;
+    
+    &:hover {
+      color: var(--primary-color);
+      border-color: transparent;
+      background-color: rgba(var(--primary-rgb), 0.05);
+    }
+    
+    &.active {
+      color: var(--primary-color);
+      background-color: var(--custom-white);
+      border-color: var(--default-border) var(--default-border) var(--custom-white);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--primary-color);
+      }
+      
+      .badge {
+        background-color: var(--primary-color) !important;
+        color: #fff !important;
+      }
+    }
+    
+    .fe {
+      font-size: 1.1rem;
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
+    
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 400;
+      padding: 0.2em 0.5em;
+    }
+  }
+}
+
+/* Button styling */
+.btn-warning, .btn-outline-warning {
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.btn-warning {
+  background-color: rgb(var(--warning-rgb));
+  border-color: rgb(var(--warning-rgb));
+  color: white;
+  
+  &:hover {
+    background-color: rgba(var(--warning-rgb), 0.9);
+    border-color: rgba(var(--warning-rgb), 0.9);
+  }
+}
+
+.btn-outline-warning {
+  color: rgb(var(--warning-rgb));
+  border-color: rgb(var(--warning-rgb));
+  
+  &:hover {
+    background-color: rgba(var(--warning-rgb), 0.1);
+    color: rgb(var(--warning-rgb));
+    border-color: rgb(var(--warning-rgb));
+  }
+}
+
+/* Enhanced badge styling */
+.badge {
+  &.bg-warning-transparent {
+    background-color: rgba(var(--warning-rgb), 0.1);
+    color: rgb(var(--warning-rgb));
+  }
+  
+  &.bg-info-transparent {
+    background-color: rgba(var(--info-rgb), 0.1);
+    color: rgb(var(--info-rgb));
+  }
+}
+
+/* Card title styling */
+.card-title {
+  display: flex;
+  align-items: center;
+  
+  .fe {
+    font-size: 1.1rem;
+    margin-top: -2px;
+  }
+}
+
+/* Dark mode adjustments for new components */
+:host-context([data-theme-mode="dark"]) {
+  .search-box .input-group {
+    .input-group-text {
+      background-color: rgba(var(--primary-rgb), 0.2);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-control {
+      background-color: var(--dark-bg);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .btn {
+      background-color: var(--dark-bg);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+  
+  .nav-tabs {
+    border-color: rgba(255, 255, 255, 0.1);
+    
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6);
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      &.active {
+        background-color: var(--dark-bg);
+        border-color: rgba(255, 255, 255, 0.1) rgba(255, 255, 255, 0.1) var(--dark-bg);
+        color: var(--primary-color);
+      }
+    }
+  }
+  
+  .badge.bg-light {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+}

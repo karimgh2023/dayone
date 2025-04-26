@@ -18,12 +18,22 @@ export class ViewReportsComponent implements OnInit {
   assignedReports: ReportDTO[] = [];
   filteredCreatedReports: ReportDTO[] = [];
   filteredAssignedReports: ReportDTO[] = [];
+  filteredAllReports: ReportDTO[] = [];
   userRole: string = '';
   createdReportsTypeFilter: string = '';
   assignedReportsTypeFilter: string = '';
   userEmail: string = '';
+  currentView: string = 'list';
+  activeTab: string = 'all';
+  searchTerm: string = '';
+  globalTypeFilter: string = '';
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService) {
+    // Initialize empty collections
+    this.filteredAllReports = [];
+    this.filteredCreatedReports = [];
+    this.filteredAssignedReports = [];
+  }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -40,7 +50,92 @@ export class ViewReportsComponent implements OnInit {
 
       // ✅ Always fetch assigned reports
       this.fetchAssignedReports();
+      
+      // Default active tab is 'all'
+      this.activeTab = 'all';
     }
+  }
+
+  /**
+   * Set the current view mode (list or board)
+   */
+  setView(view: string): void {
+    this.currentView = view;
+  }
+
+  /**
+   * Set the active tab (all, created, assigned)
+   */
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+    
+    // Update the filtered reports based on the active tab
+    if (tab === 'all') {
+      this.applyGlobalFilter();
+    } else if (tab === 'created') {
+      this.applyCreatedReportsFilter();
+    } else if (tab === 'assigned') {
+      this.applyAssignedReportsFilter();
+    }
+  }
+
+  /**
+   * Get all reports (both created and assigned)
+   */
+  getAllReports(): ReportDTO[] {
+    // Create a Map to handle potential duplicates
+    const reportsMap = new Map<number, ReportDTO>();
+    
+    // Add all created reports
+    this.createdReports.forEach(report => {
+      reportsMap.set(report.id, report);
+    });
+    
+    // Add all assigned reports (only if not already in the map)
+    this.assignedReports.forEach(report => {
+      if (!reportsMap.has(report.id)) {
+        reportsMap.set(report.id, report);
+      }
+    });
+    
+    return Array.from(reportsMap.values());
+  }
+
+  /**
+   * Apply global filter for all reports
+   */
+  applyGlobalFilter(): void {
+    const allReports = this.getAllReports();
+    this.filteredAllReports = allReports.filter(report => {
+      // Type filter
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
+        return false;
+      }
+      
+      // Search term filter
+      if (this.searchTerm) {
+        const term = this.searchTerm.toLowerCase();
+        return (
+          report.id.toString().includes(term) ||
+          report.serialNumber.toLowerCase().includes(term) ||
+          (report.designation && report.designation.toLowerCase().includes(term)) ||
+          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
+        );
+      }
+      
+      return true;
+    });
+    
+    // Also update the other filtered collections with the same filters
+    this.applyCreatedReportsFilter();
+    this.applyAssignedReportsFilter();
+  }
+
+  /**
+   * Get reports filtered by status
+   */
+  getAllReportsByStatus(status: string): ReportDTO[] {
+    return this.getAllReports().filter(report => this.getStatusLabel(report) === status);
   }
 
   fetchCreatedReports(): void {
@@ -48,6 +143,10 @@ export class ViewReportsComponent implements OnInit {
       next: (reports: ReportDTO[]) => {
         this.createdReports = reports;
         this.filteredCreatedReports = [...this.createdReports];
+        
+        // Update the combined reports list
+        this.filteredAllReports = this.getAllReports();
+        this.applyGlobalFilter();
       },
       error: (err) => {
         console.error('Error fetching created reports:', err);
@@ -58,16 +157,24 @@ export class ViewReportsComponent implements OnInit {
   fetchAssignedReports(): void {
     this.reportService.getReportsAssignedToMe().subscribe({
       next: (reports: ReportDTO[]) => {
-        this.assignedReports = reports;
+        // Fix missing createdByEmail in reports
+        this.assignedReports = reports.map(report => {
+          // If createdByEmail is missing, try to set it from other available sources
+          if (!report.createdByEmail) {
+            const createdBy = this.extractCreatedByFromReport(report);
+            if (createdBy) {
+              report.createdByEmail = createdBy;
+            }
+          }
+          return report;
+        });
+        
         this.filteredAssignedReports = [...this.assignedReports];
         
-        // Debug: check if createdByEmail exists in reports
-        console.log('Assigned Reports:', this.assignedReports);
-        this.assignedReports.forEach(report => {
-          if (!report.createdByEmail) {
-            console.warn(`Report #${report.id} missing createdByEmail:`, report);
-          }
-        });
+        // Update the combined reports list to show proper total
+        this.filteredAllReports = this.getAllReports();
+        // Apply filters to ensure consistency
+        this.applyGlobalFilter();
       },
       error: (err) => {
         console.error('Error fetching assigned reports:', err);
@@ -76,29 +183,98 @@ export class ViewReportsComponent implements OnInit {
   }
 
   /**
+   * Extract creator email from various report structures
+   */
+  private extractCreatedByFromReport(report: any): string | null {
+    // Try to access potential alternative structures
+    if (report.createdBy && typeof report.createdBy === 'object') {
+      if (report.createdBy.email) return report.createdBy.email;
+      if (report.createdBy.mail) return report.createdBy.mail;
+    }
+    
+    // Check for a creator in assignedUsers
+    if (report.assignedUsers && Array.isArray(report.assignedUsers)) {
+      const creator = report.assignedUsers.find((user: any) => 
+        user.role === 'CREATOR' || user.role === 'DEPARTMENT_MANAGER'
+      );
+      
+      if (creator && creator.email) {
+        return creator.email;
+      }
+    }
+    
+    // If we have a creator name but no email, construct a placeholder
+    if (report.createdByName) {
+      return `${report.createdByName} (No Email)`;
+    }
+    
+    return null;
+  }
+
+  /**
+   * Get creator email with improved fallbacks
+   */
+  getCreatorEmail(report: ReportDTO): string {
+    if (report.createdByEmail) {
+      return report.createdByEmail;
+    }
+    
+    const createdBy = this.extractCreatedByFromReport(report as any);
+    if (createdBy) {
+      return createdBy;
+    }
+    
+    return 'Non spécifié';
+  }
+
+  /**
    * Apply type filter to created reports
    */
   applyCreatedReportsFilter(): void {
-    if (!this.createdReportsTypeFilter) {
-      this.filteredCreatedReports = [...this.createdReports];
-    } else {
-      this.filteredCreatedReports = this.createdReports.filter(
-        report => report.type === this.createdReportsTypeFilter
-      );
-    }
+    this.filteredCreatedReports = this.createdReports.filter(report => {
+      // Type filter
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
+        return false;
+      }
+      
+      // Search term filter
+      if (this.searchTerm) {
+        const term = this.searchTerm.toLowerCase();
+        return (
+          report.id.toString().includes(term) ||
+          report.serialNumber.toLowerCase().includes(term) ||
+          (report.designation && report.designation.toLowerCase().includes(term)) ||
+          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
+        );
+      }
+      
+      return true;
+    });
   }
 
   /**
    * Apply type filter to assigned reports
    */
   applyAssignedReportsFilter(): void {
-    if (!this.assignedReportsTypeFilter) {
-      this.filteredAssignedReports = [...this.assignedReports];
-    } else {
-      this.filteredAssignedReports = this.assignedReports.filter(
-        report => report.type === this.assignedReportsTypeFilter
-      );
-    }
+    this.filteredAssignedReports = this.assignedReports.filter(report => {
+      // Type filter
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
+        return false;
+      }
+      
+      // Search term filter
+      if (this.searchTerm) {
+        const term = this.searchTerm.toLowerCase();
+        return (
+          report.id.toString().includes(term) ||
+          report.serialNumber.toLowerCase().includes(term) ||
+          (report.designation && report.designation.toLowerCase().includes(term)) ||
+          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
+        );
+      }
+      
+      return true;
+    });
   }
 
   /**
@@ -125,45 +301,10 @@ export class ViewReportsComponent implements OnInit {
   }
 
   /**
-   * Get creator email with fallbacks
-   */
-  getCreatorEmail(report: ReportDTO): string {
-    if (report.createdByEmail) {
-      return report.createdByEmail;
-    }
-    
-    // Try to access potential alternative structures
-    const reportAny = report as any;
-    if (reportAny.createdBy && typeof reportAny.createdBy === 'object') {
-      const createdBy = reportAny.createdBy;
-      if (createdBy.email) return createdBy.email;
-      if (createdBy.mail) return createdBy.mail;
-    }
-    
-    // If we have a user with creator role, try to get their email
-    const creator = report.assignedUsers?.find(user => {
-      const userAny = user as any;
-      return userAny.role === 'CREATOR' || userAny.role === 'DEPARTMENT_MANAGER';
-    });
-    
-    if (creator) {
-      return creator.email;
-    }
-    
-    return 'Non spécifié';
-  }
-
-  /**
    * Get the total number of reports (created + assigned)
    */
   getTotalReports(): number {
-    // Create a set of unique report IDs to avoid counting duplicates
-    const reportIds = new Set<number>();
-    
-    this.createdReports.forEach(report => reportIds.add(report.id));
-    this.assignedReports.forEach(report => reportIds.add(report.id));
-    
-    return reportIds.size;
+    return this.getAllReports().length;
   }
 
   /**
@@ -233,5 +374,12 @@ export class ViewReportsComponent implements OnInit {
     console.log(`Downloading report ${report.id} as PDF`);
     // Show a toast notification
     alert(`Téléchargement du rapport ${report.id} en cours...`);
+  }
+
+  /**
+   * Get reports filtered by status from a specific set of reports
+   */
+  getFilteredReportsByStatus(reports: ReportDTO[], status: string): ReportDTO[] {
+    return reports.filter(report => this.getStatusLabel(report) === status);
   }
 }

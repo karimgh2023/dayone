@@ -9,7 +9,7 @@
               <div class="d-flex flex-wrap align-items-center mb-1">
                 <h5 class="text-dark mb-1 fw-semibold">Total Rapports</h5>
               </div>
-              <h2 class="text-primary mb-0 fw-bold">{{ getTotalReports() }}</h2>
+              <h2 class="text-primary mb-0 fw-bold">{{ getAllReports().length }}</h2>
             </div>
             <div class="ms-auto">
               <div class="chart-wrapper mt-1">
@@ -23,10 +23,10 @@
           </div>
         </div>
       </div>
-  </div>
+    </div>
     <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
       <div class="card custom-card overflow-hidden">
-    <div class="card-body">
+        <div class="card-body">
           <div class="d-flex">
             <div class="mt-0">
               <div class="d-flex flex-wrap align-items-center mb-1">
@@ -95,264 +95,351 @@
     </div>
   </div>
 
-  <!-- Created Reports Section -->
-  <div class="page-header border-bottom pb-2 mb-4">
-    <div class="page-leftheader">
-      <div class="page-title">📋 Mes Rapports Créés</div>
-      <div class="page-subtitle">
-        <span class="fs-14 text-muted">Rapports que vous avez créés en tant que gestionnaire de département</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Type Filter -->
-  <div class="mb-4">
-    <div class="input-group">
-      <span class="input-group-text bg-primary-transparent"><i class="fe fe-filter text-primary"></i></span>
-      <select class="form-select" [(ngModel)]="createdReportsTypeFilter" (change)="applyCreatedReportsFilter()">
-        <option value="">Tous les types</option>
-        <option value="Homologation">Homologation</option>
-        <option value="Requalification">Requalification</option>
-      </select>
-      <button class="btn btn-outline-primary" type="button" (click)="resetCreatedReportsFilter()">
-        <i class="fe fe-refresh-cw me-1"></i>Réinitialiser
-      </button>
-  </div>
-</div>
-
-  <!-- No Reports Alert -->
-  <div *ngIf="filteredCreatedReports.length === 0" class="alert alert-info bg-info-transparent">
-    <div class="d-flex align-items-center">
-      <i class="fe fe-info me-2 text-info fs-18"></i>
-      <span>Aucun rapport trouvé.</span>
-    </div>
-  </div>
-
-  <!-- Reports List -->
-  <div class="row row-cards">
-    <div class="col-xl-6 col-md-12 mb-4" *ngFor="let report of filteredCreatedReports">
-      <div class="card custom-card h-100 overflow-hidden">
-        <div class="card-status card-status-left bg-primary"></div>
-        <div class="card-header position-relative">
-          <div class="card-title mb-0 d-flex align-items-center">
-            <span class="badge me-2 bg-primary-transparent">{{ report.type }}</span>
-            <span>Rapport N°{{ report.id }}</span>
-            <span class="badge ms-2 rounded-pill" [ngClass]="getStatusBadgeClass(report)">
-              {{ getStatusLabel(report) }}
-            </span>
-          </div>
-          <div class="position-absolute top-0 end-0 p-3 text-muted fs-13">
-            <i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'short' }}
-          </div>
+  <!-- View Options -->
+  <div class="card custom-card mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="card-title mb-0">Mes Rapports</h4>
+          <p class="text-muted fs-13 mb-0 mt-1">Visualisez et gérez tous vos rapports</p>
         </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
-            <div>
-              <p class="text-muted mb-1">Numéro de série</p>
-              <h6 class="fw-semibold mb-0 d-flex align-items-center">
-                <i class="fe fe-hash text-primary me-1"></i>
-                {{ report.serialNumber }}
-              </h6>
-            </div>
-            <div class="text-end">
-              <p class="text-muted mb-1">Équipement</p>
-              <h6 class="fw-semibold mb-0 d-flex align-items-center justify-content-end">
-                <i class="fe fe-box text-primary me-1"></i>
-                {{ report.designation || 'Non spécifié' }}
-              </h6>
-            </div>
-          </div>
-          
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <p class="text-muted mb-1">Fabricant</p>
-              <p class="fw-medium d-flex align-items-center">
-                <i class="fe fe-briefcase text-primary me-1"></i>
-                {{ report.manufacturer || 'Non spécifié' }}
-              </p>
-            </div>
-            <div class="col-md-6">
-              <p class="text-muted mb-1">Immobilisation</p>
-              <p class="fw-medium d-flex align-items-center">
-                <i class="fe fe-alert-circle text-primary me-1"></i>
-                {{ report.immobilization || 'Non spécifié' }}
-              </p>
-            </div>
-          </div>
-          
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <p class="text-muted mb-1">Unité</p>
-              <p class="fw-medium d-flex align-items-center">
-                <i class="fe fe-layers text-primary me-1"></i>
-                {{ report.businessUnit || 'Non spécifié' }}
-              </p>
-            </div>
-            <div class="col-md-6">
-              <p class="text-muted mb-1">Service</p>
-              <p class="fw-medium d-flex align-items-center">
-                <i class="fe fe-server text-primary me-1"></i>
-                {{ report.serviceSeg || 'Non spécifié' }}
-              </p>
-            </div>
-          </div>
-          
-          <div>
-            <p class="fw-semibold mb-2 d-flex align-items-center">
-              <i class="fe fe-users text-primary me-2"></i>Responsables Assignés
-            </p>
-            <div class="avatar-list avatar-list-stacked mb-2">
-              <span *ngFor="let user of report.assignedUsers?.slice(0, 5)" class="avatar avatar-md rounded-circle" 
-                [ngbTooltip]="user.firstName + ' ' + user.lastName">
-                <img [src]="user.profilePhoto" alt="photo">
-              </span>
-              <span *ngIf="report.assignedUsers?.length > 5" class="avatar avatar-md rounded-circle bg-primary text-white">
-                +{{ report.assignedUsers.length - 5 }}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer d-flex justify-content-between align-items-center">
-          <div class="progress-wrapper w-50">
-            <div class="d-flex align-items-center mb-1">
-              <span class="text-muted fs-13">Complétion</span>
-              <span class="ms-auto fs-13 fw-semibold">{{ getReportProgress(report) }}%</span>
-            </div>
-            <div class="progress progress-sm">
-              <div class="progress-bar bg-primary" [style.width.%]="getReportProgress(report)"></div>
-            </div>
-          </div>
-          <div class="d-flex gap-2">
-            <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-primary">
-              <i class="fe fe-edit-2 me-1"></i>Voir
-            </a>
-            <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
-              <i class="fe fe-download me-1"></i>PDF
+        <div class="d-flex gap-2">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" [ngClass]="currentView === 'list' ? 'btn-primary' : 'btn-outline-primary'" (click)="setView('list')">
+              <i class="fe fe-list me-1"></i>Liste
+            </button>
+            <button type="button" class="btn" [ngClass]="currentView === 'board' ? 'btn-primary' : 'btn-outline-primary'" (click)="setView('board')">
+              <i class="fe fe-layout me-1"></i>Tableau
             </button>
           </div>
+          <a routerLink="/dashboard/report-dashboard/protocol-selection" class="btn btn-success ms-2">
+            <i class="fe fe-plus-circle me-1"></i>Nouveau Rapport
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Assigned Reports Section -->
-  <div class="page-header border-bottom pb-2 mt-5 mb-4">
-    <div class="page-leftheader">
-      <div class="page-title">📋 Mes Rapports Assignés</div>
-      <div class="page-subtitle">
-        <span class="fs-14 text-muted">Rapports qui vous ont été assignés pour complétion</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Type Filter for Assigned Reports -->
-  <div class="mb-4">
-    <div class="input-group">
-      <span class="input-group-text bg-primary-transparent"><i class="fe fe-filter text-primary"></i></span>
-      <select class="form-select" [(ngModel)]="assignedReportsTypeFilter" (change)="applyAssignedReportsFilter()">
-        <option value="">Tous les types</option>
-        <option value="Homologation">Homologation</option>
-        <option value="Requalification">Requalification</option>
-      </select>
-      <button class="btn btn-outline-primary" type="button" (click)="resetAssignedReportsFilter()">
-        <i class="fe fe-refresh-cw me-1"></i>Réinitialiser
+  <!-- Tabs Navigation -->
+  <ul class="nav nav-tabs mb-4" id="reportsTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" [ngClass]="{'active': activeTab === 'all'}" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" 
+              role="tab" aria-controls="all" aria-selected="true" (click)="setActiveTab('all')">
+        <i class="fe fe-clipboard me-1"></i>Tous
+        <span class="badge rounded-pill bg-primary ms-1">{{ getAllReports().length }}</span>
       </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" [ngClass]="{'active': activeTab === 'created'}" id="created-tab" data-bs-toggle="tab" data-bs-target="#created" type="button" 
+              role="tab" aria-controls="created" aria-selected="false" (click)="setActiveTab('created')">
+        <i class="fe fe-edit me-1"></i>Créés
+        <span class="badge rounded-pill bg-success ms-1">{{ createdReports.length }}</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" [ngClass]="{'active': activeTab === 'assigned'}" id="assigned-tab" data-bs-toggle="tab" data-bs-target="#assigned" type="button" 
+              role="tab" aria-controls="assigned" aria-selected="false" (click)="setActiveTab('assigned')">
+        <i class="fe fe-users me-1"></i>Assignés
+        <span class="badge rounded-pill bg-warning ms-1">{{ assignedReports.length }}</span>
+      </button>
+    </li>
+  </ul>
+
+  <!-- Main Content based on View Type -->
+  <div class="tab-content" id="reportsTabContent">
+    <!-- All Reports Tab -->
+    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'all'}" id="all" role="tabpanel" aria-labelledby="all-tab">
+      <!-- Original Board View code -->
+      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAllReports, title: 'Tous les Rapports', count: getAllReports().length}"></ng-container>
+    </div>
+    
+    <!-- Created Reports Tab -->
+    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'created'}" id="created" role="tabpanel" aria-labelledby="created-tab">
+      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredCreatedReports, title: 'Rapports Créés', count: createdReports.length}"></ng-container>
+    </div>
+    
+    <!-- Assigned Reports Tab -->
+    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'assigned'}" id="assigned" role="tabpanel" aria-labelledby="assigned-tab">
+      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAssignedReports, title: 'Rapports Assignés', count: assignedReports.length}"></ng-container>
     </div>
   </div>
 
-  <!-- No Assigned Reports Alert -->
-  <div *ngIf="filteredAssignedReports.length === 0" class="alert alert-info bg-info-transparent">
-    <div class="d-flex align-items-center">
-      <i class="fe fe-info me-2 text-info fs-18"></i>
-      <span>Aucun rapport assigné trouvé.</span>
-    </div>
-  </div>
-
-  <!-- Assigned Reports List -->
-  <div class="row row-cards">
-    <div class="col-xl-6 col-md-12 mb-4" *ngFor="let report of filteredAssignedReports">
-      <div class="card custom-card h-100 overflow-hidden">
-        <div class="card-status card-status-left bg-warning"></div>
-        <div class="card-header position-relative">
-          <div class="card-title mb-0 d-flex align-items-center">
-            <span class="badge me-2 bg-warning-transparent">{{ report.type }}</span>
-            <span>Rapport N°{{ report.id }}</span>
-            <span class="badge ms-2 rounded-pill" [ngClass]="getStatusBadgeClass(report)">
-              {{ getStatusLabel(report) }}
-            </span>
-          </div>
-          <div class="position-absolute top-0 end-0 p-3 text-muted fs-13">
-            <i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'short' }}
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
-            <div>
-              <p class="text-muted mb-1">Numéro de série</p>
-              <h6 class="fw-semibold mb-0 d-flex align-items-center">
-                <i class="fe fe-hash text-warning me-1"></i>
-                {{ report.serialNumber }}
-              </h6>
+  <!-- Templates for reusable views -->
+  <ng-template #boardView let-reports="reports">
+    <div class="reports-board">
+      <div class="row">
+        <!-- In Progress Column -->
+        <div class="col-xl-4 col-lg-4 mb-4">
+          <div class="card custom-card">
+            <div class="card-header border-bottom">
+              <h5 class="card-title mb-0">
+                <i class="fe fe-clock text-warning me-1"></i>En Cours
+              </h5>
             </div>
-            <div class="text-end">
-              <p class="text-muted mb-1">Créé par</p>
-              <h6 class="fw-semibold mb-0 d-flex align-items-center justify-content-end">
-                <i class="fe fe-user text-warning me-1"></i>
-                {{ getCreatorEmail(report) }}
-              </h6>
-            </div>
-          </div>
-          
-          <div>
-            <p class="fw-semibold mb-2 d-flex align-items-center">
-              <i class="fe fe-users text-warning me-2"></i>Responsables Assignés
-            </p>
-            <div class="row mb-2">
-              <div class="col-md-6 mb-2" *ngFor="let user of report.assignedUsers?.slice(0, 4)">
-                <div class="d-flex align-items-center p-2 rounded-3" 
-                     [ngClass]="{'bg-warning-transparent': user.email === getLoggedInUserEmail(), 'bg-light-transparent': user.email !== getLoggedInUserEmail()}">
-                  <img [src]="user.profilePhoto" alt="photo" class="avatar avatar-md rounded-circle me-2">
-                  <div>
-                    <div class="fw-semibold text-dark">{{ user.firstName }} {{ user.lastName }}</div>
-                    <small class="text-muted d-block">{{ user.email }}</small>
-                    <div class="mt-1">
-                      <span class="badge rounded-pill bg-secondary-transparent me-1">{{ user.department.name }}</span>
-                      <span class="badge rounded-pill bg-info-transparent">{{ user.plant.name }}</span>
+            <div class="card-body p-0">
+              <div class="reports-kanban-list">
+                <div *ngFor="let report of getFilteredReportsByStatus(reports, 'En cours')" class="report-card m-3 border rounded">
+                  <div class="p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">{{ report.type }}</span>
+                      <span class="text-muted fs-12">Rapport #{{ report.id }}</span>
+                    </div>
+                    <h6 class="mb-2 text-truncate">{{ report.designation || report.serialNumber }}</h6>
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="fe fe-user text-primary me-1"></i>
+                      <span class="text-muted fs-12">Créé par: {{ getCreatorEmail(report) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <div class="avatar-list avatar-list-stacked">
+                        <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded">
+                          <img [src]="user.profilePhoto" alt="photo">
+                        </span>
+                        <span *ngIf="report.assignedUsers?.length > 3" class="avatar avatar-sm avatar-rounded bg-primary text-white">
+                          +{{ report.assignedUsers.length - 3 }}
+                        </span>
+                      </div>
+                      <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-outline-primary">
+                        <i class="fe fe-edit-2"></i>
+                      </a>
+                    </div>
+                    <div class="progress progress-sm mb-1">
+                      <div class="progress-bar bg-warning" [style.width.%]="getReportProgress(report)"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span class="text-muted fs-12">{{ getReportProgress(report) }}% complété</span>
+                      <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
                     </div>
                   </div>
                 </div>
+                <div *ngIf="getFilteredReportsByStatus(reports, 'En cours').length === 0" class="p-4 text-center text-muted">
+                  Aucun rapport en cours
+                </div>
               </div>
-            </div>
-
-            <div *ngIf="report.assignedUsers?.length > 4" class="text-center mt-2 mb-3">
-              <button type="button" class="btn btn-sm btn-light3">
-                <i class="fe fe-plus-circle me-1"></i>Voir {{ report.assignedUsers.length - 4 }} autres
-              </button>
             </div>
           </div>
         </div>
-        <div class="card-footer d-flex justify-content-between align-items-center">
-          <div class="progress-wrapper w-50">
-            <div class="d-flex align-items-center mb-1">
-              <span class="text-muted fs-13">Complétion</span>
-              <span class="ms-auto fs-13 fw-semibold">{{ getReportProgress(report) }}%</span>
+        
+        <!-- Pending Column -->
+        <div class="col-xl-4 col-lg-4 mb-4">
+          <div class="card custom-card">
+            <div class="card-header border-bottom">
+              <h5 class="card-title mb-0">
+                <i class="fe fe-alert-circle text-info me-1"></i>En Attente
+              </h5>
             </div>
-            <div class="progress progress-sm">
-              <div class="progress-bar bg-warning" [style.width.%]="getReportProgress(report)"></div>
+            <div class="card-body p-0">
+              <div class="reports-kanban-list">
+                <div *ngFor="let report of getFilteredReportsByStatus(reports, 'En attente')" class="report-card m-3 border rounded">
+                  <div class="p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">{{ report.type }}</span>
+                      <span class="text-muted fs-12">Rapport #{{ report.id }}</span>
+                    </div>
+                    <h6 class="mb-2 text-truncate">{{ report.designation || report.serialNumber }}</h6>
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="fe fe-user text-primary me-1"></i>
+                      <span class="text-muted fs-12">Créé par: {{ getCreatorEmail(report) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <div class="avatar-list avatar-list-stacked">
+                        <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded">
+                          <img [src]="user.profilePhoto" alt="photo">
+                        </span>
+                        <span *ngIf="report.assignedUsers?.length > 3" class="avatar avatar-sm avatar-rounded bg-primary text-white">
+                          +{{ report.assignedUsers.length - 3 }}
+                        </span>
+                      </div>
+                      <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-outline-info">
+                        <i class="fe fe-edit-2"></i>
+                      </a>
+                    </div>
+                    <div class="progress progress-sm mb-1">
+                      <div class="progress-bar bg-info" [style.width.%]="getReportProgress(report)"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span class="text-muted fs-12">{{ getReportProgress(report) }}% complété</span>
+                      <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="getFilteredReportsByStatus(reports, 'En attente').length === 0" class="p-4 text-center text-muted">
+                  Aucun rapport en attente
+                </div>
+              </div>
             </div>
           </div>
-          <div class="d-flex gap-2">
-            <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-warning">
-              <i class="fe fe-edit-2 me-1"></i>Compléter
-            </a>
-            <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
-              <i class="fe fe-download me-1"></i>PDF
-            </button>
+        </div>
+        
+        <!-- Completed Column -->
+        <div class="col-xl-4 col-lg-4 mb-4">
+          <div class="card custom-card">
+            <div class="card-header border-bottom">
+              <h5 class="card-title mb-0">
+                <i class="fe fe-check-circle text-success me-1"></i>Complétés
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="reports-kanban-list">
+                <div *ngFor="let report of getFilteredReportsByStatus(reports, 'Complété')" class="report-card m-3 border rounded">
+                  <div class="p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">{{ report.type }}</span>
+                      <span class="text-muted fs-12">Rapport #{{ report.id }}</span>
+                    </div>
+                    <h6 class="mb-2 text-truncate">{{ report.designation || report.serialNumber }}</h6>
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="fe fe-user text-primary me-1"></i>
+                      <span class="text-muted fs-12">Créé par: {{ getCreatorEmail(report) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <div class="avatar-list avatar-list-stacked">
+                        <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded">
+                          <img [src]="user.profilePhoto" alt="photo">
+                        </span>
+                        <span *ngIf="report.assignedUsers?.length > 3" class="avatar avatar-sm avatar-rounded bg-primary text-white">
+                          +{{ report.assignedUsers.length - 3 }}
+                        </span>
+                      </div>
+                      <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-outline-success">
+                        <i class="fe fe-eye"></i>
+                      </a>
+                    </div>
+                    <div class="progress progress-sm mb-1">
+                      <div class="progress-bar bg-success" [style.width.%]="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span class="text-muted fs-12">100% complété</span>
+                      <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="getFilteredReportsByStatus(reports, 'Complété').length === 0" class="p-4 text-center text-muted">
+                  Aucun rapport complété
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-template>
+
+  <ng-template #listView let-reports="reports" let-title="title" let-count="count">
+    <div>
+      <!-- List view header with title and count -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h5 class="card-title">{{ title }}</h5>
+          <p class="text-muted fs-13 mb-0">{{ count }} rapports trouvés</p>
+        </div>
+        
+        <!-- Search and Filter -->
+        <div class="d-flex gap-2">
+          <div class="input-group" style="width: 250px;">
+            <span class="input-group-text bg-primary-transparent"><i class="fe fe-search text-primary"></i></span>
+            <input type="text" class="form-control" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="applyGlobalFilter()">
+          </div>
+          <div class="input-group" style="width: 200px;">
+            <span class="input-group-text bg-primary-transparent"><i class="fe fe-filter text-primary"></i></span>
+            <select class="form-select" [(ngModel)]="globalTypeFilter" (change)="applyGlobalFilter()">
+              <option value="">Tous les types</option>
+              <option value="Homologation">Homologation</option>
+              <option value="Requalification">Requalification</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Table view -->
+      <div class="card custom-card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Équipement</th>
+                  <th>Créé par</th>
+                  <th>Responsables</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Progrès</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let report of reports">
+                  <td><strong>#{{ report.id }}</strong></td>
+                  <td>
+                    <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">
+                      {{ report.type }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="fe fe-box text-primary me-2"></i>
+                      <div>
+                        <div class="fw-semibold">{{ report.designation || 'Non spécifié' }}</div>
+                        <small class="text-muted">{{ report.serialNumber }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="fe fe-user text-primary me-2"></i>
+                      <span>{{ getCreatorEmail(report) }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="avatar-list avatar-list-stacked">
+                      <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded" 
+                            [ngbTooltip]="user.firstName + ' ' + user.lastName">
+                        <img [src]="user.profilePhoto" alt="photo">
+                      </span>
+                      <span *ngIf="report.assignedUsers?.length > 3" class="avatar avatar-sm avatar-rounded bg-primary text-white">
+                        +{{ report.assignedUsers.length - 3 }}
+                      </span>
+                    </div>
+                  </td>
+                  <td>{{ report.createdAt | date:'shortDate' }}</td>
+                  <td>
+                    <span class="badge rounded-pill" [ngClass]="getStatusBadgeClass(report)">
+                      {{ getStatusLabel(report) }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="progress progress-sm">
+                      <div class="progress-bar" 
+                           [ngClass]="{'bg-success': getReportProgress(report) >= 70, 'bg-warning': getReportProgress(report) < 70 && getReportProgress(report) >= 30, 'bg-danger': getReportProgress(report) < 30}"
+                           [style.width.%]="getReportProgress(report)"></div>
+                    </div>
+                    <small class="text-muted">{{ getReportProgress(report) }}%</small>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-primary">
+                        <i class="fe fe-edit-2"></i>
+                      </a>
+                      <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
+                        <i class="fe fe-download"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="reports.length === 0" class="p-4 text-center">
+            <div class="alert alert-info bg-info-transparent mb-0">
+              <i class="fe fe-info me-2 text-info fs-18"></i>
+              <span>Aucun rapport trouvé. Essayez de modifier vos filtres.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>
 
 
