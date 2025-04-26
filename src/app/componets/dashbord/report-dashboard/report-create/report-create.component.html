@@ -1,61 +1,163 @@
-<div class="container mt-4">
-  <h2 class="mb-3">Créer un Rapport</h2>
-
-  <form [formGroup]="reportForm" (ngSubmit)="submitReport()" class="needs-validation">
-
-    <!-- Input: Type -->
-    <div class="form-group mb-3">
-      <label for="type">Type (ex: Homologation, Requalification...)</label>
-      <input type="text" id="type" class="form-control" formControlName="type" required />
+<!-- Page Header -->
+<div class="page-header d-xxl-flex d-block justify-content-xxl-between">
+  <div class="page-leftheader">
+    <div class="page-title">Créer un Rapport</div>
+    <div class="page-subtitle">
+      <span class="fs-14 text-muted">Basé sur le protocole n°{{ protocolId }}</span>
     </div>
-
-    <!-- Other static inputs -->
-    <div class="form-group mb-3">
-      <label for="serialNumber">Numéro de série</label>
-      <input type="text" id="serialNumber" class="form-control" formControlName="serialNumber" required />
+  </div>
+  <div class="page-rightheader">
+    <div class="btn-list d-flex gap-2">
+      <button type="button" class="btn btn-light3" (click)="goBack()">
+        <i class="fe fe-arrow-left me-1"></i>Retour
+      </button>
     </div>
+  </div>
+</div>
 
-    <div class="form-group mb-3">
-      <label for="equipmentDescription">Description de l’équipement</label>
-      <input type="text" id="equipmentDescription" class="form-control" formControlName="equipmentDescription" />
+<div class="container-fluid px-0">
+  <div class="row">
+    <div class="col-12">
+      <div class="card custom-card">
+        <div class="card-header">
+          <div class="card-title">Informations du rapport</div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="reportForm" (ngSubmit)="submitReport()" class="needs-validation">
+            <div class="row">
+              <!-- Left column -->
+              <div class="col-lg-6">
+                <div class="form-group mb-3">
+                  <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-tag text-primary"></i></span>
+                    <input type="text" id="type" class="form-control" formControlName="type" placeholder="Ex: Homologation, Requalification..." required />
+                  </div>
+                  <div *ngIf="isFieldInvalid('type')" class="text-danger fs-12 mt-1">
+                    Ce champ est requis
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="serialNumber" class="form-label">Numéro de série <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-hash text-primary"></i></span>
+                    <input type="text" id="serialNumber" class="form-control" formControlName="serialNumber" placeholder="Numéro de série" required />
+                  </div>
+                  <div *ngIf="isFieldInvalid('serialNumber')" class="text-danger fs-12 mt-1">
+                    Ce champ est requis
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="equipmentDescription" class="form-label">Description de l'équipement</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-info text-primary"></i></span>
+                    <input type="text" id="equipmentDescription" class="form-control" formControlName="equipmentDescription" placeholder="Description" />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="designation" class="form-label">Désignation</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-file-text text-primary"></i></span>
+                    <input type="text" id="designation" class="form-control" formControlName="designation" placeholder="Désignation" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right column -->
+              <div class="col-lg-6">
+                <div class="form-group mb-3">
+                  <label for="manufacturer" class="form-label">Fabricant</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-box text-primary"></i></span>
+                    <input type="text" id="manufacturer" class="form-control" formControlName="manufacturer" placeholder="Nom du fabricant" />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="immobilization" class="form-label">Immobilisation</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-alert-circle text-primary"></i></span>
+                    <input type="text" id="immobilization" class="form-control" formControlName="immobilization" placeholder="Immobilisation" />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="serviceSeg" class="form-label">Service Segment</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-layers text-primary"></i></span>
+                    <input type="text" id="serviceSeg" class="form-control" formControlName="serviceSeg" placeholder="Service Segment" />
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="businessUnit" class="form-label">Business Unit</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary-transparent"><i class="fe fe-briefcase text-primary"></i></span>
+                    <input type="text" id="businessUnit" class="form-control" formControlName="businessUnit" placeholder="Business Unit" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- User assignments -->
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="card custom-card border">
+                  <div class="card-header">
+                    <div class="card-title">Assignations par département</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="alert alert-info mb-4" *ngIf="departments.length === 0">
+                      <div class="d-flex">
+                        <i class="fe fe-loader me-2 align-self-center"></i>
+                        <div>Chargement des départements...</div>
+                      </div>
+                    </div>
+                    
+                    <div class="row" *ngIf="departments.length > 0">
+                      <div *ngFor="let dept of departments" class="col-md-6 mb-3">
+                        <div class="card shadow-sm h-100">
+                          <div class="card-header bg-light d-flex align-items-center">
+                            <i class="fe fe-users me-2 text-primary"></i>
+                            <h6 class="mb-0">{{ dept.name }}</h6>
+                          </div>
+                          <div class="card-body">
+                            <div class="form-group">
+                              <label [for]="'department_' + dept.id" class="form-label">Responsable</label>
+                              <select class="form-select" [id]="'department_' + dept.id" [formControlName]="'department_' + dept.id">
+                                <option value="">-- Sélectionnez un utilisateur --</option>
+                                <option *ngFor="let user of usersByDepartment[dept.id]" [value]="user.id">
+                                  {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form buttons -->
+            <div class="form-group d-flex gap-2 mt-4 justify-content-end">
+              <button type="button" class="btn btn-light" (click)="goBack()">Annuler</button>
+              <button type="submit" class="btn btn-primary" [disabled]="reportForm.invalid || isSubmitting">
+                <i class="fe fe-save me-1"></i>
+                <span *ngIf="!isSubmitting">Créer le rapport</span>
+                <span *ngIf="isSubmitting">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Création en cours...
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group mb-3">
-      <label for="designation">Désignation</label>
-      <input type="text" id="designation" class="form-control" formControlName="designation" />
-    </div>
-
-    <div class="form-group mb-3">
-      <label for="manufacturer">Fabricant</label>
-      <input type="text" id="manufacturer" class="form-control" formControlName="manufacturer" />
-    </div>
-
-    <div class="form-group mb-3">
-      <label for="immobilization">Immobilisation</label>
-      <input type="text" id="immobilization" class="form-control" formControlName="immobilization" />
-    </div>
-
-    <div class="form-group mb-3">
-      <label for="serviceSeg">Service Segment</label>
-      <input type="text" id="serviceSeg" class="form-control" formControlName="serviceSeg" />
-    </div>
-
-    <div class="form-group mb-3">
-      <label for="businessUnit">Business Unit</label>
-      <input type="text" id="businessUnit" class="form-control" formControlName="businessUnit" />
-    </div>
-
-    <!-- User assignments by department -->
-    <div *ngFor="let dept of departments" class="form-group mb-3">
-      <label [for]="'department_' + dept.id">Responsable du département {{ dept.name }}</label>
-      <select class="form-control" [id]="'department_' + dept.id" [formControlName]="'department_' + dept.id">
-        <option value="">-- Sélectionnez un utilisateur --</option>
-        <option *ngFor="let user of usersByDepartment[dept.id]" [value]="user.id">
-          {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
-        </option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Créer le rapport</button>
-  </form>
+  </div>
 </div>
