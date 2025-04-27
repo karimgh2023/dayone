@@ -13,7 +13,6 @@ export const App_Route: Routes = [
     component: AuthenticationLayoutComponent,
     children: [
       { path: 'login', loadComponent: () => import('./authentication/login/login.component').then(m => m.LoginComponent) },
-      { path: 'test-login', loadComponent: () => import('./authentication/login/test-login.component').then(m => m.TestLoginComponent) },
       { path: 'register', loadComponent: () => import('./authentication/register/register01.component').then(m => m.Register01Component) },
       {  path: 'verify',loadComponent: () => import('./authentication/verify/verify.component').then(m => m.VerifyComponent) } ,
       
