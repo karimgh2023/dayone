@@ -37,7 +37,14 @@ export const appConfig: ApplicationConfig = {
         provide: DateAdapter,
         useFactory: adapterFactory,
       }),
-      ToastrModule.forRoot({ positionClass: 'top' }),
+      ToastrModule.forRoot({ 
+        positionClass: 'toast-top-right',
+        timeOut: 3000,
+        closeButton: true,
+        progressBar: true,
+        preventDuplicates: true,
+        enableHtml: true
+      }),
       NgCircleProgressModule.forRoot({"responsive": true}),
       NgbNavModule,
       FlatpickrModule.forRoot(),

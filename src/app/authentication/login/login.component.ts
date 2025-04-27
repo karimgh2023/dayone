@@ -99,6 +99,7 @@ export class LoginComponent {
           if (typeof token !== 'string' || !token.trim()) throw new Error('Invalid token');
 
           const decoded = jwtDecode<any>(token);
+          console.log('Decoded token:', decoded); // Log decoded token for debugging
 
           const user: User = {
             id: decoded.userId || 0,
@@ -124,7 +125,11 @@ export class LoginComponent {
           this.authservice.clearAuthData();
           this.authservice.saveAuthData(token, user, rememberMe);
 
-          this.toastr.success(`Bienvenue, ${user.firstName} ${user.lastName}`, 'Connexion réussie');
+          // Ensure user name is displayed properly in toast
+          const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+          const welcomeMessage = fullName ? `Bienvenue, ${fullName}` : 'Bienvenue';
+          
+          this.toastr.success(welcomeMessage, 'Connexion réussie');
           this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
         } catch (error) {
           console.error('Error processing token:', error);
