@@ -5,6 +5,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
 import { environment } from '../../environments/environment';
 import { Protocol } from '../models/protocol.model';
+import { ProtocolCreationRequest } from '../models/protocol-creation-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,15 @@ export class ProtocolService extends BaseApiService {
     super();
   }
 
-
-
   getAllProtocolsGroupedByType() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<{ [key: string]: any[] }>(`http://localhost:8081/api/protocols/grouped`, { headers });
+    return this.http.get<{ [key: string]: any[] }>(`${this.protocolsUrl}/grouped`, { headers });
   }
 
-
-
+  createProtocol(data: ProtocolCreationRequest): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.protocolsUrl}/create`, data, { headers });
+  }
 }
