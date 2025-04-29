@@ -8,7 +8,7 @@ import { MaintenanceFormDTO } from '../../../../models/maintenance-form-dto.mode
 
 
 
-import { ReportEntryService } from '../../../../services/report-entry.service';
+import { ReportEntryService } from '../../../../shared/services/report-entry.service';
 import { MaintenanceForm } from '../../../../models/maintenance-form.model';
 import { SpecificChecklistItemDTO } from '../../../../models/SpecificChecklistItemDTO.model';
 import { StandardChecklistItemDTO } from '../../../../models/StandardChecklistItemDTO.model';

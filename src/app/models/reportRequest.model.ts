@@ -1,4 +1,4 @@
-import { UserAssignmentDTO } from "./UserAssignmentDTO.model";
+import { UserAssignmentDTO } from "./userAssignmentDTO.model";
 export interface ReportRequest {
   protocolId: number;
   type: string;

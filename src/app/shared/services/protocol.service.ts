@@ -3,9 +3,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
-import { environment } from '../../environments/environment';
-import { Protocol } from '../models/protocol.model';
-import { ProtocolCreationRequest } from '../models/protocol-creation-request.model';
+import { environment } from '../../../environments/environment';
+import { Protocol } from '../../models/protocol.model';
+import { ProtocolCreationRequest } from '../../models/protocol-creation-request.model';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
-import { ReportService } from '../../../../services/report.service';
+import { ReportService } from '../../../../shared/services/report.service';
+
 
 @Component({
   standalone: true,

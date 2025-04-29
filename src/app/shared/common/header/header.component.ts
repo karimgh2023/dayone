@@ -13,7 +13,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { RightSidebarComponent } from '../right-sidebar/right-sidebar.component';
 import { LanguageService } from '../../services/language.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 interface Item {
   id: number;

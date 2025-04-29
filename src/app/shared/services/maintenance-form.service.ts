@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
-import { MaintenanceForm } from '../models/maintenance-form.model';
-import { MaintenanceFormDTO } from '../models/maintenance-form-dto.model';
+import { MaintenanceForm } from '../../models/maintenance-form.model';
+import { MaintenanceFormDTO } from '../../models/maintenance-form-dto.model';
 
 @Injectable({
   providedIn: 'root'

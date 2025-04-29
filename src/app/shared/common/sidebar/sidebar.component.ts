@@ -8,7 +8,7 @@ import {
 import { Menu, NavService } from '../../services/navservice';
 import { Subscription, fromEvent } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from  '../../services/auth.service';
 
 
 @Component({

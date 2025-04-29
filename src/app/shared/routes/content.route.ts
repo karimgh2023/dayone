@@ -7,6 +7,8 @@ import { PayrollRoutingModule } from '../../componets/dashbord/hrmdashboards/pay
 import { EmployeeDashboardRoutingModule } from '../../componets/dashbord/employee-dashboard/employee-dashboard.routes';
 import { TaskDashboardRoutingModule } from '../../componets/dashbord/task-dashboard/task-dashboard.routes';
 import { ProjectDashboardRoutingModule } from '../../componets/dashbord/project-dashboard/project-dashboard.routes';
+import { ReportDashboardRoutingModule } from '../../componets/dashbord/report-dashboard/report-dashboard.routes';
+import { ProtocolDashboardRoutingModule } from '../../componets/dashbord/protocol-dashboard/protocol-dashboard.routes';
 import { ClientDashboardRoutingModule } from '../../componets/dashbord/client-dashboard/client-dashboard.routes';
 import { JobDashboardRoutingModule } from '../../componets/dashbord/job-dashboard/job-dashboard.routes';
 import { SuperAdminRoutingModule } from '../../componets/dashbord/super-admin/super-admin.routes';
@@ -26,7 +28,6 @@ import { ProfileRoutingModule } from '../../componets/pages/profile/profile.rout
 import { PagesRoutingModule } from '../../componets/pages/pages.routes';
 import { PricingRoutingModule } from '../../componets/pages/pricing/pricing.routes';
 import { ComponentChatRoutingModule } from '../../componets/components/chat/chat.routes';
-import { ReportDashboardRoutingModule } from '../../componets/dashbord/report-dashboard/report-dashboard.routes';
 
 
 
@@ -45,6 +46,7 @@ export const content: Routes = [
     ...JobDashboardRoutingModule.routes,
     ...SuperAdminRoutingModule.routes,
     ...ReportDashboardRoutingModule.routes,
+    ...ProtocolDashboardRoutingModule.routes,
     ...ChatRoutingModule.routes,
     ...AdminRoutingModule.routes,
     ...ComponentChatRoutingModule.routes,

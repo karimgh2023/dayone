@@ -1,40 +1,42 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-
-import { map, Observable } from 'rxjs';
+import { environment } from '@/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasValidToken());
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private defaultProfilePhoto = 'https://res.cloudinary.com/dbgo6jzqe/image/upload/v1740737558/default_profile_idqbuv.png';
 
-  constructor(private http: HttpClient) {
-    // Validate token on service initialization
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.validateStoredToken();
+    this.isAuthenticatedSubject.next(this.hasValidToken());
   }
 
-  // Add method to validate token format
+  // Token Validation and Management
   validateStoredToken(): void {
     const token = this.getToken();
     if (token) {
       try {
-        // Just check if it's a string with some content
         if (typeof token !== 'string' || !token.trim()) {
           console.warn('[Auth Service] Empty token detected, clearing auth data');
           this.clearAuthData();
           return;
         }
-
-        // Try to decode the token with jwt-decode
-        // If it fails, it will throw an error which we'll catch
         const decoded = JSON.parse(atob(token.split('.')[1]));
-
-        // If we get here, token is at least decodable
         console.log('[Auth Service] Token validated successfully');
       } catch (error) {
         console.warn('[Auth Service] Invalid token format detected, clearing auth data');
@@ -43,61 +45,120 @@ export class AuthService {
     }
   }
 
-  // Add method to clear all auth data from both storages
   clearAuthData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('rememberMe');
+    localStorage.removeItem('savedEmail');
+    localStorage.removeItem('savedPassword');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
+    this.isAuthenticatedSubject.next(false);
   }
 
-
+  // Authentication Methods
   register(userData: any): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/auth/register`, userData, {
       responseType: 'text' as 'json'
     });
   }
 
-
-verifyEmailCode( code: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/auth/verify?code=${code}`, {});
-  // empty body but code is in URL
-}
-
-
-
-login(credentials: { email: string; password: string }): Observable<string> {
-  return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
-    map((res: any) => res.token) // ✅ extract only the string, not the object
-  );
-}
-
-
-saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
-  if (rememberMe) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('rememberMe', 'true');
-  } else {
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('user', JSON.stringify(user));
-    localStorage.removeItem('rememberMe');
+  verifyEmailCode(code: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/verify?code=${code}`, {});
   }
-}
 
+  login(credentials: { email: string; password: string }): Observable<string> {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      map((res: any) => res.token)
+    );
+  }
 
+  saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
+    if (rememberMe) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
+      localStorage.removeItem('rememberMe');
+    }
+    this.isAuthenticatedSubject.next(true);
+  }
+
+  // Token and User Management
   getToken(): string | null {
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
-    console.log('Getting token, rememberMe:', rememberMe);
     return rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token');
+  }
+
+  hasValidToken(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      return decoded.exp > currentTime;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  getUserFromToken(): any {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      const user = decoded?.user || decoded;
+
+      if (user && !user.profilePhoto) {
+        user.profilePhoto = this.defaultProfilePhoto;
+      }
+
+      return user;
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
   }
 
   getCurrentUser(): User | null {
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
-    console.log('Getting user, rememberMe:', rememberMe);
     const user = rememberMe ? localStorage.getItem('user') : sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  // Role and Permission Methods
+  getUserRole(): string | null {
+    const user = this.getUserFromToken();
+    return user ? user.role : null;
+  }
+
+  getUserId(): number | null {
+    const user = this.getUserFromToken();
+    return user ? user.id : null;
+  }
+
+  getUserName(): string | null {
+    const user = this.getUserFromToken();
+    return user ? `${user.firstName} ${user.lastName}` : null;
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'ADMIN';
+  }
+
+  isDepartmentManager(): boolean {
+    return this.getUserRole() === 'DEPARTMENT_MANAGER';
+  }
+
+  isUser(): boolean {
+    return this.getUserRole() === 'USER';
+  }
+
+  // Additional Data Methods
   getPlants(): Observable<Plant[]> {
     return this.http.get<Plant[]>(`${this.apiUrl}/plants`);
   }
@@ -105,7 +166,6 @@ saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
   getDepartments(): Observable<Department[]> {
     return this.http.get<Department[]>(`${this.apiUrl}/departments`);
   }
-
 
   getSavedCredentials(): { email: string, password: string } | null {
     const rememberMe = localStorage.getItem('rememberMe') === 'true';
@@ -121,8 +181,6 @@ saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
 
   logout(): void {
     this.clearAuthData();
-    localStorage.removeItem('rememberMe');
-    localStorage.removeItem('savedEmail');
-    localStorage.removeItem('savedPassword');
+    this.router.navigate(['/auth/login']);
   }
 }

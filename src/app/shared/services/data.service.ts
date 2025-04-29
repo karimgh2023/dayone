@@ -3,13 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
-import { environment } from '../../../environments/environment';
+import { environment } from '@/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8081/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

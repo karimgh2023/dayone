@@ -199,6 +199,12 @@ export class NavService implements OnDestroy {
 					]
 				},
 				{
+					title: 'Protocol Dashboard', type: 'sub', badgeType: 'success', badgeValue: '2', selected: false, active: false, children: [
+						{ path: '/dashboard/protocol-dashboard/selection', title: 'Protocol Selection', type: 'link', selected: false },
+						{ path: '/dashboard/protocol-dashboard/create', title: 'Create Protocol', type: 'link', selected: false },
+					]
+				},
+				{
 					title: 'Job Dashboard', type: 'sub', badgeType: 'success', badgeValue: '2', selected: false, active: false, children: [
 						{ path: '/dashboard/job-dashboard/dashboard', title: 'Dashboard', type: 'link', selected: false },
 						{ path: '/dashboard/job-dashboard/job-list', title: 'Job List', type: 'link', selected: false },
@@ -784,144 +790,26 @@ export class NavService implements OnDestroy {
 			headTitle: 'PAGES'
 		},
 		{
-			title: 'Pages', icon: 'copy', type: 'sub', badgeType: 'success', active: false, selected: false, children: [
-				{
-					title: 'Profile', type: 'sub', active: false, selected: false, children: [
-						{ path: '/pages/profile/profile01', title: 'Profile 01', type: 'link', selected: false },
-						{ path: '/pages/profile/profile02', title: 'Profile 02 ', type: 'link', selected: false },
-						{ path: '/pages/profile/profile03', title: 'Profile 03', type: 'link', selected: false },
-					]
-				},
+			title: 'Pages', icon: 'file', type: 'sub', active: false, selected: false, children: [
+				{ path: '/pages/profile', title: 'Profile', type: 'link', selected: false },
 				{ path: '/pages/edit-profile', title: 'Edit Profile', type: 'link', selected: false },
-				{
-					title: 'Email', type: 'sub', active: false, selected: false, children: [
-						{ path: '/pages/email/email-compose', title: 'Email Compose', type: 'link', selected: false },
-						{ path: '/pages/email/email-inbox', title: 'Email Inbox', type: 'link', selected: false },
-						{ path: '/pages/email/email-read', title: 'Email Read', type: 'link', selected: false },
-					]
-				},
-				{
-					title: 'Pricing', type: 'sub', active: false, selected: false, children: [
-						{ path: '/pages/pricing/pricing01', title: 'pricing 01', type: 'link', selected: false },
-						{ path: '/pages/pricing/pricing02', title: 'pricing 02', type: 'link', selected: false },
-						{ path: '/pages/pricing/pricing03', title: 'pricing 03', type: 'link', selected: false },
-					]
-				},
-				{
-					title: 'Invoice', type: 'sub', active: false, selected: false, children: [
-						{ path: '/pages/invoice/invoice-list', title: 'Invoice List', type: 'link', selected: false },
-						{ path: '/pages/invoice/invoice01', title: 'Invoice 01', type: 'link', selected: false },
-						{ path: '/pages/invoice/invoice02', title: 'Invoice 02', type: 'link', selected: false },
-						{ path: '/pages/invoice/invoice03', title: 'Invoice 03', type: 'link', selected: false },
-						{ path: '/pages/invoice/add-invoice', title: 'Add Invoice', type: 'link', selected: false },
-						{ path: '/pages/invoice/edit-invoice', title: 'Edit Invoice', type: 'link', selected: false },
-					]
-				},
-				{
-					title: 'Blog', type: 'sub', active: false, selected: false, children: [
-						{ path: '/pages/blog/blog01', title: 'Blog 01', type: 'link', selected: false },
-						{ path: '/pages/blog/blog02', title: 'Blog 02', type: 'link', selected: false },
-						{ path: '/pages/blog/blog03', title: 'Blog 03', type: 'link', selected: false },
-						{ path: '/pages/blog/blog-styles', title: 'Blog Styles', type: 'link', selected: false },
-					]
-				},
-
+				{ path: '/pages/invoice', title: 'Invoice', type: 'link', selected: false },
+				{ path: '/pages/pricing', title: 'Pricing', type: 'link', selected: false },
 				{ path: '/pages/gallery', title: 'Gallery', type: 'link', selected: false },
-				{ path: '/pages/faqs', title: 'FAQS', type: 'link', selected: false },
-				{ path: '/pages/terms', title: 'Terms', type: 'link', selected: false },
-				{ path: '/pages/empty-pages', title: 'Empty Page', type: 'link', selected: false },
+				{ path: '/pages/faq', title: 'FAQ', type: 'link', selected: false },
+				{ path: '/pages/terms', title: 'Terms & Conditions', type: 'link', selected: false },
+				{ path: '/pages/privacy-policy', title: 'Privacy Policy', type: 'link', selected: false },
+				{ path: '/pages/error-400', title: 'Error 400', type: 'link', selected: false },
+				{ path: '/pages/error-401', title: 'Error 401', type: 'link', selected: false },
+				{ path: '/pages/error-403', title: 'Error 403', type: 'link', selected: false },
+				{ path: '/pages/error-404', title: 'Error 404', type: 'link', selected: false },
+				{ path: '/pages/error-500', title: 'Error 500', type: 'link', selected: false },
+				{ path: '/pages/error-503', title: 'Error 503', type: 'link', selected: false },
+				{ path: '/pages/maintenance', title: 'Maintenance', type: 'link', selected: false },
+				{ path: '/pages/coming-soon', title: 'Coming Soon', type: 'link', selected: false },
+				{ path: '/pages/sitemap', title: 'Sitemap', type: 'link', selected: false },
 				{ path: '/pages/search', title: 'Search', type: 'link', selected: false },
-				{ path: '/pages/about', title: 'About', type: 'link', selected: false },
-				{ path: '/pages/notify-list', title: 'Notify-list', type: 'link', selected: false },
-				{ path: '/pages/settings', title: 'Settings', type: 'link', selected: false },
-			    {
-					title: ' Utilities',
-					dirchange: false,
-					type: 'sub',
-					active: false,
-					children: [
-					  {
-						title: 'Avatars',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/avatars',
-					  },
-					  {
-						title: 'Borders',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/borders',
-					  },
-					  {
-						title: 'Breakpoints',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/breakpoints',
-					  },
-					  {
-						title: 'Colors',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/colors',
-					  },
-					  {
-						title: 'Columns',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/columns',
-					  },
-					  {
-						title: 'Flex',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/flex',
-					  },
-					  {
-						title: 'Gutters',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/gutters',
-					  },
-					  {
-						title: 'Helpers',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/helpers',
-					  },
-					  {
-						title: 'Positions',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/positions',
-					  },
-					  {
-						title: 'Additional-Content',
-						dirchange: false,
-						type: 'link',
-						active: false,
-						selected: false,
-						path: '/utilities/additional-content',
-					  },
-					],
-				  },
+				{ path: '/pages/blank-page', title: 'Blank Page', type: 'link', selected: false },
 			]
 		},
 		{
@@ -1044,7 +932,6 @@ export class NavService implements OnDestroy {
 			  },
 			],
 		  },
-
 	];
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

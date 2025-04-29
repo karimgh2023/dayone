@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MaintenanceFormDTO } from '../models/maintenance-form-dto.model';
-import { MaintenanceForm } from '../models/maintenance-form.model';
-import { SpecificChecklistItemDTO } from '../models/SpecificChecklistItemDTO.model';
-import { SpecificReportEntryDTO } from '../models/specificReportEntryDTO.model';
-import { StandardChecklistItemDTO } from '../models/StandardChecklistItemDTO.model';
-import { StandardReportEntryDTO } from '../models/standardReportEntryDTO.model';
-
-
-
-
+import { MaintenanceFormDTO } from '../../models/maintenance-form-dto.model';
+import { MaintenanceForm } from '../../models/maintenance-form.model';
+import { SpecificChecklistItemDTO } from '../../models/SpecificChecklistItemDTO.model';
+import { SpecificReportEntryDTO } from '../../models/specificReportEntryDTO.model';
+import { StandardChecklistItemDTO } from '../../models/StandardChecklistItemDTO.model';
+import { StandardReportEntryDTO } from '../../models/standardReportEntryDTO.model';
+import { environment } from '@/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportEntryService {
-  private apiUrl = `http://localhost:8081/api/rapports`;
+  private apiUrl = `${environment.apiUrl}/rapports`;
 
   constructor(private http: HttpClient) {}
 

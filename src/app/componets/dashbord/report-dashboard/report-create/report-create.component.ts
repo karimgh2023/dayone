@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.model';
-import { UserService } from '../../../../services/user.service';
-import { ReportService } from '../../../../services/report.service';
+import { UserService } from '../../../../shared/services/user.service';
+import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

@@ -1,15 +1,14 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { catchError, Observable, throwError } from 'rxjs';
-import { ReportRequest } from '../models/reportRequest.model';
-import { ReportDTO } from '../models/reportDTO.model';
-
-
+import { Observable } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
+import { environment } from '@/environments/environment';
+import { ReportRequest } from '../../models/reportRequest.model';
+import { ReportDTO } from '../../models/reportDTO.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
-  private apiUrl = `http://localhost:8081/api/rapports`;
+    private apiUrl = `${environment.apiUrl}/rapports`;
 
   constructor(private http: HttpClient) {}
 

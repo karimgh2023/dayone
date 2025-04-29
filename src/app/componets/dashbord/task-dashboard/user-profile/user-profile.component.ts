@@ -11,7 +11,7 @@ import { SharedModule } from '../../../../shared/common/sharedmodule';
 import { FlatpickrDefaults, FlatpickrModule } from 'angularx-flatpickr';
 import flatpickr from 'flatpickr';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 import { User } from '../../../../models/user.model';
 
 interface PeriodicElement {

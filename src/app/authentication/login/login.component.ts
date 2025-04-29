@@ -7,7 +7,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../shared/services/auth.service';
 import { AppStateService } from '../../shared/services/app-state.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { jwtDecode } from 'jwt-decode'; // <-- import jwtDecode
+import { jwtDecode } from 'jwt-decode';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -18,7 +18,7 @@ import { User } from '../../models/user.model';
     NgbModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule, // <-- THIS is the one that fixes formGroup error
+    ReactiveFormsModule,
     ToastrModule
   ],
   providers: [
@@ -48,6 +48,11 @@ export class LoginComponent {
     private appStateService: AppStateService,
   ) {
     document.body.classList.add('error-1');
+    this.initLoginForm();
+  }
+
+  private initLoginForm(): void {
+    console.log('[Login] Initializing login form...');
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -55,34 +60,35 @@ export class LoginComponent {
     });
 
     // Load saved credentials if they exist
-    const savedEmail = localStorage.getItem('savedEmail');
-    const savedPassword = localStorage.getItem('savedPassword');
-    if (savedEmail && savedPassword) {
+    const savedCredentials = this.authservice.getSavedCredentials();
+    console.log('[Login] Saved credentials:', savedCredentials);
+    
+    if (savedCredentials) {
+      console.log('[Login] Found saved credentials, populating form...');
       this.loginForm.patchValue({
-        email: savedEmail,
-        password: savedPassword,
+        email: savedCredentials.email,
+        password: savedCredentials.password,
         rememberMe: true
       });
+      console.log('[Login] Form values after population:', this.loginForm.value);
     }
   }
-
-
 
   ngOnDestroy(): void {
     document.body.classList.remove('error-1');
   }
 
-  togglePassword() {
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
     this.toggleClass = this.toggleClass === 'eye' ? 'eye-off' : 'eye';
   }
 
-  clearErrorMessage() {
+  clearErrorMessage(): void {
     this.errorMessage = '';
     this._error = { name: '', message: '' };
   }
 
-  login() {
+  login(): void {
     this.clearErrorMessage();
 
     if (!this.loginForm.valid) {
@@ -92,14 +98,20 @@ export class LoginComponent {
 
     const credentials = this.loginForm.value;
     const rememberMe = this.loginForm.get('rememberMe')?.value;
+    console.log('[Login] Attempting login with credentials:', { 
+      email: credentials.email, 
+      rememberMe: rememberMe 
+    });
 
     this.authservice.login(credentials).subscribe({
       next: (token: string) => {
         try {
-          if (typeof token !== 'string' || !token.trim()) throw new Error('Invalid token');
+          if (typeof token !== 'string' || !token.trim()) {
+            throw new Error('Invalid token');
+          }
 
           const decoded = jwtDecode<any>(token);
-          console.log('Decoded token:', decoded); // Log decoded token for debugging
+          console.log('[Login] Token decoded successfully:', decoded);
 
           const user: User = {
             id: decoded.userId || 0,
@@ -113,17 +125,31 @@ export class LoginComponent {
             profilePhoto: decoded.profilePhoto || ''
           };
 
-          // Save login info
+          console.log('[Login] Remember me status:', rememberMe);
+          
+          // Handle remember me credentials
           if (rememberMe) {
+            console.log('[Login] Setting remember me flag...');
+            localStorage.setItem('rememberMe', 'true');
+            console.log('[Login] Saving credentials to localStorage...');
             localStorage.setItem('savedEmail', credentials.email);
             localStorage.setItem('savedPassword', credentials.password);
           } else {
-            localStorage.removeItem('savedEmail');
-            localStorage.removeItem('savedPassword');
+            // Only clear credentials if remember me was unchecked
+            const wasRemembered = localStorage.getItem('rememberMe') === 'true';
+            if (wasRemembered) {
+              console.log('[Login] Remember me was previously enabled, clearing credentials...');
+              localStorage.removeItem('rememberMe');
+              localStorage.removeItem('savedEmail');
+              localStorage.removeItem('savedPassword');
+            } else {
+              console.log('[Login] Remember me was not previously enabled, no need to clear credentials');
+            }
           }
 
-          this.authservice.clearAuthData();
+          // Save auth data
           this.authservice.saveAuthData(token, user, rememberMe);
+          console.log('[Login] Auth data saved successfully');
 
           // Ensure user name is displayed properly in toast
           const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
@@ -132,21 +158,16 @@ export class LoginComponent {
           this.toastr.success(welcomeMessage, 'Connexion réussie');
           this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
         } catch (error) {
-          console.error('Error processing token:', error);
+          console.error('[Login] Error processing token:', error);
           this.toastr.error('Token error', 'Login Failed');
           this.authservice.clearAuthData();
         }
       },
       error: (err) => {
-        console.error('Login failed:', err);
+        console.error('[Login] Login failed:', err);
         this.toastr.error('Invalid credentials', 'Login Failed');
         this.authservice.clearAuthData();
       }
     });
   }
-
-
-
-
-
 }

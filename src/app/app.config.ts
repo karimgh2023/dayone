@@ -22,7 +22,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';  
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { UserService } from './services/user.service';
+import { UserService } from './shared/services/user.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

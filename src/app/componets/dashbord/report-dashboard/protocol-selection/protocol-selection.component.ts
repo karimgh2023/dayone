@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2, PLATFORM_ID, Inject } from '@angular/core
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ProtocolService } from '../../../../services/protocol.service';
+import { ProtocolService } from '../../../../shared/services/protocol.service';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -100,7 +100,7 @@ export class ProtocolSelectionComponent implements OnInit {
         
         this.loading = false;
       },
-      error: err => {
+      error:  (err: any) => {
         console.error('Failed to load protocols:', err);
         this.error = 'Erreur lors du chargement des protocoles. Veuillez réessayer.';
         this.loading = false;
