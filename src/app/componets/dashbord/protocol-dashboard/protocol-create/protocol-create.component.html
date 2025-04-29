@@ -1,1 +1,55 @@
-<p>protocol-create works!</p>
+<div class="protocol-create-container">
+  <h2>Create New Protocol</h2>
+  
+  <form [formGroup]="protocolForm" (ngSubmit)="onSubmit()" class="protocol-form">
+    <div class="form-group">
+      <label for="name">Protocol Name</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name" 
+        class="form-control"
+        [class.is-invalid]="protocolForm.get('name')?.invalid && protocolForm.get('name')?.touched"
+      >
+      <div class="invalid-feedback" *ngIf="protocolForm.get('name')?.invalid && protocolForm.get('name')?.touched">
+        <div *ngIf="protocolForm.get('name')?.errors?.['required']">Name is required</div>
+        <div *ngIf="protocolForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea 
+        id="description" 
+        formControlName="description" 
+        class="form-control"
+        [class.is-invalid]="protocolForm.get('description')?.invalid && protocolForm.get('description')?.touched"
+      ></textarea>
+      <div class="invalid-feedback" *ngIf="protocolForm.get('description')?.invalid && protocolForm.get('description')?.touched">
+        <div *ngIf="protocolForm.get('description')?.errors?.['required']">Description is required</div>
+        <div *ngIf="protocolForm.get('description')?.errors?.['minlength']">Description must be at least 10 characters</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Protocol Type</label>
+      <select 
+        id="type" 
+        formControlName="type" 
+        class="form-control"
+        [class.is-invalid]="protocolForm.get('type')?.invalid && protocolForm.get('type')?.touched"
+      >
+        <option *ngFor="let type of protocolTypes" [value]="type">{{type}}</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="protocolForm.get('type')?.invalid && protocolForm.get('type')?.touched">
+        Protocol type is required
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="protocolForm.invalid">
+        Create Protocol
+      </button>
+    </div>
+  </form>
+</div>

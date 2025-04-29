@@ -9,21 +9,36 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-@Component({  
+  
+
+@Component({
   selector: 'app-protocol-selection',
-  templateUrl: './protocol-selection.component.html',
-  styleUrls: ['./protocol-selection.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+  imports: [CommonModule],
+  templateUrl: './protocol-selection.component.html',
+  styleUrls: ['./protocol-selection.component.scss']
 })
 export class ProtocolSelectionComponent implements OnInit {
-  constructor() { }
+  protocolsByType: { [key: string]: any[] } = {};
+
+  constructor(
+    private protocolService: ProtocolService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.protocolService.getAllProtocolsGroupedByType().subscribe({
+      next: data => {
+        this.protocolsByType = data;
+      },
+      error: err => {
+        console.error('Failed to load protocols:', err);
+      }
+    });
+  }
+
+  selectProtocol(protocolId: number) {
+    this.router.navigate(['/report-create'], { queryParams: { protocolId } });
   }
 }
   
