@@ -122,6 +122,7 @@ export class LoginComponent {
             role: decoded.role || '',
             department: decoded.department,
             plant: decoded.plant,
+            loggedIn: decoded.loggedIn,
             profilePhoto: decoded.profilePhoto || ''
           };
 

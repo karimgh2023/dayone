@@ -13,4 +13,6 @@ export interface User {
   role: Role;
   department: Department;
   plant: Plant;
+  loggedIn: boolean;
+
 }

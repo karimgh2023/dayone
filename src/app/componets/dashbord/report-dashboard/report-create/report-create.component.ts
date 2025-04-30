@@ -6,6 +6,7 @@ import { User } from '../../../../models/user.model';
 import { UserService } from '../../../../shared/services/user.service';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrService } from 'ngx-toastr';
+import { AssignedUserDTO } from '../../../../models/assignedUserDTO.model';
 
 @Component({
   selector: 'app-report-create',
@@ -20,10 +21,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ReportCreateComponent implements OnInit {
   reportForm!: FormGroup;
-  users: User[] = [];
+  users: AssignedUserDTO[] = [];
   departments: any[] = [];
   protocolId!: number;
-  usersByDepartment: { [key: number]: User[] } = {};
+  usersByDepartment: { [key: number]: AssignedUserDTO[] } = {};
   isSubmitting: boolean = false;
   submitted: boolean = false;
   loadingUsers: boolean = false;
@@ -80,7 +81,7 @@ export class ReportCreateComponent implements OnInit {
    */
   loadUsers(): void {
     this.loadingUsers = true;
-    this.userService.getAllUsersExceptAdmins().subscribe({
+    this.reportService.getRequiredUsers(this.protocolId).subscribe({
       next: (users) => {
         this.users = users;
         this.departments = [...new Set(users.map(u => u.department.id))].map(id => {
@@ -129,7 +130,7 @@ export class ReportCreateComponent implements OnInit {
 
     console.log("📦 Submitting Report:", payload);
 
-    this.reportService.createReport(payload).subscribe({
+    this.reportService.createNewReport(payload).subscribe({
       next: (response) => {
         this.isSubmitting = false;
         this.toastr.success('Le rapport a été créé avec succès', 'Succès');
