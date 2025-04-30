@@ -16,6 +16,7 @@ import { User } from '@/app/models/user.model';
 import { AuthService } from '@/app/shared/services/auth.service';
 import { ValidationEntryUpdateDTO } from '@/app/models/ValidationEntryUpdateDTO.model';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ProgressService } from '@/app/shared/services/progress.service';
 
 @Component({
   selector: 'app-fill-report',
@@ -62,7 +63,8 @@ export class FillReportComponent implements OnInit {
     private router: Router,
     private reportService: ReportService,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private progressService: ProgressService
   ) {}
 
   ngOnInit(): void {
@@ -406,64 +408,31 @@ export class FillReportComponent implements OnInit {
     const specific = this.getSpecificProgress();
     const maintenance = this.getMaintenanceProgress();
     
-    // Calculate average of the three sections, giving more weight to the checklists
-    return Math.round((standard * 0.4) + (specific * 0.4) + (maintenance * 0.2));
+    return this.progressService.calculateOverallProgress(standard, specific, maintenance);
   }
 
   /**
    * Calculate the progress of the standard checklist
    */
   getStandardProgress(): number {
-    if (!this.standardChecklist || this.standardChecklist.length === 0) {
-      return 0;
-    }
-    
-    const totalItems = this.standardChecklist.length;
-    const completedItems = this.standardChecklist.filter(item => 
-      item.implemented === true || 
-      (item.implemented === false && item.action && item.responsableAction && item.deadline)
-    ).length;
-    
-    return Math.round((completedItems / totalItems) * 100);
+    return this.progressService.calculateStandardProgress(this.standardChecklist);
   }
 
   /**
    * Calculate the progress of the specific checklist
    */
   getSpecificProgress(): number {
-    if (!this.specificChecklist || this.specificChecklist.length === 0) {
-      return 0;
-    }
-    
-    const totalItems = this.specificChecklist.length;
-    const completedItems = this.specificChecklist.filter(item => 
-      item.homologation === true || 
-      (item.homologation === false && item.action && item.responsableAction && item.deadline)
-    ).length;
-    
-    return Math.round((completedItems / totalItems) * 100);
+    return this.progressService.calculateSpecificProgress(this.specificChecklist);
   }
 
   /**
    * Calculate the progress of the maintenance form
    */
   getMaintenanceProgress(): number {
-    if (!this.maintenanceForm || !this.maintenanceForm.form) {
-      return 0;
-    }
-    
-    const form = this.maintenanceForm.form;
-    const totalFields = this.editableKeys.length;
-    
-    // Count fields that have values
-    let filledFields = 0;
-    this.editableKeys.forEach(key => {
-      if (form[key] && form[key].toString().trim() !== '') {
-        filledFields++;
-      }
-    });
-    
-    return Math.round((filledFields / totalFields) * 100);
+    return this.progressService.calculateMaintenanceProgress(
+      this.maintenanceForm?.form,
+      this.editableKeys
+    );
   }
 
   /**
