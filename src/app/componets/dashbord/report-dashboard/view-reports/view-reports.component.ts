@@ -5,14 +5,17 @@ import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
 import { ReportService } from '../../../../shared/services/report.service';
-
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
   selector: 'app-view-reports',
-  imports: [CommonModule, RouterModule, FormsModule, NgbTooltipModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgbTooltipModule, ToastrModule],
   templateUrl: './view-reports.component.html',
-  styleUrls: ['./view-reports.component.scss']
+  styleUrls: ['./view-reports.component.scss'],
+  providers: [
+    { provide: ToastrService, useClass: ToastrService }
+  ]
 })
 export class ViewReportsComponent implements OnInit {
   createdReports: ReportDTO[] = [];
@@ -29,7 +32,10 @@ export class ViewReportsComponent implements OnInit {
   searchTerm: string = '';
   globalTypeFilter: string = '';
 
-  constructor(private reportService: ReportService) {
+  constructor(
+    private reportService: ReportService,
+    private toastr: ToastrService
+  ) {
     // Initialize empty collections
     this.filteredAllReports = [];
     this.filteredCreatedReports = [];
@@ -151,6 +157,7 @@ export class ViewReportsComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching created reports:', err);
+        this.toastr.error('Erreur lors du chargement des rapports créés', 'Erreur');
       }
     });
   }
@@ -179,6 +186,7 @@ export class ViewReportsComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching assigned reports:', err);
+        this.toastr.error('Erreur lors du chargement des rapports assignés', 'Erreur');
       }
     });
   }
@@ -371,10 +379,9 @@ export class ViewReportsComponent implements OnInit {
    * Download report as PDF
    */
   downloadReport(report: ReportDTO): void {
-    // Placeholder - in a real app, you would implement the actual PDF download
-    console.log(`Downloading report ${report.id} as PDF`);
-    // Show a toast notification
-    alert(`Téléchargement du rapport ${report.id} en cours...`);
+    // Implement report download logic
+    this.toastr.info('Téléchargement du rapport en cours...', 'Information');
+    // Add your download logic here
   }
 
   /**

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-report-template',
@@ -13,7 +14,11 @@ import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     NgbAccordionModule,
-    NgbNavModule
+    NgbNavModule,
+    ToastrModule
+  ],
+  providers: [
+    { provide: ToastrService, useClass: ToastrService }
   ]
 })
 export class ReportTemplateComponent implements OnInit {
@@ -27,7 +32,10 @@ export class ReportTemplateComponent implements OnInit {
     { value: 'PENDING', label: 'Pending', icon: '⏳' }
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -85,11 +93,11 @@ export class ReportTemplateComponent implements OnInit {
     if (this.reportForm.valid) {
       console.log('Report data:', this.reportForm.value);
       // Call service to submit the report
-      alert('Report submitted successfully!');
+      this.toastr.success('Rapport soumis avec succès!', 'Succès');
     } else {
       // Mark all fields as touched to trigger validation
       this.markFormGroupTouched(this.reportForm);
-      alert('Please fill all required fields');
+      this.toastr.warning('Veuillez remplir tous les champs obligatoires', 'Attention');
     }
   }
   
