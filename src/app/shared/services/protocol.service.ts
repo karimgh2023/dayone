@@ -1,56 +1,26 @@
+// services/protocol.service.ts
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
-import { BaseApiService } from './base-api.service';
-import { environment } from '@/environments/environment';
-import { Protocol } from '../../models/protocol.model';
+import { Observable } from 'rxjs';
 import { ProtocolCreationRequest } from '../../models/protocol-creation-request.model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ProtocolService extends BaseApiService {
-  private protocolsUrl = `${this.apiUrl}/protocols`;
+@Injectable({ providedIn: 'root' })
+export class ProtocolService {
+  private apiUrl = 'http://localhost:8081/api/protocols'; // Adjust if needed
 
-  constructor(private http: HttpClient) {
-    super();
-  }
+  constructor(private http: HttpClient) {}
 
-  /**
-   * Get all protocols grouped by their type
-   * @returns Observable of protocols grouped by type
-   */
-  getAllProtocolsGroupedByType(): Observable<{ [key: string]: Protocol[] }> {
+  getAllProtocolsGroupedByType() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
-    return this.http.get<{ [key: string]: Protocol[] }>(`${this.protocolsUrl}/grouped`, { headers })
-      .pipe(
-        tap(response => console.log('[ProtocolService] Fetched grouped protocols:', response)),
-        catchError((error: HttpErrorResponse) => {
-          console.error('[ProtocolService] Error fetching grouped protocols:', error);
-          return throwError(() => new Error('Failed to fetch grouped protocols'));
-        })
-      );
+    return this.http.get<{ [key: string]: any[] }>(`${this.apiUrl}/grouped`, { headers });
   }
 
-  /**
-   * Create a new protocol
-   * @param data The protocol creation request data
-   * @returns Observable of the created protocol
-   */
-  createProtocol(data: ProtocolCreationRequest): Observable<Protocol> {
+  createProtocol(data: ProtocolCreationRequest): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<Protocol>(`${this.protocolsUrl}/create`, data, { headers })
-      .pipe(
-        tap(response => console.log('[ProtocolService] Created protocol:', response)),
-        catchError((error: HttpErrorResponse) => {
-          console.error('[ProtocolService] Error creating protocol:', error);
-          return throwError(() => new Error('Failed to create protocol'));
-        })
-      );
-  }
+    return this.http.post(`${this.apiUrl}/create`, data, { headers });
+  }
+
 }
