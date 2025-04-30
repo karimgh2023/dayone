@@ -8,6 +8,8 @@ import { SpecificReportEntryDTO } from '../../models/specificReportEntryDTO.mode
 import { StandardChecklistItemDTO } from '../../models/StandardChecklistItemDTO.model';
 import { StandardReportEntryDTO } from '../../models/standardReportEntryDTO.model';
 import { environment } from '@/environments/environment';
+import { ValidationChecklistItem } from '@/app/models/ValidationChecklistItem.model';
+import { ValidationEntryUpdateDTO } from '@/app/models/ValidationEntryUpdateDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +45,21 @@ export class ReportEntryService {
     });
   }
 
+  updateValidationEntry(id: number, dto: ValidationEntryUpdateDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/validation-entry/${id}`, dto, { headers });
+  }
 
+
+  getValidationChecklist(reportId: number): Observable<ValidationChecklistItem[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<ValidationChecklistItem[]>(
+      `${this.apiUrl}/validation-checklist/${reportId}`,
+      { headers }
+    );
+  }
 
   // ✅ Update specific checklist entry
   updateMultipleSpecificEntries(entries: SpecificReportEntryDTO[]): Observable<any> {

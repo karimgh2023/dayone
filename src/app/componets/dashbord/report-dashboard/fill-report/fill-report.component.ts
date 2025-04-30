@@ -12,6 +12,8 @@ import { ReportEntryService } from '../../../../shared/services/report-entry.ser
 import { MaintenanceForm } from '../../../../models/maintenance-form.model';
 import { SpecificChecklistItemDTO } from '../../../../models/SpecificChecklistItemDTO.model';
 import { StandardChecklistItemDTO } from '../../../../models/StandardChecklistItemDTO.model';
+import { ReportMetadataDTO } from '@/app/models/ReportMetadataDTO.model';
+import { ValidationChecklistItem } from '@/app/models/ValidationChecklistItem.model';
 
 
 @Component({
@@ -30,6 +32,8 @@ export class FillReportComponent implements OnInit {
   reportId!: number;
   standardChecklist: StandardChecklistItemDTO[] = [];
   specificChecklist: SpecificChecklistItemDTO[] = [];
+  validationChecklist: ValidationChecklistItem[] = [];
+  reportMetadata!: ReportMetadataDTO ;
   maintenanceForm!: MaintenanceFormDTO;
 
 
@@ -92,6 +96,7 @@ export class FillReportComponent implements OnInit {
     return this.maintenanceForm?.canEditShe === true;
   }
 
+  
   loadData() {
     this.reportEntryService.getStandardChecklist(this.reportId).subscribe({
       next: (data) => {
