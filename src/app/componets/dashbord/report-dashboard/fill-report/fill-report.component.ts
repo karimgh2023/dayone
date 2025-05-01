@@ -23,9 +23,9 @@ import { ProgressService } from '@/app/shared/services/progress.service';
   templateUrl: './fill-report.component.html',
   styleUrls: ['./fill-report.component.scss'],
   standalone: true,
-        imports: [
-          CommonModule,
-          FormsModule,
+  imports: [
+    CommonModule,
+    FormsModule,
           ReactiveFormsModule,
           CommonModule,
           FormsModule,
@@ -35,7 +35,7 @@ import { ProgressService } from '@/app/shared/services/progress.service';
         providers: [
           { provide: ToastrService, useClass: ToastrService }
         ]
-      })
+})
 export class FillReportComponent implements OnInit {
 
   reportId!: number;

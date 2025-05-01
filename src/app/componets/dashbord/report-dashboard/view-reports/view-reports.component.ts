@@ -6,6 +6,8 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ProgressService } from '@/app/shared/services/progress.service';
+
 
 @Component({
   standalone: true,
@@ -23,6 +25,7 @@ export class ViewReportsComponent implements OnInit {
   filteredCreatedReports: ReportDTO[] = [];
   filteredAssignedReports: ReportDTO[] = [];
   filteredAllReports: ReportDTO[] = [];
+
   userRole: string = '';
   createdReportsTypeFilter: string = '';
   assignedReportsTypeFilter: string = '';
@@ -34,7 +37,8 @@ export class ViewReportsComponent implements OnInit {
 
   constructor(
     private reportService: ReportService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private progressService: ProgressService
   ) {
     // Initialize empty collections
     this.filteredAllReports = [];
@@ -44,6 +48,7 @@ export class ViewReportsComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+    
 
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));

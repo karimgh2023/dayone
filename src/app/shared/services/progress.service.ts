@@ -85,4 +85,19 @@ export class ProgressService {
     
     return Math.round((filledFields / totalFields) * 100);
   }
+      /**
+     * Get the status label of the report based on overall progress
+     * @param overallProgress Overall progress percentage (0-100)
+     * @returns Status label in French
+     */
+    getStatusLabel(overallProgress: number): string {
+      if (overallProgress === 0) {
+        return 'Non commencé';
+      } else if (overallProgress === 100) {
+        return 'Complété';
+      } else {
+        return 'En cours';
+      }
+    }
+
 } 
