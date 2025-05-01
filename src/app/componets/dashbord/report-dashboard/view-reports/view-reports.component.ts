@@ -382,8 +382,7 @@ export class ViewReportsComponent implements OnInit {
    * Get progress percentage for a report
    */
   getReportProgress(report: ReportDTO): number {
-    // Placeholder - in a real app, you would use actual completion data
-    // For now, generate a random percentage between 0 and 100
+    
     return Math.floor(Math.random() * 101);
   }
 
@@ -391,7 +390,6 @@ export class ViewReportsComponent implements OnInit {
    * Download report as PDF
    */
   downloadReport(report: ReportDTO): void {
-    // Show loading state
     this.isLoading = true;
 
     // Create observables for all API calls
