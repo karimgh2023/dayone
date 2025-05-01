@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProgressService } from '@/app/shared/services/progress.service';
+import { PdfService } from '@/app/shared/services/pdf.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { ReportEntryService } from '@/app/shared/services/report-entry.service';
 
 
 @Component({
@@ -34,11 +38,14 @@ export class ViewReportsComponent implements OnInit {
   activeTab: string = 'all';
   searchTerm: string = '';
   globalTypeFilter: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private reportService: ReportService,
+    private reportEntryService: ReportEntryService,
+    private pdfService: PdfService,
     private toastr: ToastrService,
-    private progressService: ProgressService
+    private router: Router
   ) {
     // Initialize empty collections
     this.filteredAllReports = [];
@@ -384,9 +391,40 @@ export class ViewReportsComponent implements OnInit {
    * Download report as PDF
    */
   downloadReport(report: ReportDTO): void {
-    // Implement report download logic
-    this.toastr.info('Téléchargement du rapport en cours...', 'Information');
-    // Add your download logic here
+    // Show loading state
+    this.isLoading = true;
+
+    // Create observables for all API calls
+    const metadata$ = this.reportService.getReportMetadata(report.id);
+    const standardChecklist$ = this.reportEntryService.getStandardChecklist(report.id);
+    const specificChecklist$ = this.reportEntryService.getSpecificChecklist(report.id);
+    const maintenanceForm$ = this.reportEntryService.getMaintenanceForm(report.id);
+
+    // Combine all observables
+    forkJoin({
+      metadata: metadata$,
+      standardChecklist: standardChecklist$,
+      specificChecklist: specificChecklist$,
+      maintenanceForm: maintenanceForm$
+    }).pipe(
+      tap(({ metadata, standardChecklist, specificChecklist, maintenanceForm }) => {
+        // Generate PDF with all the data
+        this.pdfService.generateReportPdf(
+          report,
+          standardChecklist,
+          specificChecklist,
+          maintenanceForm.form
+        );
+      }),
+      catchError(error => {
+        console.error('[DOWNLOAD] Error fetching report data:', error);
+        this.toastr.error('Erreur lors du téléchargement du rapport', 'Erreur');
+        return of(null);
+      }),
+      finalize(() => {
+        this.isLoading = false;
+      })
+    ).subscribe();
   }
 
   /**
