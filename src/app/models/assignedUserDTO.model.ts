@@ -9,4 +9,7 @@ export interface AssignedUserDTO {
   profilePhoto: string;
   department: Department;
   plant: Plant;
+  role?: string;
+  signed?: boolean;
+  signedAt?: string;
 }
