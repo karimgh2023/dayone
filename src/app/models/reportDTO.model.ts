@@ -13,4 +13,5 @@ export interface ReportDTO {
   createdAt: string; // use Date if you want to parse it later
   createdByEmail: string;
   assignedUsers: AssignedUserDTO[];
+  progress: number;
 }
