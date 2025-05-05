@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../../shared/common/sharedmodule';
 import { RouterModule } from '@angular/router';
+import { DepartmentAdminService } from '../../../../shared/services/department-admin.service';
 import { DataService } from '../../../../shared/services/data.service';
+
 import { Department } from '../../../../models/department.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +29,7 @@ export class DepartmentComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private departmentAdminService: DepartmentAdminService,
     private dataService: DataService,
     private toastr: ToastrService
   ) {}
@@ -38,12 +41,12 @@ export class DepartmentComponent implements OnInit {
   loadDepartments(): void {
     this.isLoading = true;
     this.dataService.getDepartments().subscribe({
-      next: (departments) => {
+      next: (departments: Department[]) => {
         console.log('Departments loaded:', departments); // Debug log
         this.departments = departments;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading departments:', err);
         this.toastr.error('Failed to load departments', 'Error');
         this.isLoading = false;
@@ -75,7 +78,7 @@ export class DepartmentComponent implements OnInit {
         id: this.selectedDepartment.id,
         name: this.newDepartmentName
       };
-      this.dataService.updateDepartment(updatedDepartment).subscribe({
+      this.departmentAdminService.updateDepartment(this.selectedDepartment.id,updatedDepartment).subscribe({
         next: () => {
           this.toastr.success('Department updated successfully');
           this.loadDepartments();
@@ -92,13 +95,13 @@ export class DepartmentComponent implements OnInit {
         id: 0, // Temporary ID, will be assigned by backend
         name: this.newDepartmentName
       };
-      this.dataService.createDepartment(newDepartment).subscribe({
+      this.departmentAdminService.addDepartment(this.newDepartmentName).subscribe({
         next: () => {
           this.toastr.success('Department created successfully');
           this.loadDepartments();
           this.modalService.dismissAll();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error creating department:', err);
           this.toastr.error('Failed to create department', 'Error');
         }
@@ -108,7 +111,7 @@ export class DepartmentComponent implements OnInit {
 
   deleteDepartment(id: number): void {
     if (confirm('Are you sure you want to delete this department?')) {
-      this.dataService.deleteDepartment(id).subscribe({
+        this.departmentAdminService.deleteDepartment(id).subscribe({
         next: () => {
           // Remove department from local array immediately
           this.departments = this.departments.filter(dept => dept.id !== id);

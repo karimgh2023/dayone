@@ -36,31 +36,6 @@ export class DataService {
     // No need for authentication for public endpoints
     return this.http.get<Department>(`${this.apiUrl}/public/departments/${id}`);
   }
-
-  createDepartment(department: Department): Observable<Department> {
-    // Only add the Content-Type header without authentication
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<Department>(`${this.apiUrl}/public/departments`, department, { headers });
-  }
-
-  updateDepartment(department: Department): Observable<Department> {
-    // Only add the Content-Type header without authentication
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<Department>(`${this.apiUrl}/public/departments/${department.id}`, department, { headers });
-  }
-
-  deleteDepartment(id: number): Observable<void> {
-    // Only add the Content-Type header without authentication
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.delete<void>(`${this.apiUrl}/public/departments/${id}`, { headers });
-  }
-
   // Plant operations
   getPlants(): Observable<Plant[]> {
     return this.http.get<Plant[]>(`${this.apiUrl}/public/plants`);
