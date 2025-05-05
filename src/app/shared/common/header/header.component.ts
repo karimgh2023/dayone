@@ -14,6 +14,13 @@ import { filter } from 'rxjs';
 import { RightSidebarComponent } from '../right-sidebar/right-sidebar.component';
 import { LanguageService } from '../../services/language.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
+interface PasswordUpdateRequest {
+  oldPassword: string;
+  newPassword: string;
+}
 
 interface Item {
   id: number;
@@ -49,6 +56,9 @@ export class HeaderComponent implements OnInit {
   currentLanguage: string = 'en';
   currentLanguageFlag: string = '';
   currentUser: any;
+  passwordForm!: FormGroup;
+  successMessage = '';
+  errorMessage = '';
 
   constructor(
     private appStateService: AppStateService,
@@ -59,13 +69,28 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public languageService: LanguageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {
     this.localStorageBackUp();
+    this.initializePasswordForm();
   }
 
   private offcanvasService = inject(NgbOffcanvas);
 
+  private initializePasswordForm() {
+    this.passwordForm = this.fb.group({
+      oldPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.passwordMatchValidator });
+  }
+
+  private passwordMatchValidator(g: FormGroup) {
+    return g.get('newPassword')?.value === g.get('confirmPassword')?.value
+      ? null : { 'mismatch': true };
+  }
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -439,5 +464,32 @@ export class HeaderComponent implements OnInit {
   onImageError(event: any) {
     // Set default profile image if the image fails to load
     event.target.src = './assets/images/users/16.jpg';
+  }
+
+  onPasswordChange(form: FormGroup) {
+    if (form.invalid) {
+      this.errorMessage = 'Please fill in all required fields correctly.';
+      return;
+    }
+
+    const request: PasswordUpdateRequest = {
+      oldPassword: form.get('oldPassword')?.value,
+      newPassword: form.get('newPassword')?.value
+    };
+
+    this.authService.updatePassword(request).subscribe({
+      next: (response) => {
+        this.successMessage = response.message || 'Password updated successfully';
+        this.errorMessage = '';
+        this.toastr.success(this.successMessage);
+        this.modalService.dismissAll();
+        this.passwordForm.reset();
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.message || 'Failed to update password';
+        this.successMessage = '';
+        this.toastr.error(this.errorMessage);
+      }
+    });
   }
 }

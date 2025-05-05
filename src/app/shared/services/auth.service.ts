@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
 import { jwtDecode } from 'jwt-decode';
+import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model'; 
 
 @Injectable({
   providedIn: 'root',
@@ -177,6 +178,15 @@ export class AuthService {
       }
     }
     return null;
+  }
+  updatePassword(request: PasswordUpdateRequest) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<{ message: string }>(
+      `${this.apiUrl}/auth/update-password`,
+      request,
+      { headers }
+    );
   }
 
   logout(): void {

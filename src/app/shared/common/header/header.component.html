@@ -446,21 +446,62 @@
 
 </header>
 <ng-template #content let-modal>
-        <div class="modal-header"> 
-            <h5 class="modal-title">Change Password</h5>
-             <button (click)="modal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-             </div> <div class="modal-body"> 
-                <div class="form-group mb-3">
-                     <label class="form-label">New Password</label>
-                      <input type="password" class="form-control" placeholder="password" value=""> 
-                    </div> <div class="form-group"> 
-                        <label class="form-label">Confirm New Password</label> 
-                        <input type="password" class="form-control" placeholder="password" value=""> 
-                    </div> 
-                </div> 
-                <div class="modal-footer">
-                     <a href="javascript:void(0);" (click)="modal.dismiss('Cross click')" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</a> 
-                     <a href="javascript:void(0);" class="btn btn-primary">Confirm</a>
-                     </div> 
+    <div class="modal-header"> 
+        <h5 class="modal-title">Change Password</h5>
+        <button (click)="modal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange(passwordForm)">
+            <div class="form-group mb-3">
+                <label class="form-label">Current Password</label>
+                <input type="password" class="form-control" placeholder="Enter current password" 
+                    formControlName="oldPassword">
+                <div *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.errors?.['required']" 
+                    class="text-danger">
+                    Current password is required
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-control" placeholder="Enter new password" 
+                    formControlName="newPassword">
+                <div *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.errors?.['required']" 
+                    class="text-danger">
+                    New password is required
+                </div>
+                <div *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.errors?.['minlength']" 
+                    class="text-danger">
+                    Password must be at least 6 characters
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-control" placeholder="Confirm new password" 
+                    formControlName="confirmPassword">
+                <div *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.errors?.['required']" 
+                    class="text-danger">
+                    Please confirm your new password
+                </div>
+                <div *ngIf="passwordForm.errors?.['mismatch'] && passwordForm.get('confirmPassword')?.touched" 
+                    class="text-danger">
+                    Passwords do not match
+                </div>
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="alert alert-success">
+                {{ successMessage }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cross click')" 
+                    data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" 
+                    [disabled]="passwordForm.invalid || passwordForm.errors?.['mismatch']">
+                    Confirm
+                </button>
+            </div>
+        </form>
+    </div>
 </ng-template>
 

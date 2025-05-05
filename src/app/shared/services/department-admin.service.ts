@@ -27,7 +27,11 @@ export class DepartmentAdminService {
   }
 
 
- 
+  // Get all departments
+  getDepartments(): Observable<Department[]> {
+    return this.http.get<Department[]>(this.apiUrl, { headers: this.getHeaders() })
+      ;
+  }
 
   // Get a single department by ID
     getDepartment(id: number): Observable<Department> {
@@ -36,7 +40,10 @@ export class DepartmentAdminService {
     }
 
   // Create a new department
- 
+  createDepartment(department: Department): Observable<Department> {
+    return this.http.post<Department>(this.apiUrl, department, { headers: this.getHeaders() })
+      ;
+  }
 
   // Update an existing department
   updateDepartment(id: number, department: Department): Observable<Department> {
@@ -44,16 +51,15 @@ export class DepartmentAdminService {
      ;
   }
 
-  addDepartment(name: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.apiUrl}/add`, { name }, { headers });
+  // Delete a department
+  deleteDepartment(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
+     ;
   }
 
-  deleteDepartment(id: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers });
+  // Add a new department (legacy method - consider using createDepartment instead)
+  addDepartment(name: string): Observable<Department> {
+    const department: Department = { id: 0, name };
+    return this.createDepartment(department);
   }
-
 }
