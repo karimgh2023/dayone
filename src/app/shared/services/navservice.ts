@@ -710,26 +710,7 @@ export class NavService implements OnDestroy {
 			]
 		},
 		{
-			title: 'Elements', icon: 'layers', type: 'sub', active: false, selected: false, children: [
-				{ path: '/elements/alerts', title: 'Alerts', type: 'link', selected: false },
-				{ path: '/elements/badge', title: 'Badges', type: 'link', selected: false },
-				{ path: '/elements/breadcrumb', title: 'Breadcrumb', type: 'link', selected: false },
-				{ path: '/elements/buttons', title: 'Buttons', type: 'link', selected: false },
-				{ path: '/elements/cards', title: 'Cards', type: 'link', selected: false },
-				{ path: '/elements/dropdowns', title: 'Dropdowns', type: 'link', selected: false },
-				{ path: '/elements/images-figures', title: 'Images & Figures', type: 'link', selected: false },
-				{ path: '/elements/listgroup', title: 'List Group', type: 'link', selected: false },
-				{ path: '/elements/navtabs', title: 'Nav Tabs', type: 'link', selected: false },
-				{ path: '/elements/objectfit', title: 'Object Fit', type: 'link', selected: false },
-				{ path: '/elements/pagination', title: 'Pagination', type: 'link', selected: false },
-				{ path: '/elements/popovers', title: 'Popovers', type: 'link', selected: false },
-				{ path: '/elements/progress', title: 'Progress', type: 'link', selected: false },
-				{ path: '/elements/spinners', title: 'Spinners', type: 'link', selected: false },
-				{ path: '/elements/toasts', title: 'Toasts', type: 'link', selected: false },
-				{ path: '/elements/tooltips', title: 'Tooltips', type: 'link', selected: false },
-				{ path: '/elements/tags', title: 'Tags', type: 'link', selected: false },
-				{ path: '/elements/typography', title: 'Typography', type: 'link', selected: false },
-			]
+			path: '/dashboard/report-dashboard/view-reports', title: 'Rapports', icon: 'file-text', type: 'link', bookmark: true, selected: false
 		},
 
 		{
