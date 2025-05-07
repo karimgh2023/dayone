@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../../shared/services/data.service';
 import { Department } from '../../../../models/department.model';
+import { TaskDashboardPageHeaderComponent } from '../../task-dashboard/task-dashboard-page-header/task-dashboard-page-header.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-protocol-create',
   templateUrl: './protocol-create.component.html',
@@ -14,7 +17,9 @@ import { Department } from '../../../../models/department.model';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TaskDashboardPageHeaderComponent,
+    NgbTooltipModule
   ],
   standalone: true
 })
@@ -22,6 +27,9 @@ export class ProtocolCreateComponent implements OnInit {
   protocolForm!: FormGroup;
   protocolTypes = Object.values(ProtocolType);
   departments: Department[] = [];
+  loading: boolean = false;
+  submitting: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private protocolService: ProtocolService,
@@ -32,117 +40,121 @@ export class ProtocolCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.loadDepartments();
-
-    this.protocolForm = this.fb.group({
-      name: ['', Validators.required],
-      protocolType: ['Homologation', Validators.required],
-      specificCriteria: this.fb.array([])
-    });
-
-    // Add default one
-    this.addCriteria();
   }
 
   private initForm(): void {
     this.protocolForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      type: [ProtocolType.Homologation, Validators.required]
+      protocolType: [ProtocolType.Homologation, Validators.required],
+      specificCriteria: this.fb.array([])
     });
+
+    // Add default criteria
+    this.addCriteria();
   }
-  /**
-   * Handles the protocol creation form submission
-   * This method is triggered when the user clicks the submit button
-   * 
-   * Flow:
-   * 1. Validates the form
-   * 2. If invalid, marks all fields as touched to show validation errors
-   * 3. If valid, creates a ProtocolCreationRequest object from form values
-   * 4. Calls the protocol service to create the protocol
-   * 5. Handles success/error responses with appropriate user feedback
- 
-  onSubmit()
-  loadDepartments() {
-    this.publicService.getDepartments().subscribe(depts => {
-      this.departments = depts;
+
+  loadDepartments(): void {
+    this.loading = true;
+    this.dataService.getDepartments().subscribe({
+      next: (depts) => {
+        this.departments = depts;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading departments:', error);
+        this.toastr.error('Failed to load departments. Please try again.');
+        this.loading = false;
+      }
     });
   }
 
-  onSubmit(): void {
+  get specificCriteria() {
+    return this.protocolForm.get('specificCriteria') as FormArray;
+  }
+
+  addCriteria(): void {
+    this.specificCriteria.push(this.fb.group({
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      implementationResponsibles: [[], [Validators.required, Validators.minLength(1)]],
+      checkResponsibles: [[], [Validators.required, Validators.minLength(1)]]
+    }));
+  }
+
+  removeCriteria(index: number): void {
+    if (this.specificCriteria.length > 1) {
+      this.specificCriteria.removeAt(index);
+    } else {
+      this.toastr.warning('At least one criteria is required.');
+    }
+  }
+
+  isFieldInvalid(fieldName: string, index?: number): boolean {
+    if (index !== undefined) {
+      const criteriaGroup = this.specificCriteria.at(index);
+      const field = criteriaGroup.get(fieldName);
+      return field ? field.invalid && (field.dirty || field.touched) : false;
+    }
+    
+    const field = this.protocolForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  getErrorMessage(fieldName: string, index?: number): string {
+    if (index !== undefined) {
+      const criteriaGroup = this.specificCriteria.at(index);
+      const field = criteriaGroup.get(fieldName);
+      if (!field) return '';
+
+      if (field.hasError('required')) return 'This field is required';
+      if (field.hasError('minlength')) return `Minimum length is ${field.errors?.['minlength'].requiredLength} characters`;
+      return '';
+    }
+
+    const field = this.protocolForm.get(fieldName);
+    if (!field) return '';
+
+    if (field.hasError('required')) return 'This field is required';
+    if (field.hasError('minlength')) return `Minimum length is ${field.errors?.['minlength'].requiredLength} characters`;
+    return '';
+  }
+
+  submit(): void {
     if (this.protocolForm.invalid) {
       this.protocolForm.markAllAsTouched();
+      this.toastr.error('Please fill in all required fields correctly.');
       return;
     }
 
-    const protocolData: ProtocolCreationRequest = {
-      name: this.protocolForm.get('name')?.value,
-      description: this.protocolForm.get('description')?.value,
-      type: this.protocolForm.get('type')?.value
+    this.submitting = true;
+    const rawValue = this.protocolForm.value;
+
+    const formatted = {
+      name: rawValue.name,
+      description: rawValue.description,
+      protocolType: rawValue.protocolType,
+      specificCriteria: rawValue.specificCriteria.map((crit: any) => ({
+        description: crit.description,
+        implementationResponsibles: this.departments.filter(d => crit.implementationResponsibles.includes(d.id)),
+        checkResponsibles: this.departments.filter(d => crit.checkResponsibles.includes(d.id))
+      }))
     };
 
-    this.protocolService.createProtocol(protocolData).subscribe({
-      next: (response) => {
-        console.log('Protocol created successfully:', response);
+    this.protocolService.createProtocol(formatted as unknown as ProtocolCreationRequest).subscribe({
+      next: () => {
         this.toastr.success('Protocol created successfully!');
         this.protocolForm.reset({
-          type: ProtocolType.Homologation
+          protocolType: ProtocolType.Homologation
         });
+        this.specificCriteria.clear();
+        this.addCriteria();
+        this.submitting = false;
       },
       error: (error) => {
         console.error('Error creating protocol:', error);
         this.toastr.error('Failed to create protocol. Please try again.');
+        this.submitting = false;
       }
     });
-  }  */
-
-    loadDepartments() {
-      this.dataService.getDepartments().subscribe(depts => {
-        this.departments = depts;
-      });
-    }
-  
-    get specificCriteria() {
-      return this.protocolForm.get('specificCriteria') as FormArray;
-    }
-  
-    addCriteria() {
-      this.specificCriteria.push(this.fb.group({
-        description: ['', Validators.required],
-        implementationResponsibles: [[]],
-        checkResponsibles: [[]]
-      }));
-    }
-  
-    removeCriteria(index: number) {
-      this.specificCriteria.removeAt(index);
-    }
-  
-    submit() {
-      if (this.protocolForm.invalid) return;
-  
-      const rawValue = this.protocolForm.value;
-  
-      const formatted = {
-        name: rawValue.name,
-        protocolType: rawValue.protocolType,
-        specificCriteria: rawValue.specificCriteria.map((crit: any) => ({
-          description: crit.description,
-          implementationResponsibles: this.departments.filter(d => crit.implementationResponsibles.includes(d.id)),
-          checkResponsibles: this.departments.filter(d => crit.checkResponsibles.includes(d.id))
-        }))
-      };
-  
-      this.protocolService.createProtocol(formatted as unknown as ProtocolCreationRequest).subscribe({
-        next: res => {
-          alert('✅ Protocol created successfully.');
-          this.protocolForm.reset();
-          this.specificCriteria.clear();
-          this.addCriteria();
-        },
-        error: err => {
-          console.error('❌ Protocol creation failed', err);
-          alert('❌ Error creating protocol');
-        }
-      });
-    }
+  }
 }

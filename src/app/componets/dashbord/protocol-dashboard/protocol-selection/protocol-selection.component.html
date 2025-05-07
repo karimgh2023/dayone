@@ -1,12 +1,221 @@
-<div *ngIf="protocolsByType">
-    <div *ngFor="let type of protocolsByType | keyvalue">
-      <h3>{{ type.key }}</h3>
-      <ul>
-        <li *ngFor="let protocol of type.value">
-          <button (click)="selectProtocol(protocol.id)">
-            {{ protocol.name }}
-          </button>
-        </li>
-      </ul>
+<div class="protocol-dashboard">
+  <app-task-dashboard-page-header
+    title="Protocols"
+    subtitle="Manage and select protocols for your reports"
+    title2="Total Protocols"
+    subtitle2="{{ getTotalProtocols() }}"
+    title3="Active Protocols"
+    subtitle3="{{ getActiveProtocols() }}"
+  ></app-task-dashboard-page-header>
+
+  <!-- Metrics Row -->
+  <div class="row metrics-row">
+    <div class="col-md-3">
+      <div class="metric-card">
+        <div class="metric-icon bg-primary bg-opacity-10 text-primary">
+          <i class="fe fe-file-text"></i>
+        </div>
+        <div class="metric-value">{{ getTotalProtocols() }}</div>
+        <div class="metric-label">Total Protocols</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <div class="metric-icon bg-success bg-opacity-10 text-success">
+          <i class="fe fe-check-circle"></i>
+        </div>
+        <div class="metric-value">{{ getActiveProtocols() }}</div>
+        <div class="metric-label">Active Protocols</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <div class="metric-icon bg-info bg-opacity-10 text-info">
+          <i class="fe fe-clock"></i>
+        </div>
+        <div class="metric-value">{{ getRecentUsage() }}</div>
+        <div class="metric-label">Recent Usage</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <div class="metric-icon bg-warning bg-opacity-10 text-warning">
+          <i class="fe fe-layers"></i>
+        </div>
+        <div class="metric-value">{{ getCategoryCount() }}</div>
+        <div class="metric-label">Categories</div>
+      </div>
     </div>
   </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="search-input">
+          <i class="fe fe-search search-icon"></i>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search protocols..."
+            [(ngModel)]="searchTerm"
+            (input)="filterProtocols()"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="view-filters d-flex justify-content-end">
+          <button
+            class="btn me-2"
+            [class.active]="activeView === 'all'"
+            (click)="setActiveView('all')"
+          >
+            All
+          </button>
+          <button
+            class="btn me-2"
+            [class.active]="activeView === 'favorites'"
+            (click)="setActiveView('favorites')"
+          >
+            Favorites
+          </button>
+          <button
+            class="btn"
+            [class.active]="activeView === 'recent'"
+            (click)="setActiveView('recent')"
+          >
+            Recent
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Protocols Grid -->
+  <div class="protocols-grid">
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      <i class="fe fe-alert-circle me-2"></i>
+      {{ error }}
+    </div>
+
+    <ng-container *ngIf="!loading && !error">
+      <!-- All Protocols View -->
+      <ng-container *ngIf="activeView === 'all'">
+        <div *ngFor="let type of filteredProtocolsByType | keyvalue" class="protocol-category">
+          <div
+            class="category-header"
+            (click)="toggleProtocolType(type.key)"
+            [class.expanded]="isProtocolTypeExpanded(type.key)"
+          >
+            <h5 class="category-title mb-0">{{ type.key }}</h5>
+            <i
+              class="fe"
+              [class.fe-chevron-down]="!isProtocolTypeExpanded(type.key)"
+              [class.fe-chevron-up]="isProtocolTypeExpanded(type.key)"
+            ></i>
+          </div>
+          <div
+            class="protocol-list"
+            [@expandCollapse]="isProtocolTypeExpanded(type.key) ? 'expanded' : 'collapsed'"
+          >
+            <div
+              *ngFor="let protocol of type.value"
+              class="protocol-item"
+              (click)="selectProtocol(protocol.id)"
+            >
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="protocol-name mb-1">{{ protocol.name }}</h6>
+                  <p class="protocol-description">{{ protocol.description }}</p>
+                </div>
+                <div class="protocol-actions">
+                  <button
+                    class="btn btn-icon"
+                    (click)="toggleFavorite($event, protocol)"
+                    [class.favorite]="protocol.isFavorite"
+                    ngbTooltip="{{ protocol.isFavorite ? 'Remove from favorites' : 'Add to favorites' }}"
+                  >
+                    <i class="fe" [class.fe-star]="protocol.isFavorite" [class.fe-star-off]="!protocol.isFavorite"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Favorites View -->
+      <ng-container *ngIf="activeView === 'favorites'">
+        <div class="protocol-category">
+          <div class="category-header">
+            <h5 class="category-title mb-0">Favorite Protocols</h5>
+          </div>
+          <div class="protocol-list">
+            <div
+              *ngFor="let protocol of favoriteProtocols"
+              class="protocol-item"
+              (click)="selectProtocol(protocol.id)"
+            >
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="protocol-name mb-1">{{ protocol.name }}</h6>
+                  <p class="protocol-description">{{ protocol.description }}</p>
+                </div>
+                <div class="protocol-actions">
+                  <button
+                    class="btn btn-icon favorite"
+                    (click)="toggleFavorite($event, protocol)"
+                    ngbTooltip="Remove from favorites"
+                  >
+                    <i class="fe fe-star"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Recent View -->
+      <ng-container *ngIf="activeView === 'recent'">
+        <div class="protocol-category">
+          <div class="category-header">
+            <h5 class="category-title mb-0">Recently Used</h5>
+          </div>
+          <div class="protocol-list">
+            <div
+              *ngFor="let protocol of recentProtocols"
+              class="protocol-item"
+              (click)="selectProtocol(protocol.id)"
+            >
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="protocol-name mb-1">{{ protocol.name }}</h6>
+                  <p class="protocol-description">
+                    Last used: {{ formatDate(protocol.lastUsed) }}
+                  </p>
+                </div>
+                <div class="protocol-actions">
+                  <button
+                    class="btn btn-icon"
+                    (click)="toggleFavorite($event, protocol)"
+                    [class.favorite]="protocol.isFavorite"
+                    ngbTooltip="{{ protocol.isFavorite ? 'Remove from favorites' : 'Add to favorites' }}"
+                  >
+                    <i class="fe" [class.fe-star]="protocol.isFavorite" [class.fe-star-off]="!protocol.isFavorite"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
