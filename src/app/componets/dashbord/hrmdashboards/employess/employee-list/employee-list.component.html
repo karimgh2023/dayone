@@ -1,5 +1,4 @@
-
-<app-hr-dashboard-page-header [title]="'Employees'"  [title2]="'Add New Employee'" [class]="'btn btn-primary'" [class1]="''" [path]="'/dashboard/hrmdashboards/employees/add-employee'" ></app-hr-dashboard-page-header>
+<app-hr-dashboard-page-header [title]="'Employés'"  [title2]="'Ajouter un Employé'" [class]="'btn btn-primary'" [class1]="''" [path]="'/dashboard/hrmdashboards/employees/add-employee'" ></app-hr-dashboard-page-header>
        
               
               <!-- Start::row-1 -->
@@ -9,12 +8,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-7">
-                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Employees</span>
-                                            <h3 class="mb-0 mt-1 text-success">5,678</h3>
+                                        <div class="mt-0 text-start"> 
+                                            <span class="fw-medium">Total des Employés</span>
+                                            <h3 class="mb-0 mt-1 text-success">{{totalEmployees}}</h3>
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="icon1 bg-success-transparent my-auto float-end"> <i class="las la-users"></i> </div>
+                                        <div class="icon1 bg-success-transparent my-auto float-end"> 
+                                            <i class="las la-users"></i> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -25,12 +27,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-7">
-                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Male Employees</span>
-                                            <h3 class="mb-0 mt-1 text-primary">3,876</h3>
+                                        <div class="mt-0 text-start"> 
+                                            <span class="fw-medium">Employés Actifs</span>
+                                            <h3 class="mb-0 mt-1 text-primary">{{activeEmployees}}</h3>
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="icon1 bg-primary-transparent my-auto float-end"> <i class="las la-male"></i> </div>
+                                        <div class="icon1 bg-primary-transparent my-auto float-end"> 
+                                            <i class="las la-user-check"></i> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -41,11 +46,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-7">
-                                        <div class="mt-0 text-start"> <span class="fw-medium">Total Female Employees</span>
-                                        <h3 class="mb-0 mt-1 text-secondary">1,396</h3> </div>
+                                        <div class="mt-0 text-start"> 
+                                            <span class="fw-medium">Départements</span>
+                                            <h3 class="mb-0 mt-1 text-secondary">{{totalDepartments}}</h3>
+                                        </div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="icon1 bg-secondary-transparent my-auto float-end"> <i class="las la-female"></i> </div>
+                                        <div class="icon1 bg-secondary-transparent my-auto float-end"> 
+                                            <i class="las la-building"></i> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -56,11 +65,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-7">
-                                        <div class="mt-0 text-start"> <span class="fw-medium">Total New Employees</span>
-                                        <h3 class="mb-0 mt-1 text-danger">398</h3> </div>
+                                        <div class="mt-0 text-start"> 
+                                            <span class="fw-medium">Usines</span>
+                                            <h3 class="mb-0 mt-1 text-info">{{totalPlants}}</h3>
+                                        </div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="icon1 bg-danger-transparent my-auto float-end"> <i class="las la-user-friends"></i> </div>
+                                        <div class="icon1 bg-info-transparent my-auto float-end"> 
+                                            <i class="las la-industry"></i> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -74,96 +87,126 @@
                     <div class="col-md-12">
                         <div class="card custom-card">
                             <div class="card-header">
-                                <h3 class="card-title">Employees List</h3>
+                                <h3 class="card-title">Liste des Employés</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-2 gap-2 gap-lg-0">
                                     <div class="col-lg-6">
                                         <div class="d-flex align-items-center">
-                                            <span>Show</span>
+                                            <span>Afficher</span>
                                             <div class="d-flex ms-2 mx-2">
                                                 <div class="form-group mb-0">
-                                                    <ng-select name="quantity" id="select-countries17" placeholder="10" class="form-control  wd-150 p-0" data-trigger>
-                                                        <ng-option value="1" selected="">10</ng-option>
-                                                        <ng-option value="2">25</ng-option>
-                                                        <ng-option value="3">50</ng-option>
-                                                        <ng-option value="4">100</ng-option>
+                                                    <ng-select 
+                                                        [items]="[10, 25, 50, 100]"
+                                                        [(ngModel)]="pageSize"
+                                                        (ngModelChange)="onPageSizeChange($event)"
+                                                        class="form-control wd-150 p-0">
                                                     </ng-select>
                                                 </div>
                                             </div>
-                                            <span>entries</span>
+                                            <span>entrées</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="float-end">
-                                            <input type="text" class="form-control" placeholder="search">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Rechercher des employés..."
+                                                [(ngModel)]="searchTerm"
+                                                (ngModelChange)="onSearch($event)">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table mb-0 text-nowrap text-md-nowrap table-bordered border">
-                                        <thead>
-                                            <tr class="border-bottom">
-                                                <th>No</th>
-                                                <th>Emp Name</th>
-                                                <th>#Emp ID</th>
-                                                <th>Department</th>
-                                                <th>Designation</th>
-                                                <th>Phone Number</th>
-                                                <th>Join Date</th>
-                                                <th>At Work</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @for(emplist of lists;track $index){
-
+                                    @if(loading){
+                                        <div class="text-center p-4">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="mt-2">Loading employees...</p>
+                                        </div>
+                                    } @else if(error){
+                                        <div class="alert alert-danger m-3">
+                                            {{error}}
+                                        </div>
+                                    } @else if(!users.length){
+                                        <div class="alert alert-info m-3">
+                                            No employees found.
+                                        </div>
+                                    } @else {
+                                        <table class="table mb-0 text-nowrap text-md-nowrap table-bordered border">
+                                            <thead>
                                                 <tr class="border-bottom">
-                                                    <th scope="row">{{emplist.id}}</th>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar me-2 avatar-rounded">
-                                                                <img [src]="emplist.src" alt="img">
-                                                            </div>
-                                                            <div>
-                                                                <div class="lh-1">
-                                                                    <h6 class="mb-1">{{emplist.name}}</h6>
-                                                                </div>
-                                                                <div class="lh-1">
-                                                                    <span
-                                                                        class="fs-12 text-muted">{{emplist.mail}}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{emplist.empid}}</td>
-                                                    <td>{{emplist.dept}}</td>
-                                                    <td> {{emplist.designation}}</td>
-                                                    <td>{{emplist.phno}}</td>
-                                                    <td>{{emplist.date}}</td>
-                                                    <td>{{emplist.work}}</td>
-                                                    <td><span class="badge bg-success">Active</span></td>
-                                                    <td>
-                                                        <a class="btn btn-primary btn-icon"  routerLink="/dashboard/hrmdashboards/employees/view-employee">
-                                                            <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="View/Edit"></i>
-                                                        </a>
-                                                        <a class="btn btn-danger btn-icon" data-bs-toggle="tooltip" (click)="deleteData(emplist.id)" data-original-title="Delete"><i class="fe fe-trash-2"></i></a>
-                                                    </td>
+                                                    <th>N°</th>
+                                                    <th>Nom de l'Employé</th>
+                                                    <th>Email</th>
+                                                    <th>Département</th>
+                                                    <th>Usine</th>
+                                                    <th>Numéro de Téléphone</th>
+                                                    <th>Rôle</th>
+                                                    <th>Statut</th>
+                                                    <th>Actions</th>
                                                 </tr>
-                                            }
-                                       
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @for(user of users; track user.id){
+                                                    <tr class="border-bottom">
+                                                        <th scope="row">{{user.id}}</th>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar me-2 avatar-rounded">
+                                                                    <img [src]="user.profilePhoto || 'assets/images/faces/default-avatar.png'" alt="profile">
+                                                                </div>
+                                                                <div>
+                                                                    <div class="lh-1">
+                                                                        <h6 class="mb-1">{{user.firstName}} {{user.lastName}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{user.email}}</td>
+                                                        <td>{{user.department?.name || 'N/A'}}</td>
+                                                        <td>{{user.plant?.name || 'N/A'}}</td>
+                                                        <td>{{user.phoneNumber}}</td>
+                                                        <td>
+                                                            <span class="badge bg-info">{{user.role}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge" [class.bg-success]="user.loggedIn" [class.bg-danger]="!user.loggedIn">
+                                                                {{user.loggedIn ? 'Actif' : 'Inactif'}}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <a class="btn btn-primary btn-icon" [routerLink]="['/dashboard/hrmdashboards/employees/view-employee', user.id]">
+                                                                    <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="Voir/Modifier"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger btn-icon" (click)="deleteUser(user.id)" data-bs-toggle="tooltip" data-original-title="Supprimer">
+                                                                    <i class="fe fe-trash-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
                                 </div>
                                 <!-- Start::pagination -->
                                 <nav class="mt-4">
                                     <ul class="pagination justify-content-end mb-0">
-                                        <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Prev</a></li>
-                                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                        <li class="page-item" [class.disabled]="currentPage === 1">
+                                            <a class="page-link" (click)="onPageChange(currentPage - 1)" href="javascript:void(0);">Précédent</a>
+                                        </li>
+                                        @for(page of [].constructor(totalPages); track $index){
+                                            <li class="page-item" [class.active]="currentPage === $index + 1">
+                                                <a class="page-link" (click)="onPageChange($index + 1)" href="javascript:void(0);">{{$index + 1}}</a>
+                                            </li>
+                                        }
+                                        <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                            <a class="page-link" (click)="onPageChange(currentPage + 1)" href="javascript:void(0);">Suivant</a>
+                                        </li>
                                     </ul>
                                 </nav>
                                 <!-- End::pagination -->
