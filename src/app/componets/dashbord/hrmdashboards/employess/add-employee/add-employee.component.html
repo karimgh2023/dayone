@@ -1,148 +1,200 @@
 <app-hr-dashboard-page-header [title]="'Add Employee'"></app-hr-dashboard-page-header>
-<!-- Row -->
+
 <div class="row">
-    
     <div class="col-xxl-12 col-xl-12 col-md-12 col-lg-12">
-        <div class="tab-menu-heading hremp-tabs p-0 border-0">
-            <div class="tabs-menu1">
-                <!-- Tabs -->
-                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="panel-tabs">
-                    <li [ngbNavItem]="1">
-                        <a ngbNavLink>Personal Details</a>
-                        <ng-template ngbNavContent>
-                            <div id="tab5">
-                                <div class="card-body">
-                                    <h4 class="mb-4 font-weight-bold">Basic</h4>
-                                    <div class="form-group ">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">User Name</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <input type="text" class="form-control mb-md-0 mb-5"
-                                                            placeholder="First Name">
-                                                        <span class="text-muted"></span>
+        <form [formGroup]="employeeForm" (ngSubmit)="onSave()">
+            <div class="tab-menu-heading hremp-tabs p-0 border-0">
+                <div class="tabs-menu1">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="panel-tabs">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>Personal Details</a>
+                            <ng-template ngbNavContent>
+                                <div id="tab5">
+                                    <div class="card-body">
+                                        <h4 class="mb-4 font-weight-bold">Basic</h4>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">User Name</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control mb-md-0 mb-5"
+                                                                formControlName="firstName" placeholder="First Name">
+                                                            <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched" class="text-danger">
+                                                                First name is required
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" 
+                                                                formControlName="lastName" placeholder="Last Name">
+                                                            <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched" class="text-danger">
+                                                                Last name is required
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <input type="text" class="form-control" placeholder="Last Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Contact Number</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" 
+                                                        formControlName="phoneNumber" placeholder="Phone Number">
+                                                    <div *ngIf="employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched" class="text-danger">
+                                                        Phone number is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-label mb-0 mt-2">Upload Photo</div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        <label for="form-label" class="form-label"></label>
+                                                        <input class="form-control" type="file">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="mb-5 mt-7 font-weight-bold">Account Login</h4>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Employee Email</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="email" class="form-control" 
+                                                        formControlName="email" placeholder="employee email">
+                                                    <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" class="text-danger">
+                                                        <span *ngIf="employeeForm.get('email')?.errors?.['required']">Email is required</span>
+                                                        <span *ngIf="employeeForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+                                                        <span *ngIf="employeeForm.get('email')?.errors?.['emailExists']">This email is already registered</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Password</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="password" class="form-control" 
+                                                        formControlName="password" placeholder="password">
+                                                    <div *ngIf="employeeForm.get('password')?.invalid && employeeForm.get('password')?.touched" class="text-danger">
+                                                        Password is required
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Contact Number</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Phone Number">
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink>Company Details</a>
+                            <ng-template ngbNavContent>
+                                <div id="tab6">
+                                    <div class="card-body"> 
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Usine</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select class="form-control" formControlName="plantId">
+                                                        <option [ngValue]="null">Select Plant</option>
+                                                        <option *ngFor="let plant of plants" [ngValue]="plant">
+                                                            {{plant.name}}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="employeeForm.get('plantId')?.invalid && employeeForm.get('plantId')?.touched" class="text-danger">
+                                                        Plant is required
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-label mb-0 mt-2">Upload Photo</div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Department</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select class="form-control" formControlName="departmentId">
+                                                        <option [ngValue]="null">Select Department</option>
+                                                        <option *ngFor="let dept of departments" [ngValue]="dept">
+                                                            {{dept.name}}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="employeeForm.get('departmentId')?.invalid && employeeForm.get('departmentId')?.touched" class="text-danger">
+                                                        Department is required
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label for="form-label" class="form-label"></label>
-                                                    <input class="form-control" type="file">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label mb-0 mt-2">Role</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select class="form-control" formControlName="role">
+                                                        <option [ngValue]="null">Select Role</option>
+                                                        <option *ngFor="let role of availableRoles" [ngValue]="role">
+                                                            {{role === 'DEPARTMENT_MANAGER' ? 'Department Manager' : role}}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="employeeForm.get('role')?.invalid && employeeForm.get('role')?.touched" class="text-danger">
+                                                        Role is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group mt-7">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Status:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-check form-check-md form-switch">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                            id="switch-md" formControlName="isActive">
+                                                        <label class="form-check-label mt-0 custom-switch-description"
+                                                            for="switch-md">Active/Inactive</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <h4 class="mb-5 mt-7 font-weight-bold">Account Login</h4>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Employee Email</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="employee email">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Password</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="password" class="form-control" placeholder="password">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </ng-template>
-                    </li>
-                    <li [ngbNavItem]="2">
-                        <a ngbNavLink>Company Details</a>
-                        <ng-template ngbNavContent>
-                            <div id="tab6">
-                                <div class="card-body"> 
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Usine</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Plant">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Department</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Department">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label mb-0 mt-2">Role</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                    <input type="text" class="form-control" placeholder="role">
-                                            </div>
-                                        </div>
-                                    </div>  
-                                    <div class="form-group mt-7">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label class="form-label">Status:</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="form-check form-check-md form-switch"> <input
-                                                        class="form-check-input" type="checkbox" role="switch"
-                                                        id="switch-md" checked=""> <label
-                                                        class="form-check-label mt-0 custom-switch-description"
-                                                        for="switch-md">Active/Inactive</label> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </li>
-                </ul>
+                            </ng-template>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
-            <div [ngbNavOutlet]="nav" class="tab-content">
+            <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+                <div [ngbNavOutlet]="nav" class="tab-content">
+                </div>
+                <div class="panel-footer text-end">
+                    <button type="submit" class="me-2 btn btn-primary" [disabled]="employeeForm.invalid || loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                </div>
             </div>
-            <div class="panel-footer text-end">
-                <a href="javascript:;" class="me-2 btn btn-primary">Save</a>
-                <a href="javascript:;" class="btn btn-danger">Cancel</a>
-            </div>
-        </div>
+        </form>
     </div>
+</div>
+
+<div *ngIf="error" class="alert alert-danger mt-3">
+    {{error}}
 </div>
