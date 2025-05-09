@@ -78,7 +78,8 @@ export class AddEmployeeComponent implements OnInit {
       plantId: [null, Validators.required],        // Will store full Plant object
       departmentId: [null, Validators.required],   // Will store full Department object
       role: [null, Validators.required],           // Will store role enum value
-      isActive: [true]
+      isActive: [true],
+      profilePhoto: [null]
     });
   }
 
@@ -182,4 +183,18 @@ export class AddEmployeeComponent implements OnInit {
   flatpickrOptions: any = {
     inline: true,
   };
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      // Create a preview URL for the image
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.employeeForm.patchValue({
+          profilePhoto: e.target.result
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }

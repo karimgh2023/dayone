@@ -12,7 +12,7 @@ const routes: Routes = [
           
       },
       {
-        path: 'view-employee',
+        path: 'view-employee/:id',
         loadComponent: () =>
           import('./view-employee/view-employee.component').then((m) => m.ViewEmployeeComponent),
           
