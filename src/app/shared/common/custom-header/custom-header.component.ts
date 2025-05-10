@@ -11,6 +11,11 @@ import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { AppStateService } from '../../services/app-state.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { NotificationService } from '../../services/notification.service';
+import { NotificationWebSocketService } from '../../services/notification-websocket.service';
+import { Notification } from '../../../models/notification.model';
+import { Subscription } from 'rxjs';
+
 interface Item {
   id: number;
   name: string;
@@ -26,7 +31,7 @@ interface Item {
 })
 export class CustomHeaderComponent {
   cartItemCount: number = 5;
-  notificationCount: number = 5;
+  notificationCount: number = 0;
   public isCollapsed = true;
   collapse: any;
   closeResult = '';
@@ -34,17 +39,27 @@ export class CustomHeaderComponent {
 
   selectedItem: string = 'Sales Dashboard';
   isOpen: boolean = false;
+  isNotifyEmpty: boolean = true;
+  notifications: Notification[] = [];
+  private notificationSubscription: Subscription = new Subscription();
+
   constructor(
     private appStateService: AppStateService,
     public navServices: NavService,
     private elementRef: ElementRef,
     public renderer: Renderer2,
     public modalService: NgbModal,
-    private router: Router, private activatedRoute: ActivatedRoute
-  ) { this.localStorageBackUp() }
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService,
+    private notificationWebSocketService: NotificationWebSocketService
+  ) {
+    this.localStorageBackUp();
+    this.loadNotifications();
+    this.setupWebSocket();
+  }
 
   private offcanvasService = inject(NgbOffcanvas);
-
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -219,7 +234,6 @@ export class CustomHeaderComponent {
     }
   }
   isCartEmpty: boolean = false;
-  isNotifyEmpty: boolean = false;
 
   removeRow(rowId: string) {
     const rowElement = document.getElementById(rowId);
@@ -229,18 +243,6 @@ export class CustomHeaderComponent {
     this.cartItemCount--;
     this.isCartEmpty = this.cartItemCount === 0;
   }
-  removeNotify(rowId: string) {
-    const rowElement = document.getElementById(rowId);
-    if (rowElement) {
-      rowElement.remove();
-    }
-    this.notificationCount--;
-    this.isNotifyEmpty = this.notificationCount === 0;
-  }
-  handleCardClick(event: MouseEvent) {
-    // Prevent the click event from propagating to the container
-    event.stopPropagation();
-  }
 
   // Search
   public menuItems!: Menu[];
@@ -249,7 +251,6 @@ export class CustomHeaderComponent {
   public SearchResultEmpty: boolean = false;
 
   ngOnInit(): void {
-
     this.navServices.items.subscribe((menuItems) => {
       this.items = menuItems;
     });
@@ -267,6 +268,7 @@ export class CustomHeaderComponent {
     const dashboard = this.activatedRoute.snapshot.firstChild?.url[0]?.path;
     this.selectedItem = dashboard ? dashboard.charAt(0).toUpperCase() + dashboard.slice(1) + ' Dashboard' : this.selectedItem;
   }
+
   ngOnDestroy(): void {
     const windowObject: any = window;
     let html = this.elementRef.nativeElement.ownerDocument.documentElement;
@@ -292,7 +294,12 @@ export class CustomHeaderComponent {
     if (windowObject.innerWidth <= '991') {
       html?.setAttribute('data-toggled', 'open');
     }
+
+    if (this.notificationSubscription) {
+      this.notificationSubscription.unsubscribe();
+    }
   }
+
   Search(searchText: string) {
     if (!searchText) return this.menuItems = [];
     // items array which stores the elements
@@ -375,5 +382,65 @@ export class CustomHeaderComponent {
   isFullscreen: boolean = false;
   toggleFullscreen() {
     this.isFullscreen = !this.isFullscreen;
+  }
+
+  private loadNotifications() {
+    this.notificationService.getUserNotifications().subscribe({
+      next: (notifications) => {
+        this.notifications = notifications;
+        this.notificationCount = notifications.filter(n => !n.seen).length;
+        this.isNotifyEmpty = this.notifications.length === 0;
+      },
+      error: (error) => {
+        console.error('Error loading notifications:', error);
+      }
+    });
+  }
+
+  private setupWebSocket() {
+    this.notificationSubscription = this.notificationWebSocketService.notifications$.subscribe(notifications => {
+      this.notifications = notifications;
+      this.notificationCount = notifications.filter(n => !n.seen).length;
+      this.isNotifyEmpty = this.notifications.length === 0;
+    });
+  }
+
+  onNotificationClick(notification: Notification) {
+    if (!notification.seen) {
+      this.notificationService.markAsSeen(notification.id).subscribe({
+        next: (updatedNotification) => {
+          const index = this.notifications.findIndex(n => n.id === notification.id);
+          if (index !== -1) {
+            this.notifications[index] = updatedNotification;
+            this.notificationCount = this.notifications.filter(n => !n.seen).length;
+          }
+        },
+        error: (error) => {
+          console.error('Error marking notification as seen:', error);
+        }
+      });
+    }
+    
+    if (notification.link) {
+      this.router.navigate([notification.link]);
+    }
+  }
+
+  onDeleteNotification(id: number) {
+    this.notificationService.deleteNotification(id).subscribe({
+      next: () => {
+        this.notifications = this.notifications.filter(n => n.id !== id);
+        this.notificationCount = this.notifications.filter(n => !n.seen).length;
+        this.isNotifyEmpty = this.notifications.length === 0;
+      },
+      error: (error) => {
+        console.error('Error deleting notification:', error);
+      }
+    });
+  }
+
+  handleCardClick(event: MouseEvent) {
+    // Prevent the click event from propagating to the container
+    event.stopPropagation();
   }
 }
