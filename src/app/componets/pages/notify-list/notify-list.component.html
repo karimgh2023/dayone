@@ -10,8 +10,8 @@
     <div class="col-md-12">
         <div class="container">
             <ul class="notification">
-                <ng-container *ngIf="notifications.length > 0; else noNotifications">
-                    <li *ngFor="let notif of notifications" (click)="onNotificationClick(notif)" [class.unseen]="!notif.seen">
+                <ng-container *ngIf="displayedNotifications.length > 0; else noNotifications">
+                    <li *ngFor="let notif of displayedNotifications" (click)="onNotificationClick(notif)" [class.unseen]="!notif.seen">
                         <div class="notification-time">
                             <span class="date">{{ notif.time | date:'dd MMM' }}</span>
                             <span class="time">{{ notif.time | date:'HH:mm' }}</span>
@@ -61,8 +61,8 @@
                     </li>
                 </ng-template>
             </ul>
-            <div class="text-center mb-4">
-                <button class="btn btn-primary w-md">Load more</button>
+            <div class="text-center mb-4" *ngIf="hasMoreNotifications">
+                <button class="btn btn-primary w-md" (click)="loadMore()">Load more</button>
             </div>
         </div>
     </div>

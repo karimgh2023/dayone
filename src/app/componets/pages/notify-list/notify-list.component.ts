@@ -18,7 +18,11 @@ import { SharedModule } from '../../../shared/common/sharedmodule';
 })
 export class NotifyListComponent implements OnInit {
   notifications: Notification[] = [];
+  displayedNotifications: Notification[] = [];
   errorMessage: string | null = null;
+  private readonly pageSize = 5;
+  private currentPage = 1;
+  hasMoreNotifications = false;
 
   constructor(
     private socketService: NotificationWebSocketService,
@@ -43,6 +47,7 @@ export class NotifyListComponent implements OnInit {
         const sorted = initial.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
         this.socketService.setInitialNotifications(sorted);
         this.notifications = sorted;
+        this.updateDisplayedNotifications();
         this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
@@ -56,6 +61,7 @@ export class NotifyListComponent implements OnInit {
       next: (notifList) => {
         const sorted = notifList.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
         this.notifications = sorted;
+        this.updateDisplayedNotifications();
         this.errorMessage = null;
         this.cdr.detectChanges();
       },
@@ -64,6 +70,17 @@ export class NotifyListComponent implements OnInit {
         this.errorMessage = 'Error receiving WebSocket notifications';
       }
     });
+  }
+
+  private updateDisplayedNotifications(): void {
+    const endIndex = this.currentPage * this.pageSize;
+    this.displayedNotifications = this.notifications.slice(0, endIndex);
+    this.hasMoreNotifications = endIndex < this.notifications.length;
+  }
+
+  loadMore(): void {
+    this.currentPage++;
+    this.updateDisplayedNotifications();
   }
 
   onNotificationClick(notif: Notification) {
