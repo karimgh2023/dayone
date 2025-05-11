@@ -104,7 +104,8 @@ export class FillReportComponent implements OnInit {
         console.log('[STANDARD] Loaded:', data);
         this.standardChecklist = data.map(item => ({
           ...item,
-          isFilled: false
+          isFilled: false,
+          responsableAction: item.responsableAction || this.currentUser.firstName + ' ' + this.currentUser.lastName
         }));
         this.updateProgress();
       },

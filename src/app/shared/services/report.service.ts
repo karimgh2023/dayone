@@ -14,10 +14,15 @@ export class ReportService {
 
   constructor(private http: HttpClient) {}
 
+ 
   createNewReport(req: ReportCreateRequest) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.apiUrl}/create`, req, { headers });
+    return this.http.post<{ message: string; reportId: number }>(
+      `${this.apiUrl}/create`,
+      req,
+      { headers }
+    );
   }
 
   getRequiredUsers(protocolId: number): Observable<AssignedUserDTO[]> {

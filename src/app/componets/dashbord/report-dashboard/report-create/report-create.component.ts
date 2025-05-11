@@ -7,6 +7,9 @@ import { UserService } from '../../../../shared/services/user.service';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrService } from 'ngx-toastr';
 import { AssignedUserDTO } from '../../../../models/assignedUserDTO.model';
+import { NotificationService } from '@/app/shared/services/notification.service';
+import { NotificationType } from '@/app/models/NotificationType.enum';
+import { ReportDTO } from '@/app/models/reportDTO.model';
 
 @Component({
   selector: 'app-report-create',
@@ -30,6 +33,7 @@ export class ReportCreateComponent implements OnInit {
   loadingUsers: boolean = false;
 
   constructor(
+    private notificationService: NotificationService,
     private fb: FormBuilder,
     private userService: UserService,
     private reportService: ReportService,
@@ -120,7 +124,7 @@ export class ReportCreateComponent implements OnInit {
     const assignedUsers = this.departments.map(dept => ({
       departmentId: dept.id,
       userId: formValues[`department_${dept.id}`]
-    })).filter(assignment => assignment.userId); // Only include assignments with a user selected
+    })).filter(assignment => assignment.userId);
 
     const payload = {
       ...formValues,
@@ -131,7 +135,22 @@ export class ReportCreateComponent implements OnInit {
     console.log("📦 Submitting Report:", payload);
 
     this.reportService.createNewReport(payload).subscribe({
-      next: (response) => {
+      next: (response: any) => {
+        // Send notifications to assigned users
+        assignedUsers.forEach(assignment => {
+          const notificationDTO = {
+            description: `Un nouveau rapport ${formValues.type} a été créé et vous a été assigné`,
+            link: `/dashboard/report-dashboard/fill-report/${response.reportId}`,
+            notificationType: NotificationType.REPORT,
+            userId: assignment.userId
+          };
+
+          this.notificationService.createNotification(notificationDTO).subscribe({
+            next: () => console.log(`✅ Notification sent to user ${assignment.userId}`),
+            error: (err) => console.error(`❌ Failed to send notification to user ${assignment.userId}:`, err)
+          });
+        });
+
         this.isSubmitting = false;
         this.toastr.success('Le rapport a été créé avec succès', 'Succès');
         this.router.navigate(['/dashboard/report-dashboard/view-reports']);

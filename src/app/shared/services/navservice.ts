@@ -712,6 +712,12 @@ export class NavService implements OnDestroy {
 		{
 			path: '/dashboard/report-dashboard/view-reports', title: 'Rapports', icon: 'file-text', type: 'link', bookmark: true, selected: false
 		},
+		{
+			path: '/pages/notify-list', title: 'Notifications', icon: 'bell', type: 'link', bookmark: true, selected: false
+		},
+		{
+			path: '/dashboard/protocol-dashboard/create', title: 'Créer Protocole', icon: 'plus-circle', type: 'link', bookmark: true, selected: false
+		},
 
 		{
 			title: 'Advanced Ui',
