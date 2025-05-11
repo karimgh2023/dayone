@@ -9,8 +9,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class NotificationWebSocketService {
-  private stompClient: Client;
+  private stompClient!: Client;
   private connected = false;
+  private lastSeenNotificationId: number | null = null;
 
   private notificationsSubject = new BehaviorSubject<Notification[]>([]);
   notifications$ = this.notificationsSubject.asObservable();
@@ -19,14 +20,10 @@ export class NotificationWebSocketService {
 
   constructor() {
     console.log('✅ Using WS endpoint:', this.wsEndpoint);
+    this.initializeWebSocket();
+  }
 
-    // Ask for browser notification permission
-    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-      Notification.requestPermission().then(permission => {
-        console.log('🔐 Notification permission:', permission);
-      });
-    }
-
+  private initializeWebSocket(): void {
     this.stompClient = new Client({
       webSocketFactory: () => {
         const token = localStorage.getItem('token');
@@ -36,16 +33,13 @@ export class NotificationWebSocketService {
       debug: (str) => console.log('[WebSocket]', str),
       connectHeaders: this.buildConnectHeaders(),
     });
+
+    this.setupWebSocketHandlers();
   }
 
-  private buildConnectHeaders(): StompHeaders {
-    const token = localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  connect(): void {
-    if (this.connected) {
-      console.log('Already connected to WebSocket');
+  private setupWebSocketHandlers(): void {
+    if (!this.stompClient) {
+      console.error('WebSocket client not initialized');
       return;
     }
 
@@ -65,15 +59,6 @@ export class NotificationWebSocketService {
             new Notification(incoming.description, {
               body: 'Cliquez pour voir plus',
               icon: 'assets/free-notification.png',
-            });
-          } else if ('Notification' in window && Notification.permission !== 'denied') {
-            Notification.requestPermission().then(permission => {
-              if (permission === 'granted') {
-                new Notification(incoming.description, {
-                  body: 'Cliquez pour voir plus',
-                  icon: 'assets/free-notification.png',
-                });
-              }
             });
           }
 
@@ -118,12 +103,48 @@ export class NotificationWebSocketService {
       this.connected = false;
       setTimeout(() => this.connect(), 5000);
     };
+  }
+
+  private buildConnectHeaders(): StompHeaders {
+    const token = localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  initializeNotifications(): void {
+    // Request notification permission if not already granted
+    if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+      Notification.requestPermission().then(permission => {
+        console.log('🔐 Notification permission:', permission);
+      });
+    }
+
+    // Connect to WebSocket if not already connected
+    if (!this.connected) {
+      this.connect();
+    }
+  }
+
+  connect(): void {
+    if (this.connected) {
+      console.log('Already connected to WebSocket');
+      return;
+    }
+
+    if (!this.stompClient) {
+      console.error('WebSocket client not initialized');
+      return;
+    }
 
     console.log('Activating WebSocket client...');
     this.stompClient.activate();
   }
 
   disconnect(): void {
+    if (!this.stompClient) {
+      console.error('WebSocket client not initialized');
+      return;
+    }
+
     this.stompClient.deactivate();
     this.connected = false;
     console.log('🛑 WebSocket disconnected');
@@ -131,6 +152,9 @@ export class NotificationWebSocketService {
 
   setInitialNotifications(initial: Notification[]) {
     this.notificationsSubject.next(initial);
+    if (initial.length > 0) {
+      this.lastSeenNotificationId = initial[0].id;
+    }
   }
 
   public addOrUpdateNotification(notif: Notification): void {
@@ -145,5 +169,13 @@ export class NotificationWebSocketService {
     const merged = [...notifs.filter(n => !current.some(c => c.id === n.id)), ...current]
       .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
     this.notificationsSubject.next(merged);
+  }
+
+  public getLastSeenNotificationId(): number | null {
+    return this.lastSeenNotificationId;
+  }
+
+  public setLastSeenNotificationId(id: number): void {
+    this.lastSeenNotificationId = id;
   }
 } 

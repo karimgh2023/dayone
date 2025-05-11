@@ -8,7 +8,8 @@ import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
 import { jwtDecode } from 'jwt-decode';
-import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model'; 
+import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model';
+import { NotificationWebSocketService } from './notification-websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationWebSocketService
   ) {
     this.validateStoredToken();
     this.isAuthenticatedSubject.next(this.hasValidToken());
@@ -85,6 +87,9 @@ export class AuthService {
       localStorage.removeItem('rememberMe');
     }
     this.isAuthenticatedSubject.next(true);
+    
+    // Initialize notifications after successful login
+    this.notificationService.initializeNotifications();
   }
 
   // Token and User Management

@@ -19,7 +19,6 @@ import { SharedModule } from '../../../shared/common/sharedmodule';
 export class NotifyListComponent implements OnInit {
   notifications: Notification[] = [];
   errorMessage: string | null = null;
-  lastSeenNotificationId: number | null = null;
 
   constructor(
     private socketService: NotificationWebSocketService,
@@ -38,22 +37,12 @@ export class NotifyListComponent implements OnInit {
       return;
     }
 
-    // Ask browser for notification permission
-    if ('Notification' in window && Notification.permission !== 'granted') {
-      Notification.requestPermission().then((permission) => {
-        console.log('🔔 Notification permission:', permission);
-      });
-    }
-
-    this.socketService.connect();
-
     // Load user notifications
     this.notificationService.getUserNotifications().subscribe({
       next: (initial) => {
         const sorted = initial.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
         this.socketService.setInitialNotifications(sorted);
         this.notifications = sorted;
-        this.lastSeenNotificationId = sorted[0]?.id ?? null;
         this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
@@ -67,26 +56,6 @@ export class NotifyListComponent implements OnInit {
       next: (notifList) => {
         const sorted = notifList.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
         this.notifications = sorted;
-
-        // Show a browser notification for the newest unseen one
-        const latest = sorted[0];
-        if (
-          Notification.permission === 'granted' &&
-          latest &&
-          !latest.seen &&
-          latest.id !== this.lastSeenNotificationId
-        ) {
-          try {
-            new Notification(latest.description, {
-              body: 'Cliquez pour voir plus',
-              icon: 'assets/free-notification.png',
-            });
-            this.lastSeenNotificationId = latest.id;
-          } catch (err) {
-            console.warn('⚠️ Failed to show browser notification:', err);
-          }
-        }
-
         this.errorMessage = null;
         this.cdr.detectChanges();
       },
@@ -103,6 +72,7 @@ export class NotifyListComponent implements OnInit {
         next: (updated) => {
           console.log('📬 Notification marked as seen:', updated);
           this.socketService.addOrUpdateNotification(updated);
+          this.socketService.setLastSeenNotificationId(updated.id);
         },
         error: (err) => {
           console.error('❌ Error updating notification status:', err);
