@@ -18,6 +18,7 @@ import { ValidationEntryUpdateDTO } from '@/app/models/ValidationEntryUpdateDTO.
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProgressService } from '@/app/shared/services/progress.service';
 import { ReportDTO } from '@/app/models/reportDTO.model';
+import { UserDTO } from '@/app/models/UserDTO';
 @Component({
   selector: 'app-fill-report',
   templateUrl: './fill-report.component.html',
@@ -496,8 +497,7 @@ export class FillReportComponent implements OnInit {
     item.isFilled = this.isSpecificEntryValid(item);
   }
 
-  fillResponsibleFromAssignedUsers(item: StandardChecklistItemDTO): void {
-  }
+ 
   
   
   
