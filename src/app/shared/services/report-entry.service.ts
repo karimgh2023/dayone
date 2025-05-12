@@ -10,6 +10,7 @@ import { StandardReportEntryDTO } from '../../models/standardReportEntryDTO.mode
 import { environment } from '@/environments/environment';
 import { ValidationChecklistItem } from '@/app/models/ValidationChecklistItem.model';
 import { ValidationEntryUpdateDTO } from '@/app/models/ValidationEntryUpdateDTO.model';
+import { UserDTO } from '@/app/models/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,11 @@ export class ReportEntryService {
       responseType: 'json'  // Ensure Angular expects a JSON response
     });
   }
-
+  getAssignedUsers(reportId: number): Observable<UserDTO[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<UserDTO[]>(`${this.apiUrl}/${reportId}/assigned-users`, { headers });
+  }
 
   // ✅ Get full maintenance form DTO with editability flags
   getMaintenanceForm(reportId: number): Observable<MaintenanceFormDTO> {
@@ -86,4 +91,5 @@ export class ReportEntryService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.put(`${this.apiUrl}/maintenance-form/update/${reportId}`, form, { headers } );
   }
+
 }
