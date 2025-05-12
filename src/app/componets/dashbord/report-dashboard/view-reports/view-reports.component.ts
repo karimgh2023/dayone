@@ -384,20 +384,23 @@ export class ViewReportsComponent implements OnInit {
     const standardChecklist$ = this.reportEntryService.getStandardChecklist(report.id);
     const specificChecklist$ = this.reportEntryService.getSpecificChecklist(report.id);
     const maintenanceForm$ = this.reportEntryService.getMaintenanceForm(report.id);
+    const validationChecklist$ = this.reportEntryService.getValidationChecklist(report.id);
 
     // Combine all observables
     forkJoin({
       metadata: metadata$,
       standardChecklist: standardChecklist$,
       specificChecklist: specificChecklist$,
-      maintenanceForm: maintenanceForm$
+      maintenanceForm: maintenanceForm$,
+      validationChecklist: validationChecklist$
     }).pipe(
-      tap(({ metadata, standardChecklist, specificChecklist, maintenanceForm }) => {
+      tap(({ metadata, standardChecklist, specificChecklist, maintenanceForm, validationChecklist }) => {
         // Generate PDF with all the data
         this.pdfService.generateReportPdf(
           report,
           standardChecklist,
           specificChecklist,
+          validationChecklist,
           maintenanceForm.form
         );
       }),
