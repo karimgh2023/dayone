@@ -331,30 +331,24 @@ export class ViewReportsComponent implements OnInit {
    * Calculate the completion rate of all reports
    */
   getCompletionRate(): number {
-    // This is a simplified calculation - in a real app, you'd need report completion data
-    // For now, use a placeholder calculation based on the number of reports
-    const totalReportCount = this.getTotalReports();
-    if (totalReportCount === 0) return 0;
+    const allReports = this.getAllReports();
+    if (allReports.length === 0) return 0;
     
-    // Just for demo purposes - simulate a completion rate
-    // In a real application, you'd use actual completion data from the reports
-    const completedCount = Math.floor(Math.random() * totalReportCount);
-    
-    return Math.round((completedCount / totalReportCount) * 100);
+    const totalProgress = allReports.reduce((sum, report) => sum + (report.progress || 0), 0);
+    return Math.round(totalProgress / allReports.length);
   }
 
   /**
    * Get status label for a report
    */
   getStatusLabel(report: ReportDTO): string {
-    // Simplified status logic - in a real app you would use actual status data
-    // Type assertion to handle potential property
-    const anyReport = report as any;
-    if (anyReport.status) {
-      return anyReport.status;
+    const progress = this.getReportProgress(report);
+    if (progress === 0) {
+      return 'Non commencé';
     }
-    
-    // Placeholder logic - in a real application you'd use actual data from the report
+    if (progress === 100) {
+      return 'Complété';
+    }
     return 'En cours';
   }
 
@@ -362,18 +356,14 @@ export class ViewReportsComponent implements OnInit {
    * Get CSS class for status badge
    */
   getStatusBadgeClass(report: ReportDTO): string {
-    const status = this.getStatusLabel(report);
-    
-    switch (status) {
-      case 'Complété':
-        return 'bg-success-transparent';
-      case 'En cours':
-        return 'bg-info-transparent';
-      case 'En attente':
-        return 'bg-warning-transparent';
-      default:
-        return 'bg-secondary-transparent';
+    const progress = this.getReportProgress(report);
+    if (progress === 0) {
+      return 'bg-info';
     }
+    if (progress === 100) {
+      return 'bg-success';
+    }
+    return 'bg-warning';
   }
 
   /**
@@ -426,6 +416,13 @@ export class ViewReportsComponent implements OnInit {
    * Get reports filtered by status from a specific set of reports
    */
   getFilteredReportsByStatus(reports: ReportDTO[], status: string): ReportDTO[] {
-    return reports.filter(report => this.getStatusLabel(report) === status);
+    return reports.filter(report => {
+      const reportStatus = this.getStatusLabel(report);
+      // Map the old status to the new one for backward compatibility
+      if (status === 'En attente') {
+        return reportStatus === 'Non commencé';
+      }
+      return reportStatus === status;
+    });
   }
 }
