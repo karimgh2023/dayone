@@ -6,11 +6,10 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReportDTO } from '../../../../models/reportDTO.model';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { ProgressService } from '@/app/shared/services/progress.service';
-import { PdfService } from '@/app/shared/services/pdf.service';
+import { PdfService } from '../../../../shared/services/pdf.service';
 import { forkJoin, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
-import { ReportEntryService } from '@/app/shared/services/report-entry.service';
+import { ReportEntryService } from '../../../../shared/services/report-entry.service';
 
 
 @Component({

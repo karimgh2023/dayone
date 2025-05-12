@@ -89,7 +89,7 @@ export class NotifyListComponent implements OnInit {
         next: (updated) => {
           console.log('📬 Notification marked as seen:', updated);
           this.socketService.addOrUpdateNotification(updated);
-          this.socketService.setLastSeenNotificationId(updated.id);
+          
         },
         error: (err) => {
           console.error('❌ Error updating notification status:', err);

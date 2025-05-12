@@ -206,7 +206,7 @@
                       <div class="progress-bar bg-warning" [style.width.%]="getReportProgress(report)"></div>
                     </div>
                     <div class="d-flex justify-content-between">
-                      <span class="text-muted fs-12">{{ getReportProgress(report) }}% complété</span>
+                      <span class="text-muted fs-12">En cours</span>
                       <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
                     </div>
                   </div>
@@ -257,7 +257,7 @@
                       <div class="progress-bar bg-info" [style.width.%]="getReportProgress(report)"></div>
                     </div>
                     <div class="d-flex justify-content-between">
-                      <span class="text-muted fs-12">{{ getReportProgress(report) }}% complété</span>
+                      <span class="text-muted fs-12">En attente</span>
                       <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
                     </div>
                   </div>
@@ -308,7 +308,7 @@
                       <div class="progress-bar bg-success" [style.width.%]="100"></div>
                     </div>
                     <div class="d-flex justify-content-between">
-                      <span class="text-muted fs-12">100% complété</span>
+                      <span class="text-muted fs-12">Complété</span>
                       <span class="text-muted fs-12"><i class="fe fe-calendar me-1"></i>{{ report.createdAt | date:'shortDate' }}</span>
                     </div>
                   </div>
@@ -414,7 +414,6 @@
                            [ngClass]="{'bg-success': getReportProgress(report) >= 70, 'bg-warning': getReportProgress(report) < 70 && getReportProgress(report) >= 30, 'bg-danger': getReportProgress(report) < 30}"
                            [style.width.%]="getReportProgress(report)"></div>
                     </div>
-                    <small class="text-muted">{{ getReportProgress(report) }}%</small>
                   </td>
                   <td>
                     <div class="btn-group">

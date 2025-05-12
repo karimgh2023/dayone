@@ -17,7 +17,7 @@ import { AuthService } from '@/app/shared/services/auth.service';
 import { ValidationEntryUpdateDTO } from '@/app/models/ValidationEntryUpdateDTO.model';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProgressService } from '@/app/shared/services/progress.service';
-
+import { ReportDTO } from '@/app/models/reportDTO.model';
 @Component({
   selector: 'app-fill-report',
   templateUrl: './fill-report.component.html',
@@ -39,6 +39,7 @@ import { ProgressService } from '@/app/shared/services/progress.service';
 export class FillReportComponent implements OnInit {
 
   reportId!: number;
+  reportProgress!:number;
   currentUser!: User;
   today: string = new Date().toISOString().split('T')[0];
 
@@ -48,8 +49,7 @@ export class FillReportComponent implements OnInit {
   reportMetadata!: ReportMetadataDTO ;
   maintenanceForm!: MaintenanceFormDTO;
 
-
-
+  assignedUsers: ReportDTO[] = [];
   editableKeys: (keyof MaintenanceForm)[] = [
     'powerCircuit', 'controlCircuit', 'fuseValue', 'frequency',
     'phaseBalanceTest380v', 'phaseBalanceTest210v',
@@ -72,6 +72,7 @@ export class FillReportComponent implements OnInit {
       const id = params.get('id'); // ✅ Not 'reportId'
       if (id) {
         this.reportId = +id;
+      
         this.currentUser = this.authService.getUserFromToken();
         console.log('[ROUTE] Report ID:', this.reportId);
         this.loadData();
@@ -104,8 +105,7 @@ export class FillReportComponent implements OnInit {
         console.log('[STANDARD] Loaded:', data);
         this.standardChecklist = data.map(item => ({
           ...item,
-          isFilled: false,
-          responsableAction: item.responsableAction || this.currentUser.firstName + ' ' + this.currentUser.lastName
+          isFilled: false
         }));
         this.updateProgress();
       },
@@ -325,41 +325,7 @@ export class FillReportComponent implements OnInit {
     });
   }
 
-  /**
-   * Recalculate isFilled states for all standard checklist items
-   */
-  private recalculateStandardIsFilledStates(): void {
-    this.standardChecklist.forEach(item => {
-      if (item.implemented) {
-        // For implemented items, check if they have any non-empty fields
-        item.isFilled = !!(item.action?.trim() || 
-                          item.responsableAction?.trim() || 
-                          item.deadline || 
-                          item.successControl?.trim());
-      } else {
-        // For non-implemented items, check if they are valid
-        item.isFilled = this.isStandardEntryValid(item);
-      }
-    });
-  }
-
-  /**
-   * Recalculate isFilled states for all specific checklist items
-   */
-  private recalculateSpecificIsFilledStates(): void {
-    this.specificChecklist.forEach(item => {
-      if (item.homologation) {
-        // For homologated items, check if they have any non-empty fields
-        item.isFilled = !!(item.action?.trim() || 
-                          item.responsableAction?.trim() || 
-                          item.deadline || 
-                          item.successControl?.trim());
-      } else {
-        // For non-homologated items, check if they are valid
-        item.isFilled = this.isSpecificEntryValid(item);
-      }
-    });
-  }
+ 
 
   /**
    * Toggle implementation status and mark as filled
@@ -401,40 +367,58 @@ export class FillReportComponent implements OnInit {
     }
   }
 
-  /**
-   * Calculate the overall progress of the report
-   */
   getOverallProgress(): number {
-    const standard = this.getStandardProgress();
-    const specific = this.getSpecificProgress();
-    const maintenance = this.getMaintenanceProgress();
+  return this.progressService.calculateOverallProgress(
+    this.standardChecklist,
+    this.specificChecklist,
+    this.validationChecklist,
+    this.maintenanceForm?.form
     
-    return this.progressService.calculateOverallProgress(standard, specific, maintenance);
+  );
+}
+
+  /**
+   * Get the progress from the report DTO
+   */
+  getReportProgress(report: ReportDTO): number {
+    return report.progress || 0;
   }
 
   /**
-   * Calculate the progress of the standard checklist
+   * Get the progress of the standard checklist
    */
   getStandardProgress(): number {
     return this.progressService.calculateStandardProgress(this.standardChecklist);
   }
 
   /**
-   * Calculate the progress of the specific checklist
+   * Get the progress of the specific checklist
    */
   getSpecificProgress(): number {
+    if (!this.specificChecklist || this.specificChecklist.length === 0) {
+      return 0;
+    }
     return this.progressService.calculateSpecificProgress(this.specificChecklist);
+  }
+  
+
+  /**
+   * Get the progress of the validation checklist
+   */
+  getValidationProgress(): number {
+    return this.progressService.calculateValidationProgress(this.validationChecklist);
   }
 
   /**
-   * Calculate the progress of the maintenance form
+   * Get the progress of the maintenance form
    */
   getMaintenanceProgress(): number {
-    return this.progressService.calculateMaintenanceProgress(
-      this.maintenanceForm?.form,
-      this.editableKeys
-    );
+    if (!this.maintenanceForm || !this.maintenanceForm.form) {
+      return 0;
+    }
+    return this.progressService.calculateMaintenanceProgress(this.maintenanceForm.form);
   }
+  
 
   /**
    * Update a validation entry
@@ -511,4 +495,10 @@ export class FillReportComponent implements OnInit {
     // Update isFilled based on current field values
     item.isFilled = this.isSpecificEntryValid(item);
   }
+
+  fillResponsibleFromAssignedUsers(item: StandardChecklistItemDTO): void {
+  }
+  
+  
+  
 }

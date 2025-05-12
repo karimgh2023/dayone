@@ -58,6 +58,17 @@
             </div>
           </div>
         </div>
+        <div class="completion-stat">
+          <div class="d-flex align-items-center">
+            <div class="completion-icon bg-warning-transparent me-2">
+              <i class="fe fe-tool text-warning"></i>
+            </div>
+            <div>
+              <div class="fs-14 text-muted">Fiche Validation</div>
+              <div class="fs-16 fw-semibold">{{ getValidationProgress() }}%</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -185,13 +196,14 @@
                 </td>
                 <td>
                   <input
-                    class="form-control form-control-sm"
-                    type="text"
-                    placeholder="Responsable"
-                    [disabled]="!item.editable || item.implemented"
-                    [(ngModel)]="item.responsableAction"
-                    name="responsable-{{ item.entryId }}"
-                    (ngModelChange)="item.isFilled = true" />
+                  class="form-control form-control-sm"
+                  type="text"
+                  placeholder="Responsable"
+                  [disabled]="!item.editable || item.implemented"
+                  [(ngModel)]="item.responsableAction"
+                  name="responsable-{{ item.entryId }}"
+                  (focus)="fillResponsibleFromAssignedUsers(item)"
+                  (ngModelChange)="item.isFilled = true" />
                 </td>
                 <td>
                   <input
