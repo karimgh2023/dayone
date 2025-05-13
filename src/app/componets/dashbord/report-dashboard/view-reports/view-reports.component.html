@@ -112,8 +112,8 @@
               <i class="fe fe-layout me-1"></i>Tableau
             </button>
           </div>
-          <a routerLink="/dashboard/report-dashboard/protocol-selection" class="btn btn-success ms-2">
-            <i class="fe fe-plus-circle me-1"></i>Nouveau Rapport
+          <a *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'" routerLink="/dashboard/report-dashboard/protocol-selection" class="btn btn-success ms-2">
+            <i class="fe fe-plus-circle me-1"></i>Nouveau Rapport
           </a>
         </div>
       </div>

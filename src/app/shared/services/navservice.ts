@@ -25,7 +25,6 @@ export interface Menu {
   badgeType?: string;
   roles?: string[];
 }
-
 @Injectable({
   providedIn: 'root',
 })
