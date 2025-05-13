@@ -26,11 +26,14 @@ export class PdfService {
 
     this.addFrenchHeader(doc, report);
     let y = 55;
+    y = this.addAssignedUsers(doc, report, y);
     y = this.addEquipmentDetails(doc, report, y);
-    y = this.addValidationChecklist(doc, validationChecklist, y);
+   
+   
     this.addStandardChecklist(doc, standardChecklist);
     this.addSpecificChecklist(doc, specificChecklist);
     this.addMaintenanceForm(doc, maintenanceForm);
+    this.addValidationChecklist(doc, validationChecklist, y);
 
     doc.save(`rapport_${report.serialNumber}.pdf`);
   }
@@ -75,10 +78,33 @@ export class PdfService {
     return (doc as any).lastAutoTable.finalY + 8;
   }
 
-  private addValidationChecklist(doc: jsPDF, checklist: ValidationChecklistItem[], startY: number = 53): number {
-    doc.setFontSize(16);
+  private addAssignedUsers(doc: jsPDF, report: ReportDTO, startY: number): number {
+    if (!report.assignedUsers || report.assignedUsers.length === 0) {
+      return startY;
+    }
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setFont('helvetica', 'normal');
+
     autoTable(doc, this.commonTableOptions({
       startY: startY + 5,
+      head: [['Nom', 'Prénom', 'Email', 'Département']],
+      body: report.assignedUsers.map(user => [
+        user.lastName || '-',
+        user.firstName || '-',
+        user.email || '-',
+        user.department?.name || '-'
+      ])
+    }));
+
+    return (doc as any).lastAutoTable.finalY + 8;
+  }
+
+  private addValidationChecklist(doc: jsPDF, checklist: ValidationChecklistItem[], startY: number = 53): number {
+    doc.addPage();
+    doc.setFontSize(16);
+    autoTable(doc, this.commonTableOptions({
       head: [['Critère', 'Département', 'Type', 'Statut', 'Raison', 'Date']],
       body: checklist.map(item => [
         item.criteria,

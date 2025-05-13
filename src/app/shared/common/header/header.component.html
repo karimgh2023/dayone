@@ -124,13 +124,12 @@
           </div>
           <!-- End::header-element -->
 
-          <!-- Start::header-element -->
+          <!-- Start::header-element 
           <div class="header-element country-selector" ngbDropdown [autoClose]="'outside'">
-              <!-- Start::header-link|dropdown-toggle -->
               <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
                   <img [src]="'assets/images/flags/' + languageService.getCurrentLanguageFlag()" alt="img" class="rounded-circle">
               </a>
-              <!-- End::header-link|dropdown-toggle -->
+              <!-- End::header-link|dropdown-toggle 
               <ul ngbDropdownMenu class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
                   <li *ngFor="let lang of languages">
                       <a ngbDropdownItem class="dropdown-item d-flex align-items-center" href="javascript:void(0);" (click)="changeLanguage(lang.code)">
@@ -141,18 +140,13 @@
                       </a>
                   </li>
               </ul>
-          </div>
-          <!-- End::header-element -->
+          </div> 
 
-          <!-- Start::header-element -->
           <div class="header-element cart-dropdown" ngbDropdown [autoClose]="'outside'">
-              <!-- Start::header-link|dropdown-toggle -->
               <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
                   <i class="fe fe-mail header-link-icon"></i>
                   <span class="badge bg-success rounded-pill header-icon-badge" id="cart-icon-badge">{{cartItemCount}}</span>
               </a>
-              <!-- End::header-link|dropdown-toggle -->
-              <!-- Start::main-header-dropdown -->
               <div ngbDropdownMenu class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
                   <div class="p-3">
                       <div class="d-flex align-items-center justify-content-between">
@@ -288,18 +282,13 @@
                       </div>
                   </div>
               </div>
-              <!-- End::main-header-dropdown -->
           </div>
-          <!-- End::header-element -->
 
-          <!-- Start::header-element -->
           <div class="header-element header-shortcuts-dropdown d-none d-lg-flex" ngbDropdown>
-              <!-- Start::header-link|dropdown-toggle -->
               <a href="javascript:void(0);" ngbDropdownToggle class="header-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="notificationDropdown" aria-expanded="false">
                   <i class="fe fe-grid header-link-icon"></i>
               </a>
-              <!-- End::header-link|dropdown-toggle -->
-              <!-- Start::main-header-dropdown -->
+              
               <div ngbDropdownMenu class="main-header-dropdown header-shortcuts-dropdown dropdown-menu pb-0 dropdown-menu-end" aria-labelledby="notificationDropdown">
                   <div class="p-3">
                       <div class="d-flex align-items-center justify-content-between">
@@ -372,8 +361,7 @@
                      </div>
                   </div>
               </div>
-              <!-- End::main-header-dropdown -->
-          </div>
+          </div>-->
           <!-- End::header-element -->
 
           <!-- Start::header-element -->

@@ -54,7 +54,7 @@ export class NavService implements OnDestroy {
       type: 'link',
       bookmark: true,
       selected: false,
-      roles: ['EMPLOYEE', 'DEPARTMENT_MANAGER']
+      roles: ['EMPLOYEE', 'DEPARTMENT_MANAGER','ADMIN']
     },
     {
       path: '/pages/notify-list',
