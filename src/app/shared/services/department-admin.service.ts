@@ -52,14 +52,16 @@ export class DepartmentAdminService {
   }
 
   // Delete a department
-  deleteDepartment(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
-     ;
+  deleteDepartment(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers });
   }
 
   // Add a new department (legacy method - consider using createDepartment instead)
-  addDepartment(name: string): Observable<Department> {
-    const department: Department = { id: 0, name };
-    return this.createDepartment(department);
+  addDepartment(name: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}/add`, { name }, { headers });
   }
 }

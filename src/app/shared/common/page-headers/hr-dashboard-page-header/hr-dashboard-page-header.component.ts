@@ -61,7 +61,7 @@ export class HrDashboardPageHeaderComponent implements OnInit {
   }
 
   openModalOrEmitEvent() {
-    if (this.currentPath.includes('/dashboard/hrmdashboards/department')) {
+    if (this.currentPath.includes('/dashboard/department-dashboard/department')) {
       // Emit event for department component to handle
       this.addDepartmentClick.emit();
     } else {
