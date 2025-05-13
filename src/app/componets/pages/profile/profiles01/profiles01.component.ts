@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/common/sharedmodule';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '@/app/shared/services/auth.service';
+import { User } from '@/app/models/user.model';
 
 @Component({
   selector: 'app-profiles01',
@@ -11,10 +13,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./profiles01.component.scss']
 })
 export class Profiles01Component implements OnInit {
+  user: User | null = null;
 
-  constructor() { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.user = this.authService.getCurrentUser();
   }
-
 }
