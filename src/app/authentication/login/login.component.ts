@@ -157,8 +157,8 @@ export class LoginComponent {
           const welcomeMessage = fullName ? `Bienvenue, ${fullName}` : 'Bienvenue';
           
           this.toastr.success(welcomeMessage, 'Connexion réussie');
-          this.router.navigate(['/dashboard/hrmdashboards/dashboard']);
-        } catch (error) {
+          this.router.navigate(['/dashboard/report-dashboard/view-reports']); 
+               } catch (error) {
           console.error('[Login] Error processing token:', error);
           this.toastr.error('Token error', 'Login Failed');
           this.authservice.clearAuthData();

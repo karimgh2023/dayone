@@ -19,7 +19,10 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProgressService } from '@/app/shared/services/progress.service';
 import { ReportDTO } from '@/app/models/reportDTO.model';
 import { UserDTO } from '@/app/models/UserDTO';
-@Component({
+import { NotificationService } from '@/app/shared/services/notification.service';
+import { NotificationDTO } from '@/app/models/notification-dto.model';
+import { NotificationType } from '@/app/models/NotificationType.enum';
+  @Component({
   selector: 'app-fill-report',
   templateUrl: './fill-report.component.html',
   styleUrls: ['./fill-report.component.scss'],
@@ -50,7 +53,7 @@ export class FillReportComponent implements OnInit {
   reportMetadata!: ReportMetadataDTO ;
   maintenanceForm!: MaintenanceFormDTO;
 
-  assignedUsers: ReportDTO[] = [];
+  assignedUsers: UserDTO[] = [];
   editableKeys: (keyof MaintenanceForm)[] = [
     'powerCircuit', 'controlCircuit', 'fuseValue', 'frequency',
     'phaseBalanceTest380v', 'phaseBalanceTest210v',
@@ -65,7 +68,9 @@ export class FillReportComponent implements OnInit {
     private reportService: ReportService,
     private authService: AuthService,
     private toastr: ToastrService,
-    private progressService: ProgressService
+    private progressService: ProgressService,
+    private notificationService: NotificationService
+
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +80,10 @@ export class FillReportComponent implements OnInit {
         this.reportId = +id;
       
         this.currentUser = this.authService.getUserFromToken();
+        this.reportEntryService.getAssignedUsers(this.reportId).subscribe({
+          next: users => this.assignedUsers = users,
+          error: () => this.toastr.error('Erreur chargement utilisateurs assignés')
+        });
         console.log('[ROUTE] Report ID:', this.reportId);
         this.loadData();
       } else {
@@ -203,7 +212,7 @@ export class FillReportComponent implements OnInit {
       },
       error: err => {
         console.error('[SPECIFIC] Update failed:', err);
-        this.toastr.error('Échec de l\'enregistrement de la checklist spécifique.', 'Erreur');
+        this.toastr.error("Échec de l'enregistrement de la checklist spécifique.", 'Erreur');
       }
     });
   }
@@ -226,7 +235,7 @@ export class FillReportComponent implements OnInit {
       },
       error: err => {
         console.error('[❌ IMMOBILIZATION UPDATE ERROR]', err);
-        this.toastr.error('Échec de la mise à jour de l\'immobilisation.', 'Erreur');
+        this.toastr.error("Échec de la mise à jour de l'immobilisation.", 'Erreur');
       }
     });
   }
@@ -321,7 +330,7 @@ export class FillReportComponent implements OnInit {
       },
       error: err => {
         console.error('[STANDARD] Update failed:', err);
-        this.toastr.error('Échec de l\'enregistrement de la checklist standard.', 'Erreur');
+        this.toastr.error("Échec de l'enregistrement de la checklist standard.", 'Erreur');
       }
     });
   }
@@ -441,7 +450,7 @@ export class FillReportComponent implements OnInit {
       },
       error: err => {
         console.error('[VALIDATION] Update error:', err);
-        this.toastr.error('Échec de la mise à jour de la validation.', 'Erreur');
+        this.toastr.error("Échec de la mise à jour de la validation.", 'Erreur');
       }
     });
   }
@@ -496,6 +505,32 @@ export class FillReportComponent implements OnInit {
     // Update isFilled based on current field values
     item.isFilled = this.isSpecificEntryValid(item);
   }
+  getAssignedUserByDepartment(deptId: number): UserDTO | null {
+    return this.assignedUsers.find(u => u.department?.id === deptId) || null;
+  }
+  
+  getAssignedUsersForMultipleDepartments(depts: {id:number}[]): UserDTO[] {
+    const ids = depts.map(d => d.id);
+    return this.assignedUsers.filter(u => u.department && ids.includes(u.department.id));
+  }
+  
+  private findUserByName(fullName: string): UserDTO|undefined {
+    return this.assignedUsers.find(u =>
+      `${u.firstName} ${u.lastName}`.toLowerCase() === fullName.toLowerCase()
+    );
+  }
+  
+  private sendChecklistNotification(userId: number, message: string): void {
+    const dto: NotificationDTO = {
+      description: message,
+      link: `/dashboard/report-dashboard/fill-report/${this.reportId}`,
+      notificationType: NotificationType.REPORT,
+      userId
+    };
+    this.notificationService.createNotification(dto).subscribe();
+  }
+  
+  
 
  
   

@@ -1,11 +1,11 @@
 <div class="protocol-create">
-  <app-task-dashboard-page-header
+  <div>
     title="Create Protocol"
     subtitle="Define a new protocol with specific criteria and responsibilities"
     title2="Protocol Type"
     subtitle2="{{ protocolForm.get('protocolType')?.value }}"
-  ></app-task-dashboard-page-header>
-
+  </div>
+  
   <div class="card">
     <div class="card-body">
       <form [formGroup]="protocolForm" (ngSubmit)="submit()">

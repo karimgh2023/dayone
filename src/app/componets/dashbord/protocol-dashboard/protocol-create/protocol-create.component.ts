@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../../shared/services/data.service';
 import { Department } from '../../../../models/department.model';
-import { TaskDashboardPageHeaderComponent } from '../../task-dashboard/task-dashboard-page-header/task-dashboard-page-header.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -18,7 +17,6 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TaskDashboardPageHeaderComponent,
     NgbTooltipModule
   ],
   standalone: true

@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'companies',
         loadComponent: () =>
-          import('./companies/companies.component').then((m) => m.CompaniesComponent),
+          import('../companies/companies.component').then((m) => m.CompaniesComponent),
           
       },
       {

@@ -8,7 +8,6 @@ import { ProtocolService } from '../../../../shared/services/protocol.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { TaskDashboardPageHeaderComponent } from '../../task-dashboard/task-dashboard-page-header/task-dashboard-page-header.component';
 
 interface Protocol {
   id: number;
@@ -27,7 +26,7 @@ interface ProtocolGroup {
 @Component({
   selector: 'app-protocol-selection',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbTooltipModule, TaskDashboardPageHeaderComponent],
+  imports: [CommonModule, FormsModule, NgbTooltipModule,],
   templateUrl: './protocol-selection.component.html',
   styleUrls: ['./protocol-selection.component.scss'],
   animations: [
