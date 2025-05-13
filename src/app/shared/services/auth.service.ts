@@ -8,7 +8,7 @@ import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
 import { jwtDecode } from 'jwt-decode';
-import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model';
+import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model'; 
 import { NotificationWebSocketService } from './notification-websocket.service';
 
 @Injectable({

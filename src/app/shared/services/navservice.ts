@@ -1,138 +1,149 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject, BehaviorSubject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
+import { Router, Event } from '@angular/router';
+import { AuthService } from './auth.service';
 
-import { Router } from '@angular/router';
-// Menu
+// Menu interface
 export interface Menu {
-	headTitle?: string;
-	headTitle2?: string;
-	path?: string;
-	dirchange?: boolean;
-	title?: string;
-	icon?: string;
-	type?: string;
-	badgeValue?: string;
-	badgeClass?: string;
-	active?: boolean;
-	selected?: boolean;
-	bookmark?: boolean;
-	children?: Menu[];
-	Menusub?: boolean;
-	target?: boolean;
-	menutype?: string;
-	badgeType?: string
+  headTitle?: string;
+  headTitle2?: string;
+  path?: string;
+  dirchange?: boolean;
+  title?: string;
+  icon?: string;
+  type?: string;
+  badgeValue?: string;
+  badgeClass?: string;
+  active?: boolean;
+  selected?: boolean;
+  bookmark?: boolean;
+  children?: Menu[];
+  Menusub?: boolean;
+  target?: boolean;
+  menutype?: string;
+  badgeType?: string;
+  roles?: string[];
 }
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class NavService implements OnDestroy {
-	private unsubscriber: Subject<any> = new Subject();
-	public screenWidth: BehaviorSubject<number> = new BehaviorSubject(
-		window.innerWidth
-	);
+  private unsubscriber: Subject<any> = new Subject();
 
-	// Search Box
-	public search = false;
+  // BehaviorSubject for the filtered menu items
+  public items = new BehaviorSubject<Menu[]>([]);
 
-	// Language
-	public language = false;
+  public screenWidth: BehaviorSubject<number> = new BehaviorSubject(window.innerWidth);
+  public search = false;
+  public language = false;
+  public megaMenu = false;
+  public levelMenu = false;
+  public megaMenuColapse: boolean = window.innerWidth < 1199;
+  public collapseSidebar: boolean = window.innerWidth < 991;
+  public horizontal: boolean = window.innerWidth < 991;
+  public fullScreen = false;
 
-	// Mega Menu
-	public megaMenu = false;
-	public levelMenu = false;
-	public megaMenuColapse: boolean = window.innerWidth < 1199 ? true : false;
+  // Master list of all possible menu entries
+  private readonly ALL_MENU: Menu[] = [
+    { headTitle: 'DASHBOARDS' },
+    {
+      path: '/dashboard/report-dashboard/view-reports',
+      title: 'Rapports',
+      icon: 'file-text',
+      type: 'link',
+      bookmark: true,
+      selected: false,
+      roles: ['EMPLOYEE', 'DEPARTMENT_MANAGER']
+    },
+    {
+      path: '/pages/notify-list',
+      title: 'Notifications',
+      icon: 'bell',
+      type: 'link',
+      bookmark: true,
+      selected: false
+    },
+    {
+      path: '/dashboard/protocol-dashboard/create',
+      title: 'Créer Protocole',
+      icon: 'plus-circle',
+      type: 'link',
+      bookmark: true,
+      selected: false,
+      roles: ['ADMIN']
+    },
+    {
+      path: '/dashboard/department-dashboard/department',
+      title: 'Départements',
+      icon: 'grid',
+      type: 'link',
+      selected: false,
+      roles: ['ADMIN']
+    },
+    {
+      path: '/dashboard/employess-dashboard/employees',
+      title: 'Employés',
+      icon: 'user-check',
+      type: 'link',
+      selected: false,
+      roles: ['ADMIN']
+    }
+  ];
 
-	// Collapse Sidebar
-	public collapseSidebar: boolean = window.innerWidth < 991 ? true : false;
+  constructor(private router: Router, private authService: AuthService) {
+    this.setScreenWidth(window.innerWidth);
 
-	// For Horizontal Layout Mobile
-	public horizontal: boolean = window.innerWidth < 991 ? false : true;
+    // Watch for window resize
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(300), takeUntil(this.unsubscriber))
+      .subscribe((evt: any) => {
+        this.setScreenWidth(evt.target.innerWidth);
+        this.collapseSidebar = evt.target.innerWidth < 991;
+        this.megaMenu = false;
+        this.levelMenu = false;
+        this.megaMenuColapse = evt.target.innerWidth < 1199;
+      });
 
-	// Full screen
-	public fullScreen = false;
-	active: any;
+    // Collapse sidebar on route change for small screens
+    if (window.innerWidth < 991) {
+      this.router.events.pipe(takeUntil(this.unsubscriber)).subscribe((event: Event) => {
+        this.collapseSidebar = true;
+        this.megaMenu = false;
+        this.levelMenu = false;
+      });
+    }
 
-	constructor(private router: Router) {
-		this.setScreenWidth(window.innerWidth);
-		fromEvent(window, 'resize')
-			.pipe(debounceTime(1000), takeUntil(this.unsubscriber))
-			.subscribe((evt: any) => {
-				this.setScreenWidth(evt.target.innerWidth);
-				if (evt.target.innerWidth < 991) {
-					this.collapseSidebar = true;
-					this.megaMenu = false;
-					this.levelMenu = false;
-				}
-				if (evt.target.innerWidth < 1199) {
-					this.megaMenuColapse = true;
-				}
-			});
-		if (window.innerWidth < 991) {
-			// Detect Route change sidebar close
-			this.router.events.subscribe((event) => {
-				this.collapseSidebar = true;
-				this.megaMenu = false;
-				this.levelMenu = false;
-			});
-		}
-	}
+    // Build initial menu based on user role
+    this.refreshMenu();
+  }
 
-	ngOnDestroy() {
-		this.unsubscriber.next;
-		this.unsubscriber.complete();
-	}
+  ngOnDestroy() {
+    this.unsubscriber.next(null);
+    this.unsubscriber.complete();
+  }
 
-	private setScreenWidth(width: number): void {
-		this.screenWidth.next(width);
-	}
+  private setScreenWidth(width: number): void {
+    this.screenWidth.next(width);
+  }
 
-	MENUITEMS: Menu[] = [
-		// Dashboard
-		{ headTitle: 'DASHBOARDS' },
-		
-		
-		
+  /** Returns the current user's role, or null if not authenticated */
+  private getCurrentUserRole(): string | null {
+    return this.authService.getUserRole();
+  }
 
-
-	
-		{
-			path: '/dashboard/report-dashboard/view-reports', title: 'Rapports', icon: 'file-text', type: 'link', bookmark: true, selected: false
-		},
-		{
-			path: '/pages/notify-list', title: 'Notifications', icon: 'bell', type: 'link', bookmark: true, selected: false
-		},
-		{
-			path: '/dashboard/protocol-dashboard/create', title: 'Créer Protocole', icon: 'plus-circle', type: 'link', bookmark: true, selected: false
-		},
-		{
-			path: '/dashboard/department-dashboard/department',
-			title: 'Départements',
-			icon: 'grid',
-							type: 'link',
-			selected: false
-						  },
-						  {
-			path: '/dashboard/employess-dashboard/employees',
-			title: 'Employés',
-			icon: 'user-check',
-							type: 'link',
-			selected: false
-						  },
-						  {
-			path: '/dashboard/companies-dashboard/companies',
-			title: 'Plans',
-			icon: 'layers',
-							type: 'link',
-			selected: false
-		},
-	
-	
-	
-	
-	 
-	];
-	// Array
-	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+  /** Filters ALL_MENU by the current role and emits the result */
+  private refreshMenu(): void {
+    const role = this.getCurrentUserRole();
+    const filtered = this.ALL_MENU.filter(item => {
+      // Public if no roles specified
+      if (!item.roles || item.roles.length === 0) {
+        return true;
+      }
+      // Otherwise only include if the user's role is allowed
+      return role !== null && item.roles.includes(role);
+    });
+    this.items.next(filtered);
+  }
 }

@@ -293,23 +293,19 @@ export class HeaderComponent implements OnInit {
       };
     }
 
-    // Get search input field
-    setTimeout(() => {
-      this.navServices.items.subscribe(items => {
-        this.items = items;
-      });
-      this.menuItems = this.navServices.MENUITEMS;
-    }, 200);
-
+    // Get search input field<<----
+   // setTimeout(() => {
+    //  this.navServices.items.subscribe(items => {
+        // Filter items based on role
+     //     const role = this.authService.getUserRole();
+        //this.items = items.filter(item => !item.roles || item.roles.includes(role));
+      //});
+      // If you use ALL_MENU for something else, filter it as well
+      //const role = this.authService.getUserRole();
+      //this.menuItems = this.navServices.menuItems.filter(item => !item.roles || item.roles.includes(role));
+    //}, 200);
     // Initialize languages
-    this.languages = [
-      { code: 'en', name: 'English', flag: 'us.png' },
-      { code: 'fr', name: 'French', flag: 'fr.png' },
-      { code: 'es', name: 'Spanish', flag: 'es.png' },
-      { code: 'de', name: 'German', flag: 'de.png' },
-      { code: 'it', name: 'Italian', flag: 'it.png' },
-      { code: 'ru', name: 'Russian', flag: 'ru.png' }
-    ];
+   
     
     // Set default language values
     this.currentLanguage = 'en';
