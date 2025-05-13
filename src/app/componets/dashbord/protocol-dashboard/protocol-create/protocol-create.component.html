@@ -1,27 +1,22 @@
 <div class="protocol-create">
-  <div>
-    title="Create Protocol"
-    subtitle="Define a new protocol with specific criteria and responsibilities"
-    title2="Protocol Type"
-    subtitle2="{{ protocolForm.get('protocolType')?.value }}"
-  </div>
+  
   
   <div class="card">
     <div class="card-body">
       <form [formGroup]="protocolForm" (ngSubmit)="submit()">
         <!-- Basic Information Section -->
         <div class="form-section">
-          <h5 class="section-title">Basic Information</h5>
+          <h5 class="section-title">Informations de base</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-label">Protocol Name <span class="text-danger">*</span></label>
+                <label class="form-label">Nom du protocole <span class="text-danger">*</span></label>
                 <input
                   type="text"
                   formControlName="name"
                   class="form-control"
                   [class.is-invalid]="isFieldInvalid('name')"
-                  placeholder="Enter protocol name"
+                  placeholder="Entrez le nom du protocole"
                 />
                 <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
                   {{ getErrorMessage('name') }}
@@ -30,7 +25,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-label">Protocol Type <span class="text-danger">*</span></label>
+                <label class="form-label">Type de protocole <span class="text-danger">*</span></label>
                 <select
                   formControlName="protocolType"
                   class="form-select"
@@ -51,7 +46,7 @@
               class="form-control"
               rows="3"
               [class.is-invalid]="isFieldInvalid('description')"
-              placeholder="Enter protocol description"
+              placeholder="Entrez la description du protocole"
             ></textarea>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('description')">
               {{ getErrorMessage('description') }}
@@ -62,14 +57,14 @@
         <!-- Specific Criteria Section -->
         <div class="form-section mt-4">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="section-title mb-0">Specific Criteria</h5>
+            <h5 class="section-title mb-0">Critères spécifiques</h5>
             <button
               type="button"
               class="btn btn-outline-primary btn-sm"
               (click)="addCriteria()"
               [disabled]="loading"
             >
-              <i class="fe fe-plus me-1"></i>Add Criteria
+              <i class="fe fe-plus me-1"></i>Ajouter un critère
             </button>
           </div>
 
@@ -80,13 +75,13 @@
               class="criteria-card"
             >
               <div class="criteria-header">
-                <h6 class="mb-0">Criteria #{{ i + 1 }}</h6>
+                <h6 class="mb-0">Critère #{{ i + 1 }}</h6>
                 <button
                   type="button"
                   class="btn btn-icon btn-danger"
                   (click)="removeCriteria(i)"
                   *ngIf="specificCriteria.length > 1"
-                  ngbTooltip="Remove criteria"
+                  ngbTooltip="Supprimer le critère"
                 >
                   <i class="fe fe-trash-2"></i>
                 </button>
@@ -100,7 +95,7 @@
                     class="form-control"
                     rows="2"
                     [class.is-invalid]="isFieldInvalid('description', i)"
-                    placeholder="Enter criteria description"
+                    placeholder="Entrez la description du critère"
                   ></textarea>
                   <div class="invalid-feedback" *ngIf="isFieldInvalid('description', i)">
                     {{ getErrorMessage('description', i) }}
@@ -110,17 +105,20 @@
                 <div class="row mt-3">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="form-label">Implementation Responsibles <span class="text-danger">*</span></label>
+                      <label class="form-label">Responsables de l'implémentation <span class="text-danger">*</span></label>
                       <select
-                        class="form-select"
                         multiple
-                        formControlName="implementationResponsibles"
+                        class="form-control"
+                        [formControlName]="'implementationResponsibles'"
                         [class.is-invalid]="isFieldInvalid('implementationResponsibles', i)"
                       >
                         <option *ngFor="let dept of departments" [value]="dept.id">
                           {{ dept.name }}
                         </option>
                       </select>
+                      <small class="form-text text-muted">
+                        Vous pouvez sélectionner plusieurs départements (Ctrl/Cmd + clic).
+                      </small>
                       <div class="invalid-feedback" *ngIf="isFieldInvalid('implementationResponsibles', i)">
                         {{ getErrorMessage('implementationResponsibles', i) }}
                       </div>
@@ -128,7 +126,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="form-label">Check Responsibles <span class="text-danger">*</span></label>
+                      <label class="form-label">Responsables du contrôle <span class="text-danger">*</span></label>
                       <select
                         class="form-select"
                         multiple
@@ -158,7 +156,7 @@
             [disabled]="protocolForm.invalid || submitting || loading"
           >
             <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status"></span>
-            {{ submitting ? 'Creating...' : 'Create Protocol' }}
+            {{ submitting ? 'Création en cours...' : 'Créer le protocole' }}
           </button>
         </div>
       </form>

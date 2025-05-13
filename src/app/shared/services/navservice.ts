@@ -91,59 +91,9 @@ export class NavService implements OnDestroy {
 	MENUITEMS: Menu[] = [
 		// Dashboard
 		{ headTitle: 'DASHBOARDS' },
-		{
-			title: 'Dashboards',
-			icon: 'home',
-			dirchange: false,
-			type: 'sub',
-			active: false,
-			children: [
-				{
-					title: 'Department Dashboard', type: 'sub', badgeType: 'success', badgeValue: '2', selected: false, active: false, children: [
-						{ path: '/dashboard/department-dashboard/department', title: 'Départements', icon: 'layers', type: 'link', selected: false },
-					]
-				},
-			
-				
-			
-				{
-					title: 'Protocol Dashboard', type: 'sub', badgeType: 'success', badgeValue: '2', selected: false, active: false, children: [
-						{ path: '/dashboard/protocol-dashboard/selection', title: 'Protocol Selection', type: 'link', selected: false },
-						{ path: '/dashboard/protocol-dashboard/create', title: 'Create Protocol', type: 'link', selected: false },
-					]
-				},
-				
-				{
-					title: 'Report Dashboard', type: 'sub', selected: false, active: false, children: [
-						{ path: '/dashboard/report-dashboard/view-reports', title: 'Report List', type: 'link', selected: false },
-						{ path: '/dashboard/report-dashboard/protocol-selection', title: 'New Report', type: 'link', selected: false },
-					//	{ path: '/dashboard/report-dashboard/protocols', title: 'Protocol Management', type: 'link', selected: false },
-					]
-				},
-				{
-					title: 'Super Admin', type: 'sub', active: false, selected: false, children: [
-						{ path: '/dashboard/super-admin/dashboard', title: 'Dashboard', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/companies', title: 'Companies', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/subscription-plans', title: 'Subscription Plans', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/invoices', title: 'Invoices', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/super-admins', title: 'Super Admins', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/settings', title: 'Settings', type: 'link', selected: false },
-						{ path: '/dashboard/super-admin/role-access', title: 'Role Access', type: 'link', selected: false },
-					]
-				},
-			],
-		},
 		
-		{
-			path: '/chat', title: 'Chat', icon: 'message-square', type: 'link', bookmark: true, selected: false
-		},
-		{
-			title: 'Admin', icon: 'airplay', type: 'sub', active: false, selected: false, children: [
-				{ path: '/admin/general-settings', title: 'General Settings', type: 'link', selected: false },
-				{ path: '/admin/api-settings', title: 'Api Settings', type: 'link', selected: false },
-				{ path: '/admin/role-access', title: 'Role Access', type: 'link', selected: false },
-			]
-		},
+		
+		
 
 
 	
@@ -160,21 +110,21 @@ export class NavService implements OnDestroy {
 			path: '/dashboard/department-dashboard/department',
 			title: 'Départements',
 			icon: 'grid',
-			type: 'link',
+							type: 'link',
 			selected: false
-		},
-		{
+						  },
+						  {
 			path: '/dashboard/employess-dashboard/employees',
 			title: 'Employés',
 			icon: 'user-check',
-			type: 'link',
+							type: 'link',
 			selected: false
-		},
-		{
+						  },
+						  {
 			path: '/dashboard/companies-dashboard/companies',
 			title: 'Plans',
 			icon: 'layers',
-			type: 'link',
+							type: 'link',
 			selected: false
 		},
 	

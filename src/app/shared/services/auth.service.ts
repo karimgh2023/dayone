@@ -77,17 +77,18 @@ export class AuthService {
   }
 
   saveAuthData(token: string, user: User, rememberMe: boolean = false): void {
+    // Always store token and user in localStorage for authentication
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    // Only store credentials if rememberMe is true
     if (rememberMe) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('rememberMe', 'true');
     } else {
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('user', JSON.stringify(user));
       localStorage.removeItem('rememberMe');
+      localStorage.removeItem('savedEmail');
+      localStorage.removeItem('savedPassword');
     }
     this.isAuthenticatedSubject.next(true);
-    
     // Initialize notifications after successful login
     this.notificationService.initializeNotifications();
   }
