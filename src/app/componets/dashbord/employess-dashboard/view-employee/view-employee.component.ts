@@ -190,7 +190,7 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/dashboard/hrmdashboards/employees/employee-list']);
+    this.router.navigate(['/dashboard/employess-dashboard/employees/employee-list']);
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {

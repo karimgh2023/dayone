@@ -51,6 +51,7 @@ const routes: Routes = [
         loadComponent: () =>
           import('./search/search.component').then((m) => m.SearchComponent),  
       },
+      
      
     ]
   }

@@ -82,7 +82,7 @@ export class NavService implements OnDestroy {
       roles: ['ADMIN']
     },
     {
-      path: '/dashboard/employess-dashboard/employees',
+      path: '/dashboard/employess-dashboard/employees/employee-list',
       title: 'Employés',
       icon: 'user-check',
       type: 'link',

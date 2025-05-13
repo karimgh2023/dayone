@@ -1,142 +1,72 @@
-<app-page-header [title]="'Edit profile'"></app-page-header>
   <!-- Start::row-1 -->
   <div class="row">
+  
     <div class="col-xl-4 col-lg-4">
-        <div class="card custom-card">
-            <div class="card-header">
-                <div class="card-title">Edit Password</div>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label class="form-label">Current Password</label>
-                    <input type="password" class="form-control" value="password">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">New Password</label>
-                    <input type="password" class="form-control" value="password">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" value="password">
-                </div>
-            </div>
-            <div class="card-footer text-end">
-                <a  href="javascript:void(0);" class="btn btn-primary">Updated</a>
-                <a  href="javascript:void(0);" class="btn btn-danger">Cancel</a>
-            </div>
+      <div class="card custom-card">
+        <div class="card-header">
+          <div class="card-title">Photo de profil</div>
         </div>
+        <div class="card-body text-center">
+          <div class="profile-photo-container mb-3">
+            <img [src]="profilePhotoPreview" alt="Profile Photo" class="avatar avatar-xxl avatar-rounded rounded-circle profile-photo">
+            <label for="profilePhotoInput" class="btn btn-outline-primary mt-2 upload-btn">Changer la photo</label>
+            <input id="profilePhotoInput" type="file" (change)="onFileSelected($event)" hidden>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-xl-8 col-lg-8">
-        <div class="card custom-card">
-            <div class="card-body">
-                <div class="card-title">Basic info:</div>
-                <div class="row">
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">First Name</label>
-                            <input type="text" class="form-control" placeholder="First Name">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" class="form-control" placeholder="Last Name">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Phone Number</label>
-                            <input type="number" class="form-control" placeholder="Number">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="form-label">Address</label>
-                            <input type="text" class="form-control" placeholder="Home Address">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label class="form-label">City</label>
-                            <input type="text" class="form-control" placeholder="City">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group">
-                            <label class="form-label">Postal Code</label>
-                            <input type="number" class="form-control" placeholder="ZIP Code">
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="form-label">Country</label>
-                            <ng-select placeholder="Select Country" class="form-control Country p-0" data-trigger>
-                                <ng-option value="">Select Country</ng-option>
-                                <ng-option value="1">Germany</ng-option>
-                                <ng-option value="2">Canada</ng-option>
-                                <ng-option value="3">Usa</ng-option>
-                                <ng-option value="4">Afghanistan</ng-option>
-                                <ng-option value="5">Albania</ng-option>
-                                <ng-option value="6">China</ng-option>
-                                <ng-option value="7">Denmark</ng-option>
-                                <ng-option value="8">Finland</ng-option>
-                                <ng-option value="9">India</ng-option>
-                                <ng-option value="10">Kiribati</ng-option>
-                                <ng-option value="11">Kuwait</ng-option>
-                                <ng-option value="12">Mexico</ng-option>
-                                <ng-option value="13">Pakistan</ng-option>
-                            </ng-select>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-title mt-4">External Links:</div>
-                <div class="row">
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Facebook</label>
-                            <input type="text" class="form-control" placeholder="https://www.facebook.com/">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Google</label>
-                            <input type="text" class="form-control" placeholder="https://www.google.com/">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Twitter</label>
-                            <input type="text" class="form-control" placeholder="https://twitter.com/">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Pinterest</label>
-                            <input type="text" class="form-control" placeholder="https://in.pinterest.com/">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-title mt-4">About:</div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="form-label">About Me</label>
-                            <textarea rows="5" class="form-control" placeholder="Enter About your description"></textarea>
-                        </div>
-                    </div>
-                </div>
+      <form (ngSubmit)="updateProfile()" #profileForm="ngForm" class="card custom-card profile-form">
+        <div class="card-body">
+          <div class="card-title">Informations de base</div>
+          <div class="row">
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Prénom</label>
+                <input type="text" class="form-control" placeholder="Prénom" [(ngModel)]="profileData.firstName" name="firstName" required>
+              </div>
             </div>
-            <div class="card-footer text-end">
-                <a  href="javascript:void(0);" class="btn btn-lg btn-primary">Updated</a>
-                <a  href="javascript:void(0);" class="btn btn-lg btn-danger">Cancel</a>
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Nom</label>
+                <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="profileData.lastName" name="lastName" required>
+              </div>
             </div>
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Téléphone</label>
+                <input type="text" class="form-control" placeholder="Téléphone" [(ngModel)]="profileData.phoneNumber" name="phoneNumber" required>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email" [(ngModel)]="profileData.email" name="email" required>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Département</label>
+                <select class="form-control" [(ngModel)]="profileData.department" name="department" required>
+                  <option *ngFor="let dept of departments" [ngValue]="dept">{{ dept.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <label class="form-label">Usine</label>
+                <select class="form-control" [(ngModel)]="profileData.plant" name="plant" required>
+                  <option *ngFor="let plant of plants" [ngValue]="plant">{{ plant.name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="card-footer text-end">
+          <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
+          <button type="button" class="btn btn-lg btn-danger" (click)="profileForm.resetForm()">Annuler</button>
+        </div>
+      </form>
     </div>
 </div>
 <!--End::row-1 -->

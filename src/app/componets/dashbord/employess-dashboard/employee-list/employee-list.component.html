@@ -1,4 +1,4 @@
-<app-hr-dashboard-page-header [title]="'Employés'"  [title2]="'Ajouter un Employé'" [class]="'btn btn-primary'" [class1]="''" [path]="'/dashboard/hrmdashboards/employees/add-employee'" ></app-hr-dashboard-page-header>
+<app-hr-dashboard-page-header [title]="'Employés'"  [title2]="'Ajouter un Employé'" [class]="'btn btn-primary'" [class1]="''" [path]="'/dashboard/employess-dashboard/employees/add-employee'" ></app-hr-dashboard-page-header>
        
               
               <!-- Start::row-1 -->
@@ -179,7 +179,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
-                                                                <a class="btn btn-primary btn-icon" [routerLink]="['/dashboard/hrmdashboards/employees/view-employee', user.id]">
+                                                                <a class="btn btn-primary btn-icon" [routerLink]="['/dashboard/employess-dashboard/employees/view-employee', user.id]">
                                                                     <i class="fe fe-edit" data-bs-toggle="tooltip" data-original-title="Voir/Modifier"></i>
                                                                 </a>
                                                                 <a class="btn btn-danger btn-icon" (click)="deleteUser(user.id)" data-bs-toggle="tooltip" data-original-title="Supprimer">

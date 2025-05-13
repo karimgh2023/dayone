@@ -74,7 +74,7 @@ export class AddEmployeeComponent implements OnInit {
       lastName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [''],
       plantId: [null, Validators.required],        // Will store full Plant object
       departmentId: [null, Validators.required],   // Will store full Department object
       role: [null, Validators.required],           // Will store role enum value
