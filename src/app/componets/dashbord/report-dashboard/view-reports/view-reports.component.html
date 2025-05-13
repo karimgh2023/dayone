@@ -423,6 +423,13 @@
                       <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
                         <i class="fe fe-download"></i>
                       </button>
+                      <button *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'" 
+                              type="button" 
+                              class="btn btn-sm btn-danger" 
+                              (click)="deleteReport(report.id)"
+                              [ngbTooltip]="'Supprimer le rapport'">
+                        <i class="fe fe-trash-2"></i>
+                      </button>
                     </div>
                   </td>
                 </tr>
