@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../shared/services/data.service';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, finalize, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register01',
@@ -16,7 +19,8 @@ import { Plant } from '../../models/plant.model';
     RouterModule,
     ReactiveFormsModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ],
   templateUrl: './register01.component.html',
   styleUrls: ['./register01.component.scss']
@@ -28,6 +32,11 @@ export class Register01Component implements OnInit {
 
   plants: Plant[] = [];
   departments: Department[] = [];
+  isLoading = false;
+
+  // Cache for plants and departments
+  private plants$: Observable<Plant[]>;
+  private departments$: Observable<Department[]>;
 
   constructor(
     private elementRef: ElementRef,
@@ -38,6 +47,23 @@ export class Register01Component implements OnInit {
     private dataService: DataService
   ) {
     document.body.classList.add('error-1');
+    
+    // Initialize cached observables
+    this.plants$ = this.dataService.getPlants().pipe(
+      shareReplay(1),
+      catchError(err => {
+        console.error('Failed to load plants:', err);
+        return of([]);
+      })
+    );
+
+    this.departments$ = this.dataService.getDepartments().pipe(
+      shareReplay(1),
+      catchError(err => {
+        console.error('Failed to load departments:', err);
+        return of([]);
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -58,24 +84,24 @@ export class Register01Component implements OnInit {
   }
 
   loadDepartmentsAndPlants(): void {
-    this.dataService.getDepartments().subscribe({
-      next: (departments) => {
-        this.departments = departments;
-        console.log('✅ Departments loaded:', departments);
-      },
-      error: (err) => console.error('❌ Failed to load departments:', err)
-    });
+    this.isLoading = true;
     
-    this.dataService.getPlants().subscribe({
-      next: (plants) => {
+    forkJoin({
+      plants: this.plants$,
+      departments: this.departments$
+    }).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
+      next: ({ plants, departments }) => {
         this.plants = plants;
-        console.log('✅ Plants loaded:', plants);
+        this.departments = departments;
+        console.log('✅ Data loaded successfully');
       },
-      error: (err) => console.error('❌ Failed to load plants:', err)
+      error: (err) => {
+        console.error('❌ Failed to load data:', err);
+        this.toastr.error('Failed to load form data. Please refresh the page.');
+      }
     });
-    
-
-
   }
 
   ngOnDestroy(): void {

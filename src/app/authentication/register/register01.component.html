@@ -1,4 +1,3 @@
-
     <div class="page responsive-log login-bg">
         <div class="page-single">
             <!-- Start::container -->
@@ -12,24 +11,24 @@
                                         <a >
                                             <img src="./assets/images/Leoni_AG_Logo.svg.png" class="leoni" alt="Leoni Logo" width="150" height="auto" loading="lazy" />
                                         </a>
-                                        <p class="text-muted">Create new account</p>
+                                        <p class="text-muted">Créer un nouveau compte</p>
                                     </div>
                                     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="card-body pt-0 pb-3">
                                         <!-- First Name -->
                                         <div class="form-group">
-                                        <label class="form-label">First Name</label>
+                                        <label class="form-label">Prénom</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fe fe-user"></i></span>
-                                            <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" />
+                                            <input type="text" class="form-control" formControlName="firstName" placeholder="Entrez votre prénom" />
                                         </div>
                                         </div>
                                     
                                         <!-- Last Name -->
                                         <div class="form-group">
-                                        <label class="form-label">Last Name</label>
+                                        <label class="form-label">Nom</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fe fe-user"></i></span>
-                                            <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" />
+                                            <input type="text" class="form-control" formControlName="lastName" placeholder="Entrez votre nom" />
                                         </div>
                                         </div>
                                     
@@ -38,63 +37,79 @@
                                         <label class="form-label">Email</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fe fe-mail"></i></span>
-                                            <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+                                            <input type="email" class="form-control" formControlName="email" placeholder="Entrez votre email" />
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Phone Number</label>
+                                            <label class="form-label">Numéro de téléphone</label>
                                             <div class="input-group mb-3">
                                               <span class="input-group-text"><i class="fe fe-phone"></i></span>
-                                              <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone Number" />
+                                              <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Entrez votre numéro de téléphone" />
                                             </div>
                                           </div>
                                         </div>
                                                                             <!-- Plant select -->
                                         <div class="form-group">
-                                            <label class="form-label">Select Plant</label>
-                                            <select class="form-select" formControlName="plantId">
-                                                <option value="" disabled>Select a plant</option>
-                                                <option *ngFor="let plant of plants" [value]="plant.id">{{ plant.name }}</option>
-                                                
-                                                
-                                            </select>
+                                            <label class="form-label">Sélectionner une usine</label>
+                                            <ng-select
+                                                [items]="plants"
+                                                [bindLabel]="'name'"
+                                                [bindValue]="'id'"
+                                                [loading]="isLoading"
+                                                [clearable]="false"
+                                                placeholder="Choisissez une usine"
+                                                formControlName="plantId"
+                                                [class.is-invalid]="registerForm.get('plantId')?.invalid && registerForm.get('plantId')?.touched">
+                                            </ng-select>
+                                            <div *ngIf="registerForm.get('plantId')?.invalid && registerForm.get('plantId')?.touched" class="invalid-feedback">
+                                                Veuillez sélectionner une usine
+                                            </div>
                                         </div>
                                         
                                         <!-- Department select -->
                                         <div class="form-group">
-                                            <label class="form-label">Select Department</label>
-                                            <select class="form-select" formControlName="departmentId">
-                                            <option value="" disabled selected>Select a department</option>
-                                            <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
-                                            </select>
+                                            <label class="form-label">Sélectionner un département</label>
+                                            <ng-select
+                                                [items]="departments"
+                                                [bindLabel]="'name'"
+                                                [bindValue]="'id'"
+                                                [loading]="isLoading"
+                                                [clearable]="false"
+                                                placeholder="Choisissez un département"
+                                                formControlName="departmentId"
+                                                [class.is-invalid]="registerForm.get('departmentId')?.invalid && registerForm.get('departmentId')?.touched">
+                                            </ng-select>
+                                            <div *ngIf="registerForm.get('departmentId')?.invalid && registerForm.get('departmentId')?.touched" class="invalid-feedback">
+                                                Veuillez sélectionner un département
+                                            </div>
                                         </div>
                                         
                                         <!-- Password -->
                                         <div class="form-group">
-                                        <label class="form-label">Password</label>
+                                        <label class="form-label">Mot de passe</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fe fe-lock"></i></span>
-                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Password" />
+                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Entrez votre mot de passe" />
                                         </div>
                                         </div>
                                     
                                         <!-- Confirm Password -->
                                         <div class="form-group">
-                                        <label class="form-label">Confirm Password</label>
+                                        <label class="form-label">Confirmer le mot de passe</label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fe fe-lock"></i></span>
-                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password" />
+                                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe" />
                                         </div>
                                         </div>
                                     
                                         <!-- Submit -->
                                         <div class="submit d-grid">
-                                        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+                                        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Créer un compte</button>
                                         </div>
                                     
                                         <div class="text-center mt-4">
                                         <p class="text-dark mb-0">
-                                            Already have an account?
-                                            <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Log In</a>
+                                            Vous avez déjà un compte ?
+                                            <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Se connecter</a>
                                         </p>
                                         </div>
                                     </form>
