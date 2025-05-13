@@ -16,7 +16,7 @@ import { PagesRoutingModule } from '../../componets/pages/pages.routes';
 import { PricingRoutingModule } from '../../componets/pages/pricing/pricing.routes';
 import { DepartmentDashboardRoutingModule } from '@/app/componets/dashbord/department-dashboard/department-dashboard.routes';
 import { EmployessRoutingModule } from '@/app/componets/dashbord/employess-dashboard/employess.routes';
-
+import { CompanyDashboardRoutingModule } from '@/app/componets/dashbord/companies-dashboard/company-dashboard.routes';
 
 
 export const content: Routes = [
@@ -27,6 +27,7 @@ export const content: Routes = [
     ...ReportDashboardRoutingModule.routes,
     ...ProtocolDashboardRoutingModule.routes,
     ...DepartmentDashboardRoutingModule.routes,
+    ...CompanyDashboardRoutingModule.routes,
     ...EmployessRoutingModule.routes,
     ...ChatRoutingModule.routes,
     ...AdminRoutingModule.routes,

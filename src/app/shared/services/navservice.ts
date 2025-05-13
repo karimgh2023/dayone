@@ -170,7 +170,13 @@ export class NavService implements OnDestroy {
 			type: 'link',
 			selected: false
 		},
-
+		{
+			path: '/dashboard/companies-dashboard/companies',
+			title: 'Plans',
+			icon: 'layers',
+			type: 'link',
+			selected: false
+		},
 	
 	
 	
