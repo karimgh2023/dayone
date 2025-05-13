@@ -87,6 +87,8 @@ export class AuthService {
       localStorage.removeItem('rememberMe');
       localStorage.removeItem('savedEmail');
       localStorage.removeItem('savedPassword');
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
     }
     this.isAuthenticatedSubject.next(true);
     // Initialize notifications after successful login
