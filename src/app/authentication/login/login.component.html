@@ -1,7 +1,7 @@
 <div class="page responsive-log login-bg">
     <div class="loading-overlay" *ngIf="isLoading">
     <div class="spinner-border text-primary dual-spinner" role="status"></div>
-    <div class="loading-text">Please wait...</div>
+    <div class="loading-text">Veuillez patienter...</div>
   </div>
     <div class="page-single">
       <div class="container">
@@ -20,8 +20,8 @@
                   </a>
                   <ng-template ngbNavContent class="border-0">
                     <div class="p-4 pt-0 text-center">
-                      <h2 class="mb-2">Login</h2>
-                      <p class="text-muted mb-0">Sign In to your account</p>
+                      <h2 class="mb-2">Connexion</h2>
+                      <p class="text-muted mb-0">Connectez-vous à votre compte</p>
                     </div>
 
                     <form
@@ -45,7 +45,7 @@
                               class="form-control"
                               formControlName="email"
                               type="email"
-                              placeholder="Email"
+                              placeholder="Entrez votre email"
                               autocomplete="email"
                             />
                           </div>
@@ -54,7 +54,7 @@
 
                       <!-- Password -->
                       <div class="form-group">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">Mot de passe</label>
                         <div class="input-group mb-3">
                           <div class="input-group">
                             <span
@@ -67,7 +67,7 @@
                               class="form-control"
                               formControlName="password"
                               [type]="showPassword ? 'text' : 'password'"
-                              placeholder="Password"
+                              placeholder="Entrez votre mot de passe"
                               autocomplete="current-password"
                             />
                           </div>
@@ -83,7 +83,7 @@
                           formControlName="rememberMe"
                         />
                         <label class="form-check-label" for="defaultCheck1">
-                          Remember me
+                          Se souvenir de moi
                         </label>
                       </div>
 
@@ -94,7 +94,7 @@
                           [disabled]="!loginForm.valid"
                           autofocus
                         >
-                          Login
+                          Se connecter
                         </button>
                       </div>
 
@@ -107,12 +107,12 @@
                           </a>
                         </p>-->
                         <p class="text-dark mb-0">
-                          Don't have an account?
+                          Vous n'avez pas de compte ?
                           <a
                             class="text-primary ms-1 d-inline-flex"
                             routerLink="/auth/register"
                           >
-                            Register
+                            S'inscrire
                           </a>
                         </p>
 
