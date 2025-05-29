@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaintenanceFormDTO } from '../../../../models/maintenance-form-dto.model';
@@ -22,7 +20,8 @@ import { UserDTO } from '@/app/models/UserDTO';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { NotificationDTO } from '@/app/models/notification-dto.model';
 import { NotificationType } from '@/app/models/NotificationType.enum';
-  @Component({
+
+@Component({
   selector: 'app-fill-report',
   templateUrl: './fill-report.component.html',
   styleUrls: ['./fill-report.component.scss'],
@@ -30,36 +29,32 @@ import { NotificationType } from '@/app/models/NotificationType.enum';
   imports: [
     CommonModule,
     FormsModule,
-          ReactiveFormsModule,
-          CommonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          ToastrModule
-        ],
-        providers: [
-          { provide: ToastrService, useClass: ToastrService }
-        ]
+    ReactiveFormsModule,
+    ToastrModule
+  ],
+  providers: [
+    { provide: ToastrService, useClass: ToastrService }
+  ]
 })
 export class FillReportComponent implements OnInit {
-
   reportId!: number;
-  reportProgress!:number;
+  reportProgress!: number;
   currentUser!: User;
   today: string = new Date().toISOString().split('T')[0];
-
   standardChecklist: StandardChecklistItemDTO[] = [];
   specificChecklist: SpecificChecklistItemDTO[] = [];
   validationChecklist: ValidationChecklistItem[] = [];
-  reportMetadata!: ReportMetadataDTO ;
+  reportMetadata!: ReportMetadataDTO;
   maintenanceForm!: MaintenanceFormDTO;
-
   assignedUsers: UserDTO[] = [];
+
   editableKeys: (keyof MaintenanceForm)[] = [
     'powerCircuit', 'controlCircuit', 'fuseValue', 'frequency',
     'phaseBalanceTest380v', 'phaseBalanceTest210v',
     'insulationResistanceMotor', 'insulationResistanceCable',
     'machineSizeHeight', 'machineSizeLength', 'machineSizeWidth'
   ];
+isLoading = false;
 
   constructor(
     private reportEntryService: ReportEntryService,
@@ -69,28 +64,33 @@ export class FillReportComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private progressService: ProgressService,
-    private notificationService: NotificationService
-
+    private notificationService: NotificationService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id'); // ✅ Not 'reportId'
-      if (id) {
-        this.reportId = +id;
-      
-        this.currentUser = this.authService.getUserFromToken();
-        this.reportEntryService.getAssignedUsers(this.reportId).subscribe({
-          next: users => this.assignedUsers = users,
-          error: () => this.toastr.error('Erreur chargement utilisateurs assignés')
+    setTimeout(() => {
+      this.ngZone.run(() => {
+        this.route.paramMap.subscribe(params => {
+          const id = params.get('id');
+          if (id) {
+            this.reportId = +id;
+            this.currentUser = this.authService.getUserFromToken();
+            this.reportEntryService.getAssignedUsers(this.reportId).subscribe({
+              next: users => {
+                this.assignedUsers = users;
+                this.cdr.detectChanges();
+              },
+              error: () => this.toastr.error('Erreur chargement utilisateurs assignés')
+            });
+            this.loadData();
+          } else {
+            console.error('[ROUTE] No report ID found in route');
+          }
         });
-        console.log('[ROUTE] Report ID:', this.reportId);
-        this.loadData();
-      } else {
-        console.error('[ROUTE] No report ID found in route');
-      }
+      });
     });
-
   }
 
   /**
@@ -171,7 +171,7 @@ export class FillReportComponent implements OnInit {
         this.toastr.error('Erreur lors du chargement des métadonnées du rapport', 'Erreur');
       }
     });
-    
+
   }
   submitSpecificChecklist() {
     const filledEntries = this.specificChecklist
@@ -225,27 +225,33 @@ export class FillReportComponent implements OnInit {
     return this.maintenanceForm?.canEditShe === true;
   }
 
-  updateImmobilization() {
-    const dto = { immobilization: this.reportMetadata.immobilization };
+updateImmobilization(): void {
+  if (!this.reportMetadata || !this.reportId) return;
 
-    this.reportService.updateImmobilization(this.reportId, dto).subscribe({
-      next: res => {
-        console.log('[✅ IMMOBILIZATION UPDATED]', res.message);
-        this.toastr.success('Immobilisation mise à jour avec succès.', 'Succès');
-      },
-      error: err => {
-        console.error('[❌ IMMOBILIZATION UPDATE ERROR]', err);
-        this.toastr.error("Échec de la mise à jour de l'immobilisation.", 'Erreur');
-      }
-    });
-  }
+  const updateDTO = {
+    immobilization: this.reportMetadata.immobilization
+  };
+
+  this.reportService.updateImmobilization(this.reportId, updateDTO).subscribe({
+    next: () => {
+      this.toastr.success('Immobilisation mise à jour avec succès');
+      this.loadData(); // Recharger pour désactiver édition
+    },
+    error: () => {
+      this.toastr.error('Erreur lors de la mise à jour');
+    }
+  });
+}
+
 
   canEditValidation(entry: ValidationChecklistItem): boolean {
     return !entry.updated && this.currentUser?.department?.id === entry.department.id;
   }
-  canEditImmobilization(): boolean {
-    return this.reportMetadata?.canEditImmobilization === true;
-  }
+
+canEditImmobilization(): boolean {
+  return !!this.reportMetadata?.canEditImmobilization;
+}
+
 
 
   showDate(entry: ValidationChecklistItem): string {
@@ -268,7 +274,7 @@ export class FillReportComponent implements OnInit {
   hasFilledStandardEntries(): boolean {
     // Get all filled entries
     const filledEntries = this.standardChecklist.filter(item => item.isFilled);
-    
+
     // If no entries are filled, disable the button
     if (filledEntries.length === 0) {
       return false;
@@ -281,7 +287,7 @@ export class FillReportComponent implements OnInit {
   hasFilledSpecificEntries(): boolean {
     // Get all filled entries
     const filledEntries = this.specificChecklist.filter(item => item.isFilled);
-    
+
     // If no entries are filled, disable the button
     if (filledEntries.length === 0) {
       return false;
@@ -335,7 +341,7 @@ export class FillReportComponent implements OnInit {
     });
   }
 
- 
+
 
   /**
    * Toggle implementation status and mark as filled
@@ -343,7 +349,7 @@ export class FillReportComponent implements OnInit {
   toggleImplementation(item: StandardChecklistItemDTO): void {
     if (item.editable) {
       item.implemented = !item.implemented;
-      
+
       // Reset fields when implemented is true
       if (item.implemented) {
         item.action = null;
@@ -363,7 +369,7 @@ export class FillReportComponent implements OnInit {
   toggleHomologation(item: SpecificChecklistItemDTO): void {
     if (item.editable) {
       item.homologation = !item.homologation;
-      
+
       // Reset fields when homologation is true
       if (item.homologation) {
         item.action = null;
@@ -383,7 +389,7 @@ export class FillReportComponent implements OnInit {
     this.specificChecklist,
     this.validationChecklist,
     this.maintenanceForm?.form
-    
+
   );
 }
 
@@ -410,7 +416,7 @@ export class FillReportComponent implements OnInit {
     }
     return this.progressService.calculateSpecificProgress(this.specificChecklist);
   }
-  
+
 
   /**
    * Get the progress of the validation checklist
@@ -428,7 +434,7 @@ export class FillReportComponent implements OnInit {
     }
     return this.progressService.calculateMaintenanceProgress(this.maintenanceForm.form);
   }
-  
+
 
   /**
    * Update a validation entry
@@ -459,15 +465,15 @@ export class FillReportComponent implements OnInit {
   isStandardEntryValid(entry: StandardChecklistItemDTO): boolean {
     if (!entry.implemented) {
       // For non-implemented entries, all fields must be filled
-      return !!(entry.action?.trim() && 
-                entry.responsableAction?.trim() && 
-                entry.deadline && 
+      return !!(entry.action?.trim() &&
+                entry.responsableAction?.trim() &&
+                entry.deadline &&
                 entry.successControl?.trim());
     } else {
       // For implemented entries, all fields must be empty
-      return !(entry.action?.trim() || 
-               entry.responsableAction?.trim() || 
-               entry.deadline || 
+      return !(entry.action?.trim() ||
+               entry.responsableAction?.trim() ||
+               entry.deadline ||
                entry.successControl?.trim());
     }
   }
@@ -476,15 +482,15 @@ export class FillReportComponent implements OnInit {
   isSpecificEntryValid(entry: SpecificChecklistItemDTO): boolean {
     if (!entry.homologation) {
       // For non-homologated entries, all fields must be filled
-      return !!(entry.action?.trim() && 
-                entry.responsableAction?.trim() && 
-                entry.deadline && 
+      return !!(entry.action?.trim() &&
+                entry.responsableAction?.trim() &&
+                entry.deadline &&
                 entry.successControl?.trim());
     } else {
       // For homologated entries, all fields must be empty
-      return !(entry.action?.trim() || 
-               entry.responsableAction?.trim() || 
-               entry.deadline || 
+      return !(entry.action?.trim() ||
+               entry.responsableAction?.trim() ||
+               entry.deadline ||
                entry.successControl?.trim());
     }
   }
@@ -508,18 +514,18 @@ export class FillReportComponent implements OnInit {
   getAssignedUserByDepartment(deptId: number): UserDTO | null {
     return this.assignedUsers.find(u => u.department?.id === deptId) || null;
   }
-  
+
   getAssignedUsersForMultipleDepartments(depts: {id:number}[]): UserDTO[] {
     const ids = depts.map(d => d.id);
     return this.assignedUsers.filter(u => u.department && ids.includes(u.department.id));
   }
-  
+
   private findUserByName(fullName: string): UserDTO|undefined {
     return this.assignedUsers.find(u =>
       `${u.firstName} ${u.lastName}`.toLowerCase() === fullName.toLowerCase()
     );
   }
-  
+
   private sendChecklistNotification(userId: number, message: string): void {
     const dto: NotificationDTO = {
       description: message,
@@ -529,11 +535,11 @@ export class FillReportComponent implements OnInit {
     };
     this.notificationService.createNotification(dto).subscribe();
   }
-  
-  
 
- 
-  
-  
-  
+
+
+
+
+
+
 }

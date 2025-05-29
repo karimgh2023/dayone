@@ -75,6 +75,7 @@
 </div>
 
 <div class="container-fluid px-0">
+
   <!-- Report Details Card -->
   <div class="card custom-card mb-4">
     <div class="card-header">
@@ -132,13 +133,14 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="canEditImmobilization()">
-        <div class="col-12">
-          <button class="btn btn-primary" (click)="updateImmobilization()">
-            <i class="fe fe-save me-1"></i>Sauvegarder Immobilisation
-          </button>
-        </div>
-      </div>
+<div class="row" *ngIf="canEditImmobilization()">
+  <div class="col-12">
+    <button class="btn btn-primary" (click)="updateImmobilization()">
+      <i class="fe fe-save me-1"></i>Sauvegarder Immobilisation
+    </button>
+  </div>
+</div>
+
     </div>
   </div>
 
@@ -173,7 +175,7 @@
                 <td>
                   <div class="toggle-container">
                     <label class="toggle-switch" [class.disabled]="!item.editable">
-                      <input 
+                      <input
                         type="checkbox"
                         [disabled]="!item.editable"
                         [checked]="item.implemented"
@@ -278,7 +280,7 @@
                 <td>
                   <div class="toggle-container">
                     <label class="toggle-switch" [class.disabled]="!item.editable">
-                      <input 
+                      <input
                         type="checkbox"
                         [disabled]="!item.editable"
                         [checked]="item.homologation"
@@ -371,7 +373,7 @@
                 <option [ngValue]="'NONE'">Aucun</option>
               </select>
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Nature du courant</label>
               <select class="form-select" [(ngModel)]="maintenanceForm.form.currentType" name="currentType"
@@ -381,7 +383,7 @@
                 <option [ngValue]="'DC'">DC</option>
               </select>
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Forme de réseau</label>
               <select class="form-select" [(ngModel)]="maintenanceForm.form.networkForm" name="networkForm"
@@ -391,22 +393,22 @@
                 <option [ngValue]="'SYSTEM_5_CONDUCTORS'">Système à 5 conducteurs</option>
               </select>
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Circuit de puissance</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.powerCircuit" name="powerCircuit" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.powerCircuit" name="powerCircuit"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Circuit de commande</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.controlCircuit" name="controlCircuit" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.controlCircuit" name="controlCircuit"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Valeur du fusible</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.fuseValue" name="fuseValue" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.fuseValue" name="fuseValue"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
 
@@ -428,61 +430,61 @@
               </select>
             </div>
           </div>
-          
+
           <!-- Right column -->
           <div class="col-md-6">
             <div class="mb-3">
               <label class="form-label">Fréquence</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.frequency" name="frequency" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.frequency" name="frequency"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Phase/Phase 380v</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.phaseBalanceTest380v" name="phaseBalanceTest380v" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.phaseBalanceTest380v" name="phaseBalanceTest380v"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Phase/Neutre 210v</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.phaseBalanceTest210v" name="phaseBalanceTest210v" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.phaseBalanceTest210v" name="phaseBalanceTest210v"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Résistance isolement moteur</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.insulationResistanceMotor" name="insulationResistanceMotor" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.insulationResistanceMotor" name="insulationResistanceMotor"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="mb-3">
               <label class="form-label">Résistance isolement câble</label>
-              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.insulationResistanceCable" name="insulationResistanceCable" 
+              <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.insulationResistanceCable" name="insulationResistanceCable"
                      [disabled]="!canEditMaintenancePart()" />
             </div>
-            
+
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">Hauteur machine</label>
-                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeHeight" name="machineSizeHeight" 
+                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeHeight" name="machineSizeHeight"
                        [disabled]="!canEditMaintenancePart()" />
               </div>
-              
+
               <div class="col-md-4 mb-3">
                 <label class="form-label">Longueur machine</label>
-                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeLength" name="machineSizeLength" 
+                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeLength" name="machineSizeLength"
                        [disabled]="!canEditMaintenancePart()" />
               </div>
-              
+
               <div class="col-md-4 mb-3">
                 <label class="form-label">Largeur machine</label>
-                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeWidth" name="machineSizeWidth" 
+                <input type="text" class="form-control" [(ngModel)]="maintenanceForm.form.machineSizeWidth" name="machineSizeWidth"
                        [disabled]="!canEditMaintenancePart()" />
               </div>
             </div>
           </div>
         </div>
-        
+
         <div class="text-end mt-3">
           <button type="submit" class="btn btn-primary" [disabled]="!canEditMaintenancePart()">
             <i class="fe fe-save me-1"></i>Enregistrer les modifications
@@ -574,3 +576,11 @@
     </div>
   </div>
 </div>
+ <!-- This is the closing tag of your last <div class="container-fluid px-0"> -->
+
+<!-- ✅ Loading Overlay -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner-border text-primary dual-spinner" role="status"></div>
+  <div class="loading-text">Veuillez patienter...</div>
+</div>
+

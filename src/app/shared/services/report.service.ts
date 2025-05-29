@@ -14,7 +14,7 @@ export class ReportService {
 
   constructor(private http: HttpClient) {}
 
- 
+
   createNewReport(req: ReportCreateRequest) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -23,6 +23,14 @@ export class ReportService {
       req,
       { headers }
     );
+  }
+
+
+  deleteReport(reportId: number): Observable<any> {
+        const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.apiUrl}/delete/${reportId}`,
+      { headers });
   }
 
   getRequiredUsers(protocolId: number): Observable<AssignedUserDTO[]> {
@@ -36,7 +44,7 @@ export class ReportService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.put<{ message: string }>(`${this.apiUrl}/rapports/update-immobilization/${reportId}`, dto, { headers });
   }
-  
+
   getReportsAssignedToMe() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

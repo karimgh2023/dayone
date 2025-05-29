@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -33,6 +41,18 @@ export class EmployeeListComponent implements OnInit {
   pageSize = 10;
   currentPage = 1;
 
+  constructor(
+    private userService: UserService,
+    private userAdminService: UserAdminService,
+    private fb: FormBuilder,
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef // ✅ Injected ChangeDetectorRef
+  ) {
+    this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(term => {
+      this.filterUsers(term);
+    });
+  }
+
   get totalEmployees(): number {
     return this.users.length;
   }
@@ -48,21 +68,6 @@ export class EmployeeListComponent implements OnInit {
   get totalPlants(): number {
     return this.plants.length;
   }
-  
-  constructor(
-    private userService: UserService,
-    private userAdminService: UserAdminService,
-    private fb: FormBuilder,
-    private dataService: DataService
-  ) {
-    // Setup search with debounce
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(term => {
-      this.filterUsers(term);
-    });
-   }
 
   ngOnInit(): void {
     this.loadAllData();
@@ -75,10 +80,10 @@ export class EmployeeListComponent implements OnInit {
 
     this.userService.getAllUsersExceptAdmins().subscribe({
       next: (users) => {
-        console.log('Loaded users:', users);
         this.users = users;
         this.filteredUsers = users;
         this.loading = false;
+        this.cdr.detectChanges(); // ✅ Ensure UI update
       },
       error: (err) => {
         console.error('Load users error:', err);
@@ -89,8 +94,8 @@ export class EmployeeListComponent implements OnInit {
 
     this.dataService.getDepartments().subscribe({
       next: (deps) => {
-        console.log('Loaded departments:', deps);
         this.departments = deps;
+        this.cdr.detectChanges(); // ✅ Ensure UI update
       },
       error: (err) => {
         console.error('Load departments error:', err);
@@ -100,8 +105,8 @@ export class EmployeeListComponent implements OnInit {
 
     this.dataService.getPlants().subscribe({
       next: (plants) => {
-        console.log('Loaded plants:', plants);
         this.plants = plants;
+        this.cdr.detectChanges(); // ✅ Ensure UI update
       },
       error: (err) => {
         console.error('Load plants error:', err);
@@ -121,7 +126,7 @@ export class EmployeeListComponent implements OnInit {
     }
 
     const searchTerm = term.toLowerCase();
-    this.filteredUsers = this.users.filter(user => 
+    this.filteredUsers = this.users.filter(user =>
       user.firstName.toLowerCase().includes(searchTerm) ||
       user.lastName.toLowerCase().includes(searchTerm) ||
       user.email.toLowerCase().includes(searchTerm) ||
@@ -190,9 +195,8 @@ export class EmployeeListComponent implements OnInit {
 
     this.userAdminService.updateUser(userId, form.value).subscribe({
       next: res => {
-        console.log('[✅ User UPDATED]', res.message);
         alert('✅ User updated successfully.');
-        this.loadAllData();
+        this.loadAllData(); // Will trigger detectChanges
       },
       error: err => {
         console.error('[❌ User UPDATE ERROR]', err);
@@ -206,11 +210,10 @@ export class EmployeeListComponent implements OnInit {
 
     this.userAdminService.addUser(this.addUserForm.value).subscribe({
       next: (response) => {
-        const message = response?.message || '✅ User added and email sent';
-        alert(message);
+        alert(response?.message || '✅ User added successfully.');
         this.addUserForm.reset();
         this.addUserForm.get('role')?.setValue('EMPLOYEE');
-        this.loadAllData();
+        this.loadAllData(); // Will trigger detectChanges
       },
       error: (err) => {
         alert('❌ Failed to add user');
@@ -225,7 +228,7 @@ export class EmployeeListComponent implements OnInit {
     this.userAdminService.deleteUser(userId).subscribe({
       next: (res) => {
         alert(res.message);
-        this.loadAllData();
+        this.loadAllData(); // Will trigger detectChanges
       },
       error: (err) => {
         console.error('❌ Delete user error:', err);

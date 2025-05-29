@@ -24,12 +24,12 @@
   overflow: hidden;
   box-shadow: var(--card-shadow);
   margin-bottom: 1.5rem;
-  
+
   .card-header {
     background-color: var(--header-bg);
     border-bottom: 1px solid var(--header-border-color);
     padding: 1rem 1.25rem;
-    
+
     .card-title {
       margin-bottom: 0;
       font-weight: 500;
@@ -51,18 +51,19 @@
   color: var(--default-text-color);
 }
 
-.form-control, .form-select {
+.form-control,
+.form-select {
   border-radius: 0.375rem;
   border: 1px solid var(--input-border);
   background-color: var(--form-control-bg);
   color: var(--default-text-color);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  
+
   &:focus {
     border-color: rgba(var(--primary-rgb), 0.5);
     box-shadow: 0 0 0 0.15rem rgba(var(--primary-rgb), 0.1);
   }
-  
+
   &:disabled {
     background-color: rgba(var(--gray-rgb), 0.1);
     color: var(--text-muted);
@@ -72,7 +73,7 @@
 /* Table styling */
 .table {
   color: var(--default-text-color);
-  
+
   th {
     font-weight: 500;
     border-color: var(--default-border);
@@ -81,23 +82,23 @@
     white-space: nowrap;
     padding: 0.75rem 1rem;
   }
-  
+
   td {
     border-color: var(--default-border);
     vertical-align: middle;
     padding: 0.75rem 1rem;
-    
+
     &.text-wrap {
       white-space: normal;
       min-width: 200px;
       max-width: 300px;
     }
   }
-  
+
   &.table-striped > tbody > tr:nth-of-type(odd) > * {
     background-color: rgba(var(--primary-rgb), 0.03);
   }
-  
+
   &.table-hover > tbody > tr:hover > * {
     background-color: rgba(var(--primary-rgb), 0.08);
   }
@@ -112,28 +113,28 @@
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
   transition: all 0.2s ease-in-out;
-  
+
   &.btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    
+
     &:hover:not(:disabled) {
       background-color: rgba(var(--primary-rgb), 0.9);
       border-color: rgba(var(--primary-rgb), 0.9);
     }
-    
+
     &:disabled {
       background-color: rgba(var(--primary-rgb), 0.7);
       border-color: rgba(var(--primary-rgb), 0.7);
       cursor: not-allowed;
     }
   }
-  
+
   &.btn-light3 {
     background-color: var(--light2);
     border-color: var(--light2);
     color: var(--default-text-color);
-    
+
     &:hover {
       background-color: var(--light3);
       border-color: var(--light3);
@@ -146,7 +147,7 @@
   background-color: rgba(var(--info-rgb), 0.1);
   color: var(--info-color);
   border-color: rgba(var(--info-rgb), 0.2);
-  
+
   i {
     color: var(--info-color);
   }
@@ -159,29 +160,30 @@
       background-color: rgba(var(--primary-rgb), 0.1);
       border-color: rgba(var(--primary-rgb), 0.15);
     }
-    
+
     &.table-striped > tbody > tr:nth-of-type(odd) > * {
       background-color: rgba(var(--primary-rgb), 0.05);
     }
-    
+
     &.table-hover > tbody > tr:hover > * {
       background-color: rgba(var(--primary-rgb), 0.15);
     }
-    
+
     td {
       border-color: rgba(var(--dark-border-rgb), 0.5);
     }
   }
-  
-  .form-control, .form-select {
+
+  .form-control,
+  .form-select {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.8);
-    
+
     &::placeholder {
       color: rgba(255, 255, 255, 0.4);
     }
-    
+
     &:disabled {
       background-color: rgba(255, 255, 255, 0.02);
       color: rgba(255, 255, 255, 0.4);
@@ -202,17 +204,19 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-    
+
     .page-rightheader {
       margin-top: 0.5rem;
     }
   }
-  
-  .form-control, .form-select {
+
+  .form-control,
+  .form-select {
     font-size: 0.875rem;
   }
 }
 
+/* Checklist layout */
 .standard-checklist {
   margin: 1rem 0;
   padding: 1rem;
@@ -270,30 +274,30 @@ select {
   height: 24px;
   margin: 0;
   cursor: pointer;
-  
+
   &.disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-  
+
   input {
     opacity: 0;
     width: 0;
     height: 0;
-    
+
     &:checked + .toggle-slider {
       background-color: var(--primary-color);
-      
+
       &:before {
         transform: translateX(24px);
       }
     }
-    
+
     &:disabled + .toggle-slider {
       opacity: 0.6;
     }
   }
-  
+
   .toggle-slider {
     position: absolute;
     top: 0;
@@ -301,9 +305,9 @@ select {
     right: 0;
     bottom: 0;
     background-color: var(--gray);
-    transition: .3s;
+    transition: 0.3s;
     border-radius: 24px;
-    
+
     &:before {
       position: absolute;
       content: "";
@@ -312,11 +316,11 @@ select {
       left: 3px;
       bottom: 3px;
       background-color: white;
-      transition: .3s;
+      transition: 0.3s;
       border-radius: 50%;
     }
   }
-  
+
   .toggle-text {
     position: absolute;
     top: 50%;
@@ -329,17 +333,17 @@ select {
   }
 }
 
-/* Dark mode support for toggle */
+/* Dark mode toggle */
 :host-context([data-theme-mode="dark"]) {
   .toggle-switch {
     .toggle-slider {
       background-color: rgba(var(--gray-rgb), 0.6);
-      
+
       &:before {
         background-color: rgba(255, 255, 255, 0.9);
       }
     }
-    
+
     input:checked + .toggle-slider {
       background-color: var(--primary-color);
     }
@@ -351,20 +355,29 @@ select {
   .progress {
     height: 10px;
     border-radius: 5px;
-    
+
     .progress-bar {
       border-radius: 5px;
-      background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent);
+      background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
       background-size: 1rem 1rem;
       animation: progress-bar-stripes 1s linear infinite;
     }
   }
-  
+
   .completion-stat {
     flex: 1;
     min-width: 170px;
     margin-bottom: 0.5rem;
-    
+
     .completion-icon {
       width: 40px;
       height: 40px;
@@ -372,7 +385,7 @@ select {
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       i {
         font-size: 1.25rem;
       }
@@ -381,6 +394,38 @@ select {
 }
 
 @keyframes progress-bar-stripes {
-  from { background-position: 1rem 0; }
-  to { background-position: 0 0; }
+  from {
+    background-position: 1rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* ✅ Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  backdrop-filter: blur(2px);
+
+  .dual-spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .loading-text {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+  }
 }

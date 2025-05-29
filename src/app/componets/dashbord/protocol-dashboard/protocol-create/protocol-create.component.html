@@ -1,6 +1,6 @@
 <div class="protocol-create">
-  
-  
+
+
   <div class="card">
     <div class="card-body">
       <form [formGroup]="protocolForm" (ngSubmit)="submit()">
@@ -37,19 +37,6 @@
                   {{ getErrorMessage('protocolType') }}
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group mt-3">
-            <label class="form-label">Description <span class="text-danger">*</span></label>
-            <textarea
-              formControlName="description"
-              class="form-control"
-              rows="3"
-              [class.is-invalid]="isFieldInvalid('description')"
-              placeholder="Entrez la description du protocole"
-            ></textarea>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('description')">
-              {{ getErrorMessage('description') }}
             </div>
           </div>
         </div>
@@ -106,16 +93,19 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-label">Responsables de l'implémentation <span class="text-danger">*</span></label>
-                      <select
-                        multiple
-                        class="form-control"
-                        [formControlName]="'implementationResponsibles'"
-                        [class.is-invalid]="isFieldInvalid('implementationResponsibles', i)"
-                      >
-                        <option *ngFor="let dept of departments" [value]="dept.id">
-                          {{ dept.name }}
-                        </option>
-                      </select>
+                      <ng-select
+  [items]="departments"
+  bindLabel="name"
+  bindValue="id"
+  [multiple]="true"
+  formControlName="implementationResponsibles"
+  placeholder="Sélectionnez les départements"
+  [class.is-invalid]="isFieldInvalid('implementationResponsibles', i)">
+</ng-select>
+<div class="invalid-feedback" *ngIf="isFieldInvalid('implementationResponsibles', i)">
+  {{ getErrorMessage('implementationResponsibles', i) }}
+</div>
+
                       <small class="form-text text-muted">
                         Vous pouvez sélectionner plusieurs départements (Ctrl/Cmd + clic).
                       </small>
@@ -127,16 +117,19 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-label">Responsables du contrôle <span class="text-danger">*</span></label>
-                      <select
-                        class="form-select"
-                        multiple
-                        formControlName="checkResponsibles"
-                        [class.is-invalid]="isFieldInvalid('checkResponsibles', i)"
-                      >
-                        <option *ngFor="let dept of departments" [value]="dept.id">
-                          {{ dept.name }}
-                        </option>
-                      </select>
+                      <ng-select
+  [items]="departments"
+  bindLabel="name"
+  bindValue="id"
+  [multiple]="true"
+  formControlName="checkResponsibles"
+  placeholder="Sélectionnez les départements"
+  [class.is-invalid]="isFieldInvalid('checkResponsibles', i)">
+</ng-select>
+<div class="invalid-feedback" *ngIf="isFieldInvalid('checkResponsibles', i)">
+  {{ getErrorMessage('checkResponsibles', i) }}
+</div>
+
                       <div class="invalid-feedback" *ngIf="isFieldInvalid('checkResponsibles', i)">
                         {{ getErrorMessage('checkResponsibles', i) }}
                       </div>

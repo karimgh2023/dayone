@@ -8,7 +8,7 @@ import { User } from '../../models/user.model';
 import { Department } from '../../models/department.model';
 import { Plant } from '../../models/plant.model';
 import { jwtDecode } from 'jwt-decode';
-import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model'; 
+import { PasswordUpdateRequest } from '../../models/PasswordUpdateRequest.model';
 import { NotificationWebSocketService } from './notification-websocket.service';
 
 @Injectable({
@@ -66,9 +66,18 @@ export class AuthService {
     });
   }
 
-  verifyEmailCode(code: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/verify?code=${code}`, {});
-  }
+verifyEmailCode(email: string, code: string) {
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/auth/verify?email=${email}&code=${code}`,
+    {} // empty body since we use query params
+  );
+}
+
+resendVerificationEmail(email: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/auth/resend-verification?email=${email}`, {});
+}
+
+
 
   login(credentials: { email: string; password: string }): Observable<string> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(

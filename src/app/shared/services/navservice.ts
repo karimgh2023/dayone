@@ -64,6 +64,15 @@ export class NavService implements OnDestroy {
       bookmark: true,
       selected: false
     },
+        {
+      path: '/pages/edit-profile',
+      title: 'Edit profile',
+      icon: 'user',
+      type: 'link',
+      bookmark: true,
+      selected: false
+    },
+
     {
       path: '/dashboard/protocol-dashboard/create',
       title: 'Créer Protocole',
@@ -73,14 +82,7 @@ export class NavService implements OnDestroy {
       selected: false,
       roles: ['ADMIN']
     },
-    {
-      path: '/dashboard/department-dashboard/department',
-      title: 'Départements',
-      icon: 'grid',
-      type: 'link',
-      selected: false,
-      roles: ['ADMIN']
-    },
+
     {
       path: '/dashboard/employess-dashboard/employees/employee-list',
       title: 'Employés',

@@ -45,7 +45,7 @@ export class ViewEmployeeComponent implements OnInit {
   departments: Department[] = [];
   plants: Plant[] = [];
   employeeForm!: FormGroup;
-  
+
   // Available roles from enum
   availableRoles = Object.values(Role).filter(role => role !== Role.ADMIN);
 
@@ -68,20 +68,21 @@ export class ViewEmployeeComponent implements OnInit {
     this.loadEmployeeData();
   }
 
-  initForm() {
-    this.employeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      plantId: [null, Validators.required],
-      departmentId: [null, Validators.required],
-      role: [null, Validators.required],
-      isActive: [true],
-      profilePhoto: [null]
-    });
-  }
+initForm() {
+  this.employeeForm = this.fb.group({
+    firstName: [''],
+    lastName: [''],
+    phoneNumber: [''],
+    email: ['', Validators.email], // Keep only email format validator
+    password: [''],
+    plantId: [null],
+    departmentId: [null],
+    role: [null],
+    isActive: [true],
+    profilePhoto: [null]
+  });
+}
+
 
   loadDepartmentsAndPlants() {
     this.loading = true;
@@ -150,44 +151,56 @@ export class ViewEmployeeComponent implements OnInit {
     });
   }
 
-  onUpdate() {
-    if (this.employeeForm.invalid) {
-      this.markFormGroupTouched(this.employeeForm);
-      this.toastr.warning('Please fill in all required fields correctly.', 'Validation Error');
-      return;
-    }
+onUpdate() {
+  const employeeId = this.route.snapshot.params['id'];
+  const formValue = this.employeeForm.value;
 
-    this.loading = true;
-    const employeeId = this.route.snapshot.params['id'];
-    const formValue = this.employeeForm.value;
-
-    const payload = {
-      ...formValue,
-      plantId: formValue.plantId?.id,
-      departmentId: formValue.departmentId?.id,
-      role: formValue.role
-    };
-
-    this.userAdminService.updateUser(employeeId, payload).subscribe({
-      next: (response) => {
-        this.toastr.success('Employee updated successfully', 'Success');
-        this.router.navigate(['/dashboard/hrmdashboards/employees/employee-list']);
-      },
-      error: (err) => {
-        console.error('Update employee error:', err);
-        this.loading = false;
-        
-        if (err.status === 409) {
-          this.toastr.error('An employee with this email already exists.', 'Error');
-          this.employeeForm.get('email')?.setErrors({ emailExists: true });
-        } else if (err.status === 400) {
-          this.toastr.error('Invalid data provided. Please check your input.', 'Validation Error');
-        } else {
-          this.toastr.error('Failed to update employee. Please try again.', 'Error');
-        }
+  // Build payload by filtering only non-null, non-empty fields
+  const payload: any = {};
+  Object.keys(formValue).forEach(key => {
+    if (
+      formValue[key] !== null &&
+      formValue[key] !== '' &&
+      !(typeof formValue[key] === 'object' && Object.keys(formValue[key]).length === 0)
+    ) {
+      // Special handling for plant and department objects
+      if (key === 'plantId' && formValue[key]?.id) {
+        payload.plantId = formValue[key].id;
+      } else if (key === 'departmentId' && formValue[key]?.id) {
+        payload.departmentId = formValue[key].id;
+      } else {
+        payload[key] = formValue[key];
       }
-    });
+    }
+  });
+
+  if (Object.keys(payload).length === 0) {
+    this.toastr.warning('Nothing to update. Please modify some fields first.', 'Warning');
+    return;
   }
+
+  this.loading = true;
+  this.userAdminService.updateUser(employeeId, payload).subscribe({
+    next: (response) => {
+      this.toastr.success('Employee updated successfully', 'Success');
+      this.router.navigate(['/dashboard/employess-dashboard/employees/employee-list']);
+    },
+    error: (err) => {
+      console.error('Update employee error:', err);
+      this.loading = false;
+
+      if (err.status === 409) {
+        this.toastr.error('An employee with this email already exists.', 'Error');
+        this.employeeForm.get('email')?.setErrors({ emailExists: true });
+      } else if (err.status === 400) {
+        this.toastr.error('Invalid data provided. Please check your input.', 'Validation Error');
+      } else {
+        this.toastr.error('Failed to update employee. Please try again.', 'Error');
+      }
+    }
+  });
+}
+
 
   onCancel() {
     this.router.navigate(['/dashboard/employess-dashboard/employees/employee-list']);

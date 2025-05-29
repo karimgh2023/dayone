@@ -14,5 +14,6 @@ export interface User {
   department: Department;
   plant: Plant;
   loggedIn: boolean;
+  isVerified: boolean;
 
 }

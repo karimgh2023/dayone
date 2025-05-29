@@ -1,5 +1,40 @@
 ::ng-deep{
+.loading-overlay {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
+.loading-text {
+  margin-top: 12px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.dual-spinner {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.4em;
+  border-top-color: #007bff; // Bootstrap blue
+  border-right-color: #ff0000; // Red
+  animation: spin 0.75s linear infinite;
+  background: transparent;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
 
     .leoni {
         width: 130px;
@@ -8,5 +43,5 @@
     .nav-tabs{
         border-color:none !important;
     }
-        
+
     }

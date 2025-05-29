@@ -19,6 +19,8 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/users/current`);
   }
 
+
+
   /**
    * Update user profile photo
    */
@@ -50,14 +52,14 @@ export class UserService {
   updateMyProfile(profileData: any, profilePhoto?: File): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
     const formData = new FormData();
     formData.append('profileData', new Blob([JSON.stringify(profileData)], { type: 'application/json' }));
     if (profilePhoto) {
       formData.append('profilePhoto', profilePhoto);
     }
-  
-    return this.http.put(`${this.apiUrl}/me`, formData, {
+
+    return this.http.put(`${this.apiUrl}/users/me`, formData, {
       headers: headers
       // No need to set responseType if backend returns JSON properly (recommended)
     });

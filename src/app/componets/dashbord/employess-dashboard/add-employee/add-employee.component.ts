@@ -1,21 +1,23 @@
-import { NgCircleProgressModule } from 'ng-circle-progress';
-import { Component, OnInit } from '@angular/core';
-import { NgbDateStruct, NgbModule, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { NgbDateStruct, NgbRatingConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { SharedModule } from '@/app/shared/common/sharedmodule';
 import { RouterModule } from '@angular/router';
 import flatpickr from 'flatpickr';
 import { FlatpickrDefaults, FlatpickrModule } from 'angularx-flatpickr';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { UserAdminService } from '@/app/shared/services/user-admin.service';
 import { DataService } from '@/app/shared/services/data.service';
 import { Department } from '@/app/models/department.model';
 import { Plant } from '@/app/models/plant.model';
-import { Router } from '@angular/router';
 import { Role } from '@/app/models/role.enum';
-import { forkJoin } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-employee',
@@ -36,20 +38,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddEmployeeComponent implements OnInit {
   model!: NgbDateStruct;
-  model1!: NgbDateStruct;
-  model2!: NgbDateStruct;
-  model3!: NgbDateStruct;
-
   active = 1;
-  currentRate = 3;
   loading = false;
   error: string | null = null;
+
+  employeeForm!: FormGroup;
   departments: Department[] = [];
   plants: Plant[] = [];
-  employeeForm!: FormGroup;
-  
-  // Available roles from enum
+
   availableRoles = Object.values(Role).filter(role => role !== Role.ADMIN);
+
+  flatpickrOptions: any = {
+    inline: true,
+  };
 
   constructor(
     config: NgbRatingConfig,
@@ -57,7 +58,8 @@ export class AddEmployeeComponent implements OnInit {
     private userAdminService: UserAdminService,
     private dataService: DataService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef // 👈 Needed to fix loading spinner issue
   ) {
     config.max = 5;
   }
@@ -74,19 +76,14 @@ export class AddEmployeeComponent implements OnInit {
       lastName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: [''],
-      plantId: [null, Validators.required],        // Will store full Plant object
-      departmentId: [null, Validators.required],   // Will store full Department object
-      role: [null, Validators.required],           // Will store role enum value
-      isActive: [true],
-      profilePhoto: [null]
+      plantId: [null, Validators.required],
+      departmentId: [null, Validators.required],
+      role: [null, Validators.required],
     });
   }
 
   loadDepartmentsAndPlants() {
-    this.loading = true;
     this.error = null;
-
     forkJoin({
       departments: this.dataService.getDepartments(),
       plants: this.dataService.getPlants()
@@ -95,11 +92,13 @@ export class AddEmployeeComponent implements OnInit {
         this.departments = departments;
         this.plants = plants;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading departments or plants:', err);
         this.toastr.error('Failed to load departments and plants.', 'Error');
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -110,7 +109,6 @@ export class AddEmployeeComponent implements OnInit {
       noCalendar: true,
       dateFormat: 'H:i',
     };
-
     flatpickr('#inlinetime', this.flatpickrOptions);
 
     this.flatpickrOptions = {
@@ -118,7 +116,6 @@ export class AddEmployeeComponent implements OnInit {
       dateFormat: 'Y-m-d H:i',
       defaultDate: '2023-11-07 14:30',
     };
-
     flatpickr('#pretime', this.flatpickrOptions);
   }
 
@@ -133,26 +130,23 @@ export class AddEmployeeComponent implements OnInit {
     this.error = null;
 
     const formValue = this.employeeForm.value;
-
     const payload = {
       ...formValue,
       plantId: formValue.plantId?.id,
       departmentId: formValue.departmentId?.id,
-      role: formValue.role // already string
+      role: formValue.role
     };
-
-    console.log('Submitting payload:', payload);
 
     this.userAdminService.addUser(payload).subscribe({
       next: (response) => {
         this.toastr.success('Employee added successfully', 'Success');
-        this.router.navigate(['/dashboard/hrmdashboards/employees/employee-list']);
+        this.router.navigate(['/dashboard/employess-dashboard/employees/employee-list']);
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ ensure spinner stops
       },
       error: (err) => {
         console.error('Add employee error:', err);
-        this.loading = false;
-        
-        // Handle specific error cases
+
         if (err.status === 409) {
           this.toastr.error('An employee with this email already exists.', 'Error');
           this.employeeForm.get('email')?.setErrors({ emailExists: true });
@@ -161,6 +155,9 @@ export class AddEmployeeComponent implements OnInit {
         } else {
           this.toastr.error('Failed to add employee. Please try again.', 'Error');
         }
+
+        this.loading = false;
+        this.cdr.detectChanges(); // ✅ manually trigger UI update
       }
     });
   }
@@ -178,16 +175,9 @@ export class AddEmployeeComponent implements OnInit {
     });
   }
 
-  inlineDatePicker: boolean = false;
-  weekNumbers!: true;
-  flatpickrOptions: any = {
-    inline: true,
-  };
-
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      // Create a preview URL for the image
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.employeeForm.patchValue({

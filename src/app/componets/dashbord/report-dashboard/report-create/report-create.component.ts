@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.model';
 import { UserService } from '../../../../shared/services/user.service';
 import { ReportService } from '../../../../shared/services/report.service';
 import { ToastrService } from 'ngx-toastr';
-import { AssignedUserDTO } from '../../../../models/assignedUserDTO.model';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { NotificationType } from '@/app/models/NotificationType.enum';
-import { ReportDTO } from '@/app/models/reportDTO.model';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-report-create',
@@ -19,27 +28,30 @@ import { ReportDTO } from '@/app/models/reportDTO.model';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class ReportCreateComponent implements OnInit {
   reportForm!: FormGroup;
-  users: AssignedUserDTO[] = [];
+  users: User[] = [];
   departments: any[] = [];
   protocolId!: number;
-  usersByDepartment: { [key: number]: AssignedUserDTO[] } = {};
-  isSubmitting: boolean = false;
-  submitted: boolean = false;
-  loadingUsers: boolean = false;
+  usersByDepartment: { [key: number]: User[] } = {};
+  isSubmitting = false;
+  submitted = false;
+  loadingUsers = false;
+isLoading = false;
 
   constructor(
-    private notificationService: NotificationService,
     private fb: FormBuilder,
     private userService: UserService,
     private reportService: ReportService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -48,13 +60,10 @@ export class ReportCreateComponent implements OnInit {
     this.loadUsers();
   }
 
-  /**
-   * Initialize the form with validators
-   */
   initForm(): void {
     this.reportForm = this.fb.group({
-      type: ['', [Validators.required]],
-      serialNumber: ['', [Validators.required]],
+      type: ['', Validators.required],
+      serialNumber: ['', Validators.required],
       equipmentDescription: [''],
       designation: [''],
       manufacturer: [''],
@@ -64,15 +73,11 @@ export class ReportCreateComponent implements OnInit {
     });
   }
 
-  /**
-   * Get the protocol ID from route params
-   */
   getProtocolId(): void {
     this.route.params.subscribe(params => {
       const id = params['protocolId'];
       if (id) {
         this.protocolId = +id;
-        console.log('✅ Protocol ID from route:', this.protocolId);
       } else {
         this.toastr.error('Aucun protocole sélectionné', 'Erreur');
         this.router.navigate(['/dashboard/report-dashboard/protocol-selection']);
@@ -80,38 +85,46 @@ export class ReportCreateComponent implements OnInit {
     });
   }
 
-  /**
-   * Load users and organize them by department
-   */
   loadUsers(): void {
     this.loadingUsers = true;
-    this.reportService.getRequiredUsers(this.protocolId).subscribe({
+
+    this.userService.getAllUsersExceptAdmins().subscribe({
       next: (users) => {
         this.users = users;
-        this.departments = [...new Set(users.map(u => u.department.id))].map(id => {
-          return { id, name: users.find(u => u.department.id === id)!.department.name };
+
+        this.departments = [...new Set(users.map(u => u.department.id))].map(id => ({
+          id,
+          name: users.find(u => u.department.id === id)!.department.name
+        }));
+
+        this.departments.forEach(dept => {
+          const deptUsers = users
+            .filter(u => u.department.id === dept.id)
+            .map(user => ({
+              ...user,
+              fullName: `${user.firstName} ${user.lastName} (${user.email})`
+            }));
+
+          this.usersByDepartment[dept.id] = deptUsers;
+
+          this.reportForm.addControl(`department_${dept.id}`, this.fb.control([]));
         });
 
-        this.departments.forEach((dept) => {
-          this.reportForm.addControl(`department_${dept.id}`, this.fb.control(''));
-          this.usersByDepartment[dept.id] = users.filter(u => u.department.id === dept.id);
-        });
         this.loadingUsers = false;
+        this.cdr.detectChanges(); // ✅ Ensure view updates
       },
-      error: (error) => {
-        console.error('Failed to load users:', error);
-        this.toastr.error('Impossible de charger les utilisateurs', 'Erreur');
+      error: (err) => {
         this.loadingUsers = false;
+        console.error(err);
+        this.toastr.error('Erreur lors du chargement des utilisateurs');
       }
     });
   }
 
-  /**
-   * Submit the report
-   */
   submitReport(): void {
     this.submitted = true;
-    
+        this.isLoading = true;
+
     if (this.reportForm.invalid) {
       this.toastr.warning('Veuillez remplir tous les champs obligatoires', 'Attention');
       this.markFormGroupTouched(this.reportForm);
@@ -121,10 +134,16 @@ export class ReportCreateComponent implements OnInit {
     this.isSubmitting = true;
     const formValues = this.reportForm.value;
 
-    const assignedUsers = this.departments.map(dept => ({
-      departmentId: dept.id,
-      userId: formValues[`department_${dept.id}`]
-    })).filter(assignment => assignment.userId);
+    const assignedUsers: { departmentId: number; userId: number }[] = [];
+
+    this.departments.forEach(dept => {
+      const userIds: number[] = formValues[`department_${dept.id}`];
+      if (Array.isArray(userIds) && userIds.length > 0) {
+        userIds.forEach(userId => {
+          assignedUsers.push({ departmentId: dept.id, userId });
+        });
+      }
+    });
 
     const payload = {
       ...formValues,
@@ -132,55 +151,42 @@ export class ReportCreateComponent implements OnInit {
       assignedUsers
     };
 
-    console.log("📦 Submitting Report:", payload);
-
-    this.reportService.createNewReport(payload).subscribe({
-      next: (response: any) => {
-        // Send notifications to assigned users
-        assignedUsers.forEach(assignment => {
-          const notificationDTO = {
-            description: `Un nouveau rapport ${formValues.type} a été créé et vous a été assigné`,
-            link: `/dashboard/report-dashboard/fill-report/${response.reportId}`,
-            notificationType: NotificationType.REPORT,
-            userId: assignment.userId
-          };
-
-          this.notificationService.createNotification(notificationDTO).subscribe({
-            next: () => console.log(`✅ Notification sent to user ${assignment.userId}`),
-            error: (err) => console.error(`❌ Failed to send notification to user ${assignment.userId}:`, err)
-          });
-        });
-
-        this.isSubmitting = false;
-        this.toastr.success('Le rapport a été créé avec succès', 'Succès');
-        this.router.navigate(['/dashboard/report-dashboard/view-reports']);
-      },
-      error: (err) => {
-        this.isSubmitting = false;
-        console.error('❌ Creation failed:', err);
-        this.toastr.error('Une erreur est survenue lors de la création du rapport', 'Erreur');
-      }
+this.reportService.createNewReport(payload).subscribe({
+  next: (response: any) => {
+    assignedUsers.forEach(assignment => {
+      const notificationDTO = {
+        description: `Un nouveau rapport ${formValues.type} a été créé et vous a été assigné`,
+        link: `/dashboard/report-dashboard/fill-report/${response.reportId}`,
+        notificationType: NotificationType.REPORT,
+        userId: assignment.userId
+      };
+      this.notificationService.createNotification(notificationDTO).subscribe();
     });
+
+    this.toastr.success('Le rapport a été créé avec succès', 'Succès');
+    this.router.navigate(['/dashboard/report-dashboard/view-reports']);
+    this.isSubmitting = false;
+    this.isLoading = false; // ✅ ADDED
+  },
+  error: (err) => {
+    console.error('Erreur création:', err);
+    this.toastr.error('Erreur lors de la création du rapport');
+    this.isSubmitting = false;
+    this.isLoading = false; // ✅ ADDED
+  }
+});
+
   }
 
-  /**
-   * Go back to the previous page
-   */
   goBack(): void {
     this.router.navigate(['/dashboard/report-dashboard/protocol-selection']);
   }
 
-  /**
-   * Check if a field is invalid
-   */
   isFieldInvalid(fieldName: string): boolean {
     const field = this.reportForm.get(fieldName);
     return !!field && field.invalid && (field.dirty || field.touched || this.submitted);
   }
 
-  /**
-   * Mark all fields in a form group as touched
-   */
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();

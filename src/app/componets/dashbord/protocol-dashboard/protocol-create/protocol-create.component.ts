@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProtocolService } from '../../../../shared/services/protocol.service';
 import { ProtocolType } from '../../../../models/protocol-type.enum';
@@ -8,18 +8,20 @@ import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../../../../shared/services/data.service';
 import { Department } from '../../../../models/department.model';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-protocol-create',
   templateUrl: './protocol-create.component.html',
   styleUrls: ['./protocol-create.component.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTooltipModule
-  ],
-  standalone: true
+    NgbTooltipModule,
+    NgSelectModule
+  ]
 })
 export class ProtocolCreateComponent implements OnInit {
   protocolForm!: FormGroup;
@@ -32,7 +34,8 @@ export class ProtocolCreateComponent implements OnInit {
     private fb: FormBuilder,
     private protocolService: ProtocolService,
     private toastr: ToastrService,
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef // ✅ Inject ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +51,6 @@ export class ProtocolCreateComponent implements OnInit {
       specificCriteria: this.fb.array([])
     });
 
-    // Add default criteria
     this.addCriteria();
   }
 
@@ -58,6 +60,7 @@ export class ProtocolCreateComponent implements OnInit {
       next: (depts) => {
         this.departments = depts;
         this.loading = false;
+        this.cdr.detectChanges(); // ✅ Ensure view updates
       },
       error: (error) => {
         console.error('Error loading departments:', error);
@@ -88,28 +91,14 @@ export class ProtocolCreateComponent implements OnInit {
   }
 
   isFieldInvalid(fieldName: string, index?: number): boolean {
-    if (index !== undefined) {
-      const criteriaGroup = this.specificCriteria.at(index);
-      const field = criteriaGroup.get(fieldName);
-      return field ? field.invalid && (field.dirty || field.touched) : false;
-    }
-    
-    const field = this.protocolForm.get(fieldName);
+    const group = index !== undefined ? this.specificCriteria.at(index) : this.protocolForm;
+    const field = group.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
   getErrorMessage(fieldName: string, index?: number): string {
-    if (index !== undefined) {
-      const criteriaGroup = this.specificCriteria.at(index);
-      const field = criteriaGroup.get(fieldName);
-      if (!field) return '';
-
-      if (field.hasError('required')) return 'This field is required';
-      if (field.hasError('minlength')) return `Minimum length is ${field.errors?.['minlength'].requiredLength} characters`;
-      return '';
-    }
-
-    const field = this.protocolForm.get(fieldName);
+    const group = index !== undefined ? this.specificCriteria.at(index) : this.protocolForm;
+    const field = group.get(fieldName);
     if (!field) return '';
 
     if (field.hasError('required')) return 'This field is required';

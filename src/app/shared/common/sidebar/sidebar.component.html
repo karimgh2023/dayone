@@ -3,13 +3,13 @@
 
       <!-- Start::main-sidebar-header -->
       <div class="main-sidebar-header">
-        <a routerLink="/dashboard/report-dashboard/view-reports" class="header-logo"> 
+        <a routerLink="/dashboard/report-dashboard/view-reports" class="header-logo">
           <img src="./assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
-           <img src="./assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo"> 
+           <img src="./assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
            <img src="./assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
-            <img src="./assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-dark"> 
-            <img src="./assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white"> 
-            <img src="./assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-white"> 
+            <img src="./assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-dark">
+            <img src="./assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white">
+            <img src="./assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-white">
           </a>
       </div>
       <!-- End::main-sidebar-header -->
@@ -23,8 +23,8 @@
               <div class="app-sidebar__user mb-3">
                   <div class="dropdown user-pro-body text-center user-pic">
                       <span class="avatar avatar-xxl online avatar-rounded">
-                          <img [src]="currentUser?.profilePhoto || './assets/images/users/16.jpg'" 
-                               (error)="onImageError($event)" 
+                          <img [src]="currentUser?.profilePhoto || './assets/images/users/16.jpg'"
+                               (error)="onImageError($event)"
                                alt="User Profile Image" />
                       </span>
                       <div class="user-info mt-1">
@@ -51,7 +51,7 @@
                   <!-- head title  -->
                   <!-- has-Link -->
                   @if(menuItem.headTitle){
-        
+
                   <span class="category-name">{{ menuItem.headTitle }}</span>
                   } @if (menuItem.type === 'link') {
                   <a
@@ -62,7 +62,7 @@
                   >
                     <span class="side-menu__icon">
                       @if(menuItem.icon){
-        
+
                       <i class="fe fe-{{ menuItem.icon }} side-menu__icon"></i>
                       }
                     </span>
@@ -85,7 +85,7 @@
                     (click)="setNavActive($event, menuItem.path ?? '')"
                   >
                     @if(menuItem.icon){
-        
+
                     <i class="side-menu__icon  fe fe-{{ menuItem.icon }} side-menu__icon"></i>
                     }
                     <span class="side-menu__label">{{ menuItem.title }}</span>
@@ -101,7 +101,7 @@
                   >
                     <span class="side-menu__icon">
                       @if(menuItem.icon){
-        
+
                       <i class="fe fe-{{ menuItem.icon }} side-menu__icon"></i>
                       }
                     </span>
@@ -114,7 +114,7 @@
                         >{{ menuItem.badgeValue }}</span
                       ></span
                     >
-        
+
                     <i class="fe fe-chevron-right side-menu__angle"></i>
                   </a>
                   }
@@ -231,7 +231,7 @@
                             [ngClass]="{ 'force-left': childrenItem.dirchange }"
                             [ngStyle]="{
                                                                       display: childrenSubItem.active ? 'block' : 'none',
-                                                                  
+
                                                                     }"
                           >
                             @for (childrenSubItem1 of childrenSubItem.children; track
@@ -274,24 +274,8 @@
                 }
                 <!-- End::slide -->
               </ul>
-             
-              <div class="slide-right" (click)="rightArrowFn()" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path> </svg></div>
-              <!-- Start::Announcement -->
-              <div class="Annoucement_card">
-                  <div class="text-center">
-                      <div>
-                          <h5 class="title mt-0 mb-1 ms-2 fw-bold tx-12">Announcement</h5>
-                          <div class="bg-layer py-3">
-                              <img src="./assets/images/media/png/9.png" class="py-3 text-center mx-auto" alt="img">
-                          </div>
-                          <p class="subtext mt-0 mb-0 ms-2 fs-13 text-center my-2">Make an Announcement to Our Employee</p>
-                      </div>
-                  </div>
-                  <div class="d-grid">
-                      <button class="btn btn-primary my-3 fs-12">Create Announcement</button>
-                      <button class="btn btn-outline-primary fs-12">See history</button>
-                  </div>
-              </div>
+
+
               <!-- End::Announcement -->
           </nav>
           <!-- End::nav -->

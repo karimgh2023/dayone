@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -11,16 +11,13 @@ import { forkJoin, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { ReportEntryService } from '../../../../shared/services/report-entry.service';
 
-
 @Component({
   standalone: true,
   selector: 'app-view-reports',
   imports: [CommonModule, RouterModule, FormsModule, NgbTooltipModule, ToastrModule],
   templateUrl: './view-reports.component.html',
   styleUrls: ['./view-reports.component.scss'],
-  providers: [
-    { provide: ToastrService, useClass: ToastrService }
-  ]
+  providers: [{ provide: ToastrService, useClass: ToastrService }]
 })
 export class ViewReportsComponent implements OnInit {
   createdReports: ReportDTO[] = [];
@@ -44,116 +41,25 @@ export class ViewReportsComponent implements OnInit {
     private reportEntryService: ReportEntryService,
     private pdfService: PdfService,
     private toastr: ToastrService,
-    private router: Router
-  ) {
-    // Initialize empty collections
-    this.filteredAllReports = [];
-    this.filteredCreatedReports = [];
-    this.filteredAssignedReports = [];
-  }
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
-    
 
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       this.userRole = payload.role;
       this.userEmail = payload.sub || '';
 
-      // ✅ Fetch only created reports if user is a DEPARTMENT_MANAGER
-      if (this.userRole === 'DEPARTMENT_MANAGER') {
+      if (this.userRole === 'DEPARTMENT_MANAGER' || this.userRole === 'ADMIN') {
         this.fetchCreatedReports();
       }
 
-      // ✅ Always fetch assigned reports
       this.fetchAssignedReports();
-      
-      // Default active tab is 'all'
       this.activeTab = 'all';
     }
-  }
-
-  /**
-   * Set the current view mode (list or board)
-   */
-  setView(view: string): void {
-    this.currentView = view;
-  }
-
-  /**
-   * Set the active tab (all, created, assigned)
-   */
-  setActiveTab(tab: string): void {
-    this.activeTab = tab;
-    
-    // Update the filtered reports based on the active tab
-    if (tab === 'all') {
-      this.applyGlobalFilter();
-    } else if (tab === 'created') {
-      this.applyCreatedReportsFilter();
-    } else if (tab === 'assigned') {
-      this.applyAssignedReportsFilter();
-    }
-  }
-
-  /**
-   * Get all reports (both created and assigned)
-   */
-  getAllReports(): ReportDTO[] {
-    // Create a Map to handle potential duplicates
-    const reportsMap = new Map<number, ReportDTO>();
-    
-    // Add all created reports
-    this.createdReports.forEach(report => {
-      reportsMap.set(report.id, report);
-    });
-    
-    // Add all assigned reports (only if not already in the map)
-    this.assignedReports.forEach(report => {
-      if (!reportsMap.has(report.id)) {
-        reportsMap.set(report.id, report);
-      }
-    });
-    
-    return Array.from(reportsMap.values());
-  }
-
-  /**
-   * Apply global filter for all reports
-   */
-  applyGlobalFilter(): void {
-    const allReports = this.getAllReports();
-    this.filteredAllReports = allReports.filter(report => {
-      // Type filter
-      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
-        return false;
-      }
-      
-      // Search term filter
-      if (this.searchTerm) {
-        const term = this.searchTerm.toLowerCase();
-        return (
-          report.id.toString().includes(term) ||
-          report.serialNumber.toLowerCase().includes(term) ||
-          (report.designation && report.designation.toLowerCase().includes(term)) ||
-          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
-        );
-      }
-      
-      return true;
-    });
-    
-    // Also update the other filtered collections with the same filters
-    this.applyCreatedReportsFilter();
-    this.applyAssignedReportsFilter();
-  }
-
-  /**
-   * Get reports filtered by status
-   */
-  getAllReportsByStatus(status: string): ReportDTO[] {
-    return this.getAllReports().filter(report => this.getStatusLabel(report) === status);
   }
 
   fetchCreatedReports(): void {
@@ -161,14 +67,13 @@ export class ViewReportsComponent implements OnInit {
       next: (reports: ReportDTO[]) => {
         this.createdReports = reports;
         this.filteredCreatedReports = [...this.createdReports];
-        
-        // Update the combined reports list
         this.filteredAllReports = this.getAllReports();
         this.applyGlobalFilter();
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error fetching created reports:', err);
         this.toastr.error('Erreur lors du chargement des rapports créés', 'Erreur');
+        console.error(err);
       }
     });
   }
@@ -176,9 +81,7 @@ export class ViewReportsComponent implements OnInit {
   fetchAssignedReports(): void {
     this.reportService.getReportsAssignedToMe().subscribe({
       next: (reports: ReportDTO[]) => {
-        // Fix missing createdByEmail in reports
         this.assignedReports = reports.map(report => {
-          // If createdByEmail is missing, try to set it from other available sources
           if (!report.createdByEmail) {
             const createdBy = this.extractCreatedByFromReport(report);
             if (createdBy) {
@@ -187,245 +90,166 @@ export class ViewReportsComponent implements OnInit {
           }
           return report;
         });
-        
+
         this.filteredAssignedReports = [...this.assignedReports];
-        
-        // Update the combined reports list to show proper total
         this.filteredAllReports = this.getAllReports();
-        // Apply filters to ensure consistency
         this.applyGlobalFilter();
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error fetching assigned reports:', err);
         this.toastr.error('Erreur lors du chargement des rapports assignés', 'Erreur');
+        console.error(err);
       }
     });
   }
 
-  /**
-   * Extract creator email from various report structures
-   */
-  private extractCreatedByFromReport(report: any): string | null {
-    // Try to access potential alternative structures
-    if (report.createdBy && typeof report.createdBy === 'object') {
-      if (report.createdBy.email) return report.createdBy.email;
-      if (report.createdBy.mail) return report.createdBy.mail;
+  refreshReports(): void {
+    this.fetchAssignedReports();
+    if (this.userRole === 'DEPARTMENT_MANAGER') {
+      this.fetchCreatedReports();
     }
-    
-    // Check for a creator in assignedUsers
-    if (report.assignedUsers && Array.isArray(report.assignedUsers)) {
-      const creator = report.assignedUsers.find((user: any) => 
-        user.role === 'CREATOR' || user.role === 'DEPARTMENT_MANAGER'
-      );
-      
-      if (creator && creator.email) {
-        return creator.email;
+  }
+
+  setView(view: string): void {
+    this.currentView = view;
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+    if (tab === 'all') this.applyGlobalFilter();
+    else if (tab === 'created') this.applyCreatedReportsFilter();
+    else if (tab === 'assigned') this.applyAssignedReportsFilter();
+  }
+
+  getAllReports(): ReportDTO[] {
+    const reportsMap = new Map<number, ReportDTO>();
+    this.createdReports.forEach(report => reportsMap.set(report.id, report));
+    this.assignedReports.forEach(report => {
+      if (!reportsMap.has(report.id)) reportsMap.set(report.id, report);
+    });
+    return Array.from(reportsMap.values());
+  }
+
+  applyGlobalFilter(): void {
+    const allReports = this.getAllReports();
+    this.filteredAllReports = allReports.filter(report => {
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) return false;
+      if (this.searchTerm) {
+        const term = this.searchTerm.toLowerCase();
+        return report.id.toString().includes(term) ||
+          report.serialNumber?.toLowerCase().includes(term) ||
+          report.designation?.toLowerCase().includes(term) ||
+          report.manufacturer?.toLowerCase().includes(term);
       }
-    }
-    
-    // If we have a creator name but no email, construct a placeholder
-    if (report.createdByName) {
-      return `${report.createdByName} (No Email)`;
-    }
-    
-    return null;
+      return true;
+    });
+    this.applyCreatedReportsFilter();
+    this.applyAssignedReportsFilter();
   }
 
-  /**
-   * Get creator email with improved fallbacks
-   */
-  getCreatorEmail(report: ReportDTO): string {
-    if (report.createdByEmail) {
-      return report.createdByEmail;
-    }
-    
-    const createdBy = this.extractCreatedByFromReport(report as any);
-    if (createdBy) {
-      return createdBy;
-    }
-    
-    return 'Non spécifié';
-  }
-
-  /**
-   * Apply type filter to created reports
-   */
   applyCreatedReportsFilter(): void {
     this.filteredCreatedReports = this.createdReports.filter(report => {
-      // Type filter
-      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
-        return false;
-      }
-      
-      // Search term filter
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) return false;
       if (this.searchTerm) {
         const term = this.searchTerm.toLowerCase();
-        return (
-          report.id.toString().includes(term) ||
-          report.serialNumber.toLowerCase().includes(term) ||
-          (report.designation && report.designation.toLowerCase().includes(term)) ||
-          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
-        );
+        return report.id.toString().includes(term) ||
+          report.serialNumber?.toLowerCase().includes(term) ||
+          report.designation?.toLowerCase().includes(term) ||
+          report.manufacturer?.toLowerCase().includes(term);
       }
-      
       return true;
     });
   }
 
-  /**
-   * Apply type filter to assigned reports
-   */
   applyAssignedReportsFilter(): void {
     this.filteredAssignedReports = this.assignedReports.filter(report => {
-      // Type filter
-      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) {
-        return false;
-      }
-      
-      // Search term filter
+      if (this.globalTypeFilter && report.type !== this.globalTypeFilter) return false;
       if (this.searchTerm) {
         const term = this.searchTerm.toLowerCase();
-        return (
-          report.id.toString().includes(term) ||
-          report.serialNumber.toLowerCase().includes(term) ||
-          (report.designation && report.designation.toLowerCase().includes(term)) ||
-          (report.manufacturer && report.manufacturer.toLowerCase().includes(term))
-        );
+        return report.id.toString().includes(term) ||
+          report.serialNumber?.toLowerCase().includes(term) ||
+          report.designation?.toLowerCase().includes(term) ||
+          report.manufacturer?.toLowerCase().includes(term);
       }
-      
       return true;
     });
   }
 
-  /**
-   * Reset created reports filter
-   */
-  resetCreatedReportsFilter(): void {
-    this.createdReportsTypeFilter = '';
-    this.filteredCreatedReports = [...this.createdReports];
-  }
-
-  /**
-   * Reset assigned reports filter
-   */
-  resetAssignedReportsFilter(): void {
-    this.assignedReportsTypeFilter = '';
-    this.filteredAssignedReports = [...this.assignedReports];
-  }
-
-  /**
-   * Get logged in user email to highlight their assignment
-   */
-  getLoggedInUserEmail(): string {
-    return this.userEmail;
-  }
-
-  /**
-   * Get the total number of reports (created + assigned)
-   */
-  getTotalReports(): number {
-    return this.getAllReports().length;
-  }
-
-  /**
-   * Calculate the completion rate of all reports
-   */
-  getCompletionRate(): number {
-    const allReports = this.getAllReports();
-    if (allReports.length === 0) return 0;
-    
-    const totalProgress = allReports.reduce((sum, report) => sum + (report.progress || 0), 0);
-    return Math.round(totalProgress / allReports.length);
-  }
-
-  /**
-   * Get status label for a report
-   */
   getStatusLabel(report: ReportDTO): string {
     const progress = this.getReportProgress(report);
-    if (progress === 0) {
-      return 'Non commencé';
-    }
-    if (progress === 100) {
-      return 'Complété';
-    }
-    return 'En cours';
+    return progress === 0 ? 'Non commencé' : progress === 100 ? 'Complété' : 'En cours';
   }
 
-  /**
-   * Get CSS class for status badge
-   */
   getStatusBadgeClass(report: ReportDTO): string {
     const progress = this.getReportProgress(report);
-    if (progress === 0) {
-      return 'bg-info';
-    }
-    if (progress === 100) {
-      return 'bg-success';
-    }
-    return 'bg-warning';
+    return progress === 0 ? 'bg-info' : progress === 100 ? 'bg-success' : 'bg-warning';
   }
 
-  /**
-   * Get progress percentage for a report
-   */
   getReportProgress(report: ReportDTO): number {
     return report.progress;
   }
 
-  /**
-   * Download report as PDF
-   */
+  getCompletionRate(): number {
+    const allReports = this.getAllReports();
+    if (!allReports.length) return 0;
+    const total = allReports.reduce((sum, r) => sum + (r.progress || 0), 0);
+    return Math.round(total / allReports.length);
+  }
+
+  getCreatorEmail(report: ReportDTO): string {
+    return report.createdByEmail || this.extractCreatedByFromReport(report) || 'Non spécifié';
+  }
+
+  extractCreatedByFromReport(report: any): string | null {
+    if (report.createdBy?.email) return report.createdBy.email;
+    if (report.createdBy?.mail) return report.createdBy.mail;
+    const creator = report.assignedUsers?.find((u: any) =>
+      u.role === 'CREATOR' || u.role === 'DEPARTMENT_MANAGER'
+    );
+    if (creator?.email) return creator.email;
+    if (report.createdByName) return `${report.createdByName} (No Email)`;
+    return null;
+  }
+
+  getFilteredReportsByStatus(reports: ReportDTO[], status: string): ReportDTO[] {
+    return reports.filter(report => {
+      const stat = this.getStatusLabel(report);
+      return status === 'En attente' ? stat === 'Non commencé' : stat === status;
+    });
+  }
+
   downloadReport(report: ReportDTO): void {
     this.isLoading = true;
-
-    // Create observables for all API calls
-    const metadata$ = this.reportService.getReportMetadata(report.id);
-    const standardChecklist$ = this.reportEntryService.getStandardChecklist(report.id);
-    const specificChecklist$ = this.reportEntryService.getSpecificChecklist(report.id);
-    const maintenanceForm$ = this.reportEntryService.getMaintenanceForm(report.id);
-    const validationChecklist$ = this.reportEntryService.getValidationChecklist(report.id);
-
-    // Combine all observables
     forkJoin({
-      metadata: metadata$,
-      standardChecklist: standardChecklist$,
-      specificChecklist: specificChecklist$,
-      maintenanceForm: maintenanceForm$,
-      validationChecklist: validationChecklist$
+      metadata: this.reportService.getReportMetadata(report.id),
+      standardChecklist: this.reportEntryService.getStandardChecklist(report.id),
+      specificChecklist: this.reportEntryService.getSpecificChecklist(report.id),
+      maintenanceForm: this.reportEntryService.getMaintenanceForm(report.id),
+      validationChecklist: this.reportEntryService.getValidationChecklist(report.id)
     }).pipe(
-      tap(({ metadata, standardChecklist, specificChecklist, maintenanceForm, validationChecklist }) => {
-        // Generate PDF with all the data
-        this.pdfService.generateReportPdf(
-          report,
-          standardChecklist,
-          specificChecklist,
-          validationChecklist,
-          maintenanceForm.form
-        );
+      tap(({ standardChecklist, specificChecklist, maintenanceForm, validationChecklist }) => {
+        this.pdfService.generateReportPdf(report, standardChecklist, specificChecklist, validationChecklist, maintenanceForm.form);
       }),
       catchError(error => {
-        console.error('[DOWNLOAD] Error fetching report data:', error);
         this.toastr.error('Erreur lors du téléchargement du rapport', 'Erreur');
         return of(null);
       }),
-      finalize(() => {
-        this.isLoading = false;
-      })
+      finalize(() => this.isLoading = false)
     ).subscribe();
   }
 
-  /**
-   * Get reports filtered by status from a specific set of reports
-   */
-  getFilteredReportsByStatus(reports: ReportDTO[], status: string): ReportDTO[] {
-    return reports.filter(report => {
-      const reportStatus = this.getStatusLabel(report);
-      // Map the old status to the new one for backward compatibility
-      if (status === 'En attente') {
-        return reportStatus === 'Non commencé';
-      }
-      return reportStatus === status;
-    });
+  deleteReport(reportId: number): void {
+    if (confirm('Are you sure you want to delete this report?')) {
+      this.reportService.deleteReport(reportId).subscribe({
+        next: () => {
+          this.toastr.success('Report deleted successfully');
+          this.refreshReports();
+        },
+        error: err => {
+          this.toastr.error('Failed to delete the report.');
+          console.error(err);
+        }
+      });
+    }
   }
 }

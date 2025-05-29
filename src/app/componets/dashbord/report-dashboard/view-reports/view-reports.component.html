@@ -1,7 +1,7 @@
 <div class="container-fluid mt-4">
   <!-- Dashboard Metrics -->
-  <div class="row mb-5">
-    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+  <div class="row mb-5" >
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3" *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'">
       <div class="card custom-card overflow-hidden">
         <div class="card-body">
           <div class="d-flex">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3" *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'">
       <div class="card custom-card overflow-hidden">
         <div class="card-body">
           <div class="d-flex">
@@ -120,49 +120,65 @@
     </div>
   </div>
 
-  <!-- Tabs Navigation -->
-  <ul class="nav nav-tabs mb-4" id="reportsTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" [ngClass]="{'active': activeTab === 'all'}" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" 
-              role="tab" aria-controls="all" aria-selected="true" (click)="setActiveTab('all')">
-        <i class="fe fe-clipboard me-1"></i>Tous
-        <span class="badge rounded-pill bg-primary ms-1">{{ getAllReports().length }}</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" [ngClass]="{'active': activeTab === 'created'}" id="created-tab" data-bs-toggle="tab" data-bs-target="#created" type="button" 
-              role="tab" aria-controls="created" aria-selected="false" (click)="setActiveTab('created')">
-        <i class="fe fe-edit me-1"></i>Créés
-        <span class="badge rounded-pill bg-success ms-1">{{ createdReports.length }}</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" [ngClass]="{'active': activeTab === 'assigned'}" id="assigned-tab" data-bs-toggle="tab" data-bs-target="#assigned" type="button" 
-              role="tab" aria-controls="assigned" aria-selected="false" (click)="setActiveTab('assigned')">
-        <i class="fe fe-users me-1"></i>Assignés
-        <span class="badge rounded-pill bg-warning ms-1">{{ assignedReports.length }}</span>
-      </button>
-    </li>
-  </ul>
+<!-- Tabs Navigation -->
+<ul class="nav nav-tabs mb-4" id="reportsTabs" role="tablist">
+  <li class="nav-item" role="presentation" *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'">
+    <button
+      class="nav-link"
+      [ngClass]="{ 'active': activeTab === 'all' }"
+      type="button"
+      (click)="setActiveTab('all')"
+      role="tab"
+      aria-controls="all"
+      [attr.aria-selected]="activeTab === 'all'">
+      <i class="fe fe-clipboard me-1"></i>Tous
+      <span class="badge rounded-pill bg-primary ms-1">{{ getAllReports().length }}</span>
+    </button>
+  </li>
 
-  <!-- Main Content based on View Type -->
-  <div class="tab-content" id="reportsTabContent">
-    <!-- All Reports Tab -->
-    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'all'}" id="all" role="tabpanel" aria-labelledby="all-tab">
-      <!-- Original Board View code -->
-      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAllReports, title: 'Tous les Rapports', count: getAllReports().length}"></ng-container>
-      </div>
+  <li class="nav-item" role="presentation" *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'">
+    <button
+      class="nav-link"
+      [ngClass]="{ 'active': activeTab === 'created' }"
+      type="button"
+      (click)="setActiveTab('created')"
+      role="tab"
+      aria-controls="created"
+      [attr.aria-selected]="activeTab === 'created'">
+      <i class="fe fe-edit me-1"></i>Créés
+      <span class="badge rounded-pill bg-success ms-1">{{ createdReports.length }}</span>
+    </button>
+  </li>
 
-    <!-- Created Reports Tab -->
-    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'created'}" id="created" role="tabpanel" aria-labelledby="created-tab">
-      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredCreatedReports, title: 'Rapports Créés', count: createdReports.length}"></ng-container>
-      </div>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link"
+      [ngClass]="{ 'active': activeTab === 'assigned' }"
+      type="button"
+      (click)="setActiveTab('assigned')"
+      role="tab"
+      aria-controls="assigned"
+      [attr.aria-selected]="activeTab === 'assigned'">
+      <i class="fe fe-users me-1"></i>Assignés
+      <span class="badge rounded-pill bg-warning ms-1">{{ assignedReports.length }}</span>
+    </button>
+  </li>
+</ul>
 
-    <!-- Assigned Reports Tab -->
-    <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'assigned'}" id="assigned" role="tabpanel" aria-labelledby="assigned-tab">
-      <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAssignedReports, title: 'Rapports Assignés', count: assignedReports.length}"></ng-container>
-    </div>
+<!-- Tab Content -->
+<div class="tab-content mt-3">
+  <div *ngIf="activeTab === 'all'" class="tab-pane show active" role="tabpanel">
+    <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAllReports, title: 'Tous les Rapports', count: getAllReports().length}"></ng-container>
   </div>
+
+  <div *ngIf="activeTab === 'created'" class="tab-pane show active" role="tabpanel">
+    <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredCreatedReports, title: 'Rapports Créés', count: createdReports.length}"></ng-container>
+  </div>
+
+  <div *ngIf="activeTab === 'assigned'" class="tab-pane show active" role="tabpanel">
+    <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAssignedReports, title: 'Rapports Assignés', count: assignedReports.length}"></ng-container>
+  </div>
+</div>
 
   <!-- Templates for reusable views -->
   <ng-template #boardView let-reports="reports">
@@ -181,7 +197,7 @@
                 <div *ngFor="let report of getFilteredReportsByStatus(reports, 'En attente')" class="report-card m-3 border rounded">
                   <div class="p-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">{{ report.type }}</span>
+                      <span class="badge" [ngClass]="report.protocol.protocolType === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">{{ report.type }}</span>
                       <span class="text-muted fs-12">Rapport #{{ report.id }}</span>
                     </div>
                     <h6 class="mb-2 text-truncate">{{ report.designation || report.serialNumber }}</h6>
@@ -349,7 +365,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Table view -->
       <div class="card custom-card">
         <div class="card-body p-0">
@@ -393,7 +409,7 @@
                   </td>
                   <td>
                     <div class="avatar-list avatar-list-stacked">
-                      <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded" 
+                      <span *ngFor="let user of report.assignedUsers?.slice(0, 3)" class="avatar avatar-sm avatar-rounded"
                             [ngbTooltip]="user.firstName + ' ' + user.lastName">
                         <img [src]="user.profilePhoto" alt="photo">
                       </span>
@@ -410,7 +426,7 @@
                   </td>
                   <td>
                     <div class="progress progress-sm">
-                      <div class="progress-bar" 
+                      <div class="progress-bar"
                            [ngClass]="{'bg-success': getReportProgress(report) === 100, 'bg-warning': getReportProgress(report) > 0 && getReportProgress(report) < 100, 'bg-info': getReportProgress(report) === 0}"
                            [style.width.%]="getReportProgress(report)"></div>
                     </div>
@@ -423,9 +439,9 @@
                       <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
                         <i class="fe fe-download"></i>
                       </button>
-                      <button *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'" 
-                              type="button" 
-                              class="btn btn-sm btn-danger" 
+                      <button *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'"
+                              type="button"
+                              class="btn btn-sm btn-danger"
                               (click)="deleteReport(report.id)"
                               [ngbTooltip]="'Supprimer le rapport'">
                         <i class="fe fe-trash-2"></i>

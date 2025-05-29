@@ -1,13 +1,28 @@
-import { Component, OnInit, Renderer2, PLATFORM_ID, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { User } from '../../../../models/user.model';
-import { UserService } from '../../../../shared/services/user.service';
-import { ProtocolService } from '../../../../shared/services/protocol.service';
-import { ToastrService } from 'ngx-toastr';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
+  AfterViewInit
+} from '@angular/core';
+import {
+  isPlatformBrowser,
+  CommonModule
+} from '@angular/common';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
+import { ProtocolService } from '../../../../shared/services/protocol.service';
 
 interface Protocol {
   id: number;
@@ -26,54 +41,54 @@ interface ProtocolGroup {
 @Component({
   selector: 'app-protocol-selection',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbTooltipModule,],
+  imports: [CommonModule, FormsModule, NgbTooltipModule],
   templateUrl: './protocol-selection.component.html',
   styleUrls: ['./protocol-selection.component.scss'],
   animations: [
     trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0',
-        overflow: 'hidden',
-        opacity: '0'
-      })),
-      state('expanded', style({
-        height: '*',
-        overflow: 'visible',
-        opacity: '1'
-      })),
+      state('collapsed', style({ height: '0', overflow: 'hidden', opacity: '0' })),
+      state('expanded', style({ height: '*', overflow: 'visible', opacity: '1' })),
       transition('collapsed <=> expanded', animate('300ms ease-in-out'))
     ])
   ]
 })
-export class ProtocolSelectionComponent implements OnInit {
+export class ProtocolSelectionComponent implements OnInit, AfterViewInit {
   protocolsByType: ProtocolGroup = {};
   filteredProtocolsByType: ProtocolGroup = {};
   allProtocols: Protocol[] = [];
   recentProtocols: Protocol[] = [];
   favoriteProtocols: Protocol[] = [];
-  
-  loading: boolean = true;
+
+  loading = true;
   error: string | null = null;
-  isDarkMode: boolean = false;
+  isDarkMode = false;
   selectedProtocol: Protocol | null = null;
-  expandedProtocolTypes: Set<string> = new Set<string>();
-  
-  searchTerm: string = '';
-  activeView: string = 'all';
+  expandedProtocolTypes = new Set<string>();
+  searchTerm = '';
+  activeView = 'all';
 
   constructor(
     private protocolService: ProtocolService,
     private router: Router,
-    private renderer: Renderer2,
     private toastr: ToastrService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.fetchProtocols();
     this.detectThemeMode();
-    this.loadFavoriteProtocols();
-    this.loadRecentProtocols();
+  }
+
+  ngAfterViewInit(): void {
+    // Run outside Angular first, then force update inside zone
+    requestAnimationFrame(() => {
+      this.ngZone.run(() => {
+        this.fetchProtocols();
+        this.loadFavoriteProtocols();
+        this.loadRecentProtocols();
+      });
+    });
   }
 
   fetchProtocols(): void {
@@ -83,21 +98,22 @@ export class ProtocolSelectionComponent implements OnInit {
         this.protocolsByType = data;
         this.filteredProtocolsByType = { ...data };
         this.allProtocols = Object.values(data).flat();
-        this.loading = false;
         this.updateRecentsWithFullData();
+        this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        this.error = 'Failed to load protocols. Please try again later.';
-        this.loading = false;
         console.error('Error loading protocols:', err);
+        this.error = 'Failed to load protocols.';
+        this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
 
   detectThemeMode(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const isDark = document.documentElement.getAttribute('data-theme-mode') === 'dark';
-      this.isDarkMode = isDark;
+      this.isDarkMode = document.documentElement.getAttribute('data-theme-mode') === 'dark';
     }
   }
 
@@ -117,6 +133,10 @@ export class ProtocolSelectionComponent implements OnInit {
     return Object.keys(this.protocolsByType).length;
   }
 
+  getFilteredKeys(): string[] {
+    return Object.keys(this.filteredProtocolsByType);
+  }
+
   filterProtocols(): void {
     if (!this.searchTerm.trim()) {
       this.filteredProtocolsByType = { ...this.protocolsByType };
@@ -127,7 +147,7 @@ export class ProtocolSelectionComponent implements OnInit {
     this.filteredProtocolsByType = {};
 
     Object.entries(this.protocolsByType).forEach(([type, protocols]) => {
-      const filtered = protocols.filter(p => 
+      const filtered = protocols.filter(p =>
         p.name.toLowerCase().includes(searchLower) ||
         p.description?.toLowerCase().includes(searchLower)
       );
@@ -161,13 +181,13 @@ export class ProtocolSelectionComponent implements OnInit {
   toggleFavorite(event: Event, protocol: Protocol): void {
     event.stopPropagation();
     protocol.isFavorite = !protocol.isFavorite;
-    
+
     if (protocol.isFavorite) {
       this.favoriteProtocols.push(protocol);
     } else {
       this.favoriteProtocols = this.favoriteProtocols.filter(p => p.id !== protocol.id);
     }
-    
+
     this.saveFavoriteProtocols();
   }
 
@@ -183,7 +203,7 @@ export class ProtocolSelectionComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const favorites = localStorage.getItem('favoriteProtocols');
       if (favorites) {
-        const favoriteData = JSON.parse(favorites) as {id: number, lastUsed: string}[];
+        const favoriteData = JSON.parse(favorites) as { id: number, lastUsed: string }[];
         this.favoriteProtocols = favoriteData.map(item => ({
           id: item.id,
           name: `Protocol ${item.id}`,
@@ -198,15 +218,10 @@ export class ProtocolSelectionComponent implements OnInit {
     if (recent) {
       recent.lastUsed = new Date();
     } else {
-      this.recentProtocols.unshift({
-        ...protocol,
-        lastUsed: new Date()
-      });
+      this.recentProtocols.unshift({ ...protocol, lastUsed: new Date() });
     }
-    
-    // Keep only last 5 recent protocols
+
     this.recentProtocols = this.recentProtocols.slice(0, 5);
-    
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('recentProtocols', JSON.stringify(
         this.recentProtocols.map(p => ({ id: p.id, lastUsed: p.lastUsed }))
@@ -218,7 +233,7 @@ export class ProtocolSelectionComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const recents = localStorage.getItem('recentProtocols');
       if (recents) {
-        const recentData = JSON.parse(recents) as {id: number, lastUsed: string}[];
+        const recentData = JSON.parse(recents) as { id: number, lastUsed: string }[];
         this.recentProtocols = recentData.map(item => ({
           id: item.id,
           name: `Protocol ${item.id}`,
@@ -229,13 +244,11 @@ export class ProtocolSelectionComponent implements OnInit {
   }
 
   private updateRecentsWithFullData(): void {
-    const recentData = this.recentProtocols.map(p => ({id: p.id, lastUsed: p.lastUsed}));
+    const recentData = this.recentProtocols.map(p => ({ id: p.id, lastUsed: p.lastUsed }));
     this.recentProtocols = recentData
       .map(item => {
         const fullProtocol = this.allProtocols.find(p => p.id === item.id);
-        return fullProtocol 
-          ? {...fullProtocol, lastUsed: item.lastUsed} 
-          : null;
+        return fullProtocol ? { ...fullProtocol, lastUsed: item.lastUsed } : null;
       })
       .filter(p => p !== null) as Protocol[];
   }
@@ -253,4 +266,3 @@ export class ProtocolSelectionComponent implements OnInit {
     return new Date(date).toLocaleDateString();
   }
 }
-  
