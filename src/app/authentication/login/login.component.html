@@ -8,148 +8,125 @@
         <div class="row justify-content-center">
           <div class="col-md-9 col-lg-7 col-xl-4 col-xxl-4">
             <div class="card custom-card my-4">
-              <ul
-                ngbNav
-                #nav="ngbNav"
-                [(activeId)]="active"
-                class="nav-tabs justify-content-center border-bottom-0 mb-2 mt-4"
+              <div class="p-4 pt-6 text-center">
+                <img src="./assets/images/Leoni_AG_Logo.svg.png" class="leoni" alt="LEONI logo" />
+                <h2 class="mb-2 mt-4">Connexion</h2>
+                <p class="text-muted mb-0">Connectez-vous à votre compte</p>
+              </div>
+
+              <form
+                class="card-body pb-3"
+                [formGroup]="loginForm"
+                (ngSubmit)="login()"
               >
-                <li ngbNavItem="Leoni">
-                  <a ngbNavLink class="leoni-img">
-                    <img src="./assets/images/Leoni_AG_Logo.svg.png" class="leoni" alt="LEONI logo" />
-                  </a>
-                  <ng-template ngbNavContent class="border-0">
-                    <div class="p-4 pt-0 text-center">
-                      <h2 class="mb-2">Connexion</h2>
-                      <p class="text-muted mb-0">Connectez-vous à votre compte</p>
-                    </div>
+                <!-- Error Messages -->
+                <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+                <p *ngIf="_error?.message" class="text-danger">{{ _error.message }}</p>
 
-                    <form
-                      class="card-body pb-3"
-                      [formGroup]="loginForm"
-                      (ngSubmit)="login()"
+                <!-- Email -->
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fe fe-mail"></i>
+                      </span>
+                      <input
+                        class="form-control"
+                        formControlName="email"
+                        type="email"
+                        placeholder="Entrez votre email"
+                        autocomplete="email"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label class="form-label">Mot de passe</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group">
+                      <span
+                        class="input-group-text"
+                        (click)="togglePassword()"
+                      >
+                        <i class="fe fe-{{ toggleClass }} align-middle"></i>
+                      </span>
+                      <input
+                        class="form-control"
+                        formControlName="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Entrez votre mot de passe"
+                        autocomplete="current-password"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Remember Me -->
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="defaultCheck1"
+                    formControlName="rememberMe"
+                  />
+                  <label class="form-check-label" for="defaultCheck1">
+                    Se souvenir de moi
+                  </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit d-grid">
+                  <button
+                    class="btn btn-primary me-0"
+                    [disabled]="!loginForm.valid"
+                    autofocus
+                  >
+                    Se connecter
+                  </button>
+                </div>
+
+                <div class="text-center mt-3">
+                  <p class="text-dark mb-0">
+                    Vous n'avez pas de compte ?
+                    <a
+                      class="text-primary ms-1 d-inline-flex"
+                      routerLink="/auth/register"
                     >
-                      <!-- Error Messages -->
-                      <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
-                      <p *ngIf="_error?.message" class="text-danger">{{ _error.message }}</p>
+                      S'inscrire
+                    </a>
+                  </p>
+                </div>
+              </form>
 
-                      <!-- Email -->
-                      <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group">
-                            <span class="input-group-text">
-                              <i class="fe fe-mail"></i>
-                            </span>
-                            <input
-                              class="form-control"
-                              formControlName="email"
-                              type="email"
-                              placeholder="Entrez votre email"
-                              autocomplete="email"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Password -->
-                      <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group">
-                            <span
-                              class="input-group-text"
-                              (click)="togglePassword()"
-                            >
-                              <i class="fe fe-{{ toggleClass }} align-middle"></i>
-                            </span>
-                            <input
-                              class="form-control"
-                              formControlName="password"
-                              [type]="showPassword ? 'text' : 'password'"
-                              placeholder="Entrez votre mot de passe"
-                              autocomplete="current-password"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Remember Me -->
-                      <div class="form-check mb-3">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          id="defaultCheck1"
-                          formControlName="rememberMe"
-                        />
-                        <label class="form-check-label" for="defaultCheck1">
-                          Se souvenir de moi
-                        </label>
-                      </div>
-
-                      <!-- Submit Button -->
-                      <div class="submit d-grid">
-                        <button
-                          class="btn btn-primary me-0"
-                          [disabled]="!loginForm.valid"
-                          autofocus
-                        >
-                          Se connecter
-                        </button>
-                      </div>
-
-
-                      <div class="text-center mt-3">
-                        <!-- Links
-                        <p class="mb-2">
-                          <a routerLink="/account/forget-password/forget-password01">
-                            Forgot Password
-                          </a>
-                        </p>-->
-                        <p class="text-dark mb-0">
-                          Vous n'avez pas de compte ?
-                          <a
-                            class="text-primary ms-1 d-inline-flex"
-                            routerLink="/auth/register"
-                          >
-                            S'inscrire
-                          </a>
-                        </p>
-
-                      </div>
-                    </form>
-
-                    <!-- Social Icons -->
-                    <div class="card-body border-top-0 pt-1">
-                      <div class="text-center mb-1">
-                        <a
-                          href="https://www.facebook.com/LEONI.tunisia"
-                          target="_blank"
-                          class="avatar avatar-rounded me-2 bg-primary-transparent text-primary"
-                        >
-                          <i class="ri-facebook-line fs-17"></i>
-                        </a>
-                        <a
-                          href="https://www.instagram.com/leoni_tunisia/"
-                          target="_blank"
-                          class="avatar avatar-rounded me-2 bg-primary-transparent text-primary"
-                        >
-                          <i class="ri-instagram-line fs-17"></i>
-                        </a>
-                        <a
-                          href="https://www.leoni-tunisia.com/"
-                          target="_blank"
-                          class="avatar avatar-rounded bg-primary-transparent text-primary"
-                        >
-                          <span class="fs-17">L</span>
-                        </a>
-                      </div>
-                    </div>
-                  </ng-template>
-                </li>
-              </ul>
-
-              <div [ngbNavOutlet]="nav"></div>
+              <!-- Social Icons -->
+              <div class="card-body border-top-0 pt-1">
+                <div class="text-center mb-1">
+                  <a
+                    href="https://www.facebook.com/LEONI.tunisia"
+                    target="_blank"
+                    class="avatar avatar-rounded me-2 bg-primary-transparent text-primary"
+                  >
+                    <i class="ri-facebook-line fs-17"></i>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/leoni_tunisia/"
+                    target="_blank"
+                    class="avatar avatar-rounded me-2 bg-primary-transparent text-primary"
+                  >
+                    <i class="ri-instagram-line fs-17"></i>
+                  </a>
+                  <a
+                    href="https://www.leoni-tunisia.com/"
+                    target="_blank"
+                    class="avatar avatar-rounded bg-primary-transparent text-primary"
+                  >
+                    <span class="fs-17">L</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

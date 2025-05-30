@@ -2,7 +2,7 @@
   <!-- Full Page Loading Overlay -->
   <div class="loading-overlay" *ngIf="isLoading">
     <div class="spinner-border text-primary dual-spinner" role="status"></div>
-    <div class="loading-text">Please wait...</div>
+    <div class="loading-text">Veuillez patienter...</div>
   </div>
 
   <div class="page-single">
@@ -21,20 +21,20 @@
                     height="auto"
                     loading="lazy"
                   />
-                  <p class="text-muted">Email Verification</p>
+                  <p class="text-muted">Vérification de l'email</p>
                 </div>
 
                 <form [formGroup]="verifyForm" (ngSubmit)="onVerify()" class="card-body pt-0 pb-3">
                   <!-- Code input -->
                   <div class="form-group">
-                    <label class="form-label">Enter the verification code sent to your email</label>
+                    <label class="form-label">Entrez le code de vérification envoyé à votre email</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text"><i class="fe fe-check-circle"></i></span>
                       <input
                         type="text"
                         formControlName="code"
                         class="form-control"
-                        placeholder="Verification Code"
+                        placeholder="Code de vérification"
                       />
                     </div>
                   </div>
@@ -45,7 +45,7 @@
                       class="btn btn-primary"
                       type="submit"
                       [disabled]="!verifyForm.valid || isLoading">
-                      Verify Account
+                      Vérifier le compte
                     </button>
 
                     <button
@@ -53,15 +53,15 @@
                       class="btn btn-link mt-3"
                       (click)="resendEmail()"
                       [disabled]="!canResend || isLoading">
-                      Resend Email
+                      Renvoyer l'email
                       <span *ngIf="!canResend"> ({{ resendTimer }}s)</span>
                     </button>
                   </div>
 
                   <div class="text-center mt-4">
                     <p class="text-dark mb-0">
-                      Already verified?
-                      <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Log In</a>
+                      Déjà vérifié ?
+                      <a class="text-primary ms-1 d-inline-flex" routerLink="/auth/login">Se connecter</a>
                     </p>
                   </div>
                 </form>
