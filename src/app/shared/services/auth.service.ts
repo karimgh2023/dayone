@@ -48,6 +48,8 @@ export class AuthService {
     }
   }
 
+
+
   clearAuthData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -205,6 +207,28 @@ resendVerificationEmail(email: string): Observable<any> {
       { headers }
     );
   }
+
+  resetPassword(email: string, newPassword: string, code: string): Observable<{ message: string }> {
+  return this.http.put<{ message: string }>(
+    `${this.apiUrl}/auth/reset-password`,
+    { email, newPassword, code }
+  );
+}
+
+verifyResetCode(email: string, code: string): Observable<{ valid: boolean }> {
+  return this.http.post<{ valid: boolean }>(
+    `${this.apiUrl}/auth/verify-reset-code`,
+    { email, code }
+  );
+}
+
+sendResetPasswordCode(email: string): Observable<{ message: string }> {
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/auth/forgot-password?email=${email}`,
+    {} // no body, params used in URL
+  );
+}
+
 
   logout(): void {
     this.clearAuthData();

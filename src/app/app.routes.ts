@@ -15,7 +15,7 @@ export const App_Route: Routes = [
       { path: 'login', loadComponent: () => import('./authentication/login/login.component').then(m => m.LoginComponent) },
       { path: 'register', loadComponent: () => import('./authentication/register/register01.component').then(m => m.Register01Component) },
       {  path: 'verify',loadComponent: () => import('./authentication/verify/verify.component').then(m => m.VerifyComponent) } ,
-      
+      { path: 'forget-password', loadComponent: () => import('./authentication/forget-password/forget-password01.component').then(m => m.ForgetPassword01Component) },
       ...authen // Include other authentication routes from auth.route.ts
     ]
   },
