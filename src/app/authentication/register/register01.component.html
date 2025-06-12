@@ -22,7 +22,7 @@
                                             <input type="text" class="form-control" formControlName="firstName" placeholder="Entrez votre prénom" />
                                         </div>
                                         </div>
-                                    
+
                                         <!-- Last Name -->
                                         <div class="form-group">
                                         <label class="form-label">Nom</label>
@@ -31,7 +31,7 @@
                                             <input type="text" class="form-control" formControlName="lastName" placeholder="Entrez votre nom" />
                                         </div>
                                         </div>
-                                    
+
                                         <!-- Email -->
                                         <div class="form-group">
                                         <label class="form-label">Email</label>
@@ -54,7 +54,6 @@
                                                 [items]="plants"
                                                 [bindLabel]="'name'"
                                                 [bindValue]="'id'"
-                                                [loading]="isLoading"
                                                 [clearable]="false"
                                                 placeholder="Choisissez une usine"
                                                 formControlName="plantId"
@@ -64,7 +63,7 @@
                                                 Veuillez sélectionner une usine
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Department select -->
                                         <div class="form-group">
                                             <label class="form-label">Sélectionner un département</label>
@@ -72,7 +71,6 @@
                                                 [items]="departments"
                                                 [bindLabel]="'name'"
                                                 [bindValue]="'id'"
-                                                [loading]="isLoading"
                                                 [clearable]="false"
                                                 placeholder="Choisissez un département"
                                                 formControlName="departmentId"
@@ -82,7 +80,7 @@
                                                 Veuillez sélectionner un département
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Password -->
                                         <div class="form-group">
                                         <label class="form-label">Mot de passe</label>
@@ -91,7 +89,7 @@
                                             <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Entrez votre mot de passe" />
                                         </div>
                                         </div>
-                                    
+
                                         <!-- Confirm Password -->
                                         <div class="form-group">
                                         <label class="form-label">Confirmer le mot de passe</label>
@@ -100,12 +98,12 @@
                                             <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe" />
                                         </div>
                                         </div>
-                                    
+
                                         <!-- Submit -->
                                         <div class="submit d-grid">
                                         <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Créer un compte</button>
                                         </div>
-                                    
+
                                         <div class="text-center mt-4">
                                         <p class="text-dark mb-0">
                                             Vous avez déjà un compte ?
@@ -113,19 +111,19 @@
                                         </p>
                                         </div>
                                     </form>
-                                    
+
                                     <div class="card-body border-top-0 pb-6 pt-1">
                                         <div class="text-center">
                                         <!-- Facebook  -->
                                         <a href="https://www.facebook.com/LEONI.tunisia" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
                                             <i class="ri-facebook-line fs-17"></i>
                                         </a>
-                                        
+
                                         <!-- Instagram -->
                                         <a href="https://www.instagram.com/leoni_tunisia/" target="_blank" class="avatar avatar-rounded me-2 bg-primary-transparent text-primary">
                                             <i class="ri-instagram-line fs-17"></i>
                                         </a>
-                                        
+
                                         <a href="https://www.leoni-tunisia.com/?fbclid=PAZXh0bgNhZW0CMTEAAaZQVavNe_uVh2aIwz-rPnqi8a4BinubQvQU-GQDAeBWIAFaVNKfW5msccA_aem_naDiE9j34crJDB-WZpMbiQ" target="_blank" class="avatar avatar-rounded bg-primary-transparent text-primary">
                                             <span class="fs-17">L</span>
                                         </a>

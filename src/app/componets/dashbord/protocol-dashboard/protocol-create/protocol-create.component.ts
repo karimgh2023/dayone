@@ -107,11 +107,7 @@ export class ProtocolCreateComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.protocolForm.invalid) {
-      this.protocolForm.markAllAsTouched();
-      this.toastr.error('Please fill in all required fields correctly.');
-      return;
-    }
+
 
     this.submitting = true;
     const rawValue = this.protocolForm.value;

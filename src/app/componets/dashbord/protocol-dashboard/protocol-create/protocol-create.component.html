@@ -146,7 +146,6 @@
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="protocolForm.invalid || submitting || loading"
           >
             <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status"></span>
             {{ submitting ? 'Création en cours...' : 'Créer le protocole' }}

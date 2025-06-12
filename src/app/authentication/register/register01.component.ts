@@ -32,7 +32,7 @@ export class Register01Component implements OnInit {
 
   plants: Plant[] = [];
   departments: Department[] = [];
-  isLoading = false;
+
 
   // Cache for plants and departments
   private plants$: Observable<Plant[]>;
@@ -47,7 +47,7 @@ export class Register01Component implements OnInit {
     private dataService: DataService
   ) {
     document.body.classList.add('error-1');
-    
+
     // Initialize cached observables
     this.plants$ = this.dataService.getPlants().pipe(
       shareReplay(1),
@@ -84,13 +84,12 @@ export class Register01Component implements OnInit {
   }
 
   loadDepartmentsAndPlants(): void {
-    this.isLoading = true;
-    
+
+
     forkJoin({
       plants: this.plants$,
       departments: this.departments$
-    }).pipe(
-      finalize(() => this.isLoading = false)
+    }
     ).subscribe({
       next: ({ plants, departments }) => {
         this.plants = plants;

@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { NewUserRequestDTO } from '@/app/models/NewUserRequestDTO.model';
 import { User } from '@/app/models/user.model';
 import { UpdateUserDTO } from '@/app/models/UpdateUserDTO.model';
+import { environment } from '@/environments/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAdminService {
-  private apiUrl = `http://localhost:8081/api/admin-users`;
+  private apiUrl = `${environment.apiUrl}/admin-users`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
@@ -33,7 +33,8 @@ export class ForgetPassword01Component implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private cdr: ChangeDetectorRef // ✅ For manual UI updates
   ) {
     document.body.classList.add('error-1');
 
@@ -70,7 +71,8 @@ export class ForgetPassword01Component implements OnInit, OnDestroy {
         next: (res) => {
           this.toastr.success(res.message);
           this.step = 2;
-          this.startResendCooldown(); // ✅ start timer after first code
+          this.cdr.detectChanges(); // ✅ Update UI
+          this.startResendCooldown();
         },
         error: (err) => {
           console.error('❌ sendResetCode error:', err);
@@ -106,9 +108,12 @@ export class ForgetPassword01Component implements OnInit, OnDestroy {
     clearInterval(this.timerInterval);
     this.timerInterval = setInterval(() => {
       this.resendTimer--;
+      this.cdr.detectChanges(); // ✅ Refresh countdown
+
       if (this.resendTimer <= 0) {
         clearInterval(this.timerInterval);
         this.canResend = true;
+        this.cdr.detectChanges(); // ✅ Final UI refresh
       }
     }, 1000);
   }
@@ -127,6 +132,7 @@ export class ForgetPassword01Component implements OnInit, OnDestroy {
           if (res.valid) {
             this.toastr.success('Code vérifié');
             this.step = 3;
+            this.cdr.detectChanges(); // ✅ Immediate update to Step 3
           } else {
             this.toastr.error('Code invalide ou expiré');
           }
@@ -158,6 +164,7 @@ export class ForgetPassword01Component implements OnInit, OnDestroy {
         next: (res) => {
           this.toastr.success(res.message);
           this.step = 4;
+          this.cdr.detectChanges(); // ✅ Show final confirmation step
         },
         error: (err) => {
           console.error('❌ resetPassword error:', err);

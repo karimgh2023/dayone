@@ -27,7 +27,6 @@ import { User } from '../../models/user.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-
 export class LoginComponent {
   public showPassword: boolean = false;
   toggleClass = 'eye-off';
@@ -35,8 +34,6 @@ export class LoginComponent {
   public loginForm!: FormGroup;
   public errorMessage = '';
   public _error: any = '';
-  isLoading: boolean = false; // ✅ loading state
-
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -53,31 +50,25 @@ export class LoginComponent {
     this.initLoginForm();
   }
 
+  ngOnDestroy(): void {
+    document.body.classList.remove('error-1');
+  }
+
   private initLoginForm(): void {
-    console.log('[Login] Initializing login form...');
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       rememberMe: [false]
     });
 
-    // Load saved credentials if they exist
     const savedCredentials = this.authservice.getSavedCredentials();
-    console.log('[Login] Saved credentials:', savedCredentials);
-
     if (savedCredentials) {
-      console.log('[Login] Found saved credentials, populating form...');
       this.loginForm.patchValue({
         email: savedCredentials.email,
         password: savedCredentials.password,
         rememberMe: true
       });
-      console.log('[Login] Form values after population:', this.loginForm.value);
     }
-  }
-
-  ngOnDestroy(): void {
-    document.body.classList.remove('error-1');
   }
 
   togglePassword(): void {
@@ -88,111 +79,86 @@ export class LoginComponent {
   clearErrorMessage(): void {
     this.errorMessage = '';
     this._error = { name: '', message: '' };
-  }login(): void {
-  this.clearErrorMessage();
-  this.isLoading = true;
-
-  if (!this.loginForm.valid) {
-    this.errorMessage = 'Please fill in all required fields';
-    this.isLoading = false;
-    return;
   }
 
-  const credentials = this.loginForm.value;
-  const rememberMe = this.loginForm.get('rememberMe')?.value;
-  console.log('[Login] Attempting login with credentials:', {
-    email: credentials.email,
-    rememberMe: rememberMe
-  });
+  login(): void {
+    this.clearErrorMessage();
 
-  this.authservice.login(credentials).subscribe({
-    next: (token: string) => {
-      try {
-        if (typeof token !== 'string' || !token.trim()) {
-          throw new Error('Invalid token');
-        }
+    if (!this.loginForm.valid) {
+      this.errorMessage = 'Please fill in all required fields';
+      return;
+    }
 
-        const decoded = jwtDecode<any>(token);
-        console.log('[Login] Token decoded successfully:', decoded);
+    const credentials = this.loginForm.value;
+    const rememberMe = credentials.rememberMe;
 
-        const user: User = {
-          id: decoded.userId || 0,
-          email: decoded.email || '',
-          firstName: decoded.firstName || '',
-          lastName: decoded.lastName || '',
-          phoneNumber: decoded.phoneNumber || '',
-          role: decoded.role || '',
-          department: decoded.department,
-          plant: decoded.plant,
-          loggedIn: decoded.loggedIn,
-          profilePhoto: decoded.profilePhoto || '',
-          isVerified: decoded.isVerified || false
-        };
+    this.authservice.login(credentials).subscribe({
+      next: (token: string) => {
+        try {
+          if (!token || typeof token !== 'string') throw new Error('Invalid token');
 
-        // ⚠️ Check if user is not verified
-        if (!user.isVerified) {
-          console.warn('[Login] User not verified, resending verification email...');
+          const decoded = jwtDecode<any>(token);
+          const user: User = {
+            id: decoded.userId || 0,
+            email: decoded.email || '',
+            firstName: decoded.firstName || '',
+            lastName: decoded.lastName || '',
+            phoneNumber: decoded.phoneNumber || '',
+            role: decoded.role || '',
+            department: decoded.department,
+            plant: decoded.plant,
+            loggedIn: decoded.loggedIn,
+            profilePhoto: decoded.profilePhoto || '',
+            isVerified: decoded.isVerified || false
+          };
 
-          this.authservice.resendVerificationEmail(user.email).subscribe({
-            next: () => {
-              this.toastr.info('A verification code has been sent to your email.', 'Email Sent');
-              this.router.navigate(['/auth/verify'], { queryParams: { email: user.email } });
-              this.isLoading = false; // ✅ stop loading after redirect
-            },
-            error: (resendErr) => {
-              console.error('[Login] Failed to resend verification email:', resendErr);
-              this.toastr.error('Unable to resend verification email. Try again later.', 'Error');
-              this.isLoading = false; // ✅ stop loading on error
-            }
-          });
+          if (!user.isVerified) {
+            this.authservice.resendVerificationEmail(user.email).subscribe({
+              next: () => {
+                this.toastr.info('A verification code has been sent to your email.', 'Email Sent');
+                this.router.navigate(['/auth/verify'], {
+                  queryParams: { email: user.email },
+                  replaceUrl: true
+                }).finally(() => {
+                });
+              },
+              error: (resendErr) => {
+                this.toastr.error('Unable to resend verification email. Try again later.', 'Error');
+              }
+            });
+            return;
+          }
 
-          return; // ⛔ Prevent further login flow
-        }
-
-        console.log('[Login] Remember me status:', rememberMe);
-
-        if (rememberMe) {
-          console.log('[Login] Setting remember me flag...');
-          localStorage.setItem('rememberMe', 'true');
-          console.log('[Login] Saving credentials to localStorage...');
-          localStorage.setItem('savedEmail', credentials.email);
-          localStorage.setItem('savedPassword', credentials.password);
-        } else {
-          const wasRemembered = localStorage.getItem('rememberMe') === 'true';
-          if (wasRemembered) {
-            console.log('[Login] Remember me was previously enabled, clearing credentials...');
+          if (rememberMe) {
+            localStorage.setItem('rememberMe', 'true');
+            localStorage.setItem('savedEmail', credentials.email);
+            localStorage.setItem('savedPassword', credentials.password);
+          } else {
             localStorage.removeItem('rememberMe');
             localStorage.removeItem('savedEmail');
             localStorage.removeItem('savedPassword');
-          } else {
-            console.log('[Login] Remember me was not previously enabled, no need to clear credentials');
           }
+
+          this.authservice.saveAuthData(token, user, rememberMe);
+          const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+          const welcomeMessage = fullName ? `Bienvenue, ${fullName}` : 'Bienvenue';
+          this.toastr.success(welcomeMessage, 'Connexion réussie');
+
+          this.router.navigate(['/dashboard/report-dashboard/view-reports'], { replaceUrl: true })
+            .finally(() => {
+            });
+
+        } catch (err) {
+          console.error('[Login] Token decode error:', err);
+          this.toastr.error('Erreur de connexion', 'Token invalide');
+          this.authservice.clearAuthData();
         }
-
-        this.authservice.saveAuthData(token, user, rememberMe);
-        console.log('[Login] Auth data saved successfully');
-
-        const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
-        const welcomeMessage = fullName ? `Bienvenue, ${fullName}` : 'Bienvenue';
-
-        this.toastr.success(welcomeMessage, 'Connexion réussie');
-        this.router.navigate(['/dashboard/report-dashboard/view-reports']);
-        this.isLoading = false; // ✅ stop loading after success
-      } catch (error) {
-        console.error('[Login] Error processing token:', error);
-        this.toastr.error('Token error', 'Login Failed');
+      },
+      error: (err) => {
+        console.error('[Login] Login failed:', err);
+        this.toastr.error('Email ou mot de passe incorrect', 'Échec de connexion');
         this.authservice.clearAuthData();
-        this.isLoading = false; // ✅ stop loading on exception
       }
-    },
-    error: (err) => {
-      console.error('[Login] Login failed:', err);
-      this.toastr.error('Invalid credentials', 'Login Failed');
-      this.authservice.clearAuthData();
-      this.isLoading = false; // ✅ stop loading on login error
-    }
-  });
-}
-
-
+    });
+  }
 }

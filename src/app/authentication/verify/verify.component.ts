@@ -38,7 +38,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   email: string = '';
   canResend: boolean = false;
   resendTimer: number = 30;
-  isLoading: boolean = false; // ✅ loading state
+// ✅ loading state
   private timerInterval: any;
 
 
@@ -81,7 +81,6 @@ onVerify(): void {
     return;
   }
 
-  this.isLoading = true; // use isLoading
   const code = this.verifyForm.value.code;
 
   this.authService.verifyEmailCode(this.email, code).subscribe({
@@ -91,10 +90,8 @@ onVerify(): void {
     },
     error: (err) => {
       this.toastr.error(err.error?.error || 'Invalid verification code');
-      this.isLoading = false;
     },
     complete: () => {
-      this.isLoading = false;
     }
   });
 }
@@ -104,15 +101,12 @@ onVerify(): void {
   resendEmail(): void {
     if (!this.canResend) return;
 
-    this.isLoading = true;
     this.authService.resendVerificationEmail(this.email).subscribe({
       next: () => {
         this.toastr.success('Verification email resent.');
         this.startResendCooldown();
-        this.isLoading = false;
       },
       error: (err) => {
-        this.isLoading = false;
         this.toastr.error('Failed to resend email.');
         console.error(err);
       },

@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": ["dropzone","filepond","leaflet","sweetalert2","apexcharts","moment","sweetalert"],
-            "outputPath": "dist/preview",
+            "outputPath": "dist/dayone",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Client, Message, StompHeaders } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -178,4 +179,4 @@ export class NotificationWebSocketService {
   public setLastSeenNotificationId(id: number): void {
     this.lastSeenNotificationId = id;
   }
-} 
+}
