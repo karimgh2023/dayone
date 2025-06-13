@@ -15,6 +15,9 @@ import { AuthService } from '@/app/shared/services/auth.service';
 import { ChatWebSocketService } from '@/app/shared/services/chat-websocket.service';
 import { ChatService } from '@/app/shared/services/chat.service';
 import { SharedModule } from '../../../shared/common/sharedmodule';
+import { OpenAiService } from '@/app/shared/services/open-ai.service';
+import { MessageStatus } from '@/app/models/message-status.enum';
+import { Role } from '@/app/models/role.enum';
 
 @Component({
   selector: 'app-chat',
@@ -41,7 +44,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
     private chatSocketService: ChatWebSocketService,
     private chatService: ChatService,
     public authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private openAiService: OpenAiService
   ) {}
 
   ngAfterViewInit(): void {
@@ -49,15 +53,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   scrollToBottom(): void {
-    try {
-      setTimeout(() => {
-        if (this.chatBody?.nativeElement) {
-          this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
-        }
-      }, 100);
-    } catch (err) {
-      console.error('Erreur scrollToBottom:', err);
-    }
+    setTimeout(() => {
+      if (this.chatBody?.nativeElement) {
+        this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+      }
+    }, 100);
   }
 
   ngOnInit(): void {
@@ -66,8 +66,25 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
     this.chatService.getAllMessages().subscribe((msgs) => {
       this.messages = msgs;
+
+      const aiUser: User = this.getAiUser();
+
+      const aiWelcomeMessage: ChatMessage = {
+        id: -1,
+        content: 'Bonjour, je suis votre assistant IA. Posez-moi une question !',
+        sender: aiUser,
+        receiver: this.currentUser!,
+        timestamp: new Date().toISOString(),
+        status: MessageStatus.SEEN
+      };
+
+      const hasAIMessage = msgs.some(m => m.sender.id === 0 || m.receiver.id === 0);
+      if (!hasAIMessage) {
+        this.messages.unshift(aiWelcomeMessage);
+      }
+
       this.groupMessages();
-      this.chatSocketService.setInitialMessages(msgs);
+      this.chatSocketService.setInitialMessages(this.messages);
       this.cdr.detectChanges();
       this.scrollToBottom();
     });
@@ -82,13 +99,54 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   sendMessage(): void {
     const content = this.newMessage.trim();
-    if (!this.selectedUserId || !content) return;
+    const isAI = this.selectedUserId === 0;
+
+    if ((this.selectedUserId === null || this.selectedUserId === undefined) && !isAI) return;
+    if (!content) return;
 
     this.newMessage = '';
+    const aiUser: User = this.getAiUser();
+
+    if (isAI) {
+      const userMsg: ChatMessage = {
+        id: Date.now(),
+        content,
+        sender: this.currentUser!,
+        receiver: aiUser,
+        timestamp: new Date().toISOString(),
+        status: MessageStatus.SENT
+      };
+
+      this.groupedConversations[0] = this.groupedConversations[0] || [];
+      this.groupedConversations[0].push(userMsg);
+      this.scrollToBottom();
+      setTimeout(() => this.messageInput?.nativeElement.focus(), 100);
+
+      this.openAiService.askAi(content).subscribe({
+        next: (reply) => {
+          const aiReply: ChatMessage = {
+            id: Date.now() + 1,
+            content: reply,
+            sender: aiUser,
+            receiver: this.currentUser!,
+            timestamp: new Date().toISOString(),
+            status: MessageStatus.SEEN
+          };
+
+          this.groupedConversations[0].push(aiReply);
+          this.scrollToBottom();
+        },
+        error: (err) => {
+          console.error('❌ Failed to contact OpenAI:', err);
+        }
+      });
+
+      return;
+    }
 
     const messageDTO: ChatMessageDTO = {
       content,
-      receiverId: this.selectedUserId,
+      receiverId: Number(this.selectedUserId)
     };
 
     this.chatService.sendMessage(messageDTO).subscribe({
@@ -96,7 +154,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
         this.messages.push(sentMessage);
         this.groupMessages();
         this.scrollToBottom();
-
         setTimeout(() => this.messageInput?.nativeElement.focus(), 100);
       },
       error: (err) => {
@@ -105,10 +162,25 @@ export class ChatComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getAiUser(): User {
+    return {
+      id: 0,
+      email: 'ai@bot.com',
+      firstName: 'AI',
+      lastName: 'Bot',
+      phoneNumber: '',
+      profilePhoto: 'https://png.pngtree.com/png-vector/20220611/ourmid/pngtree-chatbot-icon-chat-bot-robot-png-image_4841963.png',
+      role: Role.EMPLOYEE,
+      department: { id: 0, name: 'AI' },
+      plant: { id: 0, name: 'AI', address: '' },
+      loggedIn: true,
+      isVerified: true
+    };
+  }
+
   getContactUser(contactId: number): User | undefined {
     const conversation = this.groupedConversations[contactId];
     if (!conversation?.length) return undefined;
-
     const firstMsg = conversation[0];
     return firstMsg.sender.id === this.currentUser?.id ? firstMsg.receiver : firstMsg.sender;
   }
@@ -129,22 +201,21 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   groupMessages() {
     this.groupedConversations = {};
-
     for (const msg of this.messages) {
       const contactId = msg.sender.id === this.currentUser?.id ? msg.receiver.id : msg.sender.id;
-
       if (!this.groupedConversations[contactId]) {
         this.groupedConversations[contactId] = [];
       }
-
       this.groupedConversations[contactId].push(msg);
     }
 
     this.sortedContactIds = Object.keys(this.groupedConversations)
       .map(id => +id)
       .sort((a, b) => {
-        const aLast = this.groupedConversations[a][this.groupedConversations[a].length - 1];
-        const bLast = this.groupedConversations[b][this.groupedConversations[b].length - 1];
+        if (a === 0) return -1;
+        if (b === 0) return 1;
+        const aLast = this.groupedConversations[a].at(-1)!;
+        const bLast = this.groupedConversations[b].at(-1)!;
         return new Date(bLast.timestamp).getTime() - new Date(aLast.timestamp).getTime();
       });
   }
@@ -167,7 +238,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error('❌ Erreur API markAsSeen:', err);
-        },
+        }
       });
     });
 
@@ -180,6 +251,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   getDisplayMessages(): ChatMessage[] {
+    if (this.selectedUserId === 0 && this.groupedConversations[0]) {
+      return this.groupedConversations[0];
+    }
     return this.selectedUserId ? this.groupedConversations[this.selectedUserId] || [] : [];
   }
 
@@ -204,7 +278,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   getUserFromConversation(contactId: number): User | null {
     const conv = this.groupedConversations[contactId]?.[0];
-    if (!conv) return null;
-    return conv.sender.id === this.currentUser?.id ? conv.receiver : conv.sender;
+    return conv ? (conv.sender.id === this.currentUser?.id ? conv.receiver : conv.sender) : null;
   }
 }

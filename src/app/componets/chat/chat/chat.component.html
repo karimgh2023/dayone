@@ -6,7 +6,6 @@
   <div class="col-md-12">
     <div class="card overflow-hidden">
       <div class="tile tile-alt mb-0 border-0" id="messages-main">
-
         <!-- Sidebar contacts/chat -->
         <div class="ms-menu">
           <div class="p-3 border-bottom">
@@ -35,15 +34,23 @@
                 ></span>
               </div>
               <div class="flex-fill">
-                <div class="fw-bold">
-                  {{ getUserFromConversation(contactId)?.firstName }} {{ getUserFromConversation(contactId)?.lastName }}
+                <div class="fw-bold d-flex align-items-center gap-1">
+                  {{ getUserFromConversation(contactId)?.firstName }}
+                  {{ getUserFromConversation(contactId)?.lastName }}
+                  <span
+                    *ngIf="contactId === 0"
+                    class="badge bg-info text-dark ms-2"
+                    style="font-size: 0.7rem;"
+                  >IA</span>
                 </div>
-                <small
-                  class="text-muted"
-                  [ngClass]="{ 'fw-bold': isLastMessageUnseen(contactId) }"
-                >
-                  {{ getLastMessage(contactId)?.content || 'Pas de message' }}
-                </small>
+<small
+  class="text-muted text-truncate d-block"
+  [ngClass]="{ 'fw-bold': isLastMessageUnseen(contactId) }"
+  style="max-width: 170px;"
+>
+  {{ getLastMessage(contactId)?.content || 'Pas de message' }}
+</small>
+
               </div>
             </li>
           </ul>
@@ -58,13 +65,16 @@
               alt=""
               class="avatar avatar-md rounded-circle me-2"
             />
-            <div class="fw-semibold">
+            <div class="fw-semibold d-flex align-items-center gap-2">
               {{ getUserFromConversation(selectedUserId)?.firstName }} {{ getUserFromConversation(selectedUserId)?.lastName }}
               <span
-                *ngIf="getUserFromConversation(selectedUserId)?.loggedIn"
-                class="badge bg-success ms-2 align-middle"
-                style="width: 10px; height: 10px; border-radius: 50%"
-              ></span>
+                *ngIf="selectedUserId === 0"
+                class="badge bg-info text-dark"
+              >Assistant IA</span>
+              <span
+                *ngIf="getUserFromConversation(selectedUserId)?.loggedIn && selectedUserId !== 0"
+                class="badge bg-success"
+              >En ligne</span>
             </div>
           </div>
 
@@ -97,13 +107,13 @@
           </div>
 
           <!-- Input -->
+<!-- Chat input -->
 
-
-                              <div class="msb-reply">
-                        <textarea               #messageInput
-              [(ngModel)]="newMessage"
-              (keydown.enter)="sendMessage()"
-              placeholder="Tapez un message..."></textarea>
+                    <div class="msb-reply">
+                        <textarea      #messageInput
+    [(ngModel)]="newMessage"
+    (keydown.enter)="sendMessage()"
+    placeholder="Tapez un message..."></textarea>
                         <button type="button" (click)="sendMessage()"><span class="fe fe-send"></span></button>
                     </div>
 
