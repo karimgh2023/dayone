@@ -21,9 +21,11 @@ import { ReportEntryService } from '../../../../shared/services/report-entry.ser
 })
 export class ViewReportsComponent implements OnInit {
   createdReports: ReportDTO[] = [];
+  archivedReports: ReportDTO[] =[];
   assignedReports: ReportDTO[] = [];
   filteredCreatedReports: ReportDTO[] = [];
   filteredAssignedReports: ReportDTO[] = [];
+
   filteredAllReports: ReportDTO[] = [];
 
   userRole: string = '';
@@ -57,6 +59,10 @@ export class ViewReportsComponent implements OnInit {
         this.fetchCreatedReports();
       }
 
+      if (this.userRole === 'DEPARTMENT_MANAGER' || this.userRole === 'ADMIN') {
+        this.fetchArchivedReports();
+      }
+
       this.fetchAssignedReports();
       this.activeTab = 'all';
     }
@@ -66,13 +72,30 @@ export class ViewReportsComponent implements OnInit {
     this.reportService.getReportsCreatedByMe().subscribe({
       next: (reports: ReportDTO[]) => {
         this.createdReports = reports;
+        console.log(this.createdReports);
         this.filteredCreatedReports = [...this.createdReports];
         this.filteredAllReports = this.getAllReports();
+
         this.applyGlobalFilter();
         this.cdr.detectChanges();
       },
       error: (err) => {
         this.toastr.error('Erreur lors du chargement des rapports créés', 'Erreur');
+        console.error(err);
+      }
+    });
+  }
+
+    fetchArchivedReports(): void {
+    this.reportService.getReportsArchived().subscribe({
+      next: (reports: ReportDTO[]) => {
+        this.archivedReports = reports;
+        console.log(this.archivedReports);
+        this.applyGlobalFilter();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.toastr.error('Erreur lors du chargement des rapports archivés', 'Erreur');
         console.error(err);
       }
     });
@@ -107,8 +130,16 @@ export class ViewReportsComponent implements OnInit {
     this.fetchAssignedReports();
     if (this.userRole === 'DEPARTMENT_MANAGER') {
       this.fetchCreatedReports();
+      this.fetchArchivedReports();
     }
   }
+
+  reloadComponent() {
+  const currentUrl = this.router.url;
+  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate([currentUrl]);
+  });
+}
 
   setView(view: string): void {
     this.currentView = view;
@@ -244,6 +275,7 @@ export class ViewReportsComponent implements OnInit {
         next: () => {
           this.toastr.success('Report deleted successfully');
           this.refreshReports();
+          this.reloadComponent();
         },
         error: err => {
           this.toastr.error('Failed to delete the report.');
@@ -251,5 +283,34 @@ export class ViewReportsComponent implements OnInit {
         }
       });
     }
+  }
+
+    restoreReport(reportId: number): void {
+      this.reportService.restoreReport(reportId).subscribe({
+        next: () => {
+          this.toastr.success('Report restored successfully');
+          this.refreshReports();
+          this.reloadComponent();
+        },
+        error: err => {
+          this.toastr.error('Failed to restore the report.');
+          console.error(err);
+        }
+      });
+  }
+
+    archiveReport(reportId: number): void {
+      this.reportService.archiveReport(reportId).subscribe({
+        next: () => {
+          this.toastr.success('Report archive successfully');
+          this.refreshReports();
+          this.reloadComponent();
+        },
+        error: err => {
+          this.toastr.error('Failed to archive the report.');
+          console.error(err);
+        }
+      });
+
   }
 }

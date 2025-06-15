@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DepartmentComponent } from './department-dashboard/department.component';
 
 export const admin: Routes = [
   {

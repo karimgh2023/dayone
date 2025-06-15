@@ -43,18 +43,18 @@ export class ProgressService {
   /**
    * Calculate specific checklist progress for UI display (0-100%)
    */
- 
+
   calculateSpecificProgress(checklist: SpecificChecklistItemDTO[]): number {
     if (!checklist || checklist.length === 0) {
       return 0;
     }
-    
+
     const totalItems = checklist.length;
-    const completedItems = checklist.filter(item => 
-      item.homologation === true || 
+    const completedItems = checklist.filter(item =>
+      item.homologation === true ||
       (item.homologation === false && item.action && item.responsableAction && item.deadline)
     ).length;
-    
+
     return Math.round((completedItems / totalItems) * 100);
   }
 
@@ -107,11 +107,11 @@ export class ProgressService {
    */
   calculateMaintenanceProgress(form: MaintenanceForm): number {
     let progress = 0;
-    if (this.isMaintenanceSystemPartFilled(form)) {
-      progress += 15;
+    if (form.maintenanceSystemUpdated) {
+      progress += 66;
     }
-    if (this.isShePartFilled(form)) {
-      progress += 10;
+    if (form.sheUpdated) {
+      progress += 34;
     }
     return progress;
   }

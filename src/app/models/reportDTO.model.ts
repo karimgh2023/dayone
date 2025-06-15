@@ -1,7 +1,11 @@
 import {  AssignedUserDTO } from "./assignedUserDTO.model";
+import { ProtocolType } from "./protocol-type.enum";
+import { Protocol } from "./protocol.model";
 
 export interface ReportDTO {
   id: number;
+  protocol: String;
+  protocolType: ProtocolType;
   type: string;
   serialNumber: string;
   equipmentDescription: string;

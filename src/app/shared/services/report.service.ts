@@ -33,6 +33,20 @@ export class ReportService {
       { headers });
   }
 
+    archiveReport(reportId: number): Observable<any> {
+        const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/archive/${reportId}`,
+      { headers });
+  }
+
+    restoreReport(reportId: number): Observable<any> {
+        const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/restore/${reportId}`,
+      { headers });
+  }
+
   getRequiredUsers(protocolId: number): Observable<AssignedUserDTO[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -55,6 +69,13 @@ export class ReportService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<ReportDTO[]>(`${this.apiUrl}/my-created`, { headers });
   }
+
+    getReportsArchived() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<ReportDTO[]>(`${this.apiUrl}/my-archived`, { headers });
+  }
+
 
   getReportMetadata(reportId: number): Observable<ReportMetadataDTO> {
     const token = localStorage.getItem('token');

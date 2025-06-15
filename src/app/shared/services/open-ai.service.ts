@@ -9,7 +9,7 @@ export class OpenAiService {
   private apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
   // ⚠️ Remplace cette clé par une variable d’environnement en prod
-  private apiKey = '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';
+  private apiKey = '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';
 
   constructor(private http: HttpClient) {}
 

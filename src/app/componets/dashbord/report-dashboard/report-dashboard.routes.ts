@@ -5,6 +5,7 @@ import { ProtocolSelectionComponent } from './protocol-selection/protocol-select
 import { ReportCreateComponent } from './report-create/report-create.component';
 import { ViewReportsComponent } from './view-reports/view-reports.component';
 import { FillReportComponent } from './fill-report/fill-report.component';
+import { DepartmentComponent } from '../department-dashboard/department.component';
 const routes: Routes = [
   {
     path: 'dashboard/report-dashboard',
@@ -28,7 +29,11 @@ const routes: Routes = [
         path: 'report-create/:protocolId',
         loadComponent: () => Promise.resolve(ReportCreateComponent),
       },
-    
+            {
+        path: 'departments',
+        loadComponent: () => Promise.resolve(DepartmentComponent),
+      },
+
     ]
   }
 ];

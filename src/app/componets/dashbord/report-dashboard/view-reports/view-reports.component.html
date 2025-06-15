@@ -76,6 +76,29 @@
           <div class="d-flex">
             <div class="mt-0">
               <div class="d-flex flex-wrap align-items-center mb-1">
+                <h5 class="text-dark mb-1 fw-semibold">Rapports Archivés</h5>
+              </div>
+              <h2 class="text-warning mb-0 fw-bold">{{ archivedReports.length }}</h2>
+            </div>
+            <div class="ms-auto">
+              <div class="chart-wrapper mt-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <div class="dashboard-icon bg-warning-transparent">
+                    <i class="fe fe-folder text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+      <div class="card custom-card overflow-hidden">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="mt-0">
+              <div class="d-flex flex-wrap align-items-center mb-1">
                 <h5 class="text-dark mb-1 fw-semibold">Taux de Complétion</h5>
               </div>
               <h2 class="text-info mb-0 fw-bold">{{ getCompletionRate() }}%</h2>
@@ -163,6 +186,20 @@
       <span class="badge rounded-pill bg-warning ms-1">{{ assignedReports.length }}</span>
     </button>
   </li>
+
+    <li class="nav-item" role="presentation" *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'">
+    <button
+      class="nav-link"
+      [ngClass]="{ 'active': activeTab === 'archived' }"
+      type="button"
+      (click)="setActiveTab('archived')"
+      role="tab"
+      aria-controls="archived"
+      [attr.aria-selected]="activeTab === 'archived'">
+      <i class="fe fe-users me-1"></i>Archivés
+      <span class="badge rounded-pill bg-warning ms-1">{{ archivedReports.length }}</span>
+    </button>
+  </li>
 </ul>
 
 <!-- Tab Content -->
@@ -177,6 +214,10 @@
 
   <div *ngIf="activeTab === 'assigned'" class="tab-pane show active" role="tabpanel">
     <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: filteredAssignedReports, title: 'Rapports Assignés', count: assignedReports.length}"></ng-container>
+  </div>
+
+    <div *ngIf="activeTab === 'archived'" class="tab-pane show active" role="tabpanel">
+    <ng-container *ngTemplateOutlet="currentView === 'board' ? boardView : listView; context: {reports: archivedReports, title: 'Rapports Archivés', count: archivedReports.length}"></ng-container>
   </div>
 </div>
 
@@ -375,6 +416,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Type</th>
+                  <th>Protocole</th>
                   <th>Équipement</th>
                   <th>Créé par</th>
                   <th>Responsables</th>
@@ -388,9 +430,15 @@
                 <tr *ngFor="let report of reports">
                   <td><strong>#{{ report.id }}</strong></td>
                   <td>
-                    <span class="badge" [ngClass]="report.type === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">
-                      {{ report.type }}
+                    <span class="badge" [ngClass]="report.protocolType === 'Homologation' ? 'bg-primary-transparent' : 'bg-secondary-transparent'">
+                      {{ report.protocolType }}
                     </span>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="fe fe-box text-primary me-2"></i>
+                      <span>{{ report.protocol }}</span>
+                    </div>
                   </td>
                   <td>
                     <div class="d-flex align-items-center">
@@ -427,27 +475,55 @@
                   <td>
                     <div class="progress progress-sm">
                       <div class="progress-bar"
-                           [ngClass]="{'bg-success': getReportProgress(report) === 100, 'bg-warning': getReportProgress(report) > 0 && getReportProgress(report) < 100, 'bg-info': getReportProgress(report) === 0}"
-                           [style.width.%]="getReportProgress(report)"></div>
+                            [ngClass]="{'bg-success': getReportProgress(report) === 100, 'bg-warning': getReportProgress(report) > 0 && getReportProgress(report) < 100, 'bg-info': getReportProgress(report) === 0}"
+                            [style.width.%]="getReportProgress(report)"></div>
                     </div>
                   </td>
-                  <td>
-                    <div class="btn-group">
-                      <a [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]" class="btn btn-sm btn-primary">
-                        <i class="fe fe-edit-2"></i>
-                      </a>
-                      <button type="button" class="btn btn-sm btn-light" (click)="downloadReport(report)">
-                        <i class="fe fe-download"></i>
-                      </button>
-                      <button *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'"
-                              type="button"
-                              class="btn btn-sm btn-danger"
-                              (click)="deleteReport(report.id)"
-                              [ngbTooltip]="'Supprimer le rapport'">
-                        <i class="fe fe-trash-2"></i>
-                      </button>
-                    </div>
-                  </td>
+<td>
+  <div class="btn-group">
+    <!-- Fill Button: Visible in Created and Assigned tabs -->
+    <a *ngIf="activeTab !== 'archived'"
+        [routerLink]="['/dashboard/report-dashboard/fill-report', report.id]"
+        class="btn btn-sm btn-primary">
+      <i class="fe fe-edit-2"></i>
+    </a>
+
+    <!-- Download Button: Visible in Created and Assigned tabs, only if progress is 100 -->
+    <button *ngIf="activeTab !== 'archived' "
+            [disabled]="report.progress !== 100"
+            type="button"
+            class="btn btn-sm btn-light"
+            (click)="downloadReport(report)">
+      <i class="fe fe-download"></i>
+    </button>
+
+    <button *ngIf="userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER'"
+            type="button"
+            class="btn btn-sm btn-danger"
+            (click)="deleteReport(report.id)"
+            [ngbTooltip]="'Supprimer le rapport'">
+      <i class="fe fe-trash-2"></i>
+    </button>
+
+    <!-- Archive Button: Visible in Created and Assigned tabs for ADMIN or DEPARTMENT_MANAGER -->
+    <button *ngIf="activeTab !== 'archived' && (userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER')"
+            type="button"
+            class="btn btn-sm btn-warning"
+            (click)="archiveReport(report.id)"
+            [ngbTooltip]="'Archiver le rapport'">
+      <i class="fe fe-folder"></i>
+    </button>
+
+    <!-- Restore Button: Visible in Archived tab for ADMIN or DEPARTMENT_MANAGER -->
+    <button *ngIf="activeTab === 'archived' && (userRole === 'ADMIN' || userRole === 'DEPARTMENT_MANAGER')"
+            type="button"
+            class="btn btn-sm btn-success"
+            (click)="restoreReport(report.id)"
+            [ngbTooltip]="'Restaurer le rapport'">
+      <i class="fe fe-refresh-cw"></i>
+    </button>
+  </div>
+</td>
                 </tr>
               </tbody>
             </table>

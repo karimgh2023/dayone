@@ -133,6 +133,7 @@
                 <div class="form-group">
                   <label class="form-label">Responsables</label>
                   <ng-select
+                    required
                     [items]="usersByDepartment[dept.id]"
                     bindLabel="fullName"
                     bindValue="id"

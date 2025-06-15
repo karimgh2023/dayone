@@ -138,7 +138,8 @@ export class FillReportComponent implements OnInit {
     next: (data) => {
       console.log('[SPECIFIC] Loaded:', data);
       this.specificChecklist = data
-        .filter(item => item.editable); // ✅ only keep accessible items
+
+ // ✅ only keep accessible items
       this.updateProgress();
     },
     error: (err) => {
@@ -197,7 +198,7 @@ export class FillReportComponent implements OnInit {
       }));
 
     if (filledEntries.length === 0) {
-      this.toastr.warning('Aucun champ spÃ©cifique rempli Ã  enregistrer.', 'Attention');
+      this.toastr.warning('Aucun champ spécifique rempli à  enregistrer.', 'Attention');
       return;
     }
 
@@ -210,18 +211,20 @@ export class FillReportComponent implements OnInit {
     });
 
     if (invalidEntries.length > 0) {
-      this.toastr.error('Pour les critÃ¨res non homologuÃ©s, tous les champs doivent Ãªtre remplis.', 'Erreur de validation');
+      this.toastr.error('Pour les critères non homologués, tous les champs doivent étre remplis.', 'Erreur de validation');
       return;
     }
 
     this.reportEntryService.updateMultipleSpecificEntries(filledEntries).subscribe({
       next: res => {
         this.specificChecklist.forEach(e => e.isFilled = false);
-        this.toastr.success(res.message, 'SuccÃ¨s');
+        this.loadData();
+        this.toastr.success(res.message, 'Succés');
         this.loadData();
       },
       error: err => {
         console.error('[SPECIFIC] Update failed:', err);
+        this.loadData();
         this.toastr.error("Ã‰chec de l'enregistrement de la checklist spÃ©cifique.", 'Erreur');
       }
     });
@@ -240,10 +243,13 @@ export class FillReportComponent implements OnInit {
 
     this.reportService.updateImmobilization(this.reportId, dto).subscribe({
       next: res => {
+      this.loadData();
+
         console.log('[âœ… IMMOBILIZATION UPDATED]', res.message);
         this.toastr.success('Immobilisation mise Ã  jour avec succÃ¨s.', 'SuccÃ¨s');
       },
       error: err => {
+        this.loadData();
         console.error('[âŒ IMMOBILIZATION UPDATE ERROR]', err);
         this.toastr.error("Ã‰chec de la mise Ã  jour de l'immobilisation.", 'Erreur');
       }
@@ -267,9 +273,11 @@ export class FillReportComponent implements OnInit {
   updateMaintenanceForm() {
     this.reportEntryService.updateMaintenanceForm(this.reportId, this.maintenanceForm.form).subscribe({
       next: (res) => {
+        this.loadData();
         console.log('[MAINTENANCE] Success:', res?.message || res);
       },
       error: (error) => {
+        this.loadData();
         console.error('[MAINTENANCE] Form update failed:', error);
       }
     });
@@ -334,11 +342,13 @@ export class FillReportComponent implements OnInit {
 
     this.reportEntryService.updateMultipleStandardEntries(filledEntries).subscribe({
       next: res => {
+        this.loadData();
         this.standardChecklist.forEach(e => e.isFilled = false);
         this.toastr.success(res.message, 'SuccÃ¨s');
         this.loadData();
       },
       error: err => {
+        this.loadData();
         console.error('[STANDARD] Update failed:', err);
         this.toastr.error("Ã‰chec de l'enregistrement de la checklist standard.", 'Erreur');
       }

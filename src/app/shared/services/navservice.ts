@@ -82,7 +82,14 @@ export class NavService implements OnDestroy {
       selected: false,
       roles: ['ADMIN']
     },
-
+						{
+							title: 'Department',
+							dirchange: false,
+							type: 'link',
+							active: false,
+							selected: false,
+							path: '/dashboard/hrmdashboards/department',
+						},
     {
       path: '/dashboard/employess-dashboard/employees/employee-list',
       title: 'Employés',
@@ -90,6 +97,14 @@ export class NavService implements OnDestroy {
       type: 'link',
       selected: false,
       roles: ['ADMIN']
+    },
+
+        {
+      path: '/chat',
+      title: 'Chat',
+      icon: 'message-square',
+      type: 'link',
+      selected: false,
     },
 
   ];
